@@ -1,11 +1,10 @@
 import { Suspense } from 'react';
+
 import Image from 'next/image';
 
-import { Link } from '@repo/api/links/entities/link.entity';
-
+import { Button } from '@repo/ui/button';
 import { Card } from '@repo/ui/card';
 import { Code } from '@repo/ui/code';
-import { Button } from '@repo/ui/button';
 
 import styles from './page.module.css';
 
@@ -29,28 +28,6 @@ const Gradient = ({
         .filter(Boolean)
         .join(' ')}
     />
-  );
-};
-
-const LinksSection = async () => {
-  const fetchLinks = async (): Promise<Link[]> => {
-    try {
-      return await (await fetch('http://localhost:3000/links')).json();
-    } catch (_) {
-      return [];
-    }
-  };
-
-  const links = await fetchLinks();
-
-  return (
-    <div className={styles.grid}>
-      {links.map(({ title, url, description }) => (
-        <Card className={styles.card} href={url} key={title} title={title}>
-          {description}
-        </Card>
-      ))}
-    </div>
   );
 };
 
@@ -155,7 +132,7 @@ const RootPage = ({ params }: { params: { forTest?: boolean } }) => {
       {params.forTest ? (
         <LinksSectionForTest />
       ) : (
-        <Suspense fallback={'Loading links...'}>{<LinksSection />}</Suspense>
+        <Suspense fallback={'Loading links...'}>{<div>oi</div>}</Suspense>
       )}
     </main>
   );
