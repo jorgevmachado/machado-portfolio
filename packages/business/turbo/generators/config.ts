@@ -1,13 +1,13 @@
 import type { PlopTypes } from '@turbo/gen';
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
-  plop.setGenerator('service', {
-    description: 'add a new service',
+  plop.setGenerator('business', {
+    description: 'add a new business',
     prompts: [
       {
         type: 'input',
         name: 'name',
-        message: 'What is the name of the service ?',
+        message: 'What is the name of the business ?',
         validate: (input: string) => {
           if (input.includes('.')) {
             return 'file name cannot include an extension';
@@ -30,13 +30,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: 'add',
-        path: 'src/{{ kebabCase name }}/{{ kebabCase name }}.spec.ts',
-        templateFile: 'templates/spec.hbs',
+        path: 'src/{{ kebabCase name }}/interface.ts',
+        templateFile: 'templates/interface.hbs',
       },
       {
         type: 'add',
         path: 'src/{{ kebabCase name }}/index.ts',
-        template: "export * from './{{kebabCase name}}';",
+        templateFile: 'templates/index.hbs',
       },
       {
         type: 'append',

@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript/library.json",
+  "include": ["src"],
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": "src",
+    "allowJs": true,
+    "incremental": false,
+    "esModuleInterop": true
+  }
+}
