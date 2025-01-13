@@ -28,7 +28,7 @@
     "@nestjs/testing": "^10.0.0",
     "@repo/eslint-config": "*",
     "@repo/jest": "*",
-    "@repo/typescript-config": "*",
+    "@repo/typescript": "*",
     "@types/express": "^4.17.17",
     "@types/node": "^20.3.1",
     "@types/supertest": "^6.0.0",
