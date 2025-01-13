@@ -1,0 +1,137 @@
+@import "../../styles/main";
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: var(--opacity-64);
+  }
+}
+
+.modal {
+  top: 50%;
+  left: 50%;
+  width: fit-content;
+  margin: 0;
+  display: flex;
+  padding: var(--size-huge) var(--size-regular);
+  z-index: 32;
+  position: fixed;
+  overflow: auto;
+  transform: translate(-50%, -50%);
+  min-width: 576px;
+  min-height: 176px;
+  border-radius: var(--border-radius-large);
+  flex-direction: column;
+  background-color: var(--color-white);
+
+  &__close {
+    top: var(--size-medium);
+    right: var(--size-medium);
+    position: absolute;
+    user-select: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__backdrop {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+    opacity: 0.64;
+    position: fixed;
+  }
+
+  &__fade-in {
+    animation: fadeIn 0.3s;
+  }
+
+  &__spacing {
+    &--md {
+      padding: var(--size-xx-big);
+      @media (max-width: var(--breakpoints-md)) {
+        padding: var(--size-xx-big) var(--size-medium);
+      }
+    }
+    &--lg {
+      padding: var(--size-huge) var(--size-regular);
+    }
+  }
+
+  &__context {
+    &--info {
+      .modal__close {
+        color: var(--color-info-80);
+        &:hover {
+          color: var(--color-info-70)
+        }
+      }
+    }
+    &--error {
+      .modal__close {
+        color: var(--color-error-80);
+        &:hover {
+          color: var(--color-error-70)
+        }
+      }
+    }
+    &--neutral {
+      .modal__close {
+        color: var(--color-neutral-80);
+        &:hover {
+          color: var(--color-neutral-90)
+        }
+      }
+    }
+    &--success {
+      .modal__close {
+        color: var(--color-success-80);
+        &:hover {
+          color: var(--color-success-70)
+        }
+      }
+    }
+    &--primary {
+      .modal__close {
+        color: var(--color-primary-80);
+        &:hover {
+          color: var(--color-primary-60)
+        }
+      }
+    }
+    &--secondary {
+      .modal__close {
+        color: var(--color-secondary-80);
+        &:hover {
+          color: var(--color-secondary-60)
+        }
+      }
+    }
+    &--attention {
+      .modal__close {
+        color: var(--color-attention-80);
+        &:hover {
+          color: var(--color-attention-60)
+        }
+      }
+    }
+  }
+
+  @media (min-width: var(--breakpoints-md)) {
+    padding: var(--size-huge) var(--size-medium);
+    max-height: 100%;
+  }
+
+  @media (max-width: var(--breakpoints-md)) {
+    width: 100%;
+    height: 100%;
+    min-width: auto;
+    border-radius: 0;
+  }
+}

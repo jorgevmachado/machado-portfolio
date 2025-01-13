@@ -1,0 +1,99 @@
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  padding: 0;
+  overflow-y: auto;
+  font-family:
+          -apple-system,
+          BlinkMacSystemFont,
+          Segoe UI,
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          Fira Sans,
+          Droid Sans,
+          Helvetica Neue,
+          sans-serif;
+  &::-webkit-scrollbar {
+    width: var(--dimensions-tiny);
+    background: var(--colors-neutral-70);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--colors-neutral-84);
+    border-radius: var(--borders-rounded);
+    border-right: none;
+    border-left: none;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove Default padding and list styles on ul, ol elements with a class attribute */
+ul[class],
+ol[class] {
+  padding: 0;
+  list-style: none;
+}
+
+/* Remove Default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* A elements that don't have a class get Default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

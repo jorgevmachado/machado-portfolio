@@ -1,0 +1,106 @@
+@import "../../styles/main";
+
+.accordion {
+  border: 1px solid var(--color-neutral-60);
+  border-radius: var(--border-radius-large);
+  background-color: var(--color-white);
+
+  @include focus();
+
+
+  &__borderless {
+    border: none;
+    border-radius: 0;
+  }
+
+  &__context {
+    &--info {
+      &:hover {
+        border-color: var(--color-info-80);
+      }
+    }
+    &--error {
+      &:hover {
+        border-color: var(--color-error-80);
+      }
+    }
+    &--neutral {
+      &:hover {
+        border-color: var(--color-neutral-80);
+      }
+    }
+    &--success {
+      &:hover {
+        border-color: var(--color-success-80);
+      }
+    }
+    &--primary {
+      &:hover {
+        border-color: var(--color-primary-80);
+      }
+    }
+    &--secondary {
+      &:hover {
+        border-color: var(--color-secondary-80);
+      }
+    }
+    &--attention {
+      &:hover {
+        border-color: var(--color-attention-80);
+      }
+    }
+  }
+
+  &__open {
+    .accordion__content {
+      height: 100%;
+      opacity: 1;
+      padding: 0 var(--size-regular) var(--size-regular) var(--size-regular);
+      transition: opacity 0.5s linear;
+      pointer-events: unset;
+    }
+    .accordion__button--arrow-icon {
+      transform: rotate(180deg);
+      transition: transform 0.2s ease-in;
+    }
+  }
+
+  &__disabled {
+    border-color: var(--color-neutral-60);
+    background-color: var(--color-neutral-50);
+
+    p, svg {
+      color: var(--color-neutral-70);
+    }
+    &:hover {
+      border-color: var(--color-neutral-60);
+    }
+    button:hover {
+      cursor: default;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    margin: 0;
+    border: none;
+    display: flex;
+    padding: var(--size-regular);
+    background: transparent;
+    justify-content: space-between;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &--title {
+      width: 100%;
+    }
+  }
+
+  &__content {
+    height: 0;
+    opacity: 0;
+    outline: none;
+    pointer-events: none;
+  }
+}

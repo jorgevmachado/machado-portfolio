@@ -1,0 +1,114 @@
+{
+  "size": {
+    "$type": "size",
+    "none": {
+      "$value": "{dimensions.none}"
+    },
+    "x": {
+      "tiny": {
+        "$value": "{dimensions.relative.2}",
+        "comment": "2px if 16px = 1rem"
+      },
+      "small": {
+        "$value": "{dimensions.relative.12}",
+        "comment": "12px if 16px = 1rem"
+      },
+      "regular": {
+        "$value": "{dimensions.relative.18}",
+        "comment": "18px if 16px = 1rem"
+      },
+      "medium": {
+        "$value": "{dimensions.relative.26}",
+        "comment": "26px if 16px = 1rem"
+      },
+      "large": {
+        "$value": "{dimensions.relative.36}",
+        "comment": "36px if 16px = 1rem"
+      },
+      "big": {
+        "$value": "{dimensions.relative.52}",
+        "comment": "52px if 16px = 1rem"
+      },
+      "huge": {
+        "$value": "{dimensions.relative.68}",
+        "comment": "68px if 16px = 1rem"
+      }
+    },
+    "xx": {
+      "tiny": {
+        "$value": "{dimensions.relative.4}",
+        "comment": "4px if 16px = 1rem"
+      },
+      "small": {
+        "$value": "{dimensions.relative.10}",
+        "comment": "10px if 16px = 1rem"
+      },
+      "regular": {
+        "$value": "{dimensions.relative.20}",
+        "comment": "20px if 16px = 1rem"
+      },
+      "medium": {
+        "$value": "{dimensions.relative.28}",
+        "comment": "28px if 16px = 1rem"
+      },
+      "large": {
+        "$value": "{dimensions.relative.40}",
+        "comment": "40px if 16px = 1rem"
+      },
+      "big": {
+        "$value": "{dimensions.relative.56}",
+        "comment": "56px if 16px = 1rem"
+      },
+      "huge": {
+        "$value": "{dimensions.relative.72}",
+        "comment": "72px if 16px = 1rem"
+      }
+    },
+    "xxx": {
+      "large": {
+        "$value": "{dimensions.relative.44}",
+        "comment": "44px if 16px = 1rem"
+      },
+      "big": {
+        "$value": "{dimensions.relative.60}",
+        "comment": "60px if 16px = 1rem"
+      }
+    },
+    "tiny": {
+      "$value": "{dimensions.relative.8}",
+      "comment": "8px if 16px = 1rem"
+    },
+    "small": {
+      "$value": "{dimensions.relative.14}",
+      "comment": "14px if 16px = 1rem"
+    },
+    "regular": {
+      "$value": "{dimensions.relative.16}",
+      "comment": "16px if 16px = 1rem"
+    },
+    "medium": {
+      "$value": "{dimensions.relative.24}",
+      "comment": "24px if 16px = 1rem"
+    },
+    "large": {
+      "$value": "{dimensions.relative.32}",
+      "comment": "32px if 16px = 1rem"
+    },
+    "big": {
+      "$value": "{dimensions.relative.48}",
+      "comment": "48px if 16px = 1rem"
+    },
+    "huge": {
+      "$value": "{dimensions.relative.64}",
+      "comment": "64px if 16px = 1rem"
+    },
+    "giant": {
+      "$value": "{dimensions.relative.80}",
+      "comment": "80px if 16px = 1rem"
+    },
+    "max": {
+      "$value": "{dimensions.max}",
+      "comment": "9999px if 1rem = 16px"
+    }
+  }
+}

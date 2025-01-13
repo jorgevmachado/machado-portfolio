@@ -1,0 +1,185 @@
+@import "../../styles/main";
+
+@mixin context($WeakColor, $MediumColor, $StrongColor) {
+  &.radio {
+    &:hover:not(:focus-within) {
+      outline: none;
+      &:not(&.radio__checked):not(&.radio__disabled) {
+        background-color: $WeakColor;
+        .radio__wrapper--input {
+          border: 1px solid $StrongColor;
+        }
+      }
+    }
+    &__checked {
+      background-color: $WeakColor;
+      .text {
+        color: $MediumColor;
+      }
+    }
+  }
+  .radio__wrapper--input:checked {
+    border-color: $StrongColor;
+    background-color: $StrongColor;
+  }
+}
+
+.radio {
+  cursor: pointer;
+  display: flex;
+  padding: var(--size-x-small);
+  align-items: center;
+  border-radius: var(--size-x-small);
+  margin-bottom: var(--size-xx-tiny);
+  background-color: var(--color-white);
+
+  &__label {
+    cursor: pointer;
+  }
+
+  &__focused {
+    @include focus;
+  }
+
+  &__wrapper {
+    width: var(--size-medium);
+    height: var(--size-medium);
+    margin: 0 var(--size-x-small) 0 0;
+    position: relative;
+    min-width: var(--size-medium);
+    &--input {
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--color-neutral-70);
+      cursor: pointer;
+      margin: 0;
+      display: inline-block;
+      position: relative;
+      appearance: none;
+      border-radius: 50%;
+      background-color: var(--color-white);
+
+      &:focus, &:focus-visible {
+        outline: none;
+      }
+
+      &:checked {
+        & + .radio__wrapper--icon {
+          display: block;
+          pointer-events: none;
+        }
+        &[disabled] {
+          background-color: var(--color-neutral-60);
+        }
+      }
+
+      &[disabled] {
+        cursor: default;
+        border-color: var(--color-neutral-60);
+        background-color: var(--color-neutral-50);
+      }
+    }
+  }
+
+
+  &__context {
+
+    &--info {
+      @include context( var(--color-info-70), var(--color-info-80), var(--color-info-80) )
+    }
+
+    &--neutral {
+      @include context( var(--color-neutral-80), var(--color-neutral-90), var(--color-neutral-90) )
+    }
+
+    &--success {
+      @include context( var(--color-success-70), var(--color-success-80), var(--color-success-80) )
+    }
+
+    &--primary {
+      @include context(var(--color-primary-40), var(--color-primary-80), var(--color-primary-90));
+    }
+
+    &--secondary {
+      @include context(var(--color-secondary-40), var(--color-secondary-80), var(--color-secondary-90));
+    }
+
+    &--attention {
+      @include context(var(--color-attention-70), var(--color-attention-80), var(--color-attention-80));
+    }
+  }
+
+  &__disabled {
+    cursor: default;
+    pointer-events: none;
+    background-color: var(--color-white);
+    .text {
+      color: var(--color-neutral-70);
+    }
+  }
+}
+
+/*
+* =========
+* icon
+* =========
+ */
+.radio__wrapper--input:checked + .radio__wrapper--icon {
+  display: block;
+  pointer-events: none;
+}
+
+.radio .radio__wrapper--icon {
+  top: 50%;
+  left: 50%;
+  color: var(--color-white);
+  height: 0.8rem;
+  width: 0.8rem;
+  display: none;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  svg {
+    display: block;
+  }
+}
+
+/*
+* =========
+* variant
+* =========
+ */
+.radio__variant--regular {
+  .radio__wrapper {
+    width: var(--size-xx-regular);
+    height: var(--size-xx-regular);
+    min-width: var(--size-xx-regular);
+  }
+}
+
+.radio__variant--large {
+  .radio__wrapper {
+    width: var(--size-large);
+    height: var(--size-large);
+    min-width: var(--size-large);
+    &--icon {
+      width: var(--size-xx-regular);
+      height:  var(--size-xx-regular);
+      svg {
+        width: var(--size-xx-regular);
+        height:  var(--size-xx-regular);
+      }
+    }
+  }
+}
+
+/*
+* =========
+* error
+* =========
+ */
+.radio__error .radio__wrapper--input {
+  border-color: var(--color-error-80);
+}
+.radio__error .text {
+  color: var(--color-error-80);
+}

@@ -1,0 +1,60 @@
+@mixin focus(
+  $default-transition: null,
+  $has-within: false,
+  $overflow-border: false
+) {
+  /*
+   * Set the focusring appearance.
+   *
+   * It's possible to add component's transition and shadows as parameters to merge it in focus.
+   * Please include it after :hover and before overrides as it doesn't add any extra specifity.
+   */
+
+  outline-color: transparent;
+  outline-style: solid;
+  outline-width: 0;
+
+  --outline-color: #{#70a5ff};
+  --outline-width: 2px;
+  --outline-offset: 0;
+
+  @if ($overflow-border) {
+    --outline-width: 3px;
+    --outline-offset: -1px;
+  }
+
+  @if ($default-transition) {
+    transition: $default-transition, outline 0.2s ease-in-out;
+  } @else {
+    transition: outline 0.2s ease-in-out;
+  }
+
+  @if ($has-within) {
+    // Focus events inside this element
+    &:focus-within {
+      border-color: var(--outline-color);
+
+      outline-color: var(--outline-color);
+      outline-width: var(--outline-width);
+      outline-offset: var(--outline-offset);
+    }
+  } @else {
+    // Keyboard events (except on <input>)
+    &:focus-visible {
+      border-color: var(--outline-color);
+
+      outline-color: var(--outline-color);
+      outline-width: var(--outline-width);
+      outline-offset: var(--outline-offset);
+    }
+
+    // Mouse events
+    &:focus {
+      border-color: var(--outline-color);
+
+      outline-color: var(--outline-color);
+      outline-width: var(--outline-width);
+      outline-offset: var(--outline-offset);
+    }
+  }
+}

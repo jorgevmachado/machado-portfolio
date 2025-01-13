@@ -1,0 +1,50 @@
+{
+  "boxShadow": {
+    "$type": "shadow",
+    "sm": {
+      "$value": {
+        "color": "{color.black}",
+        "offsetX": "{size.none}",
+        "offsetY": "{size.xx.tiny}",
+        "blur": "{size.x.small}"
+      }
+    },
+    "lg": {
+      "$value": {
+        "color": "{color.black}",
+        "offsetX": "{size.none}",
+        "offsetY": "{size.tiny}",
+        "blur": "{size.regular}"
+      }
+    },
+    "multi": {
+      "$value": ["{boxShadow.sm}", "{boxShadow.lg}"]
+    },
+    "x": {
+      "small": {
+        "$value": "0px 8px 8px rgba(24, 39, 75, 0.08)"
+      },
+      "large": {
+        "$value": "0px 8px 24px -8px rgba(24, 39, 75, 0.12), 0px 8px 88px -4px rgba(24, 39, 75, 0.16)"
+      }
+    },
+    "small": {
+      "$value": "0px 8px 16px rgba(24, 39, 75, 0.08)"
+    },
+    "regular": {
+      "$value": "0px 8px 32px rgba(24, 39, 75, 0.16)"
+    },
+    "large": {
+      "$value": "0px 8px 24px -8px rgba(24, 39, 75, 0.12), 0px 8px 88px -4px rgba(24, 39, 75, 0.16)"
+    },
+    "enhancer-small": {
+      "$value": "0px 0px 10px rgba(0, 0, 0, 0.1)"
+    },
+    "enhancer-regular": {
+      "$value": "0px 0px 20px rgba(0, 0, 0, 0.1)"
+    },
+    "enhancer-large": {
+      "$value": "0px 0px 30px rgba(0, 0, 0, 0.15)"
+    }
+  }
+}

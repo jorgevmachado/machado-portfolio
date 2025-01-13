@@ -1,0 +1,36 @@
+.input-item {
+  display: flex;
+  position: relative;
+  align-items: stretch;
+  &__addon {
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    border: 1px solid var(--color-neutral-60);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: var(--color-neutral-50);
+  }
+  &__wrapper {
+    display: flex;
+    position: relative;
+    flex-grow: 1;
+    .icon {
+      top: 55%;
+      left: 1rem;
+      position: absolute;
+      transform: translate(0, -50%);
+    }
+    div, span {
+      top: 50%;
+      left: unset;
+      right: 1rem;
+      position: absolute;
+      transform: translate(0, -50%);
+    }
+    .input__item + .icon {
+      left: unset;
+      right: 1rem;
+    }
+  }
+}

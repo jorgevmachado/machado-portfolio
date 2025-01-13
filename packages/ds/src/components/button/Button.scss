@@ -1,0 +1,280 @@
+@import "../../styles/main";
+
+@mixin context($StrongLightColor, $MediumLightColor, $WeakLightColor, $WeakDarkColor, $StrongDarkColor) {
+  &.button {
+    border: 1px solid $WeakDarkColor;
+    background-color: $WeakDarkColor;
+
+    &:disabled {
+      color: var(--color-neutral-70);
+      cursor: not-allowed;
+      pointer-events: none;
+      border-color: var(--color-neutral-60);
+      background-color: var(--color-neutral-60);
+    }
+
+    &:hover:not(:focus) {
+      border: 1px solid $StrongLightColor;
+      background-color: $StrongLightColor;
+    }
+
+    &:active, &-selected {
+      border-color: $WeakLightColor;
+      background-color: $WeakLightColor;
+    }
+
+    &__appearance {
+      &--icon, &--no-icon-border {
+        &.button {
+          background-color: transparent;
+
+          &:not(:disabled) {
+            color: $WeakDarkColor;
+            border: none;
+          }
+
+          &:hover:not(:focus) {
+            background-color: $StrongLightColor;
+          }
+
+          &:active, &-selected {
+            color: var(--color-white);
+          }
+        }
+      }
+      &--icon {
+        &.button {
+          background-color: var(--color-white);
+
+          &:not(:disabled) {
+            border: 1px solid var(--color-neutral-60);
+          }
+
+          &:hover:not(:focus) {
+            border: 1px solid var(--color-neutral-60);
+            background-color: $StrongLightColor;
+          }
+        }
+      }
+      &--outline {
+        color: $WeakLightColor;
+        &.button {
+          background-color: transparent;
+          &:hover:not(:focus) {
+            background-color: $MediumLightColor;
+          }
+          &:active {
+            background-color: $MediumLightColor;
+          }
+        }
+      }
+      &--borderless {
+        &.button {
+          color: $WeakLightColor;
+          border: 1px solid transparent;
+          background-color: transparent;
+          &:hover:not(:focus) {
+            border-color: $MediumLightColor;
+            background-color: $MediumLightColor;
+          }
+
+          &:active {
+            border-color: $MediumLightColor;
+            background-color: $MediumLightColor;
+          }
+        }
+      }
+    }
+  }
+}
+
+.button {
+  color: var(--color-white);
+  cursor: pointer;
+  user-select: none;
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-large);
+  text-decoration: none;
+
+  &:disabled {
+    color: var(--color-neutral-70);
+    cursor: not-allowed;
+    pointer-events: none;
+    border-color: var(--color-neutral-60);
+    background-color: var(--color-neutral-60);
+  }
+
+  &__size {
+    &--small {
+      height: var(--size-xxx-large);
+      padding: 0 var(--size-medium);
+      line-height: var(--font-line-height-small);
+    }
+    &--medium {
+      height: var(--size-big);
+      padding: 0 var(--size-medium);
+      line-height: var(--font-line-height-small);
+    }
+    &--large {
+      height: var(--size-xx-big);
+      padding: 0 var(--size-medium);
+      line-height: var(--font-line-height-small);
+    }
+    &--big {
+      height: var(--size-xxx-big);
+      padding: 0 var(--size-medium);
+      line-height: var(--font-line-height-small);
+    }
+  }
+
+  &__fluid {
+    width: 100%;
+  }
+
+  &__focus {
+    @include focus;
+  }
+
+  &__weight{
+    &--normal {
+      font-weight: var(--font-weight-normal);
+    }
+    &--medium {
+      font-weight: var(--font-weight-medium);
+    }
+    &--semibold {
+      font-weight: var(--font-weight-semi-bold);
+    }
+    &--bold {
+      font-weight: var(--font-weight-bold);
+    }
+  }
+
+  &__rounded {
+    border-radius: var(--border-radius-rounded);
+  }
+
+  &__no-label {
+    padding: 0;
+    border-radius: var(--size-x-small);
+  }
+
+  &__appearance {
+    &--icon,
+    &--no-icon-border {
+      display: flex;
+      width: var(--size-big);
+      height: var(--size-big);
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-white);
+    }
+    &--outline {
+      background-color: transparent;
+    }
+    &--borderless {
+      border: 1px solid transparent;
+      background-color: transparent;
+    }
+  }
+
+  &__icon--position{
+    &-left {
+      margin-top: var(--size-xx-tiny);
+      margin-right: var(--size-tiny);
+    }
+    &-right {
+      margin-top: var(--size-xx-tiny);
+      margin-left: var(--size-tiny);
+    }
+  }
+
+  &__content {
+    display: flex;
+    &--notification {
+      gap: 11rem;
+      width: auto;
+      display: flex;
+      justify-content: space-between;
+      margin-left: var(--size-tiny);
+      &-counter {
+        display: flex;
+        width: var(--size-medium);
+        height: var(--size-medium);
+        font-size: var(--font-size-small);
+        font-weight: var(--font-weight-medium);
+        align-items: center;
+        border-radius: 50%;
+        justify-content: center;
+      }
+      @media screen and (min-width: var(--breakpoints-md)) {
+        gap: 6rem;
+      }
+    }
+  }
+}
+
+.button__context--info {
+  @include context(
+                  var(--color-info-70),
+                  var(--color-info-60),
+                  var(--color-info-70),
+                  var(--color-info-80),
+                  var(--color-info-80)
+  );
+}
+.button__context--error {
+  @include context(
+                  var(--color-error-70),
+                  var(--color-error-60),
+                  var(--color-error-70),
+                  var(--color-error-80),
+                  var(--color-error-80)
+  );
+}
+.button__context--neutral {
+  @include context(
+                  var(--color-neutral-90),
+                  var(--color-neutral-60),
+                  var(--color-neutral-90),
+                  var(--color-neutral-80),
+                  var(--color-neutral-80)
+  );
+}
+.button__context--success {
+  @include context(
+                  var(--color-success-70),
+                  var(--color-success-60),
+                  var(--color-success-70),
+                  var(--color-success-80),
+                  var(--color-success-80)
+  );
+}
+.button__context--primary {
+  @include context(
+                  var(--color-primary-60),
+                  var(--color-primary-50),
+                  var(--color-primary-80),
+                  var(--color-primary-90),
+                  var(--color-primary-100)
+  );
+}
+.button__context--secondary {
+  @include context(
+                  var(--color-secondary-60),
+                  var(--color-secondary-50),
+                  var(--color-secondary-80),
+                  var(--color-secondary-90),
+                  var(--color-secondary-100)
+  );
+}
+.button__context--attention {
+  @include context(
+                  var(--color-attention-70),
+                  var(--color-attention-60),
+                  var(--color-attention-70),
+                  var(--color-attention-80),
+                  var(--color-attention-80)
+  );
+}

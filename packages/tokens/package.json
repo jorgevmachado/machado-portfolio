@@ -1,0 +1,13 @@
+{
+  "name": "@repo/tokens",
+  "version": "0.0.1",
+  "main": "index.js",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf build && node config.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.3.0"
+  }
+}

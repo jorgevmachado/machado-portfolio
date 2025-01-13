@@ -1,0 +1,137 @@
+@import "../../styles/main";
+
+@mixin context($WeakColor, $MediumColor, $StrongColor) {
+  color: $WeakColor;
+
+  &:hover {
+    color: $MediumColor;
+  }
+
+  &:active {
+    color: $StrongColor;
+  }
+}
+
+.link {
+  cursor: pointer;
+  border: none;
+  display: inline-block;
+  background: none;
+  outline-offset: var(--size-xx-tiny);
+
+  &:focus:not(:focus-visible) {
+    outline-style: none;
+  }
+
+  &__size {
+    &--small {
+      font-size: var(--font-size-small);
+    }
+    &--medium {
+      font-size: var(--font-size-medium);
+    }
+    &--large {
+      font-size: var(--font-size-large);
+    }
+    &--big {
+      font-size: var(--font-size-big);
+    }
+  }
+
+  &__weight{
+    &--normal {
+      font-weight: var(--font-weight-normal);
+    }
+    &--medium {
+      font-weight: var(--font-weight-medium);
+    }
+    &--semibold {
+      font-weight: var(--font-weight-semi-bold);
+    }
+    &--bold {
+      font-weight: var(--font-weight-bold);
+    }
+  }
+
+  &__icon--position{
+    &-left {
+      margin-top: var(--size-xx-tiny);
+      margin-right: var(--size-x-tiny);
+    }
+    &-right {
+      margin-top: var(--size-xx-tiny);
+      margin-left: var(--size-x-tiny);
+    }
+  }
+
+  &__content {
+    display: flex;
+    &--notification {
+      gap: 11rem;
+      width: auto;
+      display: flex;
+      justify-content: space-between;
+      margin-left: var(--size-x-tiny);
+      &-counter {
+        display: flex;
+        width: var(--size-medium);
+        height: var(--size-medium);
+        font-size: var(--font-size-small);
+        font-weight: 500;
+        align-items: center;
+        border-radius: 50%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.link__context--info {
+  @include context(
+                  var(--color-info-70),
+                  var(--color-info-80),
+                  var(--color-info-90)
+  );
+}
+.link__context--error {
+  @include context(
+                  var(--color-error-70),
+                  var(--color-error-80),
+                  var(--color-error-90)
+  );
+}
+.link__context--neutral {
+  @include context(
+                  var(--color-neutral-80),
+                  var(--color-neutral-90),
+                  var(--color-neutral-100)
+  );
+}
+.link__context--success {
+  @include context(
+                  var(--color-success-70),
+                  var(--color-success-80),
+                  var(--color-success-90)
+  );
+}
+.link__context--primary {
+  @include context(
+                  var(--color-primary-70),
+                  var(--color-primary-80),
+                  var(--color-primary-90)
+  );
+}
+.link__context--secondary {
+  @include context(
+                  var(--color-secondary-70),
+                  var(--color-secondary-80),
+                  var(--color-secondary-90)
+  );
+}
+.link__context--attention {
+  @include context(
+                  var(--color-attention-70),
+                  var(--color-attention-80),
+                  var(--color-attention-90)
+  );
+}

@@ -1,0 +1,21 @@
+@import "../../styles/main";
+
+.rating {
+  &__rate {
+    color: var(--color-neutral-80);
+    margin-left: var(--size-xx-tiny);
+  }
+  &__informations {
+    gap: var(--size-tiny);
+    display: flex;
+    margin-top: var(--size-tiny);
+    align-items: center;
+    &--count {
+      font-size: var(--size-small);
+      font-weight: var(--font-weight-bold);
+    }
+    &--icon {
+      margin-right: var(--size-tiny);
+    }
+  }
+}

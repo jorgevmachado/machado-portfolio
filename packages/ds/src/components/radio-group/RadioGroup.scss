@@ -1,0 +1,125 @@
+@import "../../styles/main";
+
+@mixin context($outlineColor, $selectedColor) {
+  .radio-group__container--button {
+    &:focus,
+    &:hover {
+      outline: none;
+      box-shadow: 0 0 0 1px $outlineColor inset;
+
+      &:nth-of-type(n + 2) {
+        border-left-width: 0;
+      }
+    }
+
+    &-selected {
+      box-shadow: 0 0 0 1px $outlineColor inset;
+
+      &:hover {
+        box-shadow: 0 0 0 1px $selectedColor inset;
+      }
+
+      &:focus {
+        border-color: $selectedColor;
+      }
+    }
+  }
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+
+  &__fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+  }
+
+  &__container {
+    display: flex;
+    &--input {
+      appearance: none;
+    }
+    &--button {
+      width: 222px;
+      display: inline-flex;
+      padding: var(--size-fixed-regular);
+      position: relative;
+      align-items: center;
+      border-radius: var(--border-radius-regular);
+      justify-content: center;
+
+      &#{&} {
+        border-width: 1px;
+      }
+
+      &:nth-of-type(n + 2) {
+        border-left-width: 0;
+      }
+
+      &:nth-of-type(n + 2):nth-last-of-type(n + 2) {
+        border-radius: 0;
+      }
+
+      &:first-of-type {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:last-of-type {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &-error:not(:disabled) {
+        color: var(--color-error-100);
+        border-color: var(--color-error-100);
+
+        &:focus {
+          box-shadow: 0 0 0 1px var(--color-error-100) inset;
+        }
+
+        &:hover {
+          border-color: var(--color-error-100);
+          box-shadow: 0 0 0 1px var(--color-error-100) inset;
+          background: var(--color-error-80);
+        }
+      }
+    }
+  }
+
+  &__appearance--range &__container--button {
+    width: 58px;
+
+    &:hover:not(:focus) {
+      border-width: 1px;
+    }
+  }
+
+  &__context {
+    &--info {
+      @include context(var(--color-info-80), var(--color-info-80));
+    }
+    &--error {
+      @include context(var(--color-error-80), var(--color-error-80));
+    }
+    &--neutral {
+      @include context(var(--color-neutral-80), var(--color-neutral-80));
+    }
+    &--success {
+      @include context(var(--color-success-80), var(--color-success-80));
+    }
+    &--primary {
+      @include context(var(--color-primary-80), var(--color-primary-80));
+    }
+    &--secondary {
+      @include context(var(--color-secondary-80), var(--color-secondary-80));
+    }
+    &--attention {
+      @include context(var(--color-attention-80), var(--color-attention-80));
+    }
+  }
+
+}

@@ -1,0 +1,116 @@
+{
+  "size": {
+    "fixed": {
+      "$type": "size",
+      "none": {
+        "$value": "{dimensions.none}"
+      },
+      "x": {
+        "tiny": {
+          "$value": "{dimensions.fixed.2}",
+          "comment": "0.125rem if 1rem = 16px"
+        },
+        "small": {
+          "$value": "{dimensions.fixed.12}",
+          "comment": "0.75rem if 1rem = 16px"
+        },
+        "regular": {
+          "$value": "{dimensions.fixed.18}",
+          "comment": "1.125rem if 1rem = 16px"
+        },
+        "medium": {
+          "$value": "{dimensions.fixed.26}",
+          "comment": "1.625rem if 1rem = 16px"
+        },
+        "large": {
+          "$value": "{dimensions.fixed.36}",
+          "comment": "2.25rem if 1rem = 16px"
+        },
+        "big": {
+          "$value": "{dimensions.fixed.52}",
+          "comment": "3.25rem if 1rem = 16px"
+        },
+        "huge": {
+          "$value": "{dimensions.fixed.68}",
+          "comment": "4.25rem if 1rem = 16px"
+        }
+      },
+      "xx": {
+        "tiny": {
+          "$value": "{dimensions.fixed.4}",
+          "comment": "0.25rem if 1rem = 16px"
+        },
+        "small": {
+          "$value": "{dimensions.fixed.10}",
+          "comment": "0.625rem if 1rem = 16px"
+        },
+        "regular": {
+          "$value": "{dimensions.fixed.20}",
+          "comment": "1.25rem if 1rem = 16px"
+        },
+        "medium": {
+          "$value": "{dimensions.fixed.28}",
+          "comment": "1.75rem if 1rem = 16px"
+        },
+        "large": {
+          "$value": "{dimensions.fixed.40}",
+          "comment": "2.5rem if 1rem = 16px"
+        },
+        "big": {
+          "$value": "{dimensions.fixed.56}",
+          "comment": "3.5rem if 1rem = 16px"
+        },
+        "huge": {
+          "$value": "{dimensions.fixed.72}",
+          "comment": "4.5rem if 1rem = 16px"
+        }
+      },
+      "xxx": {
+        "large": {
+          "$value": "{dimensions.fixed.44}",
+          "comment": "2.75rem if 1rem = 16px"
+        },
+        "big": {
+          "$value": "{dimensions.fixed.60}",
+          "comment": "3.75rem if 1rem = 16px"
+        }
+      },
+      "tiny": {
+        "$value": "{dimensions.fixed.8}",
+        "comment": "0.5rem if 1rem = 16px"
+      },
+      "small": {
+        "$value": "{dimensions.fixed.14}",
+        "comment": "0.875rem if 1rem = 16px"
+      },
+      "regular": {
+        "$value": "{dimensions.fixed.16}",
+        "comment": "1rem if 1rem = 16px"
+      },
+      "medium": {
+        "$value": "{dimensions.fixed.24}",
+        "comment": "1.5rem if 1rem = 16px"
+      },
+      "large": {
+        "$value": "{dimensions.fixed.32}",
+        "comment": "2rem if 1rem = 16px"
+      },
+      "big": {
+        "$value": "{dimensions.fixed.48}",
+        "comment": "3rem if 1rem = 16px"
+      },
+      "huge": {
+        "$value": "{dimensions.fixed.64}",
+        "comment": "4rem if 1rem = 16px"
+      },
+      "giant": {
+        "$value": "{dimensions.fixed.80}",
+        "comment": "5rem if 1rem = 16px"
+      },
+      "max": {
+        "$value": "{dimensions.max}",
+        "comment": "9999px if 1rem = 16px"
+      }
+    }
+  }
+}

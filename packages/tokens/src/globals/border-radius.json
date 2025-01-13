@@ -1,0 +1,22 @@
+{
+  "border": {
+    "radius": {
+      "$type": "borderRadius",
+      "small": {
+        "$value": "4px"
+      },
+      "regular": {
+        "$value": "8px"
+      },
+      "large": {
+        "$value": "12px"
+      },
+      "rounded": {
+        "$value": "26px"
+      },
+      "circle": {
+        "$value": "50%"
+      }
+    }
+  }
+}

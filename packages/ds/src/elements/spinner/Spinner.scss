@@ -1,0 +1,39 @@
+@import "../../styles/main";
+
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    animation: spin 1s linear infinite;
+  }
+
+  &__context--info {
+    color: var(--color-info-80);
+  }
+  &__context--error {
+    color: var(--color-error-80);
+  }
+  &__context--neutral {
+    color: var(--color-neutral-80);
+  }
+  &__context--success {
+    color: var(--color-success-80);
+  }
+  &__context--primary {
+    color: var(--color-primary-100);
+  }
+  &__context--secondary {
+    color: var(--color-secondary-100);
+  }
+  &__context--attention {
+    color: var(--color-attention-80);
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

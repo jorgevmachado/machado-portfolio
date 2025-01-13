@@ -1,0 +1,63 @@
+$colors: (
+        "focus": var(--color-focus),
+        "black": var(--color-black),
+        "white": var(--color-white),
+        "primary-40": var(--color-primary-40),
+        "primary-50": var(--color-primary-50),
+        "primary-60": var(--color-primary-60),
+        "primary-70": var(--color-primary-70),
+        "primary-80": var(--color-primary-80),
+        "primary-90": var(--color-primary-90),
+        "primary-100": var(--color-primary-100),
+        "secondary-40": var(--color-secondary-40),
+        "secondary-50": var(--color-secondary-50),
+        "secondary-60": var(--color-secondary-60),
+        "secondary-70": var(--color-secondary-70),
+        "secondary-80": var(--color-secondary-80),
+        "secondary-90": var(--color-secondary-90),
+        "secondary-100": var(--color-secondary-100),
+        "info-60": var(--color-info-60),
+        "info-70": var(--color-info-70),
+        "info-80": var(--color-info-80),
+        "info-90": var(--color-info-90),
+        "info-100": var(--color-info-100),
+        "error-60": var(--color-error-60),
+        "error-70": var(--color-error-70),
+        "error-80": var(--color-error-80),
+        "error-90": var(--color-error-90),
+        "error-100": var(--color-error-100),
+        "neutral-50": var(--color-neutral-50),
+        "neutral-60": var(--color-neutral-60),
+        "neutral-70": var(--color-neutral-70),
+        "neutral-80": var(--color-neutral-80),
+        "neutral-90": var(--color-neutral-90),
+        "neutral-100": var(--color-neutral-100),
+        "success-60": var(--color-success-60),
+        "success-70": var(--color-success-70),
+        "success-80": var(--color-success-80),
+        "success-90": var(--color-success-90),
+        "success-100": var(--color-success-100),
+        "attention-60": var(--color-attention-60),
+        "attention-70": var(--color-attention-70),
+        "attention-80": var(--color-attention-80),
+        "attention-90": var(--color-attention-90),
+        "attention-100": var(--color-attention-100),
+        "google-80": var(--color-social-google-80),
+        "google-90": var(--color-social-google-90),
+        "google-100": var(--color-social-google-100),
+        "facebook-80": var(--color-social-facebook-80),
+        "facebook-90": var(--color-social-facebook-90),
+        "facebook-100": var(--color-social-facebook-100),
+        "whatsapp-80": var(--color-social-whatsapp-80),
+        "whatsapp-90": var(--color-social-whatsapp-90),
+        "whatsapp-100": var(--color-social-whatsapp-100),
+);
+
+@each $name, $value in $colors {
+  .ds-color-#{$name} {
+    color: $value;
+  }
+  .ds-bg-#{$name} {
+    background-color: $value;
+  }
+}

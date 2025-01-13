@@ -1,0 +1,12 @@
+@import "../../styles/main";
+
+.collapse {
+  &__content {
+    @include line-overflow(3);
+    margin: var(--dimensions-tiny);
+    .collapse__expanded & {
+      -webkit-line-clamp: initial;
+      max-height: none;
+    }
+  }
+}

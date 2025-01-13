@@ -17,7 +17,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@repo/services": "*",
-    "@repo/business": "*"
+    "@repo/business": "*",
+    "@repo/tokens": "*",
+    "@repo/ds": "*"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
