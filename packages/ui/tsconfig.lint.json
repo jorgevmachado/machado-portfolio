@@ -3,6 +3,6 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-  "include": ["src", "turbo"],
+  "include": ["src", "turbo", "eslint.config.mjs"],
   "exclude": ["node_modules", "dist"]
 }
