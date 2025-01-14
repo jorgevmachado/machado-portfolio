@@ -2,7 +2,7 @@
 import Button from '@repo/ds/components/button/Button';
 import Link from 'next/link';
 
-export default function Page() {
+export default function Home() {
   return (
     <main>
       <h1>WEB PAGE</h1>
