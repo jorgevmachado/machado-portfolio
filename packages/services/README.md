@@ -17,4 +17,9 @@
 ```
     npm run test -- --findRelatedTests src/cookies/cookies.spec.ts               
 ```
+### http
+```
+    npm run test -- --findRelatedTests src/http/http.spec.ts               
+```
+
 
