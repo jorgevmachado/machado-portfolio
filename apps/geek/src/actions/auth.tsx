@@ -7,8 +7,11 @@ export type FormState =
   | undefined;
 
 export async function signup(state: FormState, formData: FormData) {
+  const email = formData.get('email');
+  const password = formData.get('password');
   console.log('signUp => state => ', state);
-  console.log('signUp => formData => ', formData);
+  console.log('signUp => formData => email => ', email);
+  console.log('signUp => formData => password => ', password);
 
   return {
     error: 'error',

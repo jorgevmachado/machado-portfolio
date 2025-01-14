@@ -8,10 +8,6 @@ class Cookies {
       ?.split('=')[1];
   }
 
-  public remove(key: string, domain: string) {
-    return (document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain}`);
-  }
-
   public set(
     key: string,
     value: string,
@@ -21,6 +17,10 @@ class Cookies {
     const date = new Date();
     date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000);
     return (document.cookie = `${key}=${value}; expires=${date.toUTCString()}; path=/; domain=${domain}`);
+  }
+
+  public remove(key: string, domain: string) {
+    return (document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain}`);
   }
 }
 
