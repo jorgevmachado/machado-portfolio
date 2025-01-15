@@ -18,6 +18,7 @@ export interface OptionsProps {
 }
 
 export interface RadioGroupProps extends React.HTMLAttributes<Element> {
+  name?: string;
   label?: string;
   options: Array<OptionsProps>;
   context?: TContext;
@@ -31,6 +32,8 @@ export interface RadioGroupProps extends React.HTMLAttributes<Element> {
 }
 
 export default function RadioGroup({
+  id,
+  name,
   label,
   options,
   context = 'neutral',
@@ -43,7 +46,8 @@ export default function RadioGroup({
   requiredMessage,
   ...props
 }: RadioGroupProps) {
-  const componentId = useGenerateComponentId('radio-group');
+  const generated = useGenerateComponentId('radio-group-');
+  const componentId = id ?? generated;
 
   const convertCurrentValueOfArray = () => {
     const convertCurrentValue: string | Array<string | number> =
@@ -104,7 +108,7 @@ export default function RadioGroup({
             id={`input--${componentId}--${value}`}
             key={`input--${componentId}--${value}`}
             type="radio"
-            name="id"
+            name={name}
             value={value}
             checked={isSelectedItem(value)}
             onChange={() => {}}

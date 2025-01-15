@@ -45,6 +45,8 @@ export async function signUp(prevState: SignUpFormState, formData: FormData) {
     passwordConfirmation: formData.get('passwordConfirmation')?.toString(),
   };
 
+  console.log('# => fields => gender => ', fields.gender);
+
   const state = validateSignUp(fields);
 
   if (!state?.valid) {

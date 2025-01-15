@@ -1,10 +1,12 @@
 'use client';
-import { useActionState, useEffect } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import formatter from '@repo/services/formatter/formatter';
 import validator from '@repo/services/validator/validator';
+
+import { EGender } from '@repo/business/api/nest/enum';
 
 import Button from '@repo/ds/components/button/Button';
 
@@ -14,9 +16,11 @@ import Input from '@repo/ui/components/input/Input';
 import { signUp } from '../../actions';
 
 import './SignUp.scss';
+import RadioGroup from '@repo/ds/components/radio-group/RadioGroup';
 
 export default function SignUp() {
   const [state, action, pending] = useActionState(signUp, undefined);
+  const [gender, setGender] = useState<string>('');
 
   const router = useRouter();
 
@@ -62,14 +66,26 @@ export default function SignUp() {
             placeholder="Enter your Fullname"
           />
         </div>
-        <div>
-          <Input
+        <div className="sign-up__form--radio-group">
+          <RadioGroup
             id="gender"
             name="gender"
             label="Gender"
+            options={[
+              {
+                label: 'Male',
+                value: EGender.MALE,
+              },
+              {
+                label: 'Female',
+                value: EGender.FEMALE,
+              },
+            ]}
             context="primary"
-            validate={validator.gender}
-            placeholder="Enter yourGender"
+            appearance="standard"
+            modelValue={gender}
+            onClick={(event) => event.preventDefault()}
+            onActionClick={(value) => setGender(value as EGender)}
           />
         </div>
         <div>

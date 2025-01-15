@@ -9,5 +9,15 @@
     width: Calc(25vw - 10px);
     display: flex;
     flex-direction: column;
+    &--radio-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      fieldset {
+        .label {
+          margin-left: var(--dimensions-relative-16);
+        }
+      }
+    }
   }
 }

@@ -33,7 +33,8 @@ export const InputPassword: Story = {
     type: 'password',
     label: 'Password',
     placeholder: 'Password',
-    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     validate: (value?: string) => {
       if (!value) {
         return {
