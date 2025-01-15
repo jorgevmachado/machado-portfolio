@@ -17,6 +17,7 @@ export default function Input({
   id,
   tip,
   rows,
+  name,
   type = 'text',
   addon,
   value,
@@ -159,6 +160,7 @@ export default function Input({
       <InputItem
         type={type}
         rows={rows}
+        name={name}
         value={currentInputValue}
         addon={addon}
         onBlur={onBlurHandler}

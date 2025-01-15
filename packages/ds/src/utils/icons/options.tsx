@@ -22,6 +22,8 @@ import {
   IoIosStarHalf,
   IoIosStarOutline,
   IoMdExit,
+  IoMdEye,
+  IoMdEyeOff,
 } from 'react-icons/io';
 import {
   MdOutlineArrowDropDown,
@@ -42,6 +44,7 @@ import type { TIcon, TIconPosition } from './interface';
 export const OIconPosition: Array<TIconPosition> = ['left', 'right'];
 
 export const OIcon: Array<TIcon> = [
+  'eye',
   'user',
   'lamp',
   'star',
@@ -63,6 +66,7 @@ export const OIcon: Array<TIcon> = [
   'document',
   'star-half',
   'hamburger',
+  'eye-close',
   'arrow-down',
   'arrow-right',
   'star-filled',
@@ -70,6 +74,8 @@ export const OIcon: Array<TIcon> = [
 
 export function getIcon(icon: TIcon, size?: string | number, color?: TColors) {
   switch (icon) {
+    case 'eye':
+      return <IoMdEye size={size || '1em'} color={color} />;
     case 'user':
       return <CiUser size={size || '1em'} color={color} />;
     case 'lamp':
@@ -113,6 +119,8 @@ export function getIcon(icon: TIcon, size?: string | number, color?: TColors) {
       return <MdOutlineSpaceDashboard size={size || '1em'} color={color} />;
     case 'hamburger':
       return <FaHamburger size={size || '1em'} color={color} />;
+    case 'eye-close':
+      return <IoMdEyeOff size={size || '1em'} color={color} />;
     case 'arrow-down':
       return <MdOutlineArrowDropDown size={size || '1em'} color={color} />;
     case 'arrow-right':

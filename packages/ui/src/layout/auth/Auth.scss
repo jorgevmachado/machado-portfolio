@@ -3,88 +3,10 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-
   &__description {
     width: 20rem;
     display: flex;
     text-align: center;
     line-height: var(--font-line-height-small);
-  }
-
-  &__social {
-    gap: 1rem;
-    display: flex;
-    flex-direction: column;
-
-    &--google {
-      .button__context--primary.button {
-        background-color: var(--color-social-google-90);
-      }
-      .button__icon--position-left {
-        margin-top: 0;
-      }
-    }
-
-    &--facebook {
-      .button__context--primary.button {
-        background-color: var(--color-social-facebook-90);
-      }
-      .button__icon--position-left {
-        margin-top: 0;
-      }
-    }
-
-    &--internal {
-      width: 100%;
-      padding: 0;
-      &-text {
-        position: relative;
-        border-radius: 2px;
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        box-sizing: border-box;
-        border: none;
-        flex-wrap: wrap;
-        max-width: 400px;
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.54);
-        margin-bottom: 24px;
-        text-align: center;
-        span {
-          background: #fff;
-          z-index: 1;
-          position: relative;
-          padding: 0 16px;
-          text-transform: lowercase;
-          color: #979797;
-        }
-      }
-      &:after {
-        border-top: 1px solid rgba(0, 0, 0, 0.38);
-        position: absolute;
-        content: "";
-        left: 20rem;
-        right: 20rem;
-        top: 27.5rem;
-      }
-    }
-  }
-
-  &__action {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    &--signIn,
-    &--signUp,
-    &--forgot-password {
-      gap: 8px;
-      display: flex;
-      text-align: center;
-      align-items: center;
-      flex-direction: row;
-      justify-content: center;
-    }
   }
 }

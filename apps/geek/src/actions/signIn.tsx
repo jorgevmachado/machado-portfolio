@@ -1,8 +1,14 @@
+'use server';
 import { ValidatorMessage } from '@repo/services/validator/interface';
 import validator from '@repo/services/validator/validator';
 
-export type FormState =
+export type SignInFormState =
   | {
+      valid: boolean;
+      fields: {
+        email?: string;
+        password?: string;
+      };
       errors?: {
         email?: ValidatorMessage;
         password?: ValidatorMessage;
@@ -11,23 +17,41 @@ export type FormState =
     }
   | undefined;
 
-export async function signup(state: FormState, formData: FormData) {
+export async function signIn(prevState: SignInFormState, formData: FormData) {
   const email = formData.get('email')?.toString();
   const password = formData.get('password')?.toString();
-  const invalidate = validateSignup(email, password);
+  const invalidate = validateSignIn(email, password);
+
   if (invalidate) {
-    return invalidate;
+    prevState = invalidate;
+    return prevState;
   }
-  return invalidate;
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  prevState = {
+    valid: true,
+    fields: {
+      email,
+      password,
+    },
+    errors: undefined,
+    message: 'Sign up successfully!',
+  };
+  return prevState;
 }
 
-function validateSignup(email?: string, password?: string): FormState {
+function validateSignIn(email?: string, password?: string): SignInFormState {
   const validEmail = validator.email(email);
   const validPassword = validator.password(password);
   if (validEmail.valid && validPassword.valid) {
     return;
   }
   return {
+    valid: false,
+    fields: {
+      email,
+      password,
+    },
     errors: {
       email: validEmail,
       password: validPassword,

@@ -7,6 +7,7 @@ import Icon from '../../elements/icon';
 import type { ButtonProps } from './interface';
 
 import './Button.scss';
+import { Spinner } from '../../elements';
 
 export default function Button({
   icon,
@@ -14,6 +15,7 @@ export default function Button({
   fluid,
   focus = false,
   weight = 'normal',
+  loading,
   rounded,
   context = 'neutral',
   children,
@@ -23,6 +25,7 @@ export default function Button({
   noIconBorder,
   iconPosition = 'left',
   iconClassName,
+  loadingContext,
   notificationColor,
   notificationCounter,
   notificationClassName,
@@ -67,7 +70,7 @@ export default function Button({
   ]);
 
   return (
-    <button {...props} disabled={disabled} className={classNameList}>
+    <button {...props} disabled={disabled || loading} className={classNameList}>
       {!isAppearanceIconButton ? (
         <div className="button__content">
           {icon && iconPosition === 'left' && (
@@ -87,6 +90,13 @@ export default function Button({
           </>
           {icon && iconPosition === 'right' && (
             <Icon icon={icon} size={iconSize} className={iconClassNameList} />
+          )}
+          {loading && (
+            <Spinner
+              size={16}
+              context={loadingContext ?? context}
+              className="button__loading"
+            />
           )}
         </div>
       ) : (

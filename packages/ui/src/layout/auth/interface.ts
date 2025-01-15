@@ -7,7 +7,9 @@ import { TContext } from '@repo/ds/utils/colors/interface';
 export type TAuth = 'signUp' | 'signIn' | 'update' | 'forgotPassword';
 
 export interface LogoProps {
-  url: string;
+  src: string;
+  alt?: string;
+  title?: string;
   width?: string;
   height?: string;
 }
@@ -17,6 +19,11 @@ export interface AuthLink {
   label: string;
   context?: TContext;
   clickAction: () => void;
+}
+
+export interface AuthSocial
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  label: string;
 }
 
 export interface OnAuthSubmit {
@@ -36,19 +43,15 @@ export interface OnAuthSubmit {
   messages: Array<string>;
 }
 
-export interface AuthProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit'> {
+export interface AuthProps extends React.HTMLAttributes<HTMLDivElement> {
   user?: User;
-  type: TAuth;
   logo?: LogoProps;
   title?: string;
   context?: TContext;
-  onSubmit?: (onSubmit: OnAuthSubmit) => void;
+  googleAuth?: AuthSocial;
   signUpLink?: AuthLink;
   signInLink?: AuthLink;
   description?: string;
-  buttonLabel?: string;
-  withGoogleAuth?: boolean;
-  withFacebookAuth?: boolean;
+  facebookAuth?: AuthSocial;
   forgotPasswordLink?: AuthLink;
 }

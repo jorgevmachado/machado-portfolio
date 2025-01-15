@@ -1,0 +1,16 @@
+import { Meta, IconGallery, IconItem } from '@storybook/blocks';
+
+import IconExample from './elements/icon/Icon';
+import {OIcon} from "./utils";
+
+<Meta title="Iconography" />
+
+# Iconography
+
+<IconGallery>
+    {OIcon.map((icon) => (
+        <IconItem name={icon}>
+            <IconExample icon={icon} size="2rem" color="primary-100"/>
+        </IconItem>
+    ))}
+</IconGallery>

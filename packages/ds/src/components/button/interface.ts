@@ -21,6 +21,7 @@ export interface ButtonProps
   fluid?: boolean;
   focus?: boolean;
   weight?: TWeight;
+  loading?: boolean;
   rounded?: boolean;
   context?: TContext;
   children?: React.ReactNode;
@@ -30,6 +31,7 @@ export interface ButtonProps
   noIconBorder?: boolean;
   iconPosition?: TIconPosition;
   iconClassName?: string;
+  loadingContext?: TContext;
   notificationColor?: TColors;
   notificationCounter?: number;
   notificationClassName?: string;

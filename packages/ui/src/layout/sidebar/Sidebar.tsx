@@ -10,7 +10,7 @@ import joinClass from '@repo/ds/utils/join-class/joinClass';
 
 import { Menu } from '../../utils/menu';
 
-import Profile from '../profile';
+import Profile from '../../layout/profile';
 
 import SidebarAction from './SidebarAction';
 

@@ -16,6 +16,7 @@ const meta = {
     fluid: false,
     focus: false,
     weight: 'normal',
+    loading: false,
     rounded: false,
     context: 'neutral',
     children: 'Hello, World!',
@@ -24,6 +25,7 @@ const meta = {
     noIconBorder: false,
     iconPosition: 'left',
     iconClassName: undefined,
+    loadingContext: undefined,
     notificationColor: undefined,
     notificationCounter: undefined,
     notificationClassName: undefined,
@@ -68,6 +70,13 @@ const meta = {
       },
       options: OWeight,
       control: { type: 'radio' },
+    },
+    loading: {
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+      control: { type: 'boolean' },
     },
     rounded: {
       table: {
@@ -120,6 +129,14 @@ const meta = {
         defaultValue: { summary: '' },
       },
       control: { type: 'text' },
+    },
+    loadingContext: {
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'primary' },
+      },
+      options: OContext,
+      control: { type: 'select' },
     },
     notificationColor: {
       table: {

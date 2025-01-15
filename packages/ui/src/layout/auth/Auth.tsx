@@ -1,51 +1,38 @@
 import React from 'react';
 
-import joinClass from '@repo/ds/utils/join-class/joinClass';
-
-import Button from '@repo/ds/components/button/Button';
 import Image from '@repo/ds/elements/image/Image';
 import Text from '@repo/ds/elements/text/Text';
 
 import { AuthProps } from './interface';
-
-import Form from './Form/Form';
-
-import ActionLink from './ActionLink';
+import Links from './Links';
+import Socials from './Socials';
 
 import './Auth.scss';
+import joinClass from '@repo/ds/utils/join-class/joinClass';
 
 export default function Auth({
-  user,
-  type,
   logo,
   title,
+  children,
   context = 'neutral',
-  onSubmit,
+  googleAuth,
   signUpLink,
   signInLink,
   description,
-  buttonLabel = 'Register',
-  withGoogleAuth,
-  withFacebookAuth,
+  facebookAuth,
   forgotPasswordLink,
   ...props
 }: AuthProps) {
-  const hasSocialAuth = withGoogleAuth || withFacebookAuth;
-
-  const isSignIn = type === 'signIn';
-  const isSignUp = type === 'signUp';
-  const isUpdate = type === 'update';
-  const isForgotPassword = type === 'forgotPassword';
-
-  const classNameList = joinClass(['auth', `auth__type--${type}`]);
-
+  const hasSocialAuth = googleAuth || facebookAuth;
+  const hasLink = signInLink || signUpLink || forgotPasswordLink;
+  const classNameList = joinClass(['auth', `${props.className ?? ''}`]);
   return (
     <div {...props} className={classNameList}>
       {logo && (
         <Image
-          src={logo.url}
-          alt="auth logo"
-          title="auth logo"
+          src={logo.src}
+          alt={logo.alt ?? 'auth logo'}
+          title={logo.title ?? 'auth logo'}
           style={{
             width: logo.width ?? '15rem',
             height: logo.height ?? '5rem',
@@ -62,65 +49,18 @@ export default function Auth({
           {description}
         </Text>
       )}
-      {hasSocialAuth && !isUpdate && !isForgotPassword && (
-        <div className="auth__social">
-          {withGoogleAuth && (
-            <div className="auth__social--google">
-              <Button icon="google" fluid context="primary">
-                {isSignIn ? 'SignIn with Google' : 'SignUp with Google'}
-              </Button>
-            </div>
-          )}
-          {withFacebookAuth && (
-            <div className="auth__social--facebook">
-              <Button icon="facebook" fluid context="primary">
-                {isSignIn ? 'SignIn with Facebook' : 'SignUp with Facebook'}
-              </Button>
-            </div>
-          )}
-          {onSubmit && !isUpdate && (
-            <div className="auth__social--internal">
-              <Text className="auth__social--internal-text">
-                {`Or ${isSignIn ? 'register' : 'sign up'}  with your email`}
-              </Text>
-            </div>
-          )}
-        </div>
+      {hasSocialAuth && (
+        <Socials googleAuth={googleAuth} facebookAuth={facebookAuth} />
       )}
-      {onSubmit && (
-        <Form
-          user={user}
-          type={type}
+      {children}
+      {hasLink && (
+        <Links
+          signUpLink={signUpLink}
+          signInLink={signInLink}
+          forgotPasswordLink={forgotPasswordLink}
           context={context}
-          onSubmit={onSubmit}
-          className="auth__form"
-          buttonLabel={buttonLabel}
         />
       )}
-      <div className="auth__action">
-        {forgotPasswordLink && !isUpdate && !isForgotPassword && (
-          <ActionLink
-            {...forgotPasswordLink}
-            context={context}
-            className="auth__action--forgot-password"
-          />
-        )}
-        {signUpLink && isSignIn && (
-          <ActionLink
-            {...signUpLink}
-            context={context}
-            className="auth__action--signUp"
-          />
-        )}
-
-        {signInLink && isSignUp && (
-          <ActionLink
-            {...signInLink}
-            context={context}
-            className="auth__action--signIn"
-          />
-        )}
-      </div>
     </div>
   );
 }

@@ -192,6 +192,8 @@
 
   &__content {
     display: flex;
+    align-items: center;
+    justify-content: center;
     &--notification {
       gap: 11rem;
       width: auto;
@@ -212,6 +214,10 @@
         gap: 6rem;
       }
     }
+  }
+
+  &__loading {
+    margin-left: var(--dimensions-relative-8);
   }
 }
 

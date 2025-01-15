@@ -1,4 +1,5 @@
 export type TIcon =
+  | 'eye'
   | 'user'
   | 'lamp'
   | 'star'
@@ -22,6 +23,7 @@ export type TIcon =
   | 'star-half'
   | 'dashboard'
   | 'hamburger'
+  | 'eye-close'
   | 'arrow-down'
   | 'arrow-right'
   | 'star-filled'
