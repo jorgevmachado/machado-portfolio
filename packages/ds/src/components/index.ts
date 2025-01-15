@@ -16,3 +16,5 @@ export { default as RadioGroup } from './radio-group';
 export { default as Rating } from './rating';
 export { default as StepBar } from './step-bar';
 export { default as Switch } from './switch';
+
+export { default as DatePicker } from './date-picker';

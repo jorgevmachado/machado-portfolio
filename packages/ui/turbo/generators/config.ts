@@ -1,7 +1,7 @@
 import type { PlopTypes } from '@turbo/gen';
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
-  plop.setGenerator('ds', {
+  plop.setGenerator('ui', {
     description: 'add a new design system element or component',
     prompts: [
       {
