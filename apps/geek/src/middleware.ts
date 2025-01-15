@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAccessToken } from './shared/cookies';
 
 const protectedRoutes = ['/', '/dashboard', '/about'];
-const publicRoutes = ['/login', '/signup', '/logout'];
+const publicRoutes = ['/sign-in', '/sign-up', '/logout'];
 
 export default async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -16,7 +16,7 @@ export default async function middleware(request: NextRequest) {
   const accessToken = getAccessToken();
 
   if (isProtectedRoute && !accessToken) {
-    return NextResponse.redirect(new URL('/login', request.nextUrl));
+    return NextResponse.redirect(new URL('/sign-in', request.nextUrl));
   }
 
   if (isPublicRoute && accessToken && !isHome) {

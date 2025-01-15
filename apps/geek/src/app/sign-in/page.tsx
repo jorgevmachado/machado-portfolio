@@ -11,9 +11,9 @@ import Input from '@repo/ui/components/input/Input';
 
 import { signIn } from '../../actions';
 
-import './Login.scss';
+import './SignIn.scss';
 
-export default function Login() {
+export default function SignIn() {
   const [state, action, pending] = useActionState(signIn, undefined);
 
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function Login() {
       logo={{ src: '/logo/logo.svg', width: '15rem', height: '15rem' }}
       title="Sign in"
       context="primary"
-      className="login"
+      className="sign-in"
       signUpLink={{
         title: 'Dont have an account ?',
         label: 'Register here',
@@ -41,7 +41,7 @@ export default function Login() {
         clickAction: () => router.push('/forgot-password'),
       }}
     >
-      <form action={action} className="login__form">
+      <form action={action} className="sign-in__form">
         <div>
           <Input
             id="email"

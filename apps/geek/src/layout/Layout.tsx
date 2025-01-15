@@ -13,7 +13,7 @@ interface LayoutProps {
 
 export default function Layout({ title, children }: LayoutProps) {
   const pathname = usePathname();
-  const authRoutes = ['/login', '/signup'];
+  const authRoutes = ['/sign-in', '/sign-up'];
   const isAuthRoute = authRoutes.includes(pathname);
 
   return isAuthRoute ? (
