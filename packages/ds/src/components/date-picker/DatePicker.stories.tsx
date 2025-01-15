@@ -7,7 +7,9 @@ import DatePicker from './DatePicker';
 const meta = {
   args: {
     id: 'date-picker',
+    tip: '(Tip)',
     name: 'DatePicker',
+    label: 'Label',
     open: undefined,
     value: '2025-01-01',
     locale: 'enUS',

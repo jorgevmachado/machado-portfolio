@@ -42,4 +42,12 @@
       }
     }
   }
+  &__label {
+    background: var(--color-white);
+    &--invalid {
+      label, span {
+        color: var(--color-error-80);
+      }
+    }
+  }
 }

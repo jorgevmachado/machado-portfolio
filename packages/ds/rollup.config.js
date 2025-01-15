@@ -29,7 +29,7 @@ const createConfig = (brand) => defineConfig({
             silenceDeprecations: ['legacy-js-api'],
         },
     ],
-    external: ['react/jsx-runtime', 'react', 'react-dom', '@repo/services', '@repo/business'],
+    external: ['react/jsx-runtime', 'react', 'react-dom', '@repo/services', '@repo/business', 'react-datepicker'],
     plugins: [
         typescript({ tsconfig: "./tsconfig.json" }),
         postcss({
