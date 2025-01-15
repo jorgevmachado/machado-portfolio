@@ -6,12 +6,24 @@ class Formatter {
     return value.replace(regex, '');
   }
 
-  public maskPhone(value: string): string {
+  public maskPhone(value?: string): string {
+    if (!value) {
+      return '';
+    }
     return value
       .replace(/\D/g, '')
       .replace(/(\d{2})(\d)/, '($1) $2')
       .replace(/(\d)(\d{4})$/, '$1-$2')
       .substring(0, 15);
+  }
+
+  public maskMobile(value?: string): string {
+    if (!value) {
+      return '';
+    }
+    return value
+      .replace(/\D/g, '')
+      .replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
   }
 
   public maskCurrency(value: number = 0, country: TCountry = 'br'): string {
@@ -40,7 +52,10 @@ class Formatter {
       .replace(/(-d{3})(\d+?)/, '$1');
   }
 
-  public maskCpf(value: string): string {
+  public maskCpf(value?: string): string {
+    if (!value) {
+      return '';
+    }
     return value
       .replace(/\D/g, '')
       .replace(/(\d{3})(\d)/, '$1.$2')

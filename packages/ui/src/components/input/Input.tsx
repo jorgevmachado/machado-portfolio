@@ -12,6 +12,7 @@ interface InputProps
   label?: string;
   context: TContext;
   validate: (value?: string) => ValidatorMessage;
+  formatter?: (value?: string) => string;
 }
 
 import './Input.scss';
@@ -22,6 +23,7 @@ export default function Input({
   label,
   context,
   validate,
+  formatter,
   ...props
 }: InputProps) {
   const [currentValue, setCurrentValue] = useState<string>(value ?? '');
@@ -60,7 +62,7 @@ export default function Input({
       {...props}
       type={typeInput}
       label={label}
-      value={currentValue}
+      value={formatter ? formatter(currentValue) : currentValue}
       onBlur={() => setOnBlur(true)}
       onInput={onInput}
       variant="regular"

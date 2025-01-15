@@ -1,8 +1,8 @@
 import React from 'react';
 
-interface LoginLayoutProps {
+interface SignInLayoutProps {
   children: React.ReactNode;
 }
-export default function LoginLayout({ children }: LoginLayoutProps) {
+export default function SignInLayout({ children }: SignInLayoutProps) {
   return <section>{children}</section>;
 }

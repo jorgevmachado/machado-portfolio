@@ -33,7 +33,7 @@ export default function SignIn() {
       signUpLink={{
         title: 'Dont have an account ?',
         label: 'Register here',
-        clickAction: () => router.push('/signup'),
+        clickAction: () => router.push('/sign-up'),
       }}
       description="By continuing, you affirm that you are over 18 years old and allow the sharing of your data in interactions with the platform."
       forgotPasswordLink={{
@@ -49,7 +49,7 @@ export default function SignIn() {
             label="E-mail"
             context="primary"
             validate={validator.email}
-            placeholder="Email"
+            placeholder="Enter your signUp E-mail"
           />
         </div>
 
@@ -61,11 +61,11 @@ export default function SignIn() {
             label="Password"
             context="primary"
             validate={validator.password}
-            placeholder="Password"
+            placeholder="Enter your signUp Password"
           />
         </div>
         <Button type="submit" fluid context="primary" loading={pending}>
-          Sign Up
+          Sign In
         </Button>
       </form>
     </Auth>

@@ -146,6 +146,72 @@ describe('Validator methods', () => {
     });
   });
 
+  describe('gender', () => {
+    it('should return valid when received female gender', () => {
+      expect(validator.gender('female')).toEqual({
+        valid: true,
+        message: 'Valid gender.',
+      });
+    });
+    it('should return valid when received male gender', () => {
+      expect(validator.gender('MALE')).toEqual({
+        valid: true,
+        message: 'Valid gender.',
+      });
+    });
+    it('should return valid when received other gender', () => {
+      expect(validator.gender('other')).toEqual({
+        valid: true,
+        message: 'Valid gender.',
+      });
+    });
+
+    it('should return invalid when received invalid gender', () => {
+      expect(validator.gender('people')).toEqual({
+        valid: false,
+        message: 'Invalid Gender.',
+      });
+    });
+    it('should return invalid when received undefined gender', () => {
+      expect(validator.gender()).toEqual({
+        valid: false,
+        message: 'the field is required.',
+      });
+    });
+  });
+
+  describe('dateOfBirth', () => {
+    it('should return invalid when received undefined dateOfBirth', () => {
+      expect(validator.dateOfBirth()).toEqual({
+        valid: false,
+        message: 'the field is required.',
+      });
+    });
+    it('should return invalid when received invalid date', () => {
+      expect(validator.dateOfBirth('20/07/1990')).toEqual({
+        valid: false,
+        message: 'Invalid date.',
+      });
+    });
+    it('should return invalid when received date under 18 year old.', () => {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() - 17);
+      expect(validator.dateOfBirth(date.toISOString())).toEqual({
+        valid: false,
+        message: 'You must be over 18 years old.',
+      });
+    });
+
+    it('should return valid when received date over 18 year old.', () => {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() - 20);
+      expect(validator.dateOfBirth(date.toISOString())).toEqual({
+        valid: true,
+        message: 'valid date.',
+      });
+    });
+  });
+
   describe('name', () => {
     it('should return valid when received valid name', () => {
       expect(validator.name('Harry')).toEqual({

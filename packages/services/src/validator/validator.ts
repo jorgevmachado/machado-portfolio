@@ -1,4 +1,6 @@
-import { ValidatorMessage } from './interface';
+import { EGender } from '@repo/business/api/nest/enum';
+
+import { isUnderMinYearsOld } from '../date';
 
 import {
   email as emailValidator,
@@ -10,6 +12,8 @@ import { cep as cepValidator } from './address';
 import { cpf as cpfValidator } from './document';
 
 import { validator as passwordValidator } from './password';
+
+import { ValidatorMessage } from './interface';
 
 class Validator {
   public cep(value?: string): ValidatorMessage {
@@ -86,6 +90,57 @@ class Validator {
       message: valid
         ? 'Valid name.'
         : 'Name must be at least 2 characters long.',
+    };
+  }
+
+  public gender(value?: string): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+
+    const valid =
+      value.toUpperCase() === EGender.MALE ||
+      value.toUpperCase() === EGender.FEMALE ||
+      value.toUpperCase() === EGender.OTHER;
+
+    return {
+      valid,
+      message: valid ? 'Valid gender.' : 'Invalid Gender.',
+    };
+  }
+
+  public dateOfBirth(value?: string): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+
+    const date = new Date(value);
+
+    const dateInvalid = date.toString() === 'Invalid Date';
+
+    if (dateInvalid) {
+      return {
+        valid: false,
+        message: 'Invalid date.',
+      };
+    }
+
+    if (isUnderMinYearsOld(date)) {
+      return {
+        valid: false,
+        message: 'You must be over 18 years old.',
+      };
+    }
+
+    return {
+      valid: true,
+      message: 'valid date.',
     };
   }
 

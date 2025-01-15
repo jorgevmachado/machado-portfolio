@@ -1,6 +1,10 @@
 # `Services`
 
 ## tests
+### date
+```
+    npm run test -- --findRelatedTests src/date/date.spec.ts               
+```
 ### Validator
 ```
     npm run test -- --findRelatedTests src/validator/validator.spec.ts
