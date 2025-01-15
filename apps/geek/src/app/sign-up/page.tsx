@@ -21,6 +21,7 @@ import RadioGroup from '@repo/ds/components/radio-group/RadioGroup';
 export default function SignUp() {
   const [state, action, pending] = useActionState(signUp, undefined);
   const [gender, setGender] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const router = useRouter();
 
@@ -123,10 +124,12 @@ export default function SignUp() {
           <Input
             id="password"
             type="password"
+            value={password}
             name="password"
             label="Password"
             context="primary"
             validate={validator.password}
+            onChange={(event) => setPassword(event.target.value)}
             placeholder="Password"
           />
         </div>
@@ -134,10 +137,10 @@ export default function SignUp() {
           <Input
             id="confirm-password"
             type="password"
-            name="confirm-password"
+            name="passwordConfirmation"
             label="Confirm Password"
             context="primary"
-            validate={validator.password}
+            validate={(value) => validator.confirmPassword(value, password)}
             placeholder="Confirm Password"
           />
         </div>

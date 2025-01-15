@@ -11,7 +11,10 @@ import {
 import { cep as cepValidator } from './address';
 import { cpf as cpfValidator } from './document';
 
-import { validator as passwordValidator } from './password';
+import {
+  confirmPassword as confirmPasswordValidator,
+  validator as passwordValidator,
+} from './password';
 
 import { ValidatorMessage } from './interface';
 
@@ -74,6 +77,20 @@ class Validator {
       };
     }
     return passwordValidator(min, value);
+  }
+
+  public confirmPassword(
+    value?: string,
+    password?: string,
+    min: number = 8,
+  ): ValidatorMessage {
+    if (!value || !password) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+    return confirmPasswordValidator(min, password, value);
   }
 
   public name(value?: string, min: number = 2): ValidatorMessage {

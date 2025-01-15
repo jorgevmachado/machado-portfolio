@@ -45,8 +45,6 @@ export async function signUp(prevState: SignUpFormState, formData: FormData) {
     passwordConfirmation: formData.get('passwordConfirmation')?.toString(),
   };
 
-  console.log('# => fields => gender => ', fields.gender);
-
   const state = validateSignUp(fields);
 
   if (!state?.valid) {
@@ -69,7 +67,10 @@ function validateSignUp(fields: SignUpFields): SignUpFormState {
     whatsup: validator.mobile(fields.whatsup),
     password: validator.password(fields.password),
     dateOfBirth: validator.dateOfBirth(fields.dateOfBirth),
-    passwordConfirmation: validator.password(fields.password),
+    passwordConfirmation: validator.confirmPassword(
+      fields.passwordConfirmation,
+      fields.password,
+    ),
   };
 
   const formState: SignUpFormState = {
