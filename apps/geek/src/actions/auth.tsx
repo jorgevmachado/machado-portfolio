@@ -1,21 +1,37 @@
+import { ValidatorMessage } from '@repo/services/validator/interface';
+import validator from '@repo/services/validator/validator';
+
 export type FormState =
   | {
-      error: string;
-      message: string;
-      statusCode: number;
+      errors?: {
+        email?: ValidatorMessage;
+        password?: ValidatorMessage;
+      };
+      message?: string;
     }
   | undefined;
 
 export async function signup(state: FormState, formData: FormData) {
-  const email = formData.get('email');
-  const password = formData.get('password');
-  console.log('signUp => state => ', state);
-  console.log('signUp => formData => email => ', email);
-  console.log('signUp => formData => password => ', password);
+  const email = formData.get('email')?.toString();
+  const password = formData.get('password')?.toString();
+  const invalidate = validateSignup(email, password);
+  if (invalidate) {
+    return invalidate;
+  }
+  return invalidate;
+}
 
+function validateSignup(email?: string, password?: string): FormState {
+  const validEmail = validator.email(email);
+  const validPassword = validator.password(password);
+  if (validEmail.valid && validPassword.valid) {
+    return;
+  }
   return {
-    error: 'error',
-    message: 'message error',
-    statusCode: 403,
+    errors: {
+      email: validEmail,
+      password: validPassword,
+    },
+    message: validEmail.valid ? validPassword.message : validEmail.message,
   };
 }

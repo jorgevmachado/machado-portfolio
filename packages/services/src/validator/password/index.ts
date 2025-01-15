@@ -1,1 +1,1 @@
-export { default } from './password';
+export * from './password';

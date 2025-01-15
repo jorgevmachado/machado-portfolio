@@ -1,75 +1,90 @@
 import { ValidatorMessage } from '../interface';
 
-export default class PasswordValidator {
-  constructor(public readonly validatorMessage: ValidatorMessage) {}
+export function minLength(min: number, value: string): ValidatorMessage {
+  const valid = value.length >= min;
+  return {
+    valid,
+    message: valid
+      ? 'Valid password.'
+      : `Must be at least ${min} characters long.`,
+  };
+}
 
-  validator(min: number, value: string): ValidatorMessage {
-    const minLength = this.minLength(min, value);
+export function leastOneLetter(value: string): ValidatorMessage {
+  const regex = /[a-zA-Z]/;
+  const valid = regex.test(value);
+  return {
+    valid,
+    message: valid ? 'Valid password.' : 'It must contain at least one letter.',
+  };
+}
 
-    if (!minLength.valid) {
-      return minLength;
-    }
+export function leastOneNumber(value: string): ValidatorMessage {
+  const regex = /[0-9]/;
+  const valid = regex.test(value);
+  return {
+    valid,
+    message: valid ? 'Valid password.' : 'It must contain at least one number.',
+  };
+}
 
-    const leastOneLetter = this.leastOneLetter(value);
+export function leastOneSpecialCharacter(value: string): ValidatorMessage {
+  const regex = /[^a-zA-Z0-9]/;
+  const valid = regex.test(value);
+  return {
+    valid,
+    message: valid
+      ? 'Valid password.'
+      : 'It must contain at least one special character.',
+  };
+}
 
-    if (!leastOneLetter.valid) {
-      return leastOneLetter;
-    }
-    const leastOneNumber = this.leastOneNumber(value);
+export function validator(min: number, value: string): ValidatorMessage {
+  const minLengthValidator = minLength(min, value);
 
-    if (!leastOneNumber.valid) {
-      return leastOneNumber;
-    }
-    const leastOneSpecialCharacter = this.leastOneSpecialCharacter(value);
-
-    if (!leastOneSpecialCharacter.valid) {
-      return leastOneSpecialCharacter;
-    }
-
-    return this.validatorMessage;
-  }
-  minLength(min: number, value: string): ValidatorMessage {
-    if (value.length >= min) {
-      return this.validatorMessage;
-    }
-
-    return {
-      valid: false,
-      message: `Must be at least ${min} characters long.`,
-    };
-  }
-
-  leastOneLetter(value: string): ValidatorMessage {
-    const regex = /[a-zA-Z]/;
-    if (regex.test(value)) {
-      return this.validatorMessage;
-    }
-
-    return {
-      valid: false,
-      message: 'It must contain at least one letter.',
-    };
+  if (!minLengthValidator.valid) {
+    return minLengthValidator;
   }
 
-  leastOneNumber(value: string): ValidatorMessage {
-    const regex = /[0-9]/;
-    if (regex.test(value)) {
-      return this.validatorMessage;
-    }
-    return {
-      valid: false,
-      message: 'It must contain at least one number.',
-    };
+  const leastOneLetterValidator = leastOneLetter(value);
+
+  if (!leastOneLetterValidator.valid) {
+    return leastOneLetterValidator;
+  }
+  const leastOneNumberValidator = leastOneNumber(value);
+
+  if (!leastOneNumberValidator.valid) {
+    return leastOneNumberValidator;
+  }
+  const leastOneSpecialCharacterValidator = leastOneSpecialCharacter(value);
+
+  if (!leastOneSpecialCharacterValidator.valid) {
+    return leastOneSpecialCharacterValidator;
   }
 
-  leastOneSpecialCharacter(value: string): ValidatorMessage {
-    const regex = /[^a-zA-Z0-9]/;
-    if (regex.test(value)) {
-      return this.validatorMessage;
-    }
-    return {
-      valid: false,
-      message: 'It must contain at least one special character.',
-    };
+  return {
+    valid: true,
+    message: 'Valid password.',
+  };
+}
+
+export function confirmPassword(
+  min: number,
+  password: string,
+  value: string,
+): ValidatorMessage {
+  const passwordValidator = validator(min, value);
+
+  if (!passwordValidator.valid) {
+    return passwordValidator;
   }
+
+  const valid = value === password;
+
+  return {
+    valid,
+    message: valid
+      ? 'Valid password.'
+      : 'Password confirmation does not match the password.',
+  };
 }

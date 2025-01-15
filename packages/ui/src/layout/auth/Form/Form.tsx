@@ -73,12 +73,12 @@ export default function Form({
     if (blur) {
       switch (type) {
         case 'cpf': {
-          const valid = validator.isValidCpf(value);
+          const valid = validator.cpf(value);
           setInvalidCpf(!valid);
           return valid;
         }
         case 'email': {
-          const valid = validator.isValidEmail(value);
+          const valid = validator.email(value);
           setInvalidEmail(!valid);
           return valid;
         }
@@ -88,12 +88,12 @@ export default function Form({
           return valid;
         }
         case 'whatsUp': {
-          const valid = value !== '' ? validator.isValidMobile(value) : false;
+          const valid = value !== '' ? validator.mobile(value) : false;
           setInvalidWhatsUp(!valid);
           return valid;
         }
         case 'password': {
-          const valid = validator.isValidPassword(value);
+          const valid = validator.password(value);
           setInvalidPassword(!valid);
           return valid;
         }
@@ -103,7 +103,7 @@ export default function Form({
           return valid;
         }
         case 'passwordConfirmation': {
-          const valid = validator.isValidPassword(value);
+          const valid = validator.password(value);
           setInvalidPasswordConfirmation(!valid);
           return valid;
         }

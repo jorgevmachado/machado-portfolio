@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  &__cpf,
+  &__name,
+  &__email,
+  &__whatsup,
+  &__date-of-birth{
+    margin-bottom: 1rem;
+  }
+
+  &__gender {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__button {
+    .button__content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+  }
+}

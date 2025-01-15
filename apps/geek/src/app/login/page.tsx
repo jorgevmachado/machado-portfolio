@@ -3,21 +3,38 @@ import { useActionState } from 'react';
 
 import { signup } from '../../actions';
 
+import Input from '@repo/ui/components/input/Input';
+
+import validator from '@repo/services/validator/validator';
+
 export default function Login() {
   const [state, action, pending] = useActionState(signup, undefined);
   console.log('state', state);
+  console.log('action', action);
+  console.log('pending', pending);
   return (
     <form action={action}>
       <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" placeholder="Email" />
+        <Input
+          id="email"
+          validate={validator.email}
+          label="E-mail"
+          context="primary"
+          name="email"
+          placeholder="Email"
+        />
       </div>
 
       <div>
-        <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" />
+        <Input
+          id="password"
+          validate={validator.password}
+          label="password"
+          context="primary"
+          name="password"
+          placeholder="Password"
+        />
       </div>
-
       <button disabled={pending} type="submit">
         Sign Up
       </button>

@@ -39,7 +39,7 @@
       outline-offset: var(--outline-offset);
     }
   } @else {
-    // Keyboard events (except on <input>)
+    // Keyboard events (except on <Input>)
     &:focus-visible {
       border-color: var(--outline-color);
 

@@ -1,66 +1,100 @@
 import { ValidatorMessage } from './interface';
 
-import AddressValidator from './address';
-import ContactValidator from './contact';
-import DocumentValidator from './document';
-import PasswordValidator from './password';
+import {
+  email as emailValidator,
+  fixed as fixedValidator,
+  mobile as mobileValidator,
+} from './contact';
+
+import { cep as cepValidator } from './address';
+import { cpf as cpfValidator } from './document';
+
+import { validator as passwordValidator } from './password';
 
 class Validator {
-  validatorMessage: ValidatorMessage = {
-    valid: true,
-    message: 'success',
-  };
-
-  public cep(value: string): ValidatorMessage {
-    const validatorMessage = this.validatorMessage;
-    validatorMessage.message = 'Valid zip code.';
-    const addressValidator = new AddressValidator(validatorMessage);
-    return addressValidator.cep(value);
+  public cep(value?: string): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+    return cepValidator(value);
   }
 
-  public email(value: string): ValidatorMessage {
-    const validatorMessage = this.validatorMessage;
-    validatorMessage.message = 'Valid Email.';
-    const contactValidator = new ContactValidator(validatorMessage);
-    return contactValidator.email(value);
+  public email(value?: string): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+    return emailValidator(value);
   }
 
-  public phone(value: string): ValidatorMessage {
-    const validatorMessage = this.validatorMessage;
-    validatorMessage.message = 'Valid Phone.';
-    const contactValidator = new ContactValidator(validatorMessage);
-    return contactValidator.fixed(value);
+  public phone(value?: string): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+    return fixedValidator(value);
   }
 
-  public mobile(value: string): ValidatorMessage {
-    const validatorMessage = this.validatorMessage;
-    validatorMessage.message = 'Valid Mobile.';
-    const contactValidator = new ContactValidator(validatorMessage);
-    return contactValidator.mobile(value);
+  public mobile(value?: string): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+    return mobileValidator(value);
   }
 
-  public cpf(value: string): ValidatorMessage {
-    const validatorMessage = this.validatorMessage;
-    validatorMessage.message = 'Valid CPF.';
-    const documentValidator = new DocumentValidator(validatorMessage);
-    return documentValidator.cpf(value);
+  public cpf(value?: string): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+    return cpfValidator(value);
   }
 
-  public password(value: string, min: number = 8): ValidatorMessage {
-    const validatorMessage = this.validatorMessage;
-    validatorMessage.message = 'Valid password.';
-    const passwordValidator = new PasswordValidator(validatorMessage);
-    return passwordValidator.validator(min, value);
+  public password(value?: string, min: number = 8): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+    return passwordValidator(min, value);
+  }
+
+  public name(value?: string, min: number = 2): ValidatorMessage {
+    if (!value) {
+      return {
+        valid: false,
+        message: 'the field is required.',
+      };
+    }
+
+    const valid = value.length >= min;
+    return {
+      valid,
+      message: valid
+        ? 'Valid name.'
+        : 'Name must be at least 2 characters long.',
+    };
   }
 
   public number(value: string): ValidatorMessage {
     const regex = /^[0-9]+$/;
-    if (regex.test(value)) {
-      return this.validatorMessage;
-    }
+    const valid = regex.test(value);
     return {
-      valid: false,
-      message: 'Please enter a valid number.',
+      valid,
+      message: valid ? 'valid number.' : 'Please enter a valid number.',
     };
   }
 

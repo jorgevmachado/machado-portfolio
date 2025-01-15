@@ -62,13 +62,26 @@ describe('Validator methods', () => {
         message: 'Valid zip code.',
       });
     });
+    it('should return invalid when received undefined cep', () => {
+      expect(validator.cep()).toEqual({
+        valid: false,
+        message: 'the field is required.',
+      });
+    });
   });
 
   describe('email', () => {
-    it('should return true when received valid email', () => {
+    it('should return valid when received valid email', () => {
       expect(validator.email('nome@mail.com')).toEqual({
         valid: true,
         message: 'Valid Email.',
+      });
+    });
+
+    it('should return invalid when received undefined email', () => {
+      expect(validator.email()).toEqual({
+        valid: false,
+        message: 'the field is required.',
       });
     });
   });
@@ -77,7 +90,13 @@ describe('Validator methods', () => {
     it('should return true when received valid phone number with mask', () => {
       expect(validator.phone('(11) 1234-5678')).toEqual({
         valid: true,
-        message: 'Valid Phone.',
+        message: 'Valid phone number.',
+      });
+    });
+    it('should return invalid when received undefined phone', () => {
+      expect(validator.phone()).toEqual({
+        valid: false,
+        message: 'the field is required.',
       });
     });
   });
@@ -86,7 +105,13 @@ describe('Validator methods', () => {
     it('should return true when received valid mobile number with mask', () => {
       expect(validator.mobile('(11) 12345-6789')).toEqual({
         valid: true,
-        message: 'Valid Mobile.',
+        message: 'Valid mobile number.',
+      });
+    });
+    it('should return invalid when received undefined mobile number', () => {
+      expect(validator.mobile()).toEqual({
+        valid: false,
+        message: 'the field is required.',
       });
     });
   });
@@ -98,6 +123,12 @@ describe('Validator methods', () => {
         message: 'Valid CPF.',
       });
     });
+    it('should return invalid when received undefined cpf number', () => {
+      expect(validator.cpf()).toEqual({
+        valid: false,
+        message: 'the field is required.',
+      });
+    });
   });
 
   describe('password', () => {
@@ -107,11 +138,35 @@ describe('Validator methods', () => {
         message: 'Valid password.',
       });
     });
+    it('should return invalid when received undefined password', () => {
+      expect(validator.password()).toEqual({
+        valid: false,
+        message: 'the field is required.',
+      });
+    });
+  });
+
+  describe('name', () => {
+    it('should return valid when received valid name', () => {
+      expect(validator.name('Harry')).toEqual({
+        valid: true,
+        message: 'Valid name.',
+      });
+    });
+    it('should return invalid when received undefined name', () => {
+      expect(validator.name()).toEqual({
+        valid: false,
+        message: 'the field is required.',
+      });
+    });
   });
 
   describe('number', () => {
     it('should return valid when received valid number', () => {
-      expect(validator.number('7')).toEqual(validator.validatorMessage);
+      expect(validator.number('7')).toEqual({
+        valid: true,
+        message: 'valid number.',
+      });
     });
 
     it('should return true when received invalid number', () => {

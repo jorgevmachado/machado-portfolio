@@ -1,22 +1,17 @@
 import { describe, expect, it } from '@jest/globals';
 
-import ContactValidator from './contact';
+import { email, fixed, mobile } from './contact';
 
 describe('contact validator methods', () => {
-  const validatorMessage = {
-    valid: true,
-    message: 'contact valid',
-  };
-  const contactValidator = new ContactValidator(validatorMessage);
-
   describe('email', () => {
     it('should return valid when received valid email address', () => {
-      expect(contactValidator.email('nome@mail.com')).toEqual(
-        contactValidator.validatorMessage,
-      );
+      expect(email('nome@mail.com')).toEqual({
+        valid: true,
+        message: 'Valid Email.',
+      });
     });
     it('should return invalid when received invalid email address', () => {
-      expect(contactValidator.email('nome.mail.com')).toEqual({
+      expect(email('nome.mail.com')).toEqual({
         valid: false,
         message: 'Please enter a valid email.',
       });
@@ -25,17 +20,19 @@ describe('contact validator methods', () => {
 
   describe('fixed', () => {
     it('should return valid when received valid phone fixed with mask', () => {
-      expect(contactValidator.fixed('(11) 1234-5678')).toEqual(
-        contactValidator.validatorMessage,
-      );
+      expect(fixed('(11) 1234-5678')).toEqual({
+        valid: true,
+        message: 'Valid phone number.',
+      });
     });
     it('should return valid when received valid phone fixed without mask', () => {
-      expect(contactValidator.fixed('1112345678')).toEqual(
-        contactValidator.validatorMessage,
-      );
+      expect(fixed('1112345678')).toEqual({
+        valid: true,
+        message: 'Valid phone number.',
+      });
     });
     it('should return invalid when received invalid phone fixed', () => {
-      expect(contactValidator.fixed('(11) 11234-5678')).toEqual({
+      expect(fixed('(11) 11234-5678')).toEqual({
         valid: false,
         message: 'Please enter a valid phone number.',
       });
@@ -44,19 +41,21 @@ describe('contact validator methods', () => {
 
   describe('mobile', () => {
     it('should return valid when received valid phone mobile with mask', () => {
-      expect(contactValidator.mobile('(11) 12345-6789')).toEqual(
-        contactValidator.validatorMessage,
-      );
+      expect(mobile('(11) 12345-6789')).toEqual({
+        valid: true,
+        message: 'Valid mobile number.',
+      });
     });
     it('should return valid when received valid phone mobile without mask', () => {
-      expect(contactValidator.mobile('11123456789')).toEqual(
-        contactValidator.validatorMessage,
-      );
+      expect(mobile('11123456789')).toEqual({
+        valid: true,
+        message: 'Valid mobile number.',
+      });
     });
     it('should return invalid when received invalid mobile fixed', () => {
-      expect(contactValidator.mobile('(11) 11234-56782')).toEqual({
+      expect(mobile('(11) 11234-56782')).toEqual({
         valid: false,
-        message: 'Please enter a valid phone mobile number.',
+        message: 'Please enter a valid mobile number.',
       });
     });
   });
