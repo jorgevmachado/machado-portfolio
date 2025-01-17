@@ -3,13 +3,6 @@ import type { ValidatorMessage } from '@repo/services/validator/interface';
 
 export type TLocale = 'es' | 'fr' | 'enUS' | 'ptBR';
 
-export interface InitialDate {
-  day?: number;
-  year?: number;
-  date?: Date;
-  month?: number;
-}
-
 export interface DatePickerProps {
   id: string;
   tip?: string;
@@ -26,4 +19,5 @@ export interface DatePickerProps {
   dateFormat?: string;
   initialDate?: ParseDate;
   placeholder?: string;
+  reloadValidate?: ValidatorMessage;
 }

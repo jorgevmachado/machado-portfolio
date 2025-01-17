@@ -13,6 +13,7 @@ interface InputProps
   context: TContext;
   validate: (value?: string) => ValidatorMessage;
   formatter?: (value?: string) => string;
+  reloadValidate?: ValidatorMessage;
 }
 
 import './Input.scss';
@@ -24,6 +25,7 @@ export default function Input({
   context,
   validate,
   formatter,
+  reloadValidate,
   ...props
 }: InputProps) {
   const [currentValue, setCurrentValue] = useState<string>(value ?? '');
@@ -47,15 +49,29 @@ export default function Input({
     setTypeInput('password');
   };
 
+  const handleValidateMessage = (validateMessage?: ValidatorMessage) => {
+    const currentValidateMessage = validateMessage
+      ? validateMessage
+      : validate(currentValue);
+    setInvalid(!currentValidateMessage.valid);
+    setInvalidMessage(
+      !currentValidateMessage.valid
+        ? currentValidateMessage.message
+        : undefined,
+    );
+  };
+
   useEffect(() => {
     if (onBlur) {
-      const validateMessage = validate(currentValue);
-      setInvalid(!validateMessage.valid);
-      setInvalidMessage(
-        !validateMessage.valid ? validateMessage.message : undefined,
-      );
+      handleValidateMessage();
     }
   }, [currentValue, onBlur]);
+
+  useEffect(() => {
+    if (reloadValidate) {
+      handleValidateMessage(reloadValidate);
+    }
+  }, [reloadValidate]);
 
   return (
     <InputComponent

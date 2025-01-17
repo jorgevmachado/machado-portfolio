@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getAccessToken } from './shared/cookies';
-
-const protectedRoutes = ['/', '/dashboard', '/about'];
-const publicRoutes = ['/sign-in', '/sign-up', '/logout'];
+import { protectedRoutes, publicRoutes } from './routes';
+import { getAccessToken } from './shared';
 
 export default async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;

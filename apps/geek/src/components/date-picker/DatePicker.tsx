@@ -33,6 +33,7 @@ export default function DatePicker({
   dateFormat,
   initialDate,
   placeholder,
+  reloadValidate,
 }: DatePickerProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -54,6 +55,12 @@ export default function DatePicker({
     register(locale);
     value && validateCurrentValue(currentDate);
   }, []);
+
+  useEffect(() => {
+    if (reloadValidate) {
+      setValidateMessage(reloadValidate);
+    }
+  }, [reloadValidate]);
 
   const handleDateChange = (date: Date | null) => {
     if (!date) {

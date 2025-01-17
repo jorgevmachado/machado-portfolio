@@ -50,6 +50,7 @@ export default function SignIn() {
             context="primary"
             validate={validator.email}
             placeholder="Enter your signUp E-mail"
+            reloadValidate={state?.errors?.email}
           />
         </div>
 
@@ -62,6 +63,7 @@ export default function SignIn() {
             context="primary"
             validate={validator.password}
             placeholder="Enter your signUp Password"
+            reloadValidate={state?.errors?.password}
           />
         </div>
         <Button type="submit" fluid context="primary" loading={pending}>

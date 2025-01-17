@@ -57,6 +57,7 @@ export default function SignUp() {
             validate={validator.cpf}
             formatter={formatter.maskCpf}
             placeholder="Enter your CPF"
+            reloadValidate={state?.errors?.cpf}
           />
         </div>
         <div>
@@ -67,6 +68,7 @@ export default function SignUp() {
             context="primary"
             validate={validator.name}
             placeholder="Enter your Fullname"
+            reloadValidate={state?.errors?.name}
           />
         </div>
         <div className="sign-up__form--radio-group">
@@ -89,6 +91,11 @@ export default function SignUp() {
             modelValue={gender}
             onClick={(event) => event.preventDefault()}
             onActionClick={(value) => setGender(value as EGender)}
+            requiredMessage={
+              state && !state?.errors?.gender?.valid
+                ? state?.errors?.gender?.message
+                : ''
+            }
           />
         </div>
         <div>
@@ -99,6 +106,7 @@ export default function SignUp() {
             context="primary"
             validate={validator.email}
             placeholder="Enter your best E-mail"
+            reloadValidate={state?.errors?.email}
           />
         </div>
         <div>
@@ -110,6 +118,7 @@ export default function SignUp() {
             validate={validator.mobile}
             formatter={formatter.maskMobile}
             placeholder="Enter your WhatsUp"
+            reloadValidate={state?.errors?.whatsup}
           />
         </div>
         <div>
@@ -120,6 +129,7 @@ export default function SignUp() {
             minAge={18}
             validate={validator.dateOfBirth}
             placeholder="Enter your date of birth"
+            reloadValidate={state?.errors?.dateOfBirth}
           />
         </div>
         <div>
@@ -133,6 +143,7 @@ export default function SignUp() {
             validate={validator.password}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="Password"
+            reloadValidate={state?.errors?.password}
           />
         </div>
         <div>
@@ -144,6 +155,7 @@ export default function SignUp() {
             context="primary"
             validate={(value) => validator.confirmPassword(value, password)}
             placeholder="Confirm Password"
+            reloadValidate={state?.errors?.passwordConfirmation}
           />
         </div>
         <Button type="submit" fluid context="primary" loading={pending}>

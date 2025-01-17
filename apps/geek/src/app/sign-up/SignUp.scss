@@ -14,7 +14,7 @@
       justify-content: center;
       align-items: center;
       fieldset {
-        .label {
+        .label, .radio-group P {
           margin-left: var(--dimensions-relative-16);
         }
       }

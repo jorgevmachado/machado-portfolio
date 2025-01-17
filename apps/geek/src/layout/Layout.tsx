@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import AuthLayout from './auth';
 import PublicLayout from './public';
+import { publicRoutes } from '../routes';
 
 interface LayoutProps {
   title?: string;
@@ -13,8 +14,7 @@ interface LayoutProps {
 
 export default function Layout({ title, children }: LayoutProps) {
   const pathname = usePathname();
-  const authRoutes = ['/sign-in', '/sign-up'];
-  const isAuthRoute = authRoutes.includes(pathname);
+  const isAuthRoute = publicRoutes.includes(pathname);
 
   return isAuthRoute ? (
     <PublicLayout>{children}</PublicLayout>
