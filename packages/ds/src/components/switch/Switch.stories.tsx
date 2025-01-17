@@ -71,7 +71,6 @@ export const Default: Story = {
           {...args}
           checked={isChecked}
           onChange={(event, checked) => {
-            console.log(event.target);
             setIsChecked(!checked);
           }}
         />

@@ -146,6 +146,21 @@ describe('Validator methods', () => {
     });
   });
 
+  describe('ConfirmPassword', () => {
+    it('should return valid when received valid ConfirmPassword', () => {
+      expect(validator.confirmPassword('@b345678', '@b345678')).toEqual({
+        valid: true,
+        message: 'Valid password.',
+      });
+    });
+    it('should return invalid when received undefined ConfirmPassword', () => {
+      expect(validator.confirmPassword()).toEqual({
+        valid: false,
+        message: 'the field is required.',
+      });
+    });
+  });
+
   describe('gender', () => {
     it('should return valid when received female gender', () => {
       expect(validator.gender('female')).toEqual({
@@ -187,7 +202,7 @@ describe('Validator methods', () => {
         message: 'the field is required.',
       });
     });
-    it('should return invalid when received invalid date', () => {
+    it('should return invalid when received invalid date string', () => {
       expect(validator.dateOfBirth('20/07/1990')).toEqual({
         valid: false,
         message: 'Invalid date.',
@@ -196,13 +211,13 @@ describe('Validator methods', () => {
     it('should return invalid when received date under 18 year old.', () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 17);
-      expect(validator.dateOfBirth(date.toISOString())).toEqual({
+      expect(validator.dateOfBirth(date)).toEqual({
         valid: false,
         message: 'You must be over 18 years old.',
       });
     });
 
-    it('should return valid when received date over 18 year old.', () => {
+    it('should return valid when received date string over 18 year old.', () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 20);
       expect(validator.dateOfBirth(date.toISOString())).toEqual({

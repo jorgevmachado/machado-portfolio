@@ -1,6 +1,6 @@
 import { EGender } from '@repo/business/api/nest/enum';
 
-import { isUnderMinYearsOld } from '../date';
+import { isUnderMinimumAge } from '../date';
 
 import {
   email as emailValidator,
@@ -129,7 +129,7 @@ class Validator {
     };
   }
 
-  public dateOfBirth(value?: string): ValidatorMessage {
+  public dateOfBirth(value?: string | Date): ValidatorMessage {
     if (!value) {
       return {
         valid: false,
@@ -137,28 +137,24 @@ class Validator {
       };
     }
 
-    const date = new Date(value);
+    const date = typeof value !== 'string' ? value : new Date(value);
 
-    const dateInvalid = date.toString() === 'Invalid Date';
-
-    if (dateInvalid) {
+    if (date.toString() === 'Invalid Date') {
       return {
         valid: false,
         message: 'Invalid date.',
       };
     }
 
-    if (isUnderMinYearsOld(date)) {
-      return {
-        valid: false,
-        message: 'You must be over 18 years old.',
-      };
-    }
-
-    return {
-      valid: true,
-      message: 'valid date.',
-    };
+    return isUnderMinimumAge(date)
+      ? {
+          valid: false,
+          message: 'You must be over 18 years old.',
+        }
+      : {
+          valid: true,
+          message: 'valid date.',
+        };
   }
 
   public number(value: string): ValidatorMessage {

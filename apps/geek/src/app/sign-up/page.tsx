@@ -12,11 +12,13 @@ import Button from '@repo/ds/components/button/Button';
 
 import Auth from '@repo/ui/layout/auth/Auth';
 import Input from '@repo/ui/components/input/Input';
+import RadioGroup from '@repo/ds/components/radio-group/RadioGroup';
 
 import { signUp } from '../../actions';
 
+import DatePicker from '../../components/date-picker/DatePicker';
+
 import './SignUp.scss';
-import RadioGroup from '@repo/ds/components/radio-group/RadioGroup';
 
 export default function SignUp() {
   const [state, action, pending] = useActionState(signUp, undefined);
@@ -111,11 +113,11 @@ export default function SignUp() {
           />
         </div>
         <div>
-          <Input
+          <DatePicker
             id="dateOfBirth"
             name="dateOfBirth"
             label="Date of birth"
-            context="primary"
+            minAge={18}
             validate={validator.dateOfBirth}
             placeholder="Enter your date of birth"
           />
