@@ -9,7 +9,9 @@ import {
 } from '@repo/services/date/dateUtils';
 import { ValidatorMessage } from '@repo/services/validator/interface';
 
-import Input from '@repo/ds/components/input/Input';
+import Feedback from '@repo/ds/components/feedback/Feedback';
+import Label from '@repo/ds/components/label/Label';
+import joinClass from '@repo/ds/utils/join-class/joinClass';
 
 import { currentDateLocale, register } from './utils';
 import { DatePickerProps } from './interface';
@@ -68,6 +70,11 @@ export default function DatePicker({
     setValidateMessage(validateMessage);
   };
 
+  const labelClassNameList = joinClass([
+    'date-picker__label',
+    `${validateMessage && !validateMessage.valid ? 'date-picker__label--invalid' : ''}`,
+  ]);
+
   return (
     <div className="date-picker" ref={ref}>
       {/*eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
@@ -85,18 +92,28 @@ export default function DatePicker({
         popperClassName="some-custom-class"
         popperPlacement="bottom-start"
         customInput={
-          <Input
-            id={id}
-            type="text"
-            tip={tip}
-            label={label}
-            name={name}
-            value={currentValue}
-            readOnly={true}
-            placeholder={placeholder}
-            isInvalid={!validateMessage?.valid}
-            invalidMessage={validateMessage?.message}
-          />
+          <div>
+            {label && (
+              <Label
+                tip={tip}
+                label={label}
+                className={labelClassNameList}
+                componentId={id}
+              />
+            )}
+            <input
+              id={id}
+              type="text"
+              name={name}
+              value={currentValue}
+              readOnly={true}
+              placeholder={placeholder}
+              className="date-picker__input"
+            />
+            {validateMessage && !validateMessage.valid && (
+              <Feedback context="error">{validateMessage.message}</Feedback>
+            )}
+          </div>
         }
       />
     </div>
