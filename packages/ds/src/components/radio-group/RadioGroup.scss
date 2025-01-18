@@ -43,7 +43,7 @@
       appearance: none;
     }
     &--button {
-      width: 222px;
+      width: 10rem;
       display: inline-flex;
       padding: var(--size-fixed-regular);
       position: relative;
@@ -119,6 +119,14 @@
     }
     &--attention {
       @include context(var(--color-attention-80), var(--color-attention-80));
+    }
+  }
+
+  @media screen and (min-width: 720px) {
+    &__container {
+      &--button {
+        width: 13.875rem;
+      }
     }
   }
 
