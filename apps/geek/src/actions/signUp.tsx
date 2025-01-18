@@ -1,40 +1,24 @@
 'use server';
-import { ValidatorMessage } from '@repo/services/validator/interface';
-import validator from '@repo/services/validator/validator';
+import {
+  confirmPasswordValidator,
+  passwordValidator,
+} from '@repo/services/validator/password/password';
+import {
+  dateOfBirthValidator,
+  genderValidator,
+  nameValidator,
+} from '@repo/services/validator/personal/personal';
 
-interface SignUpFields {
-  cpf?: string;
-  name?: string;
-  email?: string;
-  gender?: string;
-  whatsup?: string;
-  password?: string;
-  dateOfBirth?: string;
-  passwordConfirmation?: string;
-}
+import {
+  emailValidator,
+  mobileValidator,
+} from '@repo/services/validator/contact/contact';
+import { cpfValidator } from '@repo/services/validator/document/document';
 
-interface SignUpErrors {
-  cpf?: ValidatorMessage;
-  name?: ValidatorMessage;
-  email?: ValidatorMessage;
-  gender?: ValidatorMessage;
-  whatsup?: ValidatorMessage;
-  password?: ValidatorMessage;
-  dateOfBirth?: ValidatorMessage;
-  passwordConfirmation?: ValidatorMessage;
-}
+import { AuthErrors, AuthFields, AuthFormState } from './interface';
 
-export type SignUpFormState =
-  | {
-      valid: boolean;
-      fields: SignUpFields;
-      errors?: SignUpErrors;
-      message?: string;
-    }
-  | undefined;
-
-export async function signUp(prevState: SignUpFormState, formData: FormData) {
-  const fields: SignUpFields = {
+export async function signUp(prevState: AuthFormState, formData: FormData) {
+  const fields: AuthFields = {
     cpf: formData.get('cpf')?.toString(),
     name: formData.get('name')?.toString(),
     email: formData.get('email')?.toString(),
@@ -45,35 +29,33 @@ export async function signUp(prevState: SignUpFormState, formData: FormData) {
     passwordConfirmation: formData.get('passwordConfirmation')?.toString(),
   };
 
-  const state = validateSignUp(fields);
+  prevState = validate(fields);
 
-  if (!state?.valid) {
-    prevState = state;
+  if (!prevState?.valid) {
     return prevState;
   }
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  prevState = state;
   return prevState;
 }
 
-function validateSignUp(fields: SignUpFields): SignUpFormState {
-  const errors: SignUpErrors = {
-    cpf: validator.cpf(fields.cpf),
-    name: validator.name(fields.name),
-    email: validator.email(fields.email),
-    gender: validator.gender(fields.gender),
-    whatsup: validator.mobile(fields.whatsup),
-    password: validator.password(fields.password),
-    dateOfBirth: validator.dateOfBirth(fields.dateOfBirth),
-    passwordConfirmation: validator.confirmPassword(
+function validate(fields: AuthFields): AuthFormState {
+  const errors: AuthErrors = {
+    cpf: cpfValidator(fields.cpf),
+    name: nameValidator(fields.name),
+    email: emailValidator(fields.email),
+    gender: genderValidator(fields.gender),
+    whatsup: mobileValidator(fields.whatsup),
+    password: passwordValidator(fields.password),
+    dateOfBirth: dateOfBirthValidator(fields.dateOfBirth),
+    passwordConfirmation: confirmPasswordValidator(
       fields.passwordConfirmation,
       fields.password,
     ),
   };
 
-  const formState: SignUpFormState = {
+  const formState: AuthFormState = {
     valid: false,
     fields,
     errors,

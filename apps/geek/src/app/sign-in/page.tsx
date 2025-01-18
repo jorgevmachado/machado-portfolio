@@ -3,8 +3,11 @@ import { useActionState, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { emailValidator } from '@repo/services/validator/contact/contact';
+
+import { passwordValidator } from '@repo/services/validator/password/password';
+
 import Button from '@repo/ds/components/button/Button';
-import validator from '@repo/services/validator/validator';
 
 import Auth from '@repo/ui/layout/auth/Auth';
 import Input from '@repo/ui/components/input/Input';
@@ -48,7 +51,7 @@ export default function SignIn() {
             name="email"
             label="E-mail"
             context="primary"
-            validate={validator.email}
+            validate={emailValidator}
             placeholder="Enter your signUp E-mail"
             reloadValidate={state?.errors?.email}
           />
@@ -61,7 +64,7 @@ export default function SignIn() {
             name="password"
             label="Password"
             context="primary"
-            validate={validator.password}
+            validate={passwordValidator}
             placeholder="Enter your signUp Password"
             reloadValidate={state?.errors?.password}
           />

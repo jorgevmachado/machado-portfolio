@@ -4,12 +4,12 @@ import { User } from '@repo/business/auth/interface';
 
 import { TContext } from '@repo/ds/utils/colors/interface';
 
-import { Logo, Menu } from '../../utils/menu';
+import { Logo, Menu } from '../../utils';
 
 import Fade from '../../animations/fade';
 
-import Header from '../header';
-import Sidebar from '../sidebar';
+import Header from '../../components/header';
+import Sidebar from '../../components/sidebar';
 
 import './Page.scss';
 

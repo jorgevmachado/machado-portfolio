@@ -1,52 +1,35 @@
 'use server';
-import { ValidatorMessage } from '@repo/services/validator/interface';
-import validator from '@repo/services/validator/validator';
 
-interface SignInFields {
-  email?: string;
-  password?: string;
-}
+import { emailValidator } from '@repo/services/validator/contact/contact';
 
-interface SignInErrors {
-  email?: ValidatorMessage;
-  password?: ValidatorMessage;
-}
+import { passwordValidator } from '@repo/services/validator/password/password';
 
-export type SignInFormState =
-  | {
-      valid: boolean;
-      fields: SignInFields;
-      errors?: SignInErrors;
-      message?: string;
-    }
-  | undefined;
+import { AuthErrors, AuthFields, AuthFormState } from './interface';
 
-export async function signIn(prevState: SignInFormState, formData: FormData) {
-  const fields: SignInFields = {
+export async function signIn(prevState: AuthFormState, formData: FormData) {
+  const fields: AuthFields = {
     email: formData.get('email')?.toString(),
     password: formData.get('password')?.toString(),
   };
 
-  const state = validateSignIn(fields);
+  prevState = validate(fields);
 
-  if (!state?.valid) {
-    prevState = state;
+  if (!prevState?.valid) {
     return prevState;
   }
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  prevState = state;
   return prevState;
 }
 
-function validateSignIn(fields: SignInFields): SignInFormState {
-  const errors: SignInErrors = {
-    email: validator.email(fields.email),
-    password: validator.password(fields.password),
+function validate(fields: AuthFields): AuthFormState {
+  const errors: AuthErrors = {
+    email: emailValidator(fields.email),
+    password: passwordValidator(fields.password),
   };
 
-  const formState: SignInFormState = {
+  const formState: AuthFormState = {
     valid: false,
     fields,
     errors,

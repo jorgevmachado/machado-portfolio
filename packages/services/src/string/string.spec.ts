@@ -1,4 +1,12 @@
-import { formatUrl, isUUID, uuid } from './string';
+import {
+  capitalize,
+  formatUrl,
+  isUUID,
+  separateCamelCase,
+  toCamelCase,
+  toSnakeCase,
+  uuid,
+} from './string';
 
 import { describe, expect, it } from '@jest/globals';
 
@@ -27,6 +35,30 @@ describe('String functions', () => {
   describe('isUUID', () => {
     it('Must validate if it is a uuid', () => {
       expect(isUUID('981553ee-e275-4f0a-8d88-5bf778ff772d')).toBeTruthy();
+    });
+  });
+
+  describe('capitalize', () => {
+    it('Must capitalize the first letter of the string', () => {
+      expect(capitalize('hello')).toEqual('Hello');
+    });
+  });
+
+  describe('toSnakeCase', () => {
+    it('Must convert a string to snake case', () => {
+      expect(toSnakeCase('snakeCase')).toEqual('snake_case');
+    });
+  });
+
+  describe('toCamelCase', () => {
+    it('Must convert a string to camel case', () => {
+      expect(toCamelCase('camel_case')).toEqual('camelCase');
+    });
+  });
+
+  describe('separateCamelCase', () => {
+    it('Must separate camel case string', () => {
+      expect(separateCamelCase('helloWorld')).toEqual('hello World');
     });
   });
 });

@@ -2,18 +2,18 @@ import type { PlopTypes } from '@turbo/gen';
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator('ui', {
-    description: 'add a new design system element or component',
+    description: 'add a new user interface layout or component',
     prompts: [
       {
         type: 'list',
         name: 'type',
         message: 'What type of file should be created ?',
-        choices: ['elements', 'components'],
+        choices: ['layout', 'components'],
       },
       {
         type: 'input',
         name: 'name',
-        message: 'What is the name of the design system item ?',
+        message: 'What is the name of the user interface item ?',
         validate: (input: string) => {
           if (input.includes('.')) {
             return 'file name cannot include an extension';

@@ -2,10 +2,11 @@
 import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-import validator from '@repo/services/validator/validator';
+import { emailValidator } from '@repo/services/validator/contact/contact';
+
+import Button from '@repo/ds/components/button/Button';
 
 import Auth from '@repo/ui/layout/auth/Auth';
-import Button from '@repo/ds/components/button/Button';
 import Input from '@repo/ui/components/input/Input';
 
 import { forgotPassword } from '../../actions';
@@ -45,7 +46,7 @@ export default function ForgotPassword() {
             name="email"
             label="E-mail"
             context="primary"
-            validate={validator.email}
+            validate={emailValidator}
             placeholder="Enter your signUp E-mail"
             reloadValidate={state?.errors?.email}
           />

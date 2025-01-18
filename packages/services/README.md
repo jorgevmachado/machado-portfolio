@@ -12,6 +12,7 @@
     npm run test -- --findRelatedTests src/validator/contact/contact.spec.ts
     npm run test -- --findRelatedTests src/validator/document/document.spec.ts
     npm run test -- --findRelatedTests src/validator/password/password.spec.ts            
+    npm run test -- --findRelatedTests src/validator/personal/personal.spec.ts            
 ```
 ### window
 ```

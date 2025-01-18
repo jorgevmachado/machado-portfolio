@@ -1,50 +1,32 @@
-import { ValidatorMessage } from '@repo/services/validator/interface';
-import validator from '@repo/services/validator/validator';
+import { emailValidator } from '@repo/services/validator/contact/contact';
 
-interface ForgotPasswordFields {
-  email?: string;
-}
-
-interface ForgotPasswordErrors {
-  email?: ValidatorMessage;
-}
-
-export type ForgotPasswordFormState =
-  | {
-      valid: boolean;
-      fields: ForgotPasswordFields;
-      errors?: ForgotPasswordErrors;
-      message?: string;
-    }
-  | undefined;
+import { AuthErrors, AuthFields, AuthFormState } from './interface';
 
 export async function forgotPassword(
-  prevState: ForgotPasswordFormState,
+  prevState: AuthFormState,
   formData: FormData,
 ) {
-  const fields: ForgotPasswordFields = {
+  const fields: AuthFields = {
     email: formData.get('email')?.toString(),
   };
 
-  const state = validate(fields);
+  prevState = validate(fields);
 
-  if (!state?.valid) {
-    prevState = state;
+  if (!prevState?.valid) {
     return prevState;
   }
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  prevState = state;
   return prevState;
 }
 
-function validate(fields: ForgotPasswordFields): ForgotPasswordFormState {
-  const errors: ForgotPasswordErrors = {
-    email: validator.email(fields.email),
+function validate(fields: AuthFields): AuthFormState {
+  const errors: AuthErrors = {
+    email: emailValidator(fields.email),
   };
 
-  const formState: ForgotPasswordFormState = {
+  const formState: AuthFormState = {
     valid: false,
     fields,
     errors,

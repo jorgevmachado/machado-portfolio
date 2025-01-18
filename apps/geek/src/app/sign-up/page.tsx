@@ -3,8 +3,22 @@ import { useActionState, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import formatter from '@repo/services/formatter/formatter';
-import validator from '@repo/services/validator/validator';
+import { cpfFormatter } from '@repo/services/formatter/document/document';
+import { mobileFormatter } from '@repo/services/formatter/contact/contact';
+
+import {
+  confirmPasswordValidator,
+  passwordValidator,
+} from '@repo/services/validator/password/password';
+import {
+  dateOfBirthValidator,
+  nameValidator,
+} from '@repo/services/validator/personal/personal';
+import {
+  emailValidator,
+  mobileValidator,
+} from '@repo/services/validator/contact/contact';
+import { cpfValidator } from '@repo/services/validator/document/document';
 
 import { EGender } from '@repo/business/api/nest/enum';
 
@@ -54,8 +68,8 @@ export default function SignUp() {
             name="cpf"
             label="CPF"
             context="primary"
-            validate={validator.cpf}
-            formatter={formatter.maskCpf}
+            validate={cpfValidator}
+            formatter={cpfFormatter}
             placeholder="Enter your CPF"
             reloadValidate={state?.errors?.cpf}
           />
@@ -66,7 +80,7 @@ export default function SignUp() {
             name="name"
             label="Name"
             context="primary"
-            validate={validator.name}
+            validate={nameValidator}
             placeholder="Enter your Fullname"
             reloadValidate={state?.errors?.name}
           />
@@ -104,7 +118,7 @@ export default function SignUp() {
             name="email"
             label="E-mail"
             context="primary"
-            validate={validator.email}
+            validate={emailValidator}
             placeholder="Enter your best E-mail"
             reloadValidate={state?.errors?.email}
           />
@@ -115,8 +129,8 @@ export default function SignUp() {
             name="whatsup"
             label="WhatsUp"
             context="primary"
-            validate={validator.mobile}
-            formatter={formatter.maskMobile}
+            validate={mobileValidator}
+            formatter={mobileFormatter}
             placeholder="Enter your WhatsUp"
             reloadValidate={state?.errors?.whatsup}
           />
@@ -127,7 +141,7 @@ export default function SignUp() {
             name="dateOfBirth"
             label="Date of birth"
             minAge={18}
-            validate={validator.dateOfBirth}
+            validate={dateOfBirthValidator}
             placeholder="Enter your date of birth"
             reloadValidate={state?.errors?.dateOfBirth}
           />
@@ -140,7 +154,7 @@ export default function SignUp() {
             name="password"
             label="Password"
             context="primary"
-            validate={validator.password}
+            validate={passwordValidator}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="Password"
             reloadValidate={state?.errors?.password}
@@ -153,7 +167,7 @@ export default function SignUp() {
             name="passwordConfirmation"
             label="Confirm Password"
             context="primary"
-            validate={(value) => validator.confirmPassword(value, password)}
+            validate={(value) => confirmPasswordValidator(value, password)}
             placeholder="Confirm Password"
             reloadValidate={state?.errors?.passwordConfirmation}
           />

@@ -1,5 +1,7 @@
 import { ValidatorMessage } from '../interface';
 
+import { REQUIRED_FIELD } from '../utils';
+
 export function minLength(min: number, value: string): ValidatorMessage {
   const valid = value.length >= min;
   return {
@@ -39,7 +41,13 @@ export function leastOneSpecialCharacter(value: string): ValidatorMessage {
   };
 }
 
-export function validator(min: number, value: string): ValidatorMessage {
+export function passwordValidator(
+  value?: string,
+  min: number = 8,
+): ValidatorMessage {
+  if (!value) {
+    return REQUIRED_FIELD;
+  }
   const minLengthValidator = minLength(min, value);
 
   if (!minLengthValidator.valid) {
@@ -68,15 +76,18 @@ export function validator(min: number, value: string): ValidatorMessage {
   };
 }
 
-export function confirmPassword(
-  min: number,
-  password: string,
-  value: string,
+export function confirmPasswordValidator(
+  value?: string,
+  password?: string,
+  min: number = 8,
 ): ValidatorMessage {
-  const passwordValidator = validator(min, value);
+  if (!value || !password) {
+    return REQUIRED_FIELD;
+  }
+  const passwordValidated = passwordValidator(value, min);
 
-  if (!passwordValidator.valid) {
-    return passwordValidator;
+  if (!passwordValidated.valid) {
+    return passwordValidated;
   }
 
   const valid = value === password;
