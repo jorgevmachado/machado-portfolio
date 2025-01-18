@@ -7,7 +7,7 @@ import Text from '@repo/ds/elements/text/Text';
 import Avatar from '@repo/ds/components/avatar/Avatar';
 import Link from '@repo/ds/components/link/Link';
 
-import { Menu } from '../../utils/menu';
+import { Menu } from '../../utils';
 
 import './Profile.scss';
 import joinClass from '@repo/ds/utils/join-class/joinClass';

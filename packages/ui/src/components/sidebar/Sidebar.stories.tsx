@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ENTITY_USER_COMPLETE_FIXTURE } from '@repo/business/auth/fixture/user';
 import { OContext } from '@repo/ds/utils/colors/options';
 
-import { LOGOUT_MENU, MENU } from '../../utils/menu/menu';
+import { LOGOUT_MENU, MENU } from '../../utils';
 
 import Sidebar from './Sidebar';
 
