@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
+import { PokemonModule } from './pokemons/pokemon.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
       synchronize: true,
     }),
     AuthModule,
+    PokemonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
