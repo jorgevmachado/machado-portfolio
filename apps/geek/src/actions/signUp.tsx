@@ -15,7 +15,10 @@ import {
 } from '@repo/services/validator/contact/contact';
 import { cpfValidator } from '@repo/services/validator/document/document';
 
+import { authService } from '../shared';
+
 import { AuthErrors, AuthFields, AuthFormState } from './interface';
+import { EGender } from '@repo/business/api/nest/enum';
 
 export async function signUp(prevState: AuthFormState, formData: FormData) {
   const fields: AuthFields = {
@@ -35,9 +38,30 @@ export async function signUp(prevState: AuthFormState, formData: FormData) {
     return prevState;
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  return prevState;
+  return await authService
+    .signUp({
+      cpf: prevState?.fields?.cpf ?? '',
+      name: prevState?.fields?.name ?? '',
+      email: prevState?.fields?.email ?? '',
+      gender: (prevState?.fields?.gender ?? EGender.OTHER) as EGender,
+      whatsup: prevState?.fields?.whatsup ?? '',
+      password: prevState?.fields?.password ?? '',
+      date_of_birth: new Date(prevState?.fields?.dateOfBirth ?? ''),
+      created_at: new Date(),
+      updated_at: new Date(),
+      password_confirmation: prevState?.fields?.passwordConfirmation ?? '',
+    })
+    .then((response) => {
+      prevState.valid = true;
+      prevState.errors = undefined;
+      prevState.message = response;
+      return prevState;
+    })
+    .catch((error) => {
+      prevState.valid = false;
+      prevState.message = error.message;
+      return prevState;
+    });
 }
 
 function validate(fields: AuthFields): AuthFormState {
@@ -56,55 +80,62 @@ function validate(fields: AuthFields): AuthFormState {
   };
 
   const formState: AuthFormState = {
-    valid: false,
+    valid: true,
     fields,
     errors,
-    message: 'Unable to register, please try again later',
   };
 
+  const messages: Array<string> = [];
+
   if (!errors?.cpf?.valid) {
-    formState.message = errors?.cpf?.message;
-    return formState;
+    formState.valid = false;
+    messages.push(`CPF: ${errors?.cpf?.message ?? 'invalid'}`);
   }
 
   if (!errors?.name?.valid) {
-    formState.message = errors?.name?.message;
-    return formState;
+    formState.valid = false;
+    messages.push(`Name: ${errors?.name?.message ?? 'invalid'}`);
   }
 
   if (!errors?.email?.valid) {
-    formState.message = errors?.email?.message;
-    return formState;
+    formState.valid = false;
+    messages.push(`Email: ${errors?.email?.message ?? 'invalid'}`);
   }
 
   if (!errors?.gender?.valid) {
-    formState.message = errors?.gender?.message;
-    return formState;
+    formState.valid = false;
+    messages.push(`Gender: ${errors?.gender?.message ?? 'invalid'}`);
   }
 
   if (!errors?.whatsup?.valid) {
-    formState.message = errors?.whatsup?.message;
-    return formState;
+    formState.valid = false;
+    messages.push(`Whatsapp: ${errors?.whatsup?.message ?? 'invalid'}`);
   }
 
   if (!errors?.password?.valid) {
-    formState.message = errors?.password?.message;
-    return formState;
+    formState.valid = false;
+    messages.push(`password: ${errors?.password?.message ?? 'invalid'}`);
   }
 
   if (!errors?.dateOfBirth?.valid) {
-    formState.message = errors?.dateOfBirth?.message;
-    return formState;
+    formState.valid = false;
+    messages.push(
+      `Date Of Birth: ${errors?.dateOfBirth?.message ?? 'invalid'}`,
+    );
   }
 
   if (!errors?.passwordConfirmation?.valid) {
-    formState.message = errors?.passwordConfirmation?.message;
-    return formState;
+    formState.valid = false;
+    messages.push(
+      `Confirm Password: ${errors?.passwordConfirmation?.message ?? 'invalid'}`,
+    );
+  }
+  if (formState.valid) {
+    formState.errors = undefined;
+    formState.message = 'Sign up successfully!';
   }
 
-  formState.valid = true;
-  formState.errors = undefined;
-  formState.message = 'Sign up successfully!';
+  formState.message = messages.map((message) => `   ${message}`).join('\n');
 
   return formState;
 }

@@ -9,6 +9,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { mobileValidator } from '@repo/services/validator/contact/contact';
+
 import { ERole, EStatus } from '@repo/business/shared/enum';
 
 import { Service } from '../../shared';
@@ -30,24 +32,45 @@ export class UserService extends Service<User> {
   }
 
   async create(createAuthDto: CreateAuthDto) {
-    await this.hasInactiveUser('cpf', createAuthDto.cpf);
+    const whatsUp = this.cleanFormatter(createAuthDto.whatsup);
+    const cpf = this.cleanFormatter(createAuthDto.cpf);
+
+    this.validateMobile(whatsUp);
+
+    await this.hasInactiveUser('cpf', cpf);
     await this.hasInactiveUser('email', createAuthDto.email);
-    await this.hasInactiveUser('whatsUp', createAuthDto.whatsup);
+    await this.hasInactiveUser('whatsUp', whatsUp);
 
     const user = new User();
-    user.cpf = createAuthDto.cpf;
+    user.cpf = cpf;
     user.salt = await bcrypt.genSalt();
     user.role = ERole.USER;
     user.name = createAuthDto.name;
     user.email = createAuthDto.email;
     user.gender = createAuthDto.gender;
     user.status = EStatus.ACTIVE;
-    user.whatsup = createAuthDto.whatsup;
+    user.whatsup = whatsUp;
     user.password = await bcrypt.hash(createAuthDto.password, user.salt);
     user.date_of_birth = createAuthDto.date_of_birth;
     user.confirmation_token = crypto.randomBytes(32).toString('hex');
-
     return await this.save(user);
+  }
+
+  cleanFormatter(value: string) {
+    return value
+      .replace('-', ' ')
+      .replaceAll('.', ' ')
+      .replace('(', '')
+      .replace(')', '')
+      .replace(/\s/g, '')
+      .trim();
+  }
+
+  validateMobile(value: string) {
+    const validatorMessage = mobileValidator(value);
+    if (!validatorMessage.valid) {
+      throw new BadRequestException(validatorMessage.message);
+    }
   }
 
   private async hasInactiveUser(by: TBy, value: string) {

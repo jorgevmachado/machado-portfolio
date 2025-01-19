@@ -1,4 +1,4 @@
-import { Nest } from '../api/nest';
+import { Nest } from '../api';
 
 import { SignInParams, SignUpParams, User } from './interface';
 
@@ -6,7 +6,7 @@ export class Auth {
   constructor(private nest: Nest) {}
 
   public async signUp(params: SignUpParams): Promise<string> {
-    return this.nest.signUp(params);
+    return this.nest.signUp(params).then((res) => res.message);
   }
 
   public async signIn(params: SignInParams): Promise<string> {

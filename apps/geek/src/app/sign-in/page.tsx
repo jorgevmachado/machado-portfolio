@@ -22,8 +22,11 @@ export default function SignIn() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!pending && state?.valid) {
-      alert('You have successfully logged in!');
+    if (!pending && state?.message) {
+      alert(state.message);
+    }
+    if (state?.valid) {
+      router.push('/');
     }
   }, [state]);
 

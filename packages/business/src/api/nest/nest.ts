@@ -22,7 +22,7 @@ export class Nest extends Http {
     });
   }
 
-  public async signUp(params: ISignUpParams): Promise<string> {
+  public async signUp(params: ISignUpParams): Promise<{ message: string }> {
     return this.post('auth/signUp', { body: params });
   }
 

@@ -1,8 +1,11 @@
 'use server';
+import { cookies } from 'next/headers';
 
 import { emailValidator } from '@repo/services/validator/contact/contact';
 
 import { passwordValidator } from '@repo/services/validator/password/password';
+
+import { authService } from '../shared';
 
 import { AuthErrors, AuthFields, AuthFormState } from './interface';
 
@@ -12,15 +15,28 @@ export async function signIn(prevState: AuthFormState, formData: FormData) {
     password: formData.get('password')?.toString(),
   };
 
+  const cookieStore = await cookies();
+
   prevState = validate(fields);
 
   if (!prevState?.valid) {
     return prevState;
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  return prevState;
+  return await authService
+    .signIn({
+      email: prevState?.fields?.email ?? '',
+      password: prevState?.fields?.password ?? '',
+    })
+    .then((response) => {
+      cookieStore.set('geekAccessToken', response);
+      return prevState;
+    })
+    .catch((error) => {
+      prevState.valid = false;
+      prevState.message = error.message;
+      return prevState;
+    });
 }
 
 function validate(fields: AuthFields): AuthFormState {
