@@ -11,18 +11,23 @@ interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   readonly color?: TColors;
 }
 
-export default function Icon({ icon, size, color, ...props }: IconProps) {
-  const classNameList = joinClass([
-    'icon',
-    `${color ? `ds-color-${color}` : ''}`,
-    `${props.className ? props.className : ''}`,
-  ]);
+export default function Icon({
+  icon,
+  size,
+  color,
+  className,
+  ...props
+}: IconProps) {
+  const classNameList = joinClass(
+    ['icon', color && `icon__color--${color}`, className].filter(Boolean),
+  );
+  const ariaLabel = typeof icon === 'string' ? icon : undefined;
 
   const currentIcon =
     typeof icon === 'string' ? getIcon(icon as TIcon, size, color) : icon;
 
   return (
-    <span {...props} className={classNameList}>
+    <span {...props} className={classNameList} aria-label={ariaLabel}>
       {currentIcon}
     </span>
   );

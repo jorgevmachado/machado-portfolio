@@ -9,7 +9,7 @@ import './Image.scss';
 interface ImageProps extends React.ImgHTMLAttributes<Element> {
   readonly fit?: 'cover' | 'contain';
   readonly lazyLoad?: boolean;
-  readonly fallback?: boolean;
+  readonly fallback?: React.ReactNode;
 }
 
 export default function Image({
@@ -22,7 +22,7 @@ export default function Image({
   className,
   ...props
 }: ImageProps) {
-  const [isInvalid, setIsInvalid] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(!props.src);
 
   useEffect(() => {
     if (!props.src) {
@@ -38,16 +38,22 @@ export default function Image({
     [setIsInvalid, onErrorCallback],
   );
 
-  const classNameList = joinClass([
-    'image',
-    `${fit ? `image__fit-${fit}` : ''}`,
-    className,
-  ]);
+  const classNameList = joinClass(
+    ['image', fit && `image__fit-${fit}`, className].filter(Boolean),
+  );
 
   if (isInvalid && fallback) {
     return (
-      <div className="image__fallback" title={alt}>
-        <Icon icon="camera" className="image__fallback--icon" />
+      <div
+        className="image__fallback"
+        title={alt}
+        aria-label={alt ?? 'Image failed to load'}
+      >
+        {typeof fallback === 'boolean' ? (
+          <Icon icon="camera" className="image__fallback--icon" />
+        ) : (
+          fallback
+        )}
       </div>
     );
   }

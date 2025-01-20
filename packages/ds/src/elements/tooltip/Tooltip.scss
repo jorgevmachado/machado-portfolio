@@ -56,7 +56,12 @@
       z-index: 999;
       position: absolute;
 
-      &-caret {
+      &.tooltip__container--visible {
+        display: block;
+      }
+
+
+        &-caret {
         width: var(--size-tiny);
         height: var(--size-tiny);
         display: block;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { isObject } from '@repo/services/object/object';
 import useGenerateComponentId from '../../utils/use-generate-component-id';
 
 export function isReactNode(value: unknown): boolean {
@@ -10,8 +9,12 @@ export function isReactNode(value: unknown): boolean {
 }
 
 export function formattedText(children: unknown) {
-  if (isReactNode(children) || isObject(children)) {
-    return;
+  if (isReactNode(children)) {
+    return children;
+  }
+  if (typeof children !== 'string') {
+    console.warn('Invalid children type. Expected string or ReactNode.');
+    return children;
   }
   return textCleaner(children as string).map((paragraph) =>
     formatText(paragraph),

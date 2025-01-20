@@ -22,24 +22,28 @@ export default function Text({
 }: TextProps) {
   const CustomTag = tag as React.ElementType;
 
+  const tagProps = CustomTag === 'label' ? { htmlFor } : {};
+
   const text =
     isReactNode(children) || isObject(children)
-      ? undefined
+      ? children
       : formattedText(children as string);
 
   return (
     <CustomTag
-      className={joinClass([
-        'text',
-        `ds-color-${color}`,
-        `text__variant--${variant}`,
-        `text__weight--${weight}`,
-        className,
-      ])}
-      htmlFor={htmlFor}
+      className={joinClass(
+        [
+          'text',
+          `ds-color-${color}`,
+          `text__variant--${variant}`,
+          `text__weight--${weight}`,
+          className,
+        ].filter(Boolean),
+      )}
       {...props}
+      {...tagProps}
     >
-      {!text ? children : text}
+      {text || children}
     </CustomTag>
   );
 }

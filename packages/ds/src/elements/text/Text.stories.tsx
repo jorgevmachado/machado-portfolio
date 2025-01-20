@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { OVariant, OWeight } from '../../utils/fonts';
-import { OColors } from '../../utils/colors';
+import { OColors, OVariant, OWeight } from '../../utils';
 
 import Text from './Text';
 
@@ -85,5 +84,13 @@ export const ItalicPartText: Story = {
   args: {
     variant: 'large',
     children: 'Hello _em_ World',
+  },
+};
+
+export const LabelWithFor: Story = {
+  args: {
+    tag: 'label',
+    htmlFor: 'input-id',
+    children: 'Input Label',
   },
 };

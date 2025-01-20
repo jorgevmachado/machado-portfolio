@@ -4,20 +4,18 @@ import Skeleton, { ORadius } from './Skeleton';
 
 const meta = {
   args: {
-    width: '40',
+    width: 120,
     radius: 'none',
-    height: '40',
-    freeWidth: undefined,
-    freeHeight: undefined,
+    height: 80,
   },
   title: 'Elements/Skeleton',
   argTypes: {
     width: {
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: '40' },
+        defaultValue: { summary: '120' },
       },
-      control: { type: 'text' },
+      control: { type: 'number' },
     },
     radius: {
       table: {
@@ -30,26 +28,15 @@ const meta = {
     height: {
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: '40' },
+        defaultValue: { summary: '80' },
       },
-      control: { type: 'text' },
-    },
-    freeWidth: {
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'undefined' },
-      },
-      control: { type: 'text' },
-    },
-    freeHeight: {
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'undefined' },
-      },
-      control: { type: 'text' },
+      control: { type: 'number' },
     },
   },
   component: Skeleton,
+  parameters: {
+    layout: 'centered',
+  },
 } satisfies Meta<typeof Skeleton>;
 
 export default meta;
@@ -57,5 +44,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { children: 'Exemplo' },
+  args: {},
 };
