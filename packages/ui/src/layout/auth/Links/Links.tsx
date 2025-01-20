@@ -1,7 +1,9 @@
-import { AuthLink } from '../interface';
-import Link from './Link';
 import React from 'react';
-import { TContext } from '@repo/ds/utils/colors/interface';
+import type { TContext } from '@repo/ds/utils/colors/interface';
+
+import type { AuthLink } from '../interface';
+
+import Link from './Link';
 
 import './Links.scss';
 

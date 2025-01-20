@@ -15,10 +15,11 @@ import {
 } from '@repo/services/validator/contact/contact';
 import { cpfValidator } from '@repo/services/validator/document/document';
 
+import { EGender } from '@repo/business/api/nest/enum';
+
 import { authService } from '../shared';
 
-import { AuthErrors, AuthFields, AuthFormState } from './interface';
-import { EGender } from '@repo/business/api/nest/enum';
+import type { AuthErrors, AuthFields, AuthFormState } from './interface';
 
 export async function signUp(prevState: AuthFormState, formData: FormData) {
   const fields: AuthFields = {
@@ -68,17 +69,17 @@ export async function signUp(prevState: AuthFormState, formData: FormData) {
 
 function validate(fields: AuthFields): AuthFormState {
   const errors: AuthErrors = {
-    cpf: cpfValidator(fields.cpf),
-    name: nameValidator(fields.name),
-    email: emailValidator(fields.email),
-    gender: genderValidator(fields.gender),
-    whatsup: mobileValidator(fields.whatsup),
-    password: passwordValidator(fields.password),
-    dateOfBirth: dateOfBirthValidator(fields.dateOfBirth),
-    passwordConfirmation: confirmPasswordValidator(
-      fields.passwordConfirmation,
-      fields.password,
-    ),
+    cpf: cpfValidator({ value: fields.cpf }),
+    name: nameValidator({ value: fields.name }),
+    email: emailValidator({ value: fields.email }),
+    gender: genderValidator({ value: fields.gender }),
+    whatsup: mobileValidator({ value: fields.whatsup }),
+    password: passwordValidator({ value: fields.password }),
+    dateOfBirth: dateOfBirthValidator({ value: fields.dateOfBirth }),
+    passwordConfirmation: confirmPasswordValidator({
+      value: fields.passwordConfirmation,
+      optionalValue: fields.password,
+    }),
   };
 
   const formState: AuthFormState = {

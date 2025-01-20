@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Direction, Style } from '../interface';
+import type { Direction, Style } from '../interface';
 
 const styledShow = (timeout: number): Style => ({
   opacity: 1,

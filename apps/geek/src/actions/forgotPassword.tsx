@@ -1,6 +1,6 @@
 import { emailValidator } from '@repo/services/validator/contact/contact';
 
-import { AuthErrors, AuthFields, AuthFormState } from './interface';
+import type { AuthErrors, AuthFields, AuthFormState } from './interface';
 
 export async function forgotPassword(
   prevState: AuthFormState,
@@ -23,7 +23,7 @@ export async function forgotPassword(
 
 function validate(fields: AuthFields): AuthFormState {
   const errors: AuthErrors = {
-    email: emailValidator(fields.email),
+    email: emailValidator({ value: fields.email }),
   };
 
   const formState: AuthFormState = {

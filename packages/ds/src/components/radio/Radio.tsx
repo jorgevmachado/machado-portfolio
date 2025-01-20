@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-import { TContext } from '../../utils/colors';
+import type { TContext } from '../../utils';
 import joinClass from '../../utils/join-class';
 import useGenerateComponentId from '../../utils/use-generate-component-id';
 
-import Icon from '../../elements/icon';
-import Text from '../../elements/text';
+import { Icon, Text } from '../../elements';
 
 import './Radio.scss';
 

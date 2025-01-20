@@ -1,5 +1,5 @@
 import React from 'react';
-import { isObject } from '@repo/services';
+import { isObject } from '@repo/services/object/object';
 import useGenerateComponentId from '../../utils/use-generate-component-id';
 
 export function isReactNode(value: unknown): boolean {

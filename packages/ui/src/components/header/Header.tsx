@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { TContext } from '@repo/ds/utils/colors';
+import type { TContext } from '@repo/ds/utils/colors';
 
-import { Logo, Menu } from '../../utils';
+import type { Logo, Menu } from '../../utils';
 
 import Image from '@repo/ds/elements/image/Image';
 

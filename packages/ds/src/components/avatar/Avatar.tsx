@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import type { TContext } from '../../utils/colors';
-import type { TSimplySIze } from '../../utils/sizes';
+import type { TContext, TSimplySIze } from '../../utils';
 
 import joinClass from '../../utils/join-class';
 

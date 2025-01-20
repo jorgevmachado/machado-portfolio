@@ -1,6 +1,7 @@
 'use client';
-import Button from '@repo/ds/components/button/Button';
 import Link from 'next/link';
+
+import Button from '@repo/ds/components/button/Button';
 
 export default function Home() {
   return (

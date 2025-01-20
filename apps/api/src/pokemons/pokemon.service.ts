@@ -5,9 +5,9 @@ import { Repository } from 'typeorm';
 import { isUUID } from '@repo/services/string/string';
 
 import { EStatus } from '@repo/business/shared/enum';
-import { PaginateParameters } from '@repo/business/paginate/interface';
+import type { PaginateParameters } from '@repo/business/paginate/interface';
 import { PokemonExternalBusiness } from '@repo/business/pokemon/external/pokemonExternalBusiness';
-import { QueryParameters } from '@repo/business/shared/interface';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
 import { Pokemon } from './entities/pokemon.entity';
 

@@ -1,16 +1,15 @@
 import React from 'react';
 
-import { TContext } from '@repo/ds/utils/colors';
-
-import Text from '@repo/ds/elements/text/Text';
+import type { TContext } from '@repo/ds/utils/colors';
 
 import Avatar from '@repo/ds/components/avatar/Avatar';
 import Link from '@repo/ds/components/link/Link';
+import Text from '@repo/ds/elements/text/Text';
+import joinClass from '@repo/ds/utils/join-class/joinClass';
 
-import { Menu } from '../../utils';
+import type { Menu } from '../../utils';
 
 import './Profile.scss';
-import joinClass from '@repo/ds/utils/join-class/joinClass';
 
 interface ProfileProps {
   name?: string;

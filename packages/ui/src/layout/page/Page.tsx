@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { User } from '@repo/business/auth/interface';
+import type { User } from '@repo/business/auth/interface';
 
-import { TContext } from '@repo/ds/utils/colors/interface';
+import type { TContext } from '@repo/ds/utils/colors/interface';
 
-import { Logo, Menu } from '../../utils';
+import type { Logo, Menu } from '../../utils';
 
 import Fade from '../../animations/fade';
 

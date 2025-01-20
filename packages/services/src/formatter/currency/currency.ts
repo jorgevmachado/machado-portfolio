@@ -1,4 +1,4 @@
-import { TCountry } from '../interface';
+import type { TCountry } from '../interface';
 
 export function currencyFormatter(
   value: number = 0,

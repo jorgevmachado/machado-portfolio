@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { uuid } from '@repo/services';
+import { uuid } from '@repo/services/string/string';
 
 export default function useGenerateComponentId(text: string): string {
   const uuidGenerate = uuid();

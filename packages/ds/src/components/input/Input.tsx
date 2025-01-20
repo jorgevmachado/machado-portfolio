@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import joinClass from '../../utils/join-class';
 import useGenerateComponentId from '../../utils/use-generate-component-id';
 
-import Text from '../../elements/text';
+import { Icon, Text } from '../../elements';
 
 import Feedback from '../feedback';
 import Label from '../label';
@@ -12,7 +12,6 @@ import InputItem from './inputItem';
 import type { InputProps } from './interface';
 
 import './Input.scss';
-import { Icon } from '../../elements';
 
 export default function Input({
   id,

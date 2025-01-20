@@ -4,7 +4,7 @@ import Image from '@repo/ds/elements/image/Image';
 import Text from '@repo/ds/elements/text/Text';
 import joinClass from '@repo/ds/utils/join-class/joinClass';
 
-import { AuthProps } from './interface';
+import type { AuthProps } from './interface';
 import Form from './Form';
 import Links from './Links';
 import Socials from './Socials';

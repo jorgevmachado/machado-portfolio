@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { TContext } from '../../../utils/colors';
+import type { TContext } from '../../../utils';
 
 import type { TDropdown } from '../interface';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Style } from '../interface';
+import type { Style } from '../interface';
 
 interface FadeProps {
   enter?: boolean;

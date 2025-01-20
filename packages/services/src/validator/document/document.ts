@@ -1,4 +1,4 @@
-import { ValidatorMessage, ValidatorParams } from '../interface';
+import type { ValidatorMessage, ValidatorParams } from '../interface';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 

@@ -5,7 +5,7 @@ import {
   validateYear,
 } from './stringToDateUtils';
 
-import { ParseDate, YearMonthDay } from './interface';
+import type { ParseDate, YearMonthDay } from './interface';
 
 interface CreateDateFromYearMonthDayParams extends YearMonthDay {
   fallback?: boolean;

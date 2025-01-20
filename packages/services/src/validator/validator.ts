@@ -1,6 +1,6 @@
 import { INVALID_TYPE } from './utils';
 
-import { ValidatorMessage, ValidatorParams } from './interface';
+import type { ValidatorMessage, ValidatorParams } from './interface';
 
 export function numberValidator({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {

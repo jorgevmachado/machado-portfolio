@@ -3,7 +3,7 @@ import { ConflictException } from '@nestjs/common';
 
 import { QueryParameters } from '@repo/business/shared/interface';
 
-import { FilterParams, SearchParams } from '../interface';
+import type { FilterParams, SearchParams } from '../interface';
 
 export interface QueryParams<T> {
   readonly alias: string;

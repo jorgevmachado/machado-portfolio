@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Menu } from '../../../utils';
+import type { Menu } from '../../../utils';
 
 import Button from '@repo/ds/components/button/Button';
 import Dropdown from '@repo/ds/components/dropdown/Dropdown';
-import { TContext } from '@repo/ds/utils/colors/interface';
-import { TIcon } from '@repo/ds/utils/icons/interface';
+import type { TContext } from '@repo/ds/utils/colors/interface';
+import type { TIcon } from '@repo/ds/utils/icons/interface';
 
 export interface SidebarActionProps {
   icon?: TIcon;

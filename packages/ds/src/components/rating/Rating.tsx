@@ -1,11 +1,10 @@
 import React from 'react';
 
-import type { TContext } from '../../utils/colors';
+import type { TContext } from '../../utils';
 
 import joinClass from '../../utils/join-class';
 
-import Icon from '../../elements/icon';
-import Tooltip from '../../elements/tooltip';
+import { Icon, Tooltip } from '../../elements';
 
 import './Rating.scss';
 

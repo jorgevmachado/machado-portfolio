@@ -1,4 +1,4 @@
-import { TDateSeparator } from './interface';
+import type { TDateSeparator } from './interface';
 
 import { createDateFromYearMonthDay } from './dateUtils';
 

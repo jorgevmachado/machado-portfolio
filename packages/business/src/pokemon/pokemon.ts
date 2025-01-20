@@ -1,6 +1,6 @@
 import { Nest } from '../api';
 import { Paginate } from '../paginate';
-import { QueryParameters } from '../shared';
+import type { QueryParameters } from '../shared';
 
 import { PokemonEntity } from './modules';
 

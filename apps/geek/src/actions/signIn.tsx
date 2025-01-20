@@ -7,7 +7,7 @@ import { passwordValidator } from '@repo/services/validator/password/password';
 
 import { authService } from '../shared';
 
-import { AuthErrors, AuthFields, AuthFormState } from './interface';
+import type { AuthErrors, AuthFields, AuthFormState } from './interface';
 
 export async function signIn(prevState: AuthFormState, formData: FormData) {
   console.log('formData => ', formData);

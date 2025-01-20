@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { TColors, TContext } from '../../utils/colors';
+import type { TColors, TContext } from '../../utils';
 import joinClass from '../../utils/join-class';
 
 import Icon from '../../elements/icon';

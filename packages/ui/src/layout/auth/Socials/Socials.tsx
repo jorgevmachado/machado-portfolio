@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@repo/ds/components/button/Button';
 
-import { AuthSocial } from '../interface';
+import type { AuthSocial } from '../interface';
 
 import './Socials.scss';
 

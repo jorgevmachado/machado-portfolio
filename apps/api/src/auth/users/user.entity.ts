@@ -9,7 +9,7 @@ import {
 
 import { ERole, EStatus } from '@repo/business/shared/enum';
 import { EGender } from '@repo/business/api/nest/enum';
-import { User as EntityUser } from '@repo/business/auth/interface';
+import type { User as EntityUser } from '@repo/business/auth/interface';
 
 @Entity({ name: 'users' })
 export class User implements EntityUser {

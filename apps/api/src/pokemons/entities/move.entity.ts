@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MoveEntity } from '@repo/business/pokemon/modules/move/interface';
+import type { MoveEntity } from '@repo/business/pokemon/modules/move/interface';
 
 @Entity({ name: 'moves' })
 export class Move implements MoveEntity {

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from '@repo/ds/components/button/Button';
-import Input from './input';
 import joinClass from '@repo/ds/utils/join-class/joinClass';
+
+import Input from './input';
 
 import {
   AuthErrors,

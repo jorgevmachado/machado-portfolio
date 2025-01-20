@@ -15,7 +15,7 @@ import { ERole, EStatus } from '@repo/business/shared/enum';
 
 import { Service } from '../../shared';
 
-import { TBy } from '../../shared/interface';
+import type { TBy } from '../../shared/interface';
 
 import { CreateAuthDto } from '../dto/create-auth.dto';
 import { CredentialsAuthDto } from '../dto/credentials-auth.dto';
@@ -67,7 +67,7 @@ export class UserService extends Service<User> {
   }
 
   validateMobile(value: string) {
-    const validatorMessage = mobileValidator(value);
+    const validatorMessage = mobileValidator({ value });
     if (!validatorMessage.valid) {
       throw new BadRequestException(validatorMessage.message);
     }

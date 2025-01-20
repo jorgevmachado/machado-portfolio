@@ -1,8 +1,9 @@
-import { AuthErrors, AuthFields, AuthFormState } from './interface';
 import {
   confirmPasswordValidator,
   passwordValidator,
 } from '@repo/services/validator/password/password';
+
+import type { AuthErrors, AuthFields, AuthFormState } from './interface';
 
 export async function resetPassword(
   prevState: AuthFormState,
@@ -35,11 +36,11 @@ export async function resetPassword(
 
 function validate(fields: AuthFields): AuthFormState {
   const errors: AuthErrors = {
-    password: passwordValidator(fields.password),
-    passwordConfirmation: confirmPasswordValidator(
-      fields.passwordConfirmation,
-      fields.password,
-    ),
+    password: passwordValidator({ value: fields.password }),
+    passwordConfirmation: confirmPasswordValidator({
+      value: fields.passwordConfirmation,
+      optionalValue: fields.password,
+    }),
   };
 
   const formState: AuthFormState = {

@@ -4,7 +4,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Paginate } from '@repo/business/paginate/paginate';
 import { PaginateParameters } from '@repo/business/paginate/interface';
 
-import { FindOneParams, FindParams, ListParams } from '../interface';
+import type { FindOneParams, FindParams, ListParams } from '../interface';
 import { Base } from '../base';
 import { Query } from '../query';
 

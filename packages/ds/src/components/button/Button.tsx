@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 
 import joinClass from '../../utils/join-class';
 
-import Icon from '../../elements/icon';
+import { Icon, Spinner } from '../../elements';
 
 import type { ButtonProps } from './interface';
 
 import './Button.scss';
-import { Spinner } from '../../elements';
 
 export default function Button({
   icon,

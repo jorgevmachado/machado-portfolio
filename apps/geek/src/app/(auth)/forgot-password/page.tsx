@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import Auth from '@repo/ui/layout/auth/Auth';
 
-import { AuthForm } from '@repo/ui/layout/auth/Form/interface';
+import type { AuthForm } from '@repo/ui/layout/auth/Form/interface';
 
 import { forgotPassword } from '../../../actions';
 
