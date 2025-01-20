@@ -2,12 +2,9 @@
 import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { emailValidator } from '@repo/services/validator/contact/contact';
-
-import Button from '@repo/ds/components/button/Button';
-
 import Auth from '@repo/ui/layout/auth/Auth';
-import Input from '@repo/ui/layout/auth/Form/input/Input';
+
+import { AuthForm } from '@repo/ui/layout/auth/Form/interface';
 
 import { forgotPassword } from '../../actions';
 
@@ -27,6 +24,12 @@ export default function ForgotPassword() {
     }
   }, [state]);
 
+  const handleSubmit = (authForm: AuthForm) => {
+    if (authForm.formData) {
+      action(authForm.formData);
+    }
+  };
+
   return (
     <Auth
       type="forgotPassword"
@@ -34,30 +37,12 @@ export default function ForgotPassword() {
       title="Forgot Password"
       context="primary"
       className="forgot-password"
+      onSubmit={handleSubmit}
       description="Enter your registered email to reset your password"
       signInLink={{
         label: 'Back to login',
         clickAction: () => router.push('/sign-in'),
       }}
-    >
-      <form action={action} className="forgot-password__form">
-        <div>
-          <Input
-            id="email"
-            type="text"
-            name="email"
-            label="E-mail"
-            context="primary"
-            validate={emailValidator}
-            placeholder="Enter your signUp E-mail"
-            reloadValidate={state?.errors?.email}
-          />
-        </div>
-
-        <Button type="submit" fluid context="primary" loading={pending}>
-          Send
-        </Button>
-      </form>
-    </Auth>
+    />
   );
 }

@@ -21,6 +21,7 @@ import './Form.scss';
 export default function Form({
   type,
   context = 'primary',
+  loading,
   onSubmit,
   buttonLabel = 'save',
   ...props
@@ -161,7 +162,7 @@ export default function Form({
           />
         </div>
       ))}
-      <Button type="submit" context={context} fluid>
+      <Button type="submit" context={context} fluid loading={loading}>
         {currentForm.buttonLabel}
       </Button>
     </form>

@@ -37,6 +37,7 @@ export default function SignIn() {
       title="Sign in"
       onSubmit={handleSubmit}
       context="primary"
+      loading={pending}
       className="sign-in"
       signUpLink={{
         title: 'Dont have an account ?',

@@ -41,6 +41,7 @@ export interface AuthProps
   logo?: LogoProps;
   title?: string;
   context?: TContext;
+  loading?: boolean;
   onSubmit?: (values: AuthForm) => void;
   googleAuth?: AuthSocial;
   signUpLink?: AuthLink;

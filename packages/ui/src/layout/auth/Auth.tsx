@@ -2,15 +2,14 @@ import React from 'react';
 
 import Image from '@repo/ds/elements/image/Image';
 import Text from '@repo/ds/elements/text/Text';
+import joinClass from '@repo/ds/utils/join-class/joinClass';
 
 import { AuthProps } from './interface';
+import Form from './Form';
 import Links from './Links';
 import Socials from './Socials';
 
-import joinClass from '@repo/ds/utils/join-class/joinClass';
-
 import './Auth.scss';
-import Form from './Form';
 
 export default function Auth({
   type = 'blank',
@@ -19,6 +18,7 @@ export default function Auth({
   children,
   onSubmit,
   context = 'primary',
+  loading,
   googleAuth,
   signUpLink,
   signInLink,
@@ -61,7 +61,12 @@ export default function Auth({
       {type === 'blank' ? (
         children
       ) : (
-        <Form type={type} context={context} onSubmit={onSubmit} />
+        <Form
+          type={type}
+          context={context}
+          onSubmit={onSubmit}
+          loading={loading}
+        />
       )}
 
       {hasLink && (

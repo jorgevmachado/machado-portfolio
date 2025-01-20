@@ -12,6 +12,7 @@ export interface FormProps
   extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
   type?: Omit<TAuth, 'blank'>;
   context?: TContext;
+  loading?: boolean;
   onSubmit?: (values: AuthForm) => void;
   buttonLabel?: string;
 }
