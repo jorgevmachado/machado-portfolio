@@ -1,25 +1,25 @@
 'use client';
 import { useActionState, useEffect } from 'react';
-
 import { useRouter } from 'next/navigation';
 
 import Auth from '@repo/ui/layout/auth/Auth';
+
 import { AuthForm } from '@repo/ui/layout/auth/Form/interface';
 
-import { signUp } from '../../actions';
+import { forgotPassword } from '../../../actions';
 
-import './SignUp.scss';
+import './ForgotPassword.scss';
 
-export default function SignUp() {
-  const [state, action, pending] = useActionState(signUp, undefined);
+export default function ForgotPassword() {
+  const [state, action, pending] = useActionState(forgotPassword, undefined);
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!pending && state?.message) {
-      alert(state.message);
-    }
-    if (state?.valid) {
+    if (!pending && state?.valid) {
+      alert(
+        'In bookshelves you will receive an email with further instructions!',
+      );
       router.push('/sign-in');
     }
   }, [state]);
@@ -32,19 +32,17 @@ export default function SignUp() {
 
   return (
     <Auth
-      type="signUp"
+      type="forgotPassword"
       logo={{ src: '/logo/logo.svg', width: '15rem', height: '15rem' }}
-      title="Sign Up"
-      onSubmit={handleSubmit}
+      title="Forgot Password"
       context="primary"
-      loading={pending}
-      className="sign-up"
+      className="forgot-password"
+      onSubmit={handleSubmit}
+      description="Enter your registered email to reset your password"
       signInLink={{
-        title: 'Already have an account ?',
-        label: 'Sign in here',
+        label: 'Back to login',
         clickAction: () => router.push('/sign-in'),
       }}
-      description="By continuing, you affirm that you are over 18 years old and allow the sharing of your data in interactions with the platform."
     />
   );
 }

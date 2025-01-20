@@ -1,5 +1,3 @@
-import { router } from 'next/client';
-
 import { Menu } from '@repo/ui/utils/menu/interface';
 
 const navbar: Menu = {
@@ -7,13 +5,13 @@ const navbar: Menu = {
   items: [
     {
       key: 'about',
+      href: '/about',
       label: 'Sobre',
-      onRedirect: () => router.push('/about'),
     },
     {
       key: 'contact',
+      href: '/contact',
       label: 'Fale Conosco',
-      onRedirect: () => router.push('/contact'),
     },
   ],
 };
@@ -24,8 +22,8 @@ const sidebar: Menu = {
     {
       key: 'profile',
       icon: 'user',
+      href: '/profile',
       label: 'Meus Dados',
-      onRedirect: () => router.push('/profile'),
     },
   ],
 };
@@ -36,5 +34,4 @@ export const logout: Menu['items'][number] = {
   key: 'logout',
   icon: 'exit',
   label: 'logout',
-  onRedirect: () => router.push('/logout'),
 };

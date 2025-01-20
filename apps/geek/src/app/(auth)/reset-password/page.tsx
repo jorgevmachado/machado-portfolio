@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { AuthForm } from '@repo/ui/layout/auth/Form/interface';
 import Form from '@repo/ui/layout/auth/Form/Form';
 
-import { resetPassword } from '../../actions';
+import { resetPassword } from '../../../actions';
 
 import './ResetPassword.scss';
 

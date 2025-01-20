@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Auth from '@repo/ui/layout/auth/Auth';
 import { AuthForm } from '@repo/ui/layout/auth/Form/interface';
 
-import { signIn } from '../../actions';
+import { signIn } from '../../../actions';
 
 import './SignIn.scss';
 

@@ -5,6 +5,7 @@ import type { TIcon } from '@repo/ds/utils/icons';
 export interface MenuItem {
   key: string;
   icon?: TIcon;
+  href?: string;
   label: string;
   items?: Array<MenuItem>;
   counter?: number;

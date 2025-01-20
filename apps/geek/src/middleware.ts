@@ -1,25 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-import { protectedRoutes, publicRoutes } from './routes';
+import { allRoutes, authRoutes } from './routes';
 
 export default async function middleware(request: NextRequest) {
-  console.log('middleware => ', request.nextUrl.pathname);
-  const cookieStore = await cookies();
   const path = request.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
-  const isHome =
-    request.nextUrl.pathname.startsWith('/dashboard') ||
-    request.nextUrl.pathname.startsWith('/');
 
+  const isRoutePath = allRoutes.includes(path);
+
+  if (!isRoutePath) {
+    return NextResponse.next();
+  }
+
+  const isAuthRoute = authRoutes.includes(path);
+
+  const cookieStore = await cookies();
   const accessToken = cookieStore.get('geekAccessToken');
+  const isAuthenticated = Boolean(accessToken);
 
-  if (isProtectedRoute && !accessToken) {
+  const isLogout = request.nextUrl.searchParams.get('logout') === 'true';
+
+  if (isLogout) {
+    cookieStore.delete('geekAccessToken');
     return NextResponse.redirect(new URL('/sign-in', request.nextUrl));
   }
 
-  if (isPublicRoute && accessToken && !isHome) {
+  if (isAuthRoute && isAuthenticated) {
+    return NextResponse.redirect(new URL('/dashboard', request.nextUrl));
+  }
+
+  if (!isAuthRoute && !isAuthenticated) {
+    return NextResponse.redirect(new URL('/sign-in', request.nextUrl));
+  }
+
+  const isEmptyPath = path === '/';
+
+  if (isEmptyPath) {
     return NextResponse.redirect(new URL('/dashboard', request.nextUrl));
   }
 

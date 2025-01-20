@@ -7,3 +7,7 @@ export function getAccessToken() {
 export function setAccessToken(token: string) {
   return cookies.set('geekAccessToken', token, '.geek.com.br');
 }
+
+export function removeAccessToken() {
+  return cookies.remove('geekAccessToken', 'http://localhost:3000');
+}

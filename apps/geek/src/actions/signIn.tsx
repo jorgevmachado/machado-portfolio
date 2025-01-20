@@ -44,8 +44,8 @@ export async function signIn(prevState: AuthFormState, formData: FormData) {
 
 function validate(fields: AuthFields): AuthFormState {
   const errors: AuthErrors = {
-    email: emailValidator(fields.email),
-    password: passwordValidator(fields.password),
+    email: emailValidator({ value: fields.email }),
+    password: passwordValidator({ value: fields.password }),
   };
 
   const formState: AuthFormState = {
