@@ -25,6 +25,7 @@
     "gen": "turbo gen ui",
     "build:law": "set BRAND=law && rimraf dist && rollup -c",
     "build:geek": "set BRAND=geek && rimraf dist && rollup -c",
+    "watch:geek": "set BRAND=geek && rimraf dist && rollup -c --watch",
     "build:finance": "set BRAND=finance && rimraf dist && rollup -c",
     "storybook:finance": "set BRAND=finance && storybook dev -p 6006",
     "storybook:geek": "set BRAND=geek && storybook dev -p 6006",

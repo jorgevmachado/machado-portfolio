@@ -12,6 +12,7 @@ import InputItem from './inputItem';
 import type { InputProps } from './interface';
 
 import './Input.scss';
+import { Icon } from '../../elements';
 
 export default function Input({
   id,
@@ -52,6 +53,10 @@ export default function Input({
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const [currentInputValue, setCurrentInputValue] = useState<string>('');
   const [currentPlaceholder, setCurrentPlaceholder] = useState<string>('');
+  const [passwordIcon, setPasswordIcon] = useState<'eye' | 'eye-close'>(
+    'eye-close',
+  );
+  const [typeInput, setTypeInput] = useState<string | undefined>(type);
 
   const isShrink = floatingLabel && (inputHasValue || isInputFocused);
 
@@ -134,6 +139,17 @@ export default function Input({
     `${isInputMouseFocused ? 'input__item--mouse-focus' : ''}`,
   ]);
 
+  const toggleShowPassword = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.preventDefault();
+    if (typeInput === 'password') {
+      setPasswordIcon('eye');
+      setTypeInput('text');
+      return;
+    }
+    setPasswordIcon('eye-close');
+    setTypeInput('password');
+  };
+
   useEffect(() => {
     setInputHasValue(Boolean(value));
     setCurrentInputValue(String(value));
@@ -158,7 +174,7 @@ export default function Input({
         />
       )}
       <InputItem
-        type={type}
+        type={typeInput}
         rows={rows}
         name={name}
         value={currentInputValue}
@@ -185,7 +201,16 @@ export default function Input({
         {childrenElements['prepend']}
         {childrenElements['append']}
         {childrenElements['counter']}
-        {childrenElements['icon-right']}
+        {type === 'password' ? (
+          <Icon
+            icon={passwordIcon}
+            onClick={toggleShowPassword}
+            className="input__password"
+            data-children="icon-right"
+          />
+        ) : (
+          childrenElements['icon-right']
+        )}
       </InputItem>
       {isInvalid && invalidMessage && (
         <Feedback context="error">{invalidMessage}</Feedback>

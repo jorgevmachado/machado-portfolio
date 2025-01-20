@@ -7,14 +7,18 @@ import { AuthProps } from './interface';
 import Links from './Links';
 import Socials from './Socials';
 
-import './Auth.scss';
 import joinClass from '@repo/ds/utils/join-class/joinClass';
 
+import './Auth.scss';
+import Form from './Form';
+
 export default function Auth({
+  type = 'blank',
   logo,
   title,
   children,
-  context = 'neutral',
+  onSubmit,
+  context = 'primary',
   googleAuth,
   signUpLink,
   signInLink,
@@ -26,6 +30,7 @@ export default function Auth({
   const hasSocialAuth = googleAuth || facebookAuth;
   const hasLink = signInLink || signUpLink || forgotPasswordLink;
   const classNameList = joinClass(['auth', `${props.className ?? ''}`]);
+
   return (
     <div {...props} className={classNameList}>
       {logo && (
@@ -52,7 +57,13 @@ export default function Auth({
       {hasSocialAuth && (
         <Socials googleAuth={googleAuth} facebookAuth={facebookAuth} />
       )}
-      {children}
+
+      {type === 'blank' ? (
+        children
+      ) : (
+        <Form type={type} context={context} onSubmit={onSubmit} />
+      )}
+
       {hasLink && (
         <Links
           signUpLink={signUpLink}

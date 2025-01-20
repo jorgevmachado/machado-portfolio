@@ -4,7 +4,15 @@ import { User } from '@repo/business/auth/interface';
 
 import { TContext } from '@repo/ds/utils/colors/interface';
 
-export type TAuth = 'signUp' | 'signIn' | 'update' | 'forgotPassword';
+import { AuthForm } from './Form/interface';
+
+export type TAuth =
+  | 'blank'
+  | 'signUp'
+  | 'signIn'
+  | 'update'
+  | 'forgotPassword'
+  | 'resetPassword';
 
 export interface LogoProps {
   src: string;
@@ -26,28 +34,14 @@ export interface AuthSocial
   label: string;
 }
 
-export interface OnAuthSubmit {
-  valid: boolean;
-  result?: {
-    id?: User['id'];
-    cpf: User['cpf'];
-    role: User['role'];
-    name: User['name'];
-    email: User['email'];
-    gender: User['gender'];
-    whatsUp: User['whatsup'];
-    password: string;
-    dateOfBirth: User['date_of_birth'];
-    passwordConfirmation: string;
-  };
-  messages: Array<string>;
-}
-
-export interface AuthProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AuthProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit'> {
+  type?: TAuth;
   user?: User;
   logo?: LogoProps;
   title?: string;
   context?: TContext;
+  onSubmit?: (values: AuthForm) => void;
   googleAuth?: AuthSocial;
   signUpLink?: AuthLink;
   signInLink?: AuthLink;

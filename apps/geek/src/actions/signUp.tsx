@@ -26,11 +26,13 @@ export async function signUp(prevState: AuthFormState, formData: FormData) {
     name: formData.get('name')?.toString(),
     email: formData.get('email')?.toString(),
     gender: formData.get('gender')?.toString(),
-    whatsup: formData.get('whatsup')?.toString(),
+    whatsup: formData.get('whatsapp')?.toString(),
     password: formData.get('password')?.toString(),
     dateOfBirth: formData.get('dateOfBirth')?.toString(),
     passwordConfirmation: formData.get('passwordConfirmation')?.toString(),
   };
+
+  console.log('fields => ', fields);
 
   prevState = validate(fields);
 

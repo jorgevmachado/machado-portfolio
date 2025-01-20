@@ -10,10 +10,13 @@ import { authService } from '../shared';
 import { AuthErrors, AuthFields, AuthFormState } from './interface';
 
 export async function signIn(prevState: AuthFormState, formData: FormData) {
+  console.log('formData => ', formData);
   const fields: AuthFields = {
     email: formData.get('email')?.toString(),
     password: formData.get('password')?.toString(),
   };
+
+  console.log('fields => ', fields);
 
   const cookieStore = await cookies();
 

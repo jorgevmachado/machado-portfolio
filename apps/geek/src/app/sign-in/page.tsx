@@ -3,14 +3,8 @@ import { useActionState, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { emailValidator } from '@repo/services/validator/contact/contact';
-
-import { passwordValidator } from '@repo/services/validator/password/password';
-
-import Button from '@repo/ds/components/button/Button';
-
 import Auth from '@repo/ui/layout/auth/Auth';
-import Input from '@repo/ui/components/input/Input';
+import { AuthForm } from '@repo/ui/layout/auth/Form/interface';
 
 import { signIn } from '../../actions';
 
@@ -30,10 +24,18 @@ export default function SignIn() {
     }
   }, [state]);
 
+  const handleSubmit = (authForm: AuthForm) => {
+    if (authForm.formData) {
+      action(authForm.formData);
+    }
+  };
+
   return (
     <Auth
+      type="signIn"
       logo={{ src: '/logo/logo.svg', width: '15rem', height: '15rem' }}
       title="Sign in"
+      onSubmit={handleSubmit}
       context="primary"
       className="sign-in"
       signUpLink={{
@@ -46,36 +48,6 @@ export default function SignIn() {
         label: 'I forgot my password',
         clickAction: () => router.push('/forgot-password'),
       }}
-    >
-      <form action={action} className="sign-in__form">
-        <div>
-          <Input
-            id="email"
-            name="email"
-            label="E-mail"
-            context="primary"
-            validate={emailValidator}
-            placeholder="Enter your signUp E-mail"
-            reloadValidate={state?.errors?.email}
-          />
-        </div>
-
-        <div>
-          <Input
-            id="password"
-            type="password"
-            name="password"
-            label="Password"
-            context="primary"
-            validate={passwordValidator}
-            placeholder="Enter your signUp Password"
-            reloadValidate={state?.errors?.password}
-          />
-        </div>
-        <Button type="submit" fluid context="primary" loading={pending}>
-          Sign In
-        </Button>
-      </form>
-    </Auth>
+    />
   );
 }

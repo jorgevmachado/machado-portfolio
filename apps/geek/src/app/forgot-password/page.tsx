@@ -7,7 +7,7 @@ import { emailValidator } from '@repo/services/validator/contact/contact';
 import Button from '@repo/ds/components/button/Button';
 
 import Auth from '@repo/ui/layout/auth/Auth';
-import Input from '@repo/ui/components/input/Input';
+import Input from '@repo/ui/layout/auth/Form/input/Input';
 
 import { forgotPassword } from '../../actions';
 
@@ -29,6 +29,7 @@ export default function ForgotPassword() {
 
   return (
     <Auth
+      type="forgotPassword"
       logo={{ src: '/logo/logo.svg', width: '15rem', height: '15rem' }}
       title="Forgot Password"
       context="primary"
@@ -43,6 +44,7 @@ export default function ForgotPassword() {
         <div>
           <Input
             id="email"
+            type="text"
             name="email"
             label="E-mail"
             context="primary"

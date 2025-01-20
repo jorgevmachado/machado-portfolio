@@ -1,43 +1,18 @@
 'use client';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { cpfFormatter } from '@repo/services/formatter/document/document';
-import { mobileFormatter } from '@repo/services/formatter/contact/contact';
-
-import {
-  confirmPasswordValidator,
-  passwordValidator,
-} from '@repo/services/validator/password/password';
-import {
-  dateOfBirthValidator,
-  nameValidator,
-} from '@repo/services/validator/personal/personal';
-import {
-  emailValidator,
-  mobileValidator,
-} from '@repo/services/validator/contact/contact';
-import { cpfValidator } from '@repo/services/validator/document/document';
-
-import { EGender } from '@repo/business/api/nest/enum';
-
-import Button from '@repo/ds/components/button/Button';
-
 import Auth from '@repo/ui/layout/auth/Auth';
-import Input from '@repo/ui/components/input/Input';
-import RadioGroup from '@repo/ds/components/radio-group/RadioGroup';
 
 import { signUp } from '../../actions';
 
-import DatePicker from '../../components/date-picker/DatePicker';
-
+// import DatePicker from '../../components/date-picker/DatePicker';
 import './SignUp.scss';
+import { AuthForm } from '@repo/ui/layout/auth/Form/interface';
 
 export default function SignUp() {
   const [state, action, pending] = useActionState(signUp, undefined);
-  const [gender, setGender] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
 
   const router = useRouter();
 
@@ -50,10 +25,18 @@ export default function SignUp() {
     }
   }, [state]);
 
+  const handleSubmit = (authForm: AuthForm) => {
+    if (authForm.formData) {
+      action(authForm.formData);
+    }
+  };
+
   return (
     <Auth
+      type="signUp"
       logo={{ src: '/logo/logo.svg', width: '15rem', height: '15rem' }}
       title="Sign Up"
+      onSubmit={handleSubmit}
       context="primary"
       className="sign-up"
       signInLink={{
@@ -63,122 +46,122 @@ export default function SignUp() {
       }}
       description="By continuing, you affirm that you are over 18 years old and allow the sharing of your data in interactions with the platform."
     >
-      <form action={action} className="sign-up__form">
-        <div>
-          <Input
-            id="cpf"
-            type="cpf"
-            name="cpf"
-            label="CPF"
-            context="primary"
-            validate={cpfValidator}
-            formatter={cpfFormatter}
-            placeholder="Enter your CPF"
-            reloadValidate={state?.errors?.cpf}
-          />
-        </div>
-        <div>
-          <Input
-            id="name"
-            name="name"
-            label="Name"
-            context="primary"
-            validate={nameValidator}
-            placeholder="Enter your Fullname"
-            reloadValidate={state?.errors?.name}
-          />
-        </div>
-        <div className="sign-up__form--radio-group">
-          <RadioGroup
-            id="gender"
-            name="gender"
-            label="Gender"
-            options={[
-              {
-                label: 'Male',
-                value: EGender.MALE,
-              },
-              {
-                label: 'Female',
-                value: EGender.FEMALE,
-              },
-            ]}
-            context="primary"
-            appearance="standard"
-            modelValue={gender}
-            onClick={(event) => event.preventDefault()}
-            onActionClick={(value) => setGender(value as EGender)}
-            requiredMessage={
-              state && !state?.errors?.gender?.valid
-                ? state?.errors?.gender?.message
-                : ''
-            }
-          />
-        </div>
-        <div>
-          <Input
-            id="email"
-            name="email"
-            label="E-mail"
-            context="primary"
-            validate={emailValidator}
-            placeholder="Enter your best E-mail"
-            reloadValidate={state?.errors?.email}
-          />
-        </div>
-        <div>
-          <Input
-            id="whatsup"
-            name="whatsup"
-            label="WhatsUp"
-            context="primary"
-            validate={mobileValidator}
-            formatter={mobileFormatter}
-            placeholder="Enter your WhatsUp"
-            reloadValidate={state?.errors?.whatsup}
-          />
-        </div>
-        <div>
-          <DatePicker
-            id="dateOfBirth"
-            name="dateOfBirth"
-            label="Date of birth"
-            minAge={18}
-            validate={dateOfBirthValidator}
-            placeholder="Enter your date of birth"
-            reloadValidate={state?.errors?.dateOfBirth}
-          />
-        </div>
-        <div>
-          <Input
-            id="password"
-            type="password"
-            value={password}
-            name="password"
-            label="Password"
-            context="primary"
-            validate={passwordValidator}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="Password"
-            reloadValidate={state?.errors?.password}
-          />
-        </div>
-        <div>
-          <Input
-            id="confirm-password"
-            type="password"
-            name="passwordConfirmation"
-            label="Confirm Password"
-            context="primary"
-            validate={(value) => confirmPasswordValidator(value, password)}
-            placeholder="Confirm Password"
-            reloadValidate={state?.errors?.passwordConfirmation}
-          />
-        </div>
-        <Button type="submit" fluid context="primary" loading={pending}>
-          Sign Up
-        </Button>
-      </form>
+      {/*<form action={action} className="sign-up__form">*/}
+      {/*  <div>*/}
+      {/*    <Input*/}
+      {/*      id="cpf"*/}
+      {/*      type="cpf"*/}
+      {/*      name="cpf"*/}
+      {/*      label="CPF"*/}
+      {/*      context="primary"*/}
+      {/*      validate={cpfValidator}*/}
+      {/*      formatter={cpfFormatter}*/}
+      {/*      placeholder="Enter your CPF"*/}
+      {/*      reloadValidate={state?.errors?.cpf}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <div>*/}
+      {/*    <Input*/}
+      {/*      id="name"*/}
+      {/*      name="name"*/}
+      {/*      label="Name"*/}
+      {/*      context="primary"*/}
+      {/*      validate={nameValidator}*/}
+      {/*      placeholder="Enter your Fullname"*/}
+      {/*      reloadValidate={state?.errors?.name}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <div className="sign-up__form--radio-group">*/}
+      {/*    <RadioGroup*/}
+      {/*      id="gender"*/}
+      {/*      name="gender"*/}
+      {/*      label="Gender"*/}
+      {/*      options={[*/}
+      {/*        {*/}
+      {/*          label: 'Male',*/}
+      {/*          value: EGender.MALE,*/}
+      {/*        },*/}
+      {/*        {*/}
+      {/*          label: 'Female',*/}
+      {/*          value: EGender.FEMALE,*/}
+      {/*        },*/}
+      {/*      ]}*/}
+      {/*      context="primary"*/}
+      {/*      appearance="standard"*/}
+      {/*      modelValue={gender}*/}
+      {/*      onClick={(event) => event.preventDefault()}*/}
+      {/*      onActionClick={(value) => setGender(value as EGender)}*/}
+      {/*      requiredMessage={*/}
+      {/*        state && !state?.errors?.gender?.valid*/}
+      {/*          ? state?.errors?.gender?.message*/}
+      {/*          : ''*/}
+      {/*      }*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <div>*/}
+      {/*    <Input*/}
+      {/*      id="email"*/}
+      {/*      name="email"*/}
+      {/*      label="E-mail"*/}
+      {/*      context="primary"*/}
+      {/*      validate={emailValidator}*/}
+      {/*      placeholder="Enter your best E-mail"*/}
+      {/*      reloadValidate={state?.errors?.email}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <div>*/}
+      {/*    <Input*/}
+      {/*      id="whatsup"*/}
+      {/*      name="whatsup"*/}
+      {/*      label="WhatsUp"*/}
+      {/*      context="primary"*/}
+      {/*      validate={mobileValidator}*/}
+      {/*      formatter={mobileFormatter}*/}
+      {/*      placeholder="Enter your WhatsUp"*/}
+      {/*      reloadValidate={state?.errors?.whatsup}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <div>*/}
+      {/*    <DatePicker*/}
+      {/*      id="dateOfBirth"*/}
+      {/*      name="dateOfBirth"*/}
+      {/*      label="Date of birth"*/}
+      {/*      minAge={18}*/}
+      {/*      validate={dateOfBirthValidator}*/}
+      {/*      placeholder="Enter your date of birth"*/}
+      {/*      reloadValidate={state?.errors?.dateOfBirth}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <div>*/}
+      {/*    <Input*/}
+      {/*      id="password"*/}
+      {/*      type="password"*/}
+      {/*      value={password}*/}
+      {/*      name="password"*/}
+      {/*      label="Password"*/}
+      {/*      context="primary"*/}
+      {/*      validate={passwordValidator}*/}
+      {/*      onChange={(event) => setPassword(event.target.value)}*/}
+      {/*      placeholder="Password"*/}
+      {/*      reloadValidate={state?.errors?.password}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <div>*/}
+      {/*    <Input*/}
+      {/*      id="confirm-password"*/}
+      {/*      type="password"*/}
+      {/*      name="passwordConfirmation"*/}
+      {/*      label="Confirm Password"*/}
+      {/*      context="primary"*/}
+      {/*      validate={(value) => confirmPasswordValidator(value, password)}*/}
+      {/*      placeholder="Confirm Password"*/}
+      {/*      reloadValidate={state?.errors?.passwordConfirmation}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <Button type="submit" fluid context="primary" loading={pending}>*/}
+      {/*    Sign Up*/}
+      {/*  </Button>*/}
+      {/*</form>*/}
     </Auth>
   );
 }
