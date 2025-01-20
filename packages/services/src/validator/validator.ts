@@ -1,6 +1,17 @@
-import { ValidatorMessage } from './interface';
+import { INVALID_TYPE } from './utils';
 
-export function numberValidator(value: string): ValidatorMessage {
+import { ValidatorMessage, ValidatorParams } from './interface';
+
+export function numberValidator({ value }: ValidatorParams): ValidatorMessage {
+  if (!value) {
+    return {
+      valid: false,
+      message: 'Please enter a valid number.',
+    };
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
+  }
   const regex = /^[0-9]+$/;
   const valid = regex.test(value);
   return {

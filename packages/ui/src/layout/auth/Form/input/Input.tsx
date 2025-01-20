@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import type { ValidatorMessage } from '@repo/services/validator/interface';
+import type {
+  ValidatorMessage,
+  ValidatorParams,
+} from '@repo/services/validator/interface';
 
 import RadioGroup, {
   OptionsProps,
@@ -23,26 +26,26 @@ interface InputProps
     React.InputHTMLAttributes<HTMLInputElement>,
     'value' | 'type' | 'onInput'
   > {
+  tip?: string;
   type: TInput;
   value?: string;
   label?: string;
   options?: Array<OptionsProps>;
   context: TContext;
-  minAge?: number;
   onInput?: (name: string, value: string) => void;
-  validate: (value?: string, optionalValue?: string) => ValidatorMessage;
+  validate: (validatorParams: ValidatorParams) => ValidatorMessage;
   formatter?: (value?: string) => string;
   reloadValidate?: ValidatorMessage;
 }
 
 export default function Input({
+  tip,
   name,
   type,
   value,
   label,
   options = [],
   context,
-  minAge,
   onInput,
   validate,
   formatter,
@@ -69,7 +72,7 @@ export default function Input({
   const handleValidate = (validatorMessage?: ValidatorMessage) => {
     const currentValidatorMessage = validatorMessage
       ? validatorMessage
-      : validate(currentValue);
+      : validate({ value: currentValue });
 
     setInputValidator({
       invalid: !currentValidatorMessage.valid,
@@ -93,9 +96,10 @@ export default function Input({
 
   return (
     <>
-      {type !== 'datepicker' && type !== 'radio-group' && (
+      {type !== 'radio-group' && (
         <InputComponent
           {...props}
+          tip={tip}
           name={name}
           type={type}
           label={label}
@@ -108,7 +112,6 @@ export default function Input({
           invalidMessage={inputValidator?.message}
         />
       )}
-      {type === 'datepicker' && <div>datepicker</div>}
       {type === 'radio-group' && options?.length && (
         <div className="form-input__radio-group">
           <RadioGroup

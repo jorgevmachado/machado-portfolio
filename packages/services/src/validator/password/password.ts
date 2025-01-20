@@ -1,8 +1,17 @@
-import { ValidatorMessage } from '../interface';
+import { ValidatorMessage, ValidatorParams } from '../interface';
 
-import { REQUIRED_FIELD } from '../utils';
+import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
-export function minLength(min: number, value: string): ValidatorMessage {
+export function minLength({
+  min = 8,
+  value,
+}: ValidatorParams): ValidatorMessage {
+  if (!value) {
+    return REQUIRED_FIELD;
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
+  }
   const valid = value.length >= min;
   return {
     valid,
@@ -12,7 +21,13 @@ export function minLength(min: number, value: string): ValidatorMessage {
   };
 }
 
-export function leastOneLetter(value: string): ValidatorMessage {
+export function leastOneLetter({ value }: ValidatorParams): ValidatorMessage {
+  if (!value) {
+    return REQUIRED_FIELD;
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
+  }
   const regex = /[a-zA-Z]/;
   const valid = regex.test(value);
   return {
@@ -21,7 +36,13 @@ export function leastOneLetter(value: string): ValidatorMessage {
   };
 }
 
-export function leastOneNumber(value: string): ValidatorMessage {
+export function leastOneNumber({ value }: ValidatorParams): ValidatorMessage {
+  if (!value) {
+    return REQUIRED_FIELD;
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
+  }
   const regex = /[0-9]/;
   const valid = regex.test(value);
   return {
@@ -30,7 +51,15 @@ export function leastOneNumber(value: string): ValidatorMessage {
   };
 }
 
-export function leastOneSpecialCharacter(value: string): ValidatorMessage {
+export function leastOneSpecialCharacter({
+  value,
+}: ValidatorParams): ValidatorMessage {
+  if (!value) {
+    return REQUIRED_FIELD;
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
+  }
   const regex = /[^a-zA-Z0-9]/;
   const valid = regex.test(value);
   return {
@@ -41,30 +70,33 @@ export function leastOneSpecialCharacter(value: string): ValidatorMessage {
   };
 }
 
-export function passwordValidator(
-  value?: string,
-  min: number = 8,
-): ValidatorMessage {
+export function passwordValidator({
+  min = 8,
+  value,
+}: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
   }
-  const minLengthValidator = minLength(min, value);
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
+  }
+  const minLengthValidator = minLength({ min, value });
 
   if (!minLengthValidator.valid) {
     return minLengthValidator;
   }
 
-  const leastOneLetterValidator = leastOneLetter(value);
+  const leastOneLetterValidator = leastOneLetter({ value });
 
   if (!leastOneLetterValidator.valid) {
     return leastOneLetterValidator;
   }
-  const leastOneNumberValidator = leastOneNumber(value);
+  const leastOneNumberValidator = leastOneNumber({ value });
 
   if (!leastOneNumberValidator.valid) {
     return leastOneNumberValidator;
   }
-  const leastOneSpecialCharacterValidator = leastOneSpecialCharacter(value);
+  const leastOneSpecialCharacterValidator = leastOneSpecialCharacter({ value });
 
   if (!leastOneSpecialCharacterValidator.valid) {
     return leastOneSpecialCharacterValidator;
@@ -76,21 +108,24 @@ export function passwordValidator(
   };
 }
 
-export function confirmPasswordValidator(
-  value?: string,
-  password?: string,
-  min: number = 8,
-): ValidatorMessage {
-  if (!value || !password) {
+export function confirmPasswordValidator({
+  min = 8,
+  value,
+  optionalValue,
+}: ValidatorParams): ValidatorMessage {
+  if (!value || !optionalValue) {
     return REQUIRED_FIELD;
   }
-  const passwordValidated = passwordValidator(value, min);
+  if (typeof value !== 'string' || typeof optionalValue !== 'string') {
+    return INVALID_TYPE;
+  }
+  const passwordValidated = passwordValidator({ value, min });
 
   if (!passwordValidated.valid) {
     return passwordValidated;
   }
 
-  const valid = value === password;
+  const valid = value === optionalValue;
 
   return {
     valid,

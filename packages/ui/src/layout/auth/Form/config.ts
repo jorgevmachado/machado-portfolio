@@ -108,9 +108,8 @@ export const INPUT_TYPE: Array<InputType> = [
     type: 'datepicker',
     name: 'dateOfBirth',
     label: 'Date of birth',
-    minAge: 18,
     validate: dateOfBirthValidator,
-    placeholder: 'Enter your Whatsapp',
+    placeholder: 'Enter your Date of birth',
   },
   {
     id: 'password',

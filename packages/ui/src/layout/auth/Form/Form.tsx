@@ -79,7 +79,7 @@ export default function Form({
       fields[input.name as keyof AuthFields] = '';
       errors[input.name as keyof AuthErrors] =
         type === 'update'
-          ? input.validate(fields[input.name as keyof AuthFields])
+          ? input.validate({ value: fields[input.name as keyof AuthFields] })
           : undefined;
     });
     setAuthForm({
@@ -93,9 +93,9 @@ export default function Form({
     const messages: Array<string> = [];
     const authFormState = authForm;
     inputs.forEach((input) => {
-      const validatorMessage = input.validate(
-        authFormState.fields[input.name as keyof AuthFields],
-      );
+      const validatorMessage = input.validate({
+        value: authFormState.fields[input.name as keyof AuthFields],
+      });
       if (!validatorMessage.valid) {
         authFormState.valid = false;
         messages.push(`${input.label}:${validatorMessage.message}`);
@@ -151,10 +151,13 @@ export default function Form({
             options={input.options}
             onInput={onInputHandler}
             context={context}
-            validate={(value) =>
+            validate={(params) =>
               input.name !== 'passwordConfirmation'
-                ? input.validate(value)
-                : input.validate(value, authForm?.fields?.password)
+                ? input.validate(params)
+                : input.validate({
+                    value: params.value,
+                    optionalValue: authForm?.fields?.password,
+                  })
             }
             formatter={input.formatter}
             placeholder={input.placeholder}

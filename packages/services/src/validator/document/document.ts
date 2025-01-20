@@ -1,10 +1,13 @@
-import { ValidatorMessage } from '../interface';
+import { ValidatorMessage, ValidatorParams } from '../interface';
 
-import { REQUIRED_FIELD } from '../utils';
+import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
-export function cpfValidator(value?: string): ValidatorMessage {
+export function cpfValidator({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
   }
   const regex = /^(?:\d{3}\.?\d{3}\.?\d{3}-?\d{2}|\d{11})$/;
   const valid = regex.test(value);

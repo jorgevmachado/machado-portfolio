@@ -2,16 +2,20 @@ import { EGender } from '@repo/business/api/nest/enum';
 
 import { isUnderMinimumAge } from '../../date';
 
-import { ValidatorMessage } from '../interface';
+import { ValidatorMessage, ValidatorParams } from '../interface';
 
-import { REQUIRED_FIELD } from '../utils';
+import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
-export function nameValidator(
-  value?: string,
-  min: number = 2,
-): ValidatorMessage {
+export function nameValidator({
+  value,
+  min = 2,
+}: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
+  }
+
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
   }
 
   const valid = value.length >= min;
@@ -21,9 +25,13 @@ export function nameValidator(
   };
 }
 
-export function genderValidator(value?: string): ValidatorMessage {
+export function genderValidator({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
+  }
+
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
   }
 
   const valid =
@@ -37,7 +45,9 @@ export function genderValidator(value?: string): ValidatorMessage {
   };
 }
 
-export function dateOfBirthValidator(value?: string | Date): ValidatorMessage {
+export function dateOfBirthValidator({
+  value,
+}: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
   }

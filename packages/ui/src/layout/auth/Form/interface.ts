@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { ValidatorMessage } from '@repo/services/validator/interface';
+import {
+  ValidatorMessage,
+  ValidatorParams,
+} from '@repo/services/validator/interface';
 
 import { TContext } from '@repo/ds/utils/colors/interface';
 
@@ -70,7 +73,7 @@ export interface InputType {
   label: string;
   minAge?: number;
   options?: Array<{ value: string; label: string }>;
-  validate: (value?: string, optionalValue?: string) => ValidatorMessage;
+  validate: (validatorParams: ValidatorParams) => ValidatorMessage;
   formatter?: (value?: string) => string;
   placeholder?: string;
 }

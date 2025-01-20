@@ -1,5 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
+import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
+
 import {
   dateOfBirthValidator,
   genderValidator,
@@ -9,47 +11,45 @@ import {
 describe('personal Validator methods', () => {
   describe('genderValidator', () => {
     it('should return valid when received female gender', () => {
-      expect(genderValidator('female')).toEqual({
+      expect(genderValidator({ value: 'female' })).toEqual({
         valid: true,
         message: 'Valid gender.',
       });
     });
     it('should return valid when received male gender', () => {
-      expect(genderValidator('MALE')).toEqual({
+      expect(genderValidator({ value: 'MALE' })).toEqual({
         valid: true,
         message: 'Valid gender.',
       });
     });
     it('should return valid when received other gender', () => {
-      expect(genderValidator('other')).toEqual({
+      expect(genderValidator({ value: 'other' })).toEqual({
         valid: true,
         message: 'Valid gender.',
       });
     });
 
     it('should return invalid when received invalid gender', () => {
-      expect(genderValidator('people')).toEqual({
+      expect(genderValidator({ value: 'people' })).toEqual({
         valid: false,
         message: 'Invalid Gender.',
       });
     });
     it('should return invalid when received undefined gender', () => {
-      expect(genderValidator()).toEqual({
-        valid: false,
-        message: 'the field is required.',
-      });
+      expect(genderValidator({})).toEqual(REQUIRED_FIELD);
+    });
+
+    it('should return invalid when received invalid gender type', () => {
+      expect(genderValidator({ value: new Date() })).toEqual(INVALID_TYPE);
     });
   });
 
   describe('dateOfBirthValidator', () => {
     it('should return invalid when received undefined dateOfBirth', () => {
-      expect(dateOfBirthValidator()).toEqual({
-        valid: false,
-        message: 'the field is required.',
-      });
+      expect(dateOfBirthValidator({})).toEqual(REQUIRED_FIELD);
     });
     it('should return invalid when received invalid date string', () => {
-      expect(dateOfBirthValidator('20/07/1990')).toEqual({
+      expect(dateOfBirthValidator({ value: '20/07/1990' })).toEqual({
         valid: false,
         message: 'Invalid date.',
       });
@@ -57,7 +57,7 @@ describe('personal Validator methods', () => {
     it('should return invalid when received date under 18 year old.', () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 17);
-      expect(dateOfBirthValidator(date)).toEqual({
+      expect(dateOfBirthValidator({ value: date })).toEqual({
         valid: false,
         message: 'You must be over 18 years old.',
       });
@@ -66,7 +66,7 @@ describe('personal Validator methods', () => {
     it('should return valid when received date string over 18 year old.', () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 20);
-      expect(dateOfBirthValidator(date.toISOString())).toEqual({
+      expect(dateOfBirthValidator({ value: date.toISOString() })).toEqual({
         valid: true,
         message: 'valid date.',
       });
@@ -75,16 +75,17 @@ describe('personal Validator methods', () => {
 
   describe('nameValidator', () => {
     it('should return valid when received valid name', () => {
-      expect(nameValidator('Harry')).toEqual({
+      expect(nameValidator({ value: 'Harry' })).toEqual({
         valid: true,
         message: 'Valid name.',
       });
     });
     it('should return invalid when received undefined name', () => {
-      expect(nameValidator()).toEqual({
-        valid: false,
-        message: 'the field is required.',
-      });
+      expect(nameValidator({})).toEqual(REQUIRED_FIELD);
+    });
+
+    it('should return invalid when received invalid name type', () => {
+      expect(nameValidator({ value: new Date() })).toEqual(INVALID_TYPE);
     });
   });
 });

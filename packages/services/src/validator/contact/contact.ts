@@ -1,10 +1,13 @@
-import { ValidatorMessage } from '../interface';
+import { ValidatorMessage, ValidatorParams } from '../interface';
 
-import { REQUIRED_FIELD } from '../utils';
+import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
-export function emailValidator(value?: string): ValidatorMessage {
+export function emailValidator({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
   }
   const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   const valid = regex.test(value);
@@ -14,9 +17,12 @@ export function emailValidator(value?: string): ValidatorMessage {
   };
 }
 
-export function phoneValidator(value?: string): ValidatorMessage {
+export function phoneValidator({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
   }
   const regex = /^\(?\d{2}\)? ?\d{4}-?\d{4}$/;
   const valid = regex.test(value);
@@ -28,9 +34,12 @@ export function phoneValidator(value?: string): ValidatorMessage {
   };
 }
 
-export function mobileValidator(value?: string): ValidatorMessage {
+export function mobileValidator({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
+  }
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
   }
   const regex = /^\(?\d{2}\)? ?\d{5}-?\d{4}$/;
   const valid = regex.test(value);
