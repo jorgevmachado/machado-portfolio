@@ -38,9 +38,11 @@ export default function Image({
     [setIsInvalid, onErrorCallback],
   );
 
-  const classNameList = joinClass(
-    ['image', fit && `image__fit-${fit}`, className].filter(Boolean),
-  );
+  const classNameList = joinClass([
+    'image',
+    fit && `image__fit-${fit}`,
+    className,
+  ]);
 
   if (isInvalid && fallback) {
     return (

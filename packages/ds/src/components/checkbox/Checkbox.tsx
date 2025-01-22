@@ -49,33 +49,35 @@ export default function Checkbox({
       return;
     }
     setIsChecked(Boolean(modelValue));
-  }, [modelValue]);
+  }, [modelValue, value]);
 
   const classNameList = joinClass([
     'checkbox',
-    `${disabled ? 'checkbox__disabled' : ''}`,
-    `${isChecked ? 'checkbox__checked' : ''}`,
-    `checkbox__variant--${variant}`,
-    `checkbox__context--${context}`,
+    disabled && 'checkbox__disabled',
+    isChecked && 'checkbox__checked',
+    variant && `checkbox__variant--${variant}`,
+    context && `checkbox__context--${context}`,
   ]);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
     const isChecked = event.target.checked;
+
+    // Atualiza imediatamente o estado interno
+    setIsChecked(isChecked);
+
+    // Notifica mudanças ao estado do componente pai (se necessário)
     if (modelValue !== undefined) {
       if (Array.isArray(modelValue)) {
         const newChecked = [...modelValue];
         isChecked
           ? newChecked.push(value)
           : newChecked.splice(modelValue.indexOf(value), 1);
-
         onCheckboxChange && onCheckboxChange({ isChecked, newChecked });
-        return;
+      } else {
+        onCheckboxChange &&
+          onCheckboxChange({ isChecked, newChecked: [value] });
       }
-
-      onCheckboxChange && onCheckboxChange({ isChecked, newChecked: [value] });
     }
-    setIsChecked(isChecked);
   };
 
   return (
@@ -94,7 +96,7 @@ export default function Checkbox({
         />
         <Icon icon="check" className="checkbox__wrapper--icon-check" />
       </div>
-      <Text tag="span" tabIndex={-1} className="checkbox__label">
+      <Text tag="span" className="checkbox__label" draggable={false}>
         {children}
       </Text>
     </label>

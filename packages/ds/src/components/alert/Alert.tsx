@@ -29,13 +29,11 @@ export default function Alert({
   hasCloseButton,
   ...props
 }: AlertProps) {
-  const classNameList = joinClass(
-    [
-      'alert',
-      type && `alert__type--${type}`,
-      hasCloseButton && 'alert__borderless',
-    ].filter(Boolean),
-  );
+  const classNameList = joinClass([
+    'alert',
+    type && `alert__type--${type}`,
+    hasCloseButton && 'alert__borderless',
+  ]);
 
   const ariaLive =
     type === 'error' || type === 'warning' ? 'assertive' : 'polite';

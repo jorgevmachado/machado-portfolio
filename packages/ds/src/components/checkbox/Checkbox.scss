@@ -10,6 +10,9 @@
         }
       }
     }
+    &:focus-within {
+      outline: var(--size-x-tiny) solid $lightColor;
+    }
     &__checked {
       background-color: $lightColor;
       .text {
@@ -38,11 +41,15 @@
   }
 
   &:focus-within {
-    outline: none;
+    outline: var(--size-x-tiny) solid var(--color-primary-60);
   }
 
   &:focus-visible {
     outline: var(--size-x-tiny) solid var(--color-google-80);
+  }
+
+  &__label {
+    user-select: none;
   }
 
   &__disabled {

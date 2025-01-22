@@ -15,11 +15,11 @@ export default function Spinner({
   context = 'primary',
   ...props
 }: SpinnerProps) {
-  const classList = joinClass(
-    ['spinner', `spinner__context--${context}`, props.className].filter(
-      Boolean,
-    ),
-  );
+  const classList = joinClass([
+    'spinner',
+    `spinner__context--${context}`,
+    props.className,
+  ]);
   return (
     <div
       {...props}

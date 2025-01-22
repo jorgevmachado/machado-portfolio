@@ -18,9 +18,11 @@ export default function Icon({
   className,
   ...props
 }: IconProps) {
-  const classNameList = joinClass(
-    ['icon', color && `icon__color--${color}`, className].filter(Boolean),
-  );
+  const classNameList = joinClass([
+    'icon',
+    color && `icon__color--${color}`,
+    className,
+  ]);
   const ariaLabel = typeof icon === 'string' ? icon : undefined;
 
   const currentIcon =

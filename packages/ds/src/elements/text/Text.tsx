@@ -31,15 +31,13 @@ export default function Text({
 
   return (
     <CustomTag
-      className={joinClass(
-        [
-          'text',
-          `ds-color-${color}`,
-          `text__variant--${variant}`,
-          `text__weight--${weight}`,
-          className,
-        ].filter(Boolean),
-      )}
+      className={joinClass([
+        'text',
+        `ds-color-${color}`,
+        `text__variant--${variant}`,
+        `text__weight--${weight}`,
+        className,
+      ])}
       {...props}
       {...tagProps}
     >

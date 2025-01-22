@@ -28,19 +28,16 @@ export default function Tooltip({
     };
   }, []);
 
-  const classNameList = joinClass(
-    ['tooltip__container', context && `tooltip__context--${context}`].filter(
-      Boolean,
-    ),
-  );
+  const classNameList = joinClass([
+    'tooltip__container',
+    context && `tooltip__context--${context}`,
+  ]);
 
-  const bodyClassNameList = joinClass(
-    [
-      'tooltip__container--body',
-      align && `tooltip__container--align-${align}`,
-      isVisible && 'tooltip__container--visible',
-    ].filter(Boolean),
-  );
+  const bodyClassNameList = joinClass([
+    'tooltip__container--body',
+    align && `tooltip__container--align-${align}`,
+    isVisible && 'tooltip__container--visible',
+  ]);
 
   const handleToggle = () => {
     if (isTouchDevice) {

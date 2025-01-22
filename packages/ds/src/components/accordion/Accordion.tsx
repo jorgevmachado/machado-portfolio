@@ -38,15 +38,13 @@ export default function Accordion({
 
   const componentId = useGenerateComponentId(title);
 
-  const classNameList = joinClass(
-    [
-      'accordion',
-      isBorderless && 'accordion__borderless',
-      context && `accordion__context--${context}`,
-      isOpenModel && 'accordion__open',
-      disabled && 'accordion__disabled',
-    ].filter(Boolean),
-  );
+  const classNameList = joinClass([
+    'accordion',
+    isBorderless && 'accordion__borderless',
+    context && `accordion__context--${context}`,
+    isOpenModel && 'accordion__open',
+    disabled && 'accordion__disabled',
+  ]);
 
   const toggleOpen = React.useCallback(
     () => setIsOpenModel((open) => !open),

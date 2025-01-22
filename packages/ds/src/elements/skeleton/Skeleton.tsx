@@ -34,9 +34,7 @@ export default function Skeleton({
   style,
   ...props
 }: SkeletonProps) {
-  const classList = joinClass(
-    [`skeleton__radius--${radius}`, props.className].filter(Boolean),
-  );
+  const classList = joinClass([`skeleton__radius--${radius}`, props.className]);
 
   const inlineStyles = {
     ...style,

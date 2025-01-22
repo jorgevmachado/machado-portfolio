@@ -44,18 +44,17 @@ export default function Avatar({
       .join('');
   }, [name, initialsLength]);
 
-  const classNameList = joinClass(
-    [
-      'avatar',
-      size && `avatar__size--${size}`,
-      context && `avatar__context--${context}`,
-      hasNotification && 'avatar__has-notification',
-    ].filter(Boolean),
-  );
+  const classNameList = joinClass([
+    'avatar',
+    size && `avatar__size--${size}`,
+    context && `avatar__context--${context}`,
+    hasNotification && 'avatar__has-notification',
+  ]);
 
-  const imageClassNameList = joinClass(
-    ['avatar__img', isImageLoaded && 'avatar__img--loaded'].filter(Boolean),
-  );
+  const imageClassNameList = joinClass([
+    'avatar__img',
+    isImageLoaded && 'avatar__img--loaded',
+  ]);
 
   const onLoadImage = () => {
     setImageLoaded(true);
