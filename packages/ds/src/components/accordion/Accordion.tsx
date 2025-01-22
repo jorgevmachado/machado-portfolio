@@ -32,33 +32,44 @@ export default function Accordion({
   childrenTitle,
   ...props
 }: AccordionProps) {
-  const [isOpenModel, setIsOpenModel] = useState(isOpen);
+  const [isOpenModel, setIsOpenModel] = useState(
+    isOpen !== undefined ? isOpen : false,
+  );
 
   const componentId = useGenerateComponentId(title);
 
-  const classNameList = joinClass([
-    'accordion',
-    `${isBorderless ? 'accordion__borderless' : ''}`,
-    `accordion__context--${context}`,
-    `${isOpenModel ? 'accordion__open' : ''}`,
-    `${disabled ? 'accordion__disabled' : ''}`,
-  ]);
+  const classNameList = joinClass(
+    [
+      'accordion',
+      isBorderless && 'accordion__borderless',
+      context && `accordion__context--${context}`,
+      isOpenModel && 'accordion__open',
+      disabled && 'accordion__disabled',
+    ].filter(Boolean),
+  );
 
-  const toggleOpen = () => setIsOpenModel((open) => !open);
+  const toggleOpen = React.useCallback(
+    () => setIsOpenModel((open) => !open),
+    [],
+  );
 
   useEffect(() => {
-    setIsOpenModel(isOpen);
+    if (isOpen !== undefined) {
+      setIsOpenModel(isOpen);
+    }
   }, [isOpen]);
 
   return (
     <div {...props} tabIndex={disabled ? -1 : 0} className={classNameList}>
       <button
         id={`${componentId}-accordion-button`}
+        role="button"
         type="button"
         onClick={toggleOpen}
         tabIndex={-1}
         disabled={disabled}
         className="accordion__button"
+        aria-disabled={disabled}
         aria-expanded={isOpenModel}
         aria-controls={`${componentId}-accordion-button-content`}
       >
