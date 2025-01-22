@@ -17,6 +17,12 @@ const meta = {
       options: ['error', 'success', 'attention'],
       control: { type: 'select' },
     },
+    children: {
+      control: 'text',
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+    },
   },
   component: Feedback,
 } satisfies Meta<typeof Feedback>;

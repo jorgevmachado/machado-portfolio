@@ -17,9 +17,15 @@ export default function Feedback({
   children,
   className,
 }: FeedbackProps) {
-  const classNameList = joinClass(['feedback', `${className ?? className}`]);
+  const classNameList = joinClass(['feedback', className]);
   return (
-    <Text color={`${context}-80`} variant="regular" className={classNameList}>
+    <Text
+      role={context === 'error' ? 'alert' : 'status'}
+      color={`${context}-80`}
+      variant="regular"
+      className={classNameList}
+      aria-live={context === 'error' ? 'assertive' : 'polite'}
+    >
       {children}
     </Text>
   );
