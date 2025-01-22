@@ -1,11 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { OContext } from '../../utils/colors';
+import { OContext } from '../../utils';
 
 import Collapse from './Collapse';
 
 const text =
-  'Atirei o pau no gatis, per gatis num morreus. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi.Atirei o pau no gatis, per gatis num morreus. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi.';
+  'Atirei o pau no gatis, per gatis num morreus. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. ' +
+  'Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose.' +
+  'Posuere libero varius. Nullam a nisl ut ante blandit hendrerit.' +
+  'Aenean sit amet nisi.Atirei o pau no gatis, per gatis num morreus.' +
+  'Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.' +
+  'Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose.' +
+  'Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi.' +
+  'Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi.';
 
 const meta = {
   args: {
