@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import type { TContext, TSimplySIze } from '../../utils';
 
@@ -28,53 +28,50 @@ export default function Avatar({
 }: AvatarProps) {
   const [isImageLoaded, setImageLoaded] = useState<boolean>(false);
 
-  const classNameList = joinClass([
-    'avatar',
-    `avatar__size--${size}`,
-    `avatar__context--${context}`,
-    `${hasNotification ? 'avatar__has-notification' : ''}`,
-  ]);
+  const initials = useMemo(() => {
+    if (initialsLength <= 0) {
+      return name.charAt(0).toUpperCase();
+    }
+    const normalized = name
+      .normalize('NFD') // Remove acentos
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+      .replace(/\s+/g, ' ');
+    const nameParts = normalized.split(' ');
+    return nameParts
+      .map((word) => word?.[0]?.toUpperCase() || '')
+      .slice(0, initialsLength)
+      .join('');
+  }, [name, initialsLength]);
 
-  const imageClassNameList = joinClass([
-    'avatar__img',
-    `${isImageLoaded ? 'avatar__img--loaded' : ''}`,
-  ]);
+  const classNameList = joinClass(
+    [
+      'avatar',
+      size && `avatar__size--${size}`,
+      context && `avatar__context--${context}`,
+      hasNotification && 'avatar__has-notification',
+    ].filter(Boolean),
+  );
+
+  const imageClassNameList = joinClass(
+    ['avatar__img', isImageLoaded && 'avatar__img--loaded'].filter(Boolean),
+  );
 
   const onLoadImage = () => {
     setImageLoaded(true);
   };
 
-  const getNameInitials = (name: string, length: number): string => {
-    if (length <= 0) {
-      length = 1;
-    }
-    const initials = name
-      .toString()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .trim()
-      .replace(/\s{2,}/, ' ')
-      .toUpperCase()
-      .split(' ');
-
-    const filteredInitials = initials.filter((i) => i.length);
-
-    if (filteredInitials.length) {
-      return format(filteredInitials, length);
-    }
-
-    return format(initials, length);
-  };
-
-  const format = (initialLetters: Array<string>, length: number) => {
-    return initialLetters
-      .map((word) => word[0])
-      .slice(0, length)
-      .join('');
-  };
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [src]);
 
   return (
-    <div className={classNameList} {...props}>
+    <div
+      {...props}
+      role="img"
+      aria-label={src ? name : `Avatar of ${initials}`}
+      className={classNameList}
+    >
       <div className="avatar__wrapper">
         {Boolean(src) && (
           <img
@@ -86,7 +83,7 @@ export default function Avatar({
         )}
         {!isImageLoaded && (
           <Text tag="span" color="neutral-90">
-            {getNameInitials(name, initialsLength)}
+            {initials}
           </Text>
         )}
       </div>

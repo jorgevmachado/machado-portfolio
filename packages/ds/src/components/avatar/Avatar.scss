@@ -9,6 +9,11 @@
   }
 }
 
+@mixin avatar-size($factor) {
+  width: calc($factor * var(--size-regular));
+  height: calc($factor * var(--size-regular));
+}
+
 .avatar {
   border: 1px solid var(--color-neutral-50);
   display: flex;
@@ -22,8 +27,8 @@
   &__size {
 
     &--small {
-      width: calc(1.25 * var(--size-regular));
-      height: calc(1.25 * var(--size-regular));
+      @include avatar-size(1.25);
+
       .text {
         font-size: var(--font-size-tiny);
       }
@@ -37,8 +42,7 @@
     }
 
     &--medium {
-      width: calc(2 * var(--size-regular));
-      height: calc(2 * var(--size-regular));
+      @include avatar-size(2);
 
       .text {
         font-size: var(--font-size-small);
@@ -53,13 +57,33 @@
     }
 
     &--large {
-      width: calc(2.5 * var(--size-regular));
-      height: calc(2.5 * var(--size-regular));
+      @include avatar-size(2.5);
+
+      .text {
+        font-size: var(--font-size-regular);
+      }
+
+      &.avatar__has-notification {
+        &:after {
+          width: calc(0.625 * var(--size-regular));
+          height: calc(0.625 * var(--size-regular));
+        }
+      }
     }
 
     &--big {
-      width: calc(3.5 * var(--size-regular));
-      height: calc(3.5 * var(--size-regular));
+      @include avatar-size(3.5);
+
+      .text {
+        font-size: var(--font-size-medium);
+      }
+
+      &.avatar__has-notification {
+        &:after {
+          width: calc(0.825 * var(--size-regular));
+          height: calc(0.825 * var(--size-regular));
+        }
+      }
     }
 
   }

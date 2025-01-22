@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { OContext } from '../../utils/colors';
-import { OSimplySize } from '../../utils/sizes';
+import { OContext, OSimplySize } from '../../utils';
 
 import Avatar from './Avatar';
 
@@ -73,4 +72,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
+};
+
+export const WithImage: Story = {
+  args: {
+    src,
+  },
+};
+
+export const WithNotification: Story = {
+  args: {
+    src,
+    name: 'User With Notification',
+    hasNotification: true,
+  },
 };
