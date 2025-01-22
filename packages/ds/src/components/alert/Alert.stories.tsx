@@ -9,6 +9,7 @@ const OAlert: Array<TAlert> = ['info', 'lamp', 'error', 'warning', 'success'];
 const meta = {
   args: {
     type: 'info',
+    hasCloseButton: false,
     children: 'Hello, World!',
   },
   title: 'Components/Alert',

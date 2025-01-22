@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import joinClass from '../../utils/join-class';
 
@@ -29,25 +29,48 @@ export default function Alert({
   hasCloseButton,
   ...props
 }: AlertProps) {
-  const classNameList = joinClass([
-    'alert',
-    `alert__type--${type}`,
-    `${hasCloseButton ? 'alert__borderless' : ''}`,
-  ]);
+  const classNameList = joinClass(
+    [
+      'alert',
+      type && `alert__type--${type}`,
+      hasCloseButton && 'alert__borderless',
+    ].filter(Boolean),
+  );
+
+  const ariaLive =
+    type === 'error' || type === 'warning' ? 'assertive' : 'polite';
+
+  const handleLinkClick = useCallback(() => {
+    if (link?.clickAction) link.clickAction();
+  }, [link]);
+
+  const handleClose = useCallback(() => {
+    if (onClose) onClose();
+  }, [onClose]);
+
   return (
-    <div {...props} className={classNameList}>
+    <div {...props} role="alert" aria-live={ariaLive} className={classNameList}>
       <Icon icon={type} className="alert__icon--title" />
       <div className="alert__content">
         {children}
         {link && (
-          <span className="alert__content--link" onClick={link.clickAction}>
-            {' '}
-            {link.text}{' '}
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={handleLinkClick}
+            className="alert__content--link"
+            onKeyDown={(e) => e.key === 'Enter' && link.clickAction()}
+          >
+            {link.text}
           </span>
         )}
       </div>
       {hasCloseButton && (
-        <Icon icon="close" className="alert__icon--close" onClick={onClose} />
+        <Icon
+          icon="close"
+          className="alert__icon--close"
+          onClick={handleClose}
+        />
       )}
     </div>
   );

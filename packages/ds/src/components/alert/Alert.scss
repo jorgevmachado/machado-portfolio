@@ -1,5 +1,21 @@
 @import "../../styles/main";
 
+@mixin alert-type($text-color, $border-color, $background-color) {
+  color: $text-color;
+  border-color: $border-color;
+  background-color: $background-color;
+  .alert {
+    &__icon {
+      &--title, &--close {
+        color: $border-color;
+      }
+    }
+    &__content {
+      color: $border-color;
+    }
+  }
+}
+
 .alert {
   gap: var(--size-regular);
   width: 100%;
@@ -32,76 +48,16 @@
 
   &__type {
     &--info, &--lamp {
-      color: var(--color-info-90);
-      border-color: var(--color-info-80);
-      background-color: var(--color-info-60);
-      .alert {
-        &__icon {
-          &--title {
-            color: var(--color-info-80);
-          }
-          &--close {
-            color: var(--color-info-100);
-          }
-        }
-        &__content {
-          color: var(--color-info-80);
-        }
-      }
+      @include alert-type(var(--color-info-90), var(--color-info-80), var(--color-info-60));
     }
     &--error {
-      color: var(--color-error-90);
-      border-color: var(--color-error-80);
-      background-color: var(--color-error-60);
-      .alert {
-        &__icon {
-          &--title {
-            color: var(--color-error-80);
-          }
-          &--close {
-            color: var(--color-error-100);
-          }
-        }
-        &__content {
-          color: var(--color-error-80);
-        }
-      }
+      @include alert-type(var(--color-error-90), var(--color-error-80), var(--color-error-60));
     }
     &--warning {
-      color: var(--color-attention-90);
-      border-color: var(--color-attention-80);
-      background-color: var(--color-attention-60);
-      .alert {
-        &__icon {
-          &--title {
-            color: var(--color-attention-80);
-          }
-          &--close {
-            color: var(--color-attention-100);
-          }
-        }
-        &__content {
-          color: var(--color-attention-80);
-        }
-      }
+      @include alert-type(var(--color-attention-90), var(--color-attention-80), var(--color-attention-60));
     }
     &--success {
-      color: var(--color-success-90);
-      border-color: var(--color-success-80);
-      background-color: var(--color-success-60);
-      .alert {
-        &__icon {
-          &--title {
-            color: var(--color-success-80);
-          }
-          &--close {
-            color: var(--color-success-100);
-          }
-        }
-        &__content {
-          color: var(--color-success-80);
-        }
-      }
+      @include alert-type(var(--color-success-90), var(--color-success-80), var(--color-success-60));
     }
   }
 
