@@ -7,12 +7,14 @@ import Text from '../../elements/text';
 import './Feedback.scss';
 
 interface FeedbackProps {
+  id: string;
   context: 'error' | 'success' | 'attention';
   children?: React.ReactNode;
   className?: string;
 }
 
 export default function Feedback({
+  id,
   context,
   children,
   className,
@@ -20,6 +22,7 @@ export default function Feedback({
   const classNameList = joinClass(['feedback', className]);
   return (
     <Text
+      id={id}
       role={context === 'error' ? 'alert' : 'status'}
       color={`${context}-80`}
       variant="regular"

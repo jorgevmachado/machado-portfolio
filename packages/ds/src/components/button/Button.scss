@@ -105,6 +105,11 @@
   }
 
   &__size {
+    &--tiny {
+      height: var(--size-large);
+      padding: 0 var(--size-medium);
+      line-height: var(--font-line-height-small);
+    }
     &--small {
       height: var(--size-xxx-large);
       padding: 0 var(--size-medium);

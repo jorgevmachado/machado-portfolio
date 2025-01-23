@@ -1,10 +1,13 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
+
+import { joinClass } from '../../../utils';
 
 import Text from '../../../elements/text';
 
 import './InputItem.scss';
 
-interface InputItemProps extends React.HTMLProps<any> {
+interface InputItemProps
+  extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   type?: string;
   addon?: string;
   disabled?: boolean;
@@ -29,56 +32,66 @@ const InputItem = forwardRef<any, InputItemProps>(
       className,
       dataCyName,
       componentId,
+      placeholder,
       inputClassList,
       ...props
     },
     ref,
   ) => {
-    const childrenElements = React.Children.toArray(children);
+    const childrenElements = useMemo(
+      () => React.Children.toArray(children),
+      [children],
+    );
 
-    const getChildrenElement = (elementId: string) => {
-      return childrenElements.find(
-        (child: any) => child.props['data-children'] === elementId,
+    const getChildrenElement = (elementId: string): React.ReactNode | null => {
+      const element = childrenElements.find(
+        (child) =>
+          React.isValidElement(child) &&
+          (child.props as any)['data-children'] === elementId,
       );
+      return element || null;
     };
 
+    const prependElement = getChildrenElement('prepend');
+    const appendElement = getChildrenElement('append');
+    const iconLeftElement = getChildrenElement('icon-left');
+    const iconRightElement = getChildrenElement('icon-right');
+    const counterElement = getChildrenElement('counter');
+
+    const InputElement = multiline ? 'textarea' : 'input';
+
     return (
-      <div className={`input-item ${className}`}>
-        {getChildrenElement('prepend')}
+      <div
+        className={joinClass([
+          'input-item',
+          className,
+          disabled && 'input-item__disabled',
+        ])}
+      >
+        {prependElement}
         <div className="input-item__wrapper">
-          {getChildrenElement('icon-left')}
-          {multiline ? (
-            <textarea
-              id={componentId}
-              ref={ref}
-              value={value}
-              disabled={disabled}
-              data-cy={dataCyName}
-              className={inputClassList}
-              {...props}
-            />
-          ) : (
-            <input
-              id={componentId}
-              ref={ref}
-              type={type}
-              value={value}
-              disabled={disabled}
-              data-cy={dataCyName}
-              autoFocus={autoFocus}
-              className={inputClassList}
-              {...props}
-            />
-          )}
-          {getChildrenElement('icon-right')}
-          {getChildrenElement('counter')}
+          {iconLeftElement}
+          <InputElement
+            id={componentId}
+            ref={ref}
+            type={type}
+            value={value}
+            disabled={disabled}
+            data-cy={dataCyName}
+            autoFocus={autoFocus}
+            placeholder={placeholder}
+            className={inputClassList}
+            {...props}
+          />
+          {iconRightElement}
+          {counterElement}
         </div>
         {addon && (
           <div className="input-item__addon">
             <Text color="neutral-60">{addon}</Text>
           </div>
         )}
-        {getChildrenElement('append')}
+        {appendElement}
       </div>
     );
   },

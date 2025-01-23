@@ -26,4 +26,4 @@ export type TSize =
   | 'giant'
   | 'max';
 
-export type TSimplySIze = 'small' | 'medium' | 'large' | 'big';
+export type TSimplySIze = 'tiny' | 'small' | 'medium' | 'large' | 'big';

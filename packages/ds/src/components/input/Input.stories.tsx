@@ -176,8 +176,64 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const inputs = [
+  {
+    id: 'input-default',
+    type: 'default',
+  },
+  {
+    id: 'input-icon',
+    type: 'icon',
+  },
+  {
+    id: 'input-icon-left',
+    type: 'icon-left',
+  },
+  {
+    id: 'input-addon',
+    type: 'addon',
+    addon: '0,00',
+  },
+  {
+    id: 'input-prepend',
+    type: 'prepend',
+  },
+  {
+    id: 'input-append',
+    type: 'append',
+  },
+  {
+    id: 'input-counter',
+    type: 'counter',
+  },
+];
+
 export const Default: Story = {
   args: {},
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      {inputs.map((item) => (
+        <Input
+          {...args}
+          id={item.id}
+          label={item.id.replace('-', ' ')}
+          placeholder={item.id.replace('-', ' ')}
+          addon={item?.addon}
+        >
+          {item.type === 'icon' ||
+            (item.type === 'icon-left' && (
+              <Icon icon="react" data-children={item.type} />
+            ))}
+        </Input>
+      ))}
+    </div>
+  ),
+};
+
+export const Password: Story = {
+  args: {
+    type: 'password',
+  },
 };
 
 export const WithButtons: Story = {

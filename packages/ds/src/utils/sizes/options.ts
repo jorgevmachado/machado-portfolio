@@ -30,6 +30,7 @@ export const OSize: Array<TSize> = [
 ];
 
 export const OSimplySize: Array<TSimplySIze> = [
+  'tiny',
   'small',
   'medium',
   'large',

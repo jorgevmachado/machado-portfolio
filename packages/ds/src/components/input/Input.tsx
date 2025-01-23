@@ -61,19 +61,28 @@ export default function Input({
 
   const generated = useGenerateComponentId('input-');
   const componentId = id ?? generated;
+  const labelId = `${componentId}-label`;
 
-  const getAriaAttributes = {
+  const ariaAttributes = {
     'aria-invalid': Boolean(isInvalid).toString(),
+    'aria-disabled': disabled,
+    'aria-labelledby': label ? labelId : undefined,
+    'aria-describedby': helperText ? `${componentId}-helper` : undefined,
+    'aria-placeholder': placeholder,
   };
 
-  const childrenElements: { [key: string]: JSX.Element } = {};
-
-  React.Children.map(children, (element: any) => {
-    if (element) {
-      const key = element.props['data-children'] as string;
-      childrenElements[key] = element;
-    }
-  });
+  const childrenElements = React.useMemo(() => {
+    const elements: { [key: string]: JSX.Element } = {};
+    React.Children.forEach(children, (element) => {
+      if (React.isValidElement<{ 'data-children': string }>(element)) {
+        const key = element.props['data-children'];
+        if (key) {
+          elements[key] = element;
+        }
+      }
+    });
+    return elements;
+  }, [children]);
 
   const onBlurHandler = (e: React.FocusEvent) => {
     setIsInputMouseFocused(false);
@@ -140,14 +149,34 @@ export default function Input({
 
   const toggleShowPassword = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
-    if (typeInput === 'password') {
-      setPasswordIcon('eye');
-      setTypeInput('text');
-      return;
-    }
-    setPasswordIcon('eye-close');
-    setTypeInput('password');
+    setTypeInput((prev) => (prev === 'password' ? 'text' : 'password'));
+    setPasswordIcon((prev) => (prev === 'eye' ? 'eye-close' : 'eye'));
   };
+
+  const renderLabel = () =>
+    label && (
+      <Label
+        id={labelId}
+        tip={tip}
+        label={label}
+        className={labelClassNameList}
+        componentId={componentId}
+      />
+    );
+
+  const renderHelperText = () =>
+    isInvalid &&
+    invalidMessage && (
+      <Text
+        id={`${componentId}-helper`}
+        tag="p"
+        color="neutral-90"
+        variant="small"
+        weight="normal"
+      >
+        {helperText}
+      </Text>
+    );
 
   useEffect(() => {
     setInputHasValue(Boolean(value));
@@ -164,14 +193,7 @@ export default function Input({
 
   return (
     <div {...props} className={classNameList}>
-      {label && (
-        <Label
-          tip={tip}
-          label={label}
-          className={labelClassNameList}
-          componentId={componentId}
-        />
-      )}
+      {renderLabel()}
       <InputItem
         type={typeInput}
         rows={rows}
@@ -194,7 +216,7 @@ export default function Input({
         componentId={componentId}
         autoComplete={autoComplete}
         inputClassList={inputItemClassNameList}
-        {...getAriaAttributes}
+        {...ariaAttributes}
       >
         {childrenElements['icon-left']}
         {childrenElements['prepend']}
@@ -212,13 +234,11 @@ export default function Input({
         )}
       </InputItem>
       {isInvalid && invalidMessage && (
-        <Feedback context="error">{invalidMessage}</Feedback>
+        <Feedback id={`${componentId}-feedback`} context="error">
+          {invalidMessage}
+        </Feedback>
       )}
-      {!invalidMessage && helperText && (
-        <Text tag="p" color="neutral-90" variant="small" weight="normal">
-          {helperText}
-        </Text>
-      )}
+      {renderHelperText()}
     </div>
   );
 }
