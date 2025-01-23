@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 
 import joinClass from '../../utils/join-class';
 
-import { Icon, Spinner } from '../../elements';
+import { Icon } from '../../elements';
 
 import type { ButtonProps } from './interface';
+
+import ButtonContent from './button-content';
 
 import './Button.scss';
 
@@ -14,20 +16,21 @@ export default function Button({
   fluid,
   focus = false,
   weight = 'normal',
-  loading,
+  loading = false,
   rounded,
   context = 'neutral',
   children,
   disabled,
   iconSize = '1em',
+  className = '',
   appearance = 'standard',
   noIconBorder,
   iconPosition = 'left',
   iconClassName,
-  loadingContext,
+  loadingContext = 'neutral',
   notificationColor,
   notificationCounter,
-  notificationClassName,
+  notificationClassName = '',
   notificationBackgroundColor,
   ...props
 }: ButtonProps) {
@@ -37,23 +40,23 @@ export default function Button({
 
   useEffect(() => {
     if (!hasLabel && !props['aria-label']) {
-      throw new Error(
-        'You must define the aria-label if the button has no label',
-      );
+      console.warn('You must define the aria-label if the button has no label');
     }
-  }, []);
+  }, [hasLabel, props['aria-label']]);
 
   const classNameList = joinClass([
     'button',
-    `button__size--${size}`,
-    `${fluid ? 'button__fluid' : ''}`,
-    `${focus ? 'button__focus' : ''}`,
-    `button__weight--${weight}`,
-    `${rounded ? 'button__rounded' : ''}`,
-    `button__context--${context}`,
-    `${!hasLabel ? 'button__no-label' : ''}`,
-    `${isAppearanceIconButton && noIconBorder ? 'button__appearance--no-icon-border' : `button__appearance--${appearance}`}`,
-    `${props.className ?? ''}`,
+    size && `button__size--${size}`,
+    fluid && 'button__fluid',
+    focus && 'button__focus',
+    weight && `button__weight--${weight}`,
+    rounded && 'button__rounded',
+    context && `button__context--${context}`,
+    !hasLabel && 'button__no-label',
+    isAppearanceIconButton && noIconBorder
+      ? 'button__appearance--no-icon-border'
+      : `button__appearance--${appearance}`,
+    className,
   ]);
 
   const iconClassNameList = joinClass([
@@ -65,41 +68,33 @@ export default function Button({
     'button__content--notification-counter',
     `${notificationColor ? `ds-color-${notificationColor}` : 'ds-color-white'} `,
     `${notificationBackgroundColor ? `ds-bg-${notificationBackgroundColor}` : 'ds-bg-error-80'} `,
-    `${notificationClassName ?? ''}`,
+    notificationClassName,
   ]);
 
   return (
-    <button {...props} disabled={disabled || loading} className={classNameList}>
-      {!isAppearanceIconButton ? (
-        <div className="button__content">
-          {icon && iconPosition === 'left' && (
-            <Icon icon={icon} size={iconSize} className={iconClassNameList} />
-          )}
-          <>
-            <div>{children}</div>
-            {notificationCounter && (
-              <div className="button__content--notification">
-                {notificationCounter && (
-                  <div className={notificationCounterClassNameList}>
-                    {notificationCounter > 9 ? '9+' : notificationCounter}
-                  </div>
-                )}
-              </div>
-            )}
-          </>
-          {icon && iconPosition === 'right' && (
-            <Icon icon={icon} size={iconSize} className={iconClassNameList} />
-          )}
-          {loading && (
-            <Spinner
-              size={16}
-              context={loadingContext ?? context}
-              className="button__loading"
-            />
-          )}
-        </div>
-      ) : (
+    <button
+      {...props}
+      role={appearance === 'icon' ? 'button' : undefined}
+      disabled={disabled || loading}
+      className={classNameList}
+      aria-busy={loading ? 'true' : undefined}
+      aria-disabled={disabled || loading ? 'true' : undefined}
+    >
+      {isAppearanceIconButton ? (
         <Icon icon={icon || 'react'} className={iconClassNameList} />
+      ) : (
+        <ButtonContent
+          icon={icon}
+          context={context}
+          loading={loading}
+          children={children}
+          iconSize={iconSize}
+          iconPosition={iconPosition}
+          loadingContext={loadingContext}
+          iconClassNameList={iconClassNameList}
+          notificationCounter={notificationCounter}
+          notificationCounterClassNameList={notificationCounterClassNameList}
+        />
       )}
     </button>
   );

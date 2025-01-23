@@ -1,9 +1,13 @@
 import React from 'react';
 
-import type { TColors, TContext } from '../../utils/colors';
-import type { TIcon, TIconPosition } from '../../utils/icons';
-import type { TSimplySIze } from '../../utils/sizes';
-import type { TWeight } from '../../utils/fonts';
+import type {
+  TColors,
+  TContext,
+  TIcon,
+  TIconPosition,
+  TSimplySIze,
+  TWeight,
+} from '../../utils';
 
 export type TAppearance = 'icon' | 'outline' | 'standard' | 'borderless';
 
@@ -36,4 +40,17 @@ export interface ButtonProps
   notificationCounter?: number;
   notificationClassName?: string;
   notificationBackgroundColor?: TColors;
+}
+
+export interface ButtonContentProps {
+  icon?: React.ReactNode | TIcon;
+  context: TContext;
+  loading: boolean;
+  children?: React.ReactNode;
+  iconSize: string | number;
+  iconPosition: TIconPosition;
+  loadingContext: TContext;
+  iconClassNameList: string;
+  notificationCounter?: number;
+  notificationCounterClassNameList: string;
 }
