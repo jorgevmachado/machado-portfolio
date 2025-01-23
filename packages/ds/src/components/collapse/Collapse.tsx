@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import type { TContext, TIconPosition } from '../../utils';
 import joinClass from '../../utils/join-class';
-import useGenerateComponentId from '../../utils/use-generate-component-id';
+import useGenerateComponentId from '../../hooks/use-generate-component-id';
 
 import Button from '../button';
 import Link from '../link';

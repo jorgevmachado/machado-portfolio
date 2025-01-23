@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import joinClass from '../../utils/join-class';
-import { useOutsideClick } from '../../utils';
+
+import { useDropdown, useOutsideClick } from '../../hooks';
 
 import { DropdownProps } from './interface';
 
@@ -12,75 +13,62 @@ import './Dropdown.scss';
 export default function Dropdown({
   type = 'button',
   label = 'activator',
-  isOpen,
+  isOpen: externalIsOpen,
   context = 'neutral',
   disabled,
   children,
+  className = '',
   activator,
   onClickOutside,
   onDropDownClick,
   ...props
 }: DropdownProps) {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  const { isOpen, setIsOpen } = useDropdown(externalIsOpen);
+
+  const handleActivatorClick = () => {
+    if (disabled) return;
+
+    // Toggle do dropdown
+    setIsOpen(!isOpen);
+
+    // Notifica o pai ao clicar no dropdown
+    if (onDropDownClick) {
+      onDropDownClick(!isOpen);
+    }
+  };
 
   const classNameList = joinClass([
     'dropdown',
-    `dropdown__context--${context}`,
-    `${props.className ?? ''}`,
+    context && `dropdown__context--${context}`,
+    className,
   ]);
 
-  const handleClick = () => {
-    if (disabled) {
-      return;
-    }
-
-    if (isOpen === undefined) {
-      setIsDropdownOpen(!isDropdownOpen);
-    }
-
-    if (onDropDownClick) {
-      onDropDownClick(!isDropdownOpen);
-    }
-  };
-
-  const handleIsOpen = () => {
-    if (isOpen !== undefined) {
-      return isOpen;
-    }
-    return isDropdownOpen;
-  };
-
-  const handleOpenDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-
-  useEffect(() => {
-    if (isOpen !== undefined) {
-      setIsDropdownOpen(isOpen);
-    }
-  }, [isOpen]);
-
   useOutsideClick(ref, () => {
+    setIsOpen(false);
+
     onClickOutside && onClickOutside(true);
-    setIsDropdownOpen(false);
-    onDropDownClick && onDropDownClick(isDropdownOpen);
-  }, []);
+
+    onDropDownClick && onDropDownClick(false);
+  }, [setIsOpen]);
 
   return (
     <div {...props} ref={ref} className={classNameList}>
-      <div onClick={handleClick}>
+      <div onClick={handleActivatorClick}>
         {!activator ? (
           <Activator
             type={type}
             label={label}
-            isOpen={handleIsOpen()}
-            onClick={handleOpenDropdown}
+            isOpen={isOpen}
+            onClick={handleActivatorClick}
             context={context}
           />
         ) : (
           activator
         )}
       </div>
-      {handleIsOpen() && (
+      {isOpen && (
         <div className={`dropdown__action--${type}`} tabIndex={-1}>
           {children}
         </div>

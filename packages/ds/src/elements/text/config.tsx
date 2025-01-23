@@ -1,5 +1,5 @@
 import React from 'react';
-import useGenerateComponentId from '../../utils/use-generate-component-id';
+import useGenerateComponentId from '../../hooks/use-generate-component-id';
 
 export function isReactNode(value: unknown): boolean {
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { TContext } from '../../../utils';
 
@@ -24,7 +24,8 @@ export default function Activator({
   className,
   ...props
 }: ActivatorProps) {
-  const icon = isOpen ? 'arrow-up' : 'arrow-down';
+  const icon = useMemo(() => (isOpen ? 'arrow-up' : 'arrow-down'), [isOpen]);
+
   return (
     <div {...props} className={className}>
       {type === 'button' ? (

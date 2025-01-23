@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import type { TContext } from '../../utils';
 
 import joinClass from '../../utils/join-class';
-import useGenerateComponentId from '../../utils/use-generate-component-id';
+import useGenerateComponentId from '../../hooks/use-generate-component-id';
 
 import { Icon, Text } from '../../elements';
 
