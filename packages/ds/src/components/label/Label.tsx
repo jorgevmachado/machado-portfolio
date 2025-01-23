@@ -40,7 +40,7 @@ export default function Label({
         </Text>
       )}
       {tip && (
-        <Text id={tipId} tag="span" color="neutral-90" variant="small">
+        <Text id={tipId} tag="span" variant="small">
           {tip}
         </Text>
       )}
