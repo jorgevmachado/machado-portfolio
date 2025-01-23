@@ -8,7 +8,7 @@ import './Label.scss';
 
 export type TTag = 'label' | 'legend';
 
-interface LabelProps extends React.HTMLProps<HTMLDivElement> {
+interface LabelProps extends React.HTMLAttributes<HTMLDivElement> {
   tip?: string;
   tag?: TTag;
   label?: string;
@@ -23,22 +23,24 @@ export default function Label({
   className,
   ...props
 }: LabelProps) {
+  const tipId = componentId ? `${componentId}-tip` : undefined;
+
   const classNameList = joinClass(['label', className]);
 
   return (
     <div {...props} className={classNameList}>
       {label && (
-        <Text tag={tag} htmlFor={componentId} className="label__text">
+        <Text
+          tag={tag}
+          htmlFor={tag === 'label' ? componentId : undefined}
+          className="label__text"
+          aria-describedby={tip ? tipId : undefined}
+        >
           {label}
         </Text>
       )}
       {tip && (
-        <Text
-          tag="span"
-          color="neutral-90"
-          className="label__tip"
-          variant="small"
-        >
+        <Text id={tipId} tag="span" color="neutral-90" variant="small">
           {tip}
         </Text>
       )}
