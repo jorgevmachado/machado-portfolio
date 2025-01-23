@@ -41,16 +41,3 @@ export interface ButtonProps
   notificationClassName?: string;
   notificationBackgroundColor?: TColors;
 }
-
-export interface ButtonContentProps {
-  icon?: React.ReactNode | TIcon;
-  context: TContext;
-  loading: boolean;
-  children?: React.ReactNode;
-  iconSize: string | number;
-  iconPosition: TIconPosition;
-  loadingContext: TContext;
-  iconClassNameList: string;
-  notificationCounter?: number;
-  notificationCounterClassNameList: string;
-}

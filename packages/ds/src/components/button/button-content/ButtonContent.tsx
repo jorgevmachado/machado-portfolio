@@ -1,8 +1,21 @@
 import React from 'react';
 
+import type { TContext, TIcon, TIconPosition } from '../../../utils';
+
 import { Icon, Spinner } from '../../../elements';
 
-import type { ButtonContentProps } from '../interface';
+export interface ButtonContentProps {
+  icon?: React.ReactNode | TIcon;
+  context: TContext;
+  loading: boolean;
+  children?: React.ReactNode;
+  iconSize: string | number;
+  iconPosition: TIconPosition;
+  loadingContext: TContext;
+  iconClassNameList: string;
+  notificationCounter?: number;
+  notificationCounterClassNameList: string;
+}
 
 export default function ButtonContent({
   icon,
