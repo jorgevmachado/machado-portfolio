@@ -41,7 +41,7 @@ export default function Radio({
     return modelValue === value;
   };
 
-  const handleChange = () => {
+  const handleInputChange = () => {
     setIsFocused(true);
     onItemClick && onItemClick(value);
   };
@@ -57,11 +57,11 @@ export default function Radio({
   ]);
   return (
     <label
-      role="radioButton"
-      onClick={handleChange}
-      aria-label="radio button"
+      role="radio"
       className={classNameList}
       data-testid={dataTestId}
+      aria-checked={shouldBeChecked()}
+      aria-labelledby={`${componentId}-label`}
       {...props}
     >
       <div className="radio__wrapper">
@@ -74,7 +74,7 @@ export default function Radio({
           checked={shouldBeChecked()}
           disabled={disabled}
           tabIndex={0}
-          onChange={handleChange}
+          onChange={handleInputChange}
           className="radio__wrapper--input"
           aria-checked={shouldBeChecked()}
           data-destid={`${dataTestId}-radio-input`}
