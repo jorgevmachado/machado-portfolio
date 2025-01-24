@@ -64,65 +64,6 @@
     }
   }
 
-  &__context {
-    &--info {
-      .modal__close {
-        color: var(--color-info-80);
-        &:hover {
-          color: var(--color-info-70)
-        }
-      }
-    }
-    &--error {
-      .modal__close {
-        color: var(--color-error-80);
-        &:hover {
-          color: var(--color-error-70)
-        }
-      }
-    }
-    &--neutral {
-      .modal__close {
-        color: var(--color-neutral-80);
-        &:hover {
-          color: var(--color-neutral-90)
-        }
-      }
-    }
-    &--success {
-      .modal__close {
-        color: var(--color-success-80);
-        &:hover {
-          color: var(--color-success-70)
-        }
-      }
-    }
-    &--primary {
-      .modal__close {
-        color: var(--color-primary-80);
-        &:hover {
-          color: var(--color-primary-60)
-        }
-      }
-    }
-    &--secondary {
-      .modal__close {
-        color: var(--color-secondary-80);
-        &:hover {
-          color: var(--color-secondary-60)
-        }
-      }
-    }
-    &--attention {
-      .modal__close {
-        color: var(--color-attention-80);
-        &:hover {
-          color: var(--color-attention-60)
-        }
-      }
-    }
-  }
-
   @media (min-width: var(--breakpoints-md)) {
     padding: var(--size-huge) var(--size-medium);
     max-height: 100%;
@@ -133,5 +74,23 @@
     height: 100%;
     min-width: auto;
     border-radius: 0;
+  }
+}
+
+$contexts: (
+        info: (var(--color-info-80), var(--color-info-70)),
+        error: (var(--color-error-80), var(--color-error-70)),
+        neutral: (var(--color-neutral-80), var(--color-neutral-90)),
+        primary: (var(--color-primary-80), var(--color-primary-60)),
+        secondary: (var(--color-secondary-80), var(--color-secondary-60)),
+        attention: (var(--color-attention-80), var(--color-attention-60))
+);
+
+@each $key, $colors in $contexts {
+  .modal__context--#{$key} .modal__close {
+    color: nth($colors, 1);
+    &:hover {
+      color: nth($colors, 2);
+    }
   }
 }

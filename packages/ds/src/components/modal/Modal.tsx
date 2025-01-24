@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import type { TColors, TContext } from '../../utils';
 import joinClass from '../../utils/join-class';
 
 import Icon from '../../elements/icon';
-import Text from '../../elements/text';
 
 import './Modal.scss';
 
@@ -28,41 +27,35 @@ export default function Modal({
   context = 'primary',
   onClose,
   children,
-  closeOnEsc,
+  closeOnEsc = false,
   backDropColor = 'neutral-100',
-  closeOnOutsideClick,
-  removeBackgroundScroll,
+  closeOnOutsideClick = true,
+  removeBackgroundScroll = false,
   ...props
 }: ModalProps) {
-  const onCloseFunction = () => {
-    if (removeBackgroundScroll) {
-      document.body.style.overflow = 'auto';
-    }
-    onClose();
-  };
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (removeBackgroundScroll && isOpen) {
       document.body.style.overflow = 'hidden';
     }
-  }, [isOpen]);
+    return () => {
+      if (removeBackgroundScroll) document.body.style.overflow = 'auto';
+    };
+  }, [isOpen, removeBackgroundScroll]);
 
   useEffect(() => {
-    if (closeOnEsc) {
-      const keyDownHandler = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-          event.preventDefault();
-          onCloseFunction();
-        }
-      };
+    if (!closeOnEsc) return;
+    const keyHandler = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    document.addEventListener('keydown', keyHandler);
+    return () => document.removeEventListener('keydown', keyHandler);
+  }, [closeOnEsc, onClose]);
 
-      window.addEventListener('keydown', keyDownHandler);
-
-      return () => window.removeEventListener('keydown', keyDownHandler);
-    }
-  }, [closeOnEsc]);
-
-  const classNameList = joinClass([
+  const backdropClasses = joinClass([
+    'modal__backdrop',
+    `ds-bg-${backDropColor}`,
+  ]);
+  const modalClasses = joinClass([
     'modal',
     'modal__fade-in',
     `modal__spacing--${spacing}`,
@@ -72,29 +65,27 @@ export default function Modal({
   return isOpen ? (
     <>
       <div
-        className={joinClass([
-          'modal__backdrop',
-          'modal__fade-in',
-          `ds-bg-${backDropColor}`,
-        ])}
-        onClick={() => closeOnOutsideClick && onCloseFunction}
+        className={backdropClasses}
+        onClick={() => closeOnOutsideClick && onClose()}
+        aria-hidden="true"
       />
-      <div {...props} className={classNameList}>
+      <div
+        {...props}
+        className={modalClasses}
+        role="dialog"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+        ref={modalRef}
+      >
         <Icon
           icon="close"
           size={35}
-          onClick={onCloseFunction}
-          tabIndex={0}
+          onClick={onClose}
+          aria-label="Fechar modal"
           className="modal__close"
-          aria-label="close modal"
-          data-testid="on-close"
         />
-
-        <Text tag="h2" weight="bold" variant="xlarge" tabIndex={0}>
-          {title}
-        </Text>
-
-        <div tabIndex={0}>{children}</div>
+        {title && <h2 id="modal-title">{title}</h2>}
+        <div id="modal-description">{children}</div>
       </div>
     </>
   ) : null;
