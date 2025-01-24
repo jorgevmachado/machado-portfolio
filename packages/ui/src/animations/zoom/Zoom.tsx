@@ -1,37 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 
 interface ZoomProps {
   enter: boolean;
+  style?: React.HTMLAttributes<HTMLDivElement>['style'];
   delay?: number;
   timeout?: number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  transitionType?: string;
 }
-
-type Style = React.HTMLAttributes<HTMLDivElement>['style'];
-
-const styledShow = (timeout: number): Style => ({
-  transform: 'scale(1)',
-  transition: `all ${timeout}s cubic-bezier(1, 0.01, 0, 0.99)`,
-});
-
-const styledHide = (timeout: number): Style => ({
-  transform: 'scale(0)',
-  transition: `all ${timeout}s cubic-bezier(1, 0.01, 0, 0.99)`,
-});
 
 export default function Zoom({
   enter,
+  style = {},
   delay = 0,
   timeout = 0.2,
-  children,
+  children = null,
+  transitionType = 'all',
 }: ZoomProps) {
-  const [style, setStyle] = useState<Style>(styledHide(timeout));
+  const getStyled = useCallback(
+    (scale: number): CSSProperties => ({
+      transform: `scale(${scale})`,
+      transition: `${transitionType} ${timeout}s cubic-bezier(1, 0.01, 0, 0.99)`,
+    }),
+    [timeout, transitionType],
+  );
+
+  const [zoomStyle, setZoomStyle] = useState<CSSProperties>(getStyled(0));
 
   useEffect(() => {
-    setTimeout(() => {
-      setStyle(enter ? styledShow(timeout) : styledHide(timeout));
+    const timer = setTimeout(() => {
+      setZoomStyle(getStyled(enter ? 1 : 0));
     }, delay);
-  }, [enter]);
+    return () => clearTimeout(timer);
+  }, [enter, delay, getStyled]);
 
-  return <div style={{ ...style, width: 'fit-content' }}>{children}</div>;
+  return (
+    <div
+      style={{ ...zoomStyle, ...style, width: 'fit-content' }}
+      aria-hidden={!enter}
+    >
+      {children}
+    </div>
+  );
 }
