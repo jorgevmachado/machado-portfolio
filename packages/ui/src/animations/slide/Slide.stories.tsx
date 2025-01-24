@@ -20,6 +20,7 @@ const meta = {
       </>
     ),
     direction: 'right',
+    transitionType: 'all',
   },
   title: 'Animations/Slide',
   argTypes: {
@@ -32,15 +33,15 @@ const meta = {
     },
     delay: {
       table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: '0' },
+        type: { summary: 'number' },
+        defaultValue: { summary: '50' },
       },
       control: { type: 'number' },
     },
     timeout: {
       table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: '.2' },
+        type: { summary: 'number' },
+        defaultValue: { summary: '0.2' },
       },
       control: { type: 'number' },
     },
@@ -63,7 +64,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { children: 'Exemplo' },
+  args: { children: 'Example' },
   render: (args) => {
     const [show, setShow] = useState(false);
 
@@ -72,8 +73,83 @@ export const Default: Story = {
     };
     return (
       <>
-        <Slide {...args} enter={show} children={args.children} />
-        <Button onClick={handleToggle}>TOGGLE</Button>
+        <Slide {...args} enter={show}>
+          {args.children}
+        </Slide>
+        <Button onClick={handleToggle} style={{ marginTop: '2rem' }}>
+          {show ? 'HIDE SLIDE' : 'SHOW SLIDE'}
+        </Button>
+      </>
+    );
+  },
+};
+
+export const DirectionTop: Story = {
+  args: {
+    direction: 'top',
+    children: (
+      <div
+        style={{ background: '#f0f0f0', padding: '10px', textAlign: 'center' }}
+      >
+        Slide from Top
+      </div>
+    ),
+  },
+};
+
+export const DirectionBottom: Story = {
+  args: {
+    direction: 'bottom',
+    children: (
+      <div
+        style={{ background: '#f0f0f0', padding: '10px', textAlign: 'center' }}
+      >
+        Slide from Bottom
+      </div>
+    ),
+  },
+};
+
+export const CustomTimeout: Story = {
+  args: {
+    timeout: 1.5,
+    children: (
+      <div
+        style={{ background: '#ffcccc', padding: '10px', textAlign: 'center' }}
+      >
+        Custom Timeout (1.5s)
+      </div>
+    ),
+  },
+};
+
+export const CustomDelay: Story = {
+  args: {
+    delay: 1000,
+    children: (
+      <div
+        style={{ background: '#d9f7d9', padding: '10px', textAlign: 'center' }}
+      >
+        Custom Delay (1s)
+      </div>
+    ),
+  },
+};
+
+export const DynamicContent: Story = {
+  render: (args) => {
+    const [show, setShow] = useState(false);
+
+    const handleToggle = () => {
+      setShow(!show);
+    };
+
+    return (
+      <>
+        <Slide {...args} enter={show}>
+          <p>{show ? 'Content Visible' : 'Content Hidden'}</p>
+        </Slide>
+        <Button onClick={handleToggle}>{show ? 'HIDE' : 'SHOW'}</Button>
       </>
     );
   },

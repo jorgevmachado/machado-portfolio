@@ -1,53 +1,73 @@
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 
-import type { Direction, Style } from '../interface';
-
-const styledShow = (timeout: number): Style => ({
-  opacity: 1,
-  transform: '',
-  transition: `all ${timeout}s ease-in-out`,
-});
-
-const styledHide = (timeout: number, direction: Direction): Style => {
-  const translate = {
-    top: 'translateY(-10px)',
-    left: 'translateX(-10px)',
-    right: 'translateX(10px)',
-    bottom: 'translateY(10px)',
-  };
-
-  return {
-    opacity: 0,
-    transform: translate[direction],
-    transition: `all ${timeout}s ease-in-out`,
-  };
-};
+import type { Direction } from '../interface';
 
 export interface SlideProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
-  enter: boolean;
+  enter?: boolean;
   delay?: number;
   timeout?: number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   direction?: Direction;
+  transitionType?: string;
 }
+
 export default function Slide({
-  enter,
+  enter = true,
   delay = 50,
   timeout = 0.2,
-  children,
+  children = null,
   direction = 'right',
+  transitionType = 'all',
   ...props
 }: SlideProps) {
-  const [style, setStyle] = useState<Style>(styledHide(timeout, direction));
+  const styledHide = useCallback(
+    (
+      timeout: number,
+      direction: Direction,
+      transitionType: string,
+    ): CSSProperties => {
+      const translate = {
+        top: 'translateY(-10px)',
+        left: 'translateX(-10px)',
+        right: 'translateX(10px)',
+        bottom: 'translateY(10px)',
+      };
+
+      return {
+        opacity: 0,
+        transform: translate[direction],
+        transition: `${transitionType} ${timeout}s ease-in-out`,
+      };
+    },
+    [],
+  );
+
+  const styledShow = useCallback(
+    (timeout: number, transitionType: string): CSSProperties => ({
+      opacity: 1,
+      transform: '',
+      transition: `${transitionType} ${timeout}s ease-in-out`,
+    }),
+    [],
+  );
+
+  const [animationStyle, setAnimationStyle] = useState<CSSProperties>(
+    styledHide(timeout, direction, transitionType),
+  );
 
   useEffect(() => {
-    setTimeout(() => {
-      setStyle(enter ? styledShow(timeout) : styledHide(timeout, direction));
+    const timer = setTimeout(() => {
+      setAnimationStyle(
+        enter
+          ? styledShow(timeout, transitionType)
+          : styledHide(timeout, direction, transitionType),
+      );
     }, delay);
-  }, [enter]);
+    return () => clearTimeout(timer);
+  }, [enter, delay, timeout, transitionType, direction]);
 
   return (
-    <div style={style} {...props}>
+    <div style={animationStyle} {...props}>
       {children}
     </div>
   );
