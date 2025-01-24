@@ -81,32 +81,21 @@
     }
   }
 
-  &[disabled] {
-    .switch__label,
-    .switch__button {
-      cursor: default;
-    }
+  &[disabled],
+  &__disabled {
+    cursor: default;
 
     .switch__button {
       border-color: var(--color-neutral-70);
       background-color: var(--color-neutral-70);
-    }
-  }
-
-  &__disabled {
-    cursor: default;
-    .text {
-      color: var(--color-neutral-70);
-      cursor: default;
-    }
-
-    .switch__button {
-      border-color: var(--color-neutral-70);
 
       &:before {
         background-color: var(--color-neutral-70);
       }
     }
-  }
 
+    .text {
+      color: var(--color-neutral-70);
+    }
+  }
 }

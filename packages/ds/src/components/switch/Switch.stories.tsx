@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { OContext } from '../../utils/colors';
+import { OContext } from '../../utils';
 
 import Switch, { SwitchProps } from './Switch';
 
@@ -59,19 +59,13 @@ export const Default: Story = {
   render: (args: SwitchProps) => {
     const [isChecked, setIsChecked] = useState(args.checked);
 
-    useEffect(() => {
-      if (isChecked !== args.checked) {
-        setIsChecked(args.checked);
-      }
-    }, [args]);
-
     return (
       <div>
         <Switch
           {...args}
           checked={isChecked}
-          onChange={(event, checked) => {
-            setIsChecked(!checked);
+          onChange={(event, nextChecked) => {
+            setIsChecked(nextChecked);
           }}
         />
       </div>

@@ -28,7 +28,7 @@ export default function Switch({
   const componentId = useGenerateComponentId('switch-');
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (onChange) onChange(event, checked);
+    if (onChange) onChange(event, !checked);
   };
 
   const classNameList = joinClass([
@@ -47,6 +47,7 @@ export default function Switch({
         disabled={disabled}
         className="switch__button"
         aria-checked={checked}
+        aria-disabled={disabled ? true : undefined}
         aria-labelledby={`${componentId}-label`}
       />
       <Text
