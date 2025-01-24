@@ -27,7 +27,7 @@ export interface RadioGroupProps extends React.HTMLAttributes<Element> {
   appearance?: TAppearance;
   modelValue: string | number | Array<string | number>;
   multiSelect?: boolean;
-  onActionClick?: (model: number | string | Array<string | number>) => void;
+  onActionClick: (model: number | string | Array<string | number>) => void;
   requiredMessage?: string;
 }
 
@@ -49,28 +49,24 @@ export default function RadioGroup({
   const generated = useGenerateComponentId('radio-group-');
   const componentId = id ?? generated;
 
-  const convertCurrentValueOfArray = () => {
-    const convertCurrentValue: string | Array<string | number> =
-      modelValue?.toString();
-    return convertCurrentValue?.length ? convertCurrentValue.split(',') : [];
-  };
+  const selectedValues = React.useMemo(
+    () =>
+      (Array.isArray(modelValue)
+        ? modelValue
+        : modelValue?.toString().split(',')) ?? [],
+    [modelValue],
+  );
 
   const valueIsMultiselect = (value: string | number) => {
-    const arrayMultiSelect: Array<string | number> =
-      convertCurrentValueOfArray();
-
-    if (arrayMultiSelect.some((ft) => ft == value)) {
-      return arrayMultiSelect.filter((ft) => ft !== value);
+    if (selectedValues.includes(value)) {
+      return selectedValues.filter((v) => v !== value);
     }
-
-    arrayMultiSelect.push(value);
-
-    return arrayMultiSelect;
+    return [...selectedValues, value];
   };
 
   const isSelectedItem = (value: number | string) => {
     return multiSelect
-      ? convertCurrentValueOfArray().some((sm) => sm === value)
+      ? selectedValues.some((sm) => sm === value)
       : value === modelValue;
   };
 
@@ -87,12 +83,14 @@ export default function RadioGroup({
     return isSelectedItem(value) ? 'standard' : 'outline';
   };
 
-  const buttonClassNameList = (value: string | number) =>
-    joinClass([
+  const buttonClassNameList = (value: string | number) => {
+    const baseClassName = 'radio-group__container--button';
+    return joinClass([
       'radio-group__container--button',
-      `${isSelectedItem(value) ? 'radio-group__container--button-selected' : ''}`,
-      `${hasError() ? 'radio-group__container--button-error' : ''}`,
+      isSelectedItem(value) && `${baseClassName}-selected`,
+      hasError() && `${baseClassName}-error`,
     ]);
+  };
 
   const classNameList = joinClass([
     'radio-group',
@@ -124,7 +122,11 @@ export default function RadioGroup({
             role="radio"
             context={context}
             onClick={() => handleClick(value)}
+            tabIndex={isSelectedItem(value) ? 0 : -1}
             disabled={disabled}
+            onKeyDown={(e) => {
+              if (e.key === ' ' || e.key === 'Enter') handleClick(value);
+            }}
             className={buttonClassNameList(value)}
             appearance={buttonAppearance(value)}
             aria-checked={isSelectedItem(value)}
@@ -134,17 +136,22 @@ export default function RadioGroup({
           </Button>
         ))}
       </div>
-      {hasError() && <Feedback context="error">{requiredMessage}</Feedback>}
+      {hasError() && (
+        <Feedback context="error" id="radio-group-feedback">
+          {requiredMessage}
+        </Feedback>
+      )}
     </div>
   );
 
   return label ? (
     <fieldset
+      id={componentId}
       className="radio-group__fieldset"
       data-testid={dataTestId}
       {...props}
     >
-      {label && <Label label={label}></Label>}
+      {label && <Label tag="legend" label={label}></Label>}
       {template}
     </fieldset>
   ) : (
