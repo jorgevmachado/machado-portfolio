@@ -38,6 +38,9 @@ export default function Tag({
   children,
   fullWidth,
   className,
+  'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
+
   ...props
 }: TagProps) {
   const classList = joinClass([
@@ -52,17 +55,37 @@ export default function Tag({
     `${className ? className : ''}`,
   ]);
 
+  const renderInclined = (inclined: TDirection, position: 'left' | 'right') => {
+    const inclinedMap = {
+      left: {
+        left: <InclinedLeftPositionLeft />,
+        right: <InclinedLeftPositionRight />,
+      },
+      right: {
+        left: <InclinedRightPositionLeft />,
+        right: <InclinedRightPositionRight />,
+      },
+    };
+
+    return inclinedMap[inclined]?.[position] ?? null;
+  };
+
   return (
-    <div className={classList} {...props}>
+    <div
+      className={classList}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden}
+      {...props}
+    >
       {inclined === 'right' && (
         <div className="color-path tag__incline--right-position__left">
-          <InclinedRightPositionLeft />
+          {renderInclined(inclined, 'left')}
         </div>
       )}
 
       {inclined === 'left' && (
         <div className="color-path tag__incline--left-position__left">
-          <InclinedLeftPositionLeft />
+          {renderInclined(inclined, 'left')}
         </div>
       )}
 
@@ -73,13 +96,13 @@ export default function Tag({
 
       {inclined === 'right' && (
         <div className="color-path tag__incline--right-position__right">
-          <InclinedRightPositionRight />
+          {renderInclined(inclined, 'right')}
         </div>
       )}
 
       {inclined === 'left' && (
         <div className="color-path tag__incline--left-position__right">
-          <InclinedLeftPositionRight />
+          {renderInclined(inclined, 'right')}
         </div>
       )}
     </div>

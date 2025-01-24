@@ -13,6 +13,22 @@
   }
 }
 
+%tag-inclined-base {
+  margin-left: var(--size-small);
+  margin-right: var(--size-small);
+
+  &:before {
+    top: 100%;
+    width: 0;
+    height: 0;
+    border: var(--size-x-small) solid transparent;
+    content: "";
+    display: block;
+    position: absolute;
+  }
+}
+
+
 .tag {
   display: inline-flex;
   padding: var(--size-xx-tiny) var(--size-tiny);
@@ -50,34 +66,18 @@
   &__inclined {
     border-radius: 0;
     &--right {
-      margin-left: var(--size-small);
-      margin-right: var(--size-small);
+      @extend %tag-inclined-base;
       &:before {
-        top: 100%;
         left: -14px;
-        border: var(--size-x-small) solid transparent;
-        width: 0;
-        height: 0;
-        content: "";
-        display: block;
-        position: absolute;
         border-top: var(--size-x-small) solid;
         border-right: 0;
         border-bottom: 0;
       }
     }
     &--left {
-      margin-left: var(--size-small);
-      margin-right: var(--size-small);
+      @extend %tag-inclined-base;
       &:before {
-        top: 100%;
         right: -14px;
-        width: 0;
-        height: 0;
-        border: var(--size-x-small) solid transparent;
-        content: "";
-        display: block;
-        position: absolute;
         border-top: var(--size-x-small) solid;
         border-left: 0;
         border-bottom: 0;
