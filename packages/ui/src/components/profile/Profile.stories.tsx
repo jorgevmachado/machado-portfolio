@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { ENTITY_USER_COMPLETE_FIXTURE } from '@repo/business';
@@ -11,7 +13,7 @@ const meta = {
     name: ENTITY_USER_COMPLETE_FIXTURE.name,
     email: ENTITY_USER_COMPLETE_FIXTURE.email,
     context: 'primary',
-    picture: ENTITY_USER_COMPLETE_FIXTURE.picture,
+    picture: ENTITY_USER_COMPLETE_FIXTURE.picture ?? 'https://placehold.co/150',
     children: 'Hello, World!',
     profileMenu: PROFILE_MENU,
   },
@@ -35,4 +37,28 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
+};
+
+export const WithNeutralContext: Story = {
+  args: {
+    context: 'neutral',
+  },
+};
+
+export const WithoutPicture: Story = {
+  args: {
+    picture: '',
+  },
+};
+
+export const NoMenuLink: Story = {
+  args: {
+    profileMenu: undefined,
+  },
+};
+
+export const CustomChildren: Story = {
+  args: {
+    children: <p>Bem vindo ao sistema!</p>,
+  },
 };

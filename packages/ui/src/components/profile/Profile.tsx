@@ -25,19 +25,19 @@ export default function Profile({
   name,
   email,
   picture,
-  context,
+  context = 'neutral',
   children,
-  className,
+  className = '',
   profileMenu,
 }: ProfileProps) {
   const classNameList = joinClass([
     'profile',
-    `${context ? `profile__context--${context}` : ''}`,
-    `${className ? className : ''}`,
+    context && `profile__context--${context}`,
+    className,
   ]);
 
   return (
-    <div className={classNameList}>
+    <div role="region" className={classNameList} aria-label="Profile Section">
       {children}
       <div className="profile__info">
         {(name || picture) && (
@@ -46,6 +46,7 @@ export default function Profile({
             size="large"
             name={name ?? 'username'}
             initialsLength={2}
+            aria-label={`Avatar de ${name}`}
           />
         )}
         <div>
@@ -73,6 +74,7 @@ export default function Profile({
               icon="arrow-right"
               onClick={profileMenu.onRedirect}
               className="profile__info--link"
+              aria-label={`Menu de perfil: ${profileMenu.label}`}
               iconPosition="right"
             >
               {profileMenu.label}
