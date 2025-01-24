@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { TContext } from '../../utils';
 
@@ -35,25 +35,17 @@ export default function Rating({
   const currentRating = roundRating ? Math.round(rating) : rating;
 
   const getStar = (value: number, index: number) => {
-    const currentValue = halfStar ? rating : value;
-    const previousIndex = index - 1;
-
-    if (currentValue >= index) {
-      return 'star-filled';
-    }
-
-    if (currentValue > previousIndex && currentValue < index) {
+    if (halfStar && rating > index - 1 && rating < index) {
       return 'star-half';
     }
 
-    return 'star';
+    return value >= index ? 'star-filled' : 'star';
   };
 
-  const renderStars = () => {
-    const stars: Array<React.ReactNode> = [];
-
+  const stars = useMemo(() => {
+    const starsArray: Array<React.ReactNode> = [];
     for (let i = 1; i <= length; i++) {
-      stars.push(
+      starsArray.push(
         <Icon
           key={`star-${i}`}
           icon={getStar(value, i)}
@@ -62,14 +54,21 @@ export default function Rating({
         />,
       );
     }
+    return starsArray;
+  }, [length, rating, context]);
 
-    return stars;
-  };
+  const renderStars = () => stars;
 
   const classNameList = joinClass(['rating', `rating__context--${context}`]);
 
   return (
-    <div {...props} className={classNameList}>
+    <div
+      {...props}
+      className={classNameList}
+      aria-label={`Rated ${currentRating} out of ${length} stars. ${
+        ratingCount ? `${ratingCount} total ratings.` : ''
+      }`}
+    >
       <span role="img" aria-label={`Rated ${value} out of ${length} stars`}>
         {renderStars()}
       </span>
