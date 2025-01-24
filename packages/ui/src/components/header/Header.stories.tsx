@@ -61,3 +61,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {},
 };
+
+export const WithNeutralContext: Story = {
+  args: { context: 'neutral' },
+};
+
+export const NoLogo: Story = {
+  args: { logo: undefined },
+};

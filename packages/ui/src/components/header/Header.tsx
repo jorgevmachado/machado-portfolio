@@ -25,6 +25,10 @@ export default function Header({
   context = 'neutral',
   handleToggleMenu,
 }: NavbarProps) {
+  const handleLogoClick = (e: React.MouseEvent<HTMLDivElement>) =>
+    logo?.onClick && logo.onClick(e);
+  const hasItems = (item: Menu['items'][number]) => !!item?.items?.length;
+
   return (
     <header className={`header header__context--${context}`}>
       <div className="header__brand">
@@ -38,7 +42,11 @@ export default function Header({
           noIconBorder={true}
         />
         {logo && (
-          <div className="header__brand--logo" onClick={logo.onClick}>
+          <div
+            className="header__brand--logo"
+            onClick={handleLogoClick}
+            tabIndex={0}
+          >
             <Image
               src={logo.src}
               alt={logo.alt}
@@ -49,22 +57,15 @@ export default function Header({
           </div>
         )}
       </div>
-      <nav className="header__nav">
-        <ul className="header__nav--list">
+      <nav className="header__nav" aria-label="main navigation">
+        <ul role="menu" className="header__nav--list">
           {navbar?.map((item) => (
             <li
               key={item.key}
+              role={item.items?.length ? 'menuitem' : 'menu'}
               className={`header__nav--list-item ${item.items?.length ? 'header__nav--list-dropdown' : ''}`}
             >
-              {!item.items?.length ? (
-                <Link
-                  context={context}
-                  onClick={item?.onRedirect}
-                  className="header__nav--list-link"
-                >
-                  {item.label}
-                </Link>
-              ) : (
+              {hasItems(item) ? (
                 <Dropdown label={item.label} type="link" context={context}>
                   {item?.items?.map((subItem) => (
                     <Link
@@ -78,6 +79,14 @@ export default function Header({
                     </Link>
                   ))}
                 </Dropdown>
+              ) : (
+                <Link
+                  context={context}
+                  onClick={item?.onRedirect}
+                  className="header__nav--list-link"
+                >
+                  {item.label}
+                </Link>
               )}
             </li>
           ))}
@@ -86,17 +95,3 @@ export default function Header({
     </header>
   );
 }
-
-// HEADER
-// HEADER__CONTEXT
-
-// HEADER__BRAND
-// HEADER__BRAND--BUTTON
-// HEADER__BRAND--LOGO
-
-// HEADER__NAV
-// HEADER__NAV--LIST
-// HEADER__NAV--LIST-ITEM
-// HEADER__NAV--LIST-LINK
-// HEADER__NAV--LIST-DROPDOWN
-// HEADER__NAV--LIST-DROPDOWN__LINK

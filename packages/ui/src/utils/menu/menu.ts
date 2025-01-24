@@ -1,11 +1,11 @@
 import type { Logo, Menu } from './interface';
 
 export const LOGO: Logo = {
-  src: 'https://via.placeholder.com/150',
+  src: 'https://placehold.co/150',
   alt: 'logo',
   title: 'logo',
   width: 80,
-  height: 80,
+  height: 60,
   onClick: () => alert('Open Home'),
 };
 
