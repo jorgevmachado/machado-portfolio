@@ -86,52 +86,18 @@
   }
 }
 
-.link__context--info {
-  @include context(
-                  var(--color-info-70),
-                  var(--color-info-80),
-                  var(--color-info-90)
-  );
-}
-.link__context--error {
-  @include context(
-                  var(--color-error-70),
-                  var(--color-error-80),
-                  var(--color-error-90)
-  );
-}
-.link__context--neutral {
-  @include context(
-                  var(--color-neutral-80),
-                  var(--color-neutral-90),
-                  var(--color-neutral-100)
-  );
-}
-.link__context--success {
-  @include context(
-                  var(--color-success-70),
-                  var(--color-success-80),
-                  var(--color-success-90)
-  );
-}
-.link__context--primary {
-  @include context(
-                  var(--color-primary-70),
-                  var(--color-primary-80),
-                  var(--color-primary-90)
-  );
-}
-.link__context--secondary {
-  @include context(
-                  var(--color-secondary-70),
-                  var(--color-secondary-80),
-                  var(--color-secondary-90)
-  );
-}
-.link__context--attention {
-  @include context(
-                  var(--color-attention-70),
-                  var(--color-attention-80),
-                  var(--color-attention-90)
-  );
+$contexts: (
+        info: (var(--color-info-70), var(--color-info-80), var(--color-info-90)),
+        error: (var(--color-error-70), var(--color-error-80), var(--color-error-90)),
+        neutral: (var(--color-neutral-80), var(--color-neutral-90), var(--color-neutral-100)),
+        success: (var(--color-success-70), var(--color-success-80), var(--color-success-90)),
+        primary: (var(--color-primary-70), var(--color-primary-80), var(--color-primary-90)),
+        secondary: (var(--color-secondary-70), var(--color-secondary-80), var(--color-secondary-90)),
+        attention: (var(--color-attention-70), var(--color-attention-80), var(--color-attention-90))
+);
+
+@each $key, $colors in $contexts {
+  .link__context--#{$key} {
+    @include context(nth($colors, 1), nth($colors, 2), nth($colors, 3));
+  }
 }

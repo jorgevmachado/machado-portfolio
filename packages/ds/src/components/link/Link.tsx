@@ -2,9 +2,11 @@ import React from 'react';
 
 import joinClass from '../../utils/join-class';
 
-import Icon from '../../elements/icon';
-
 import type { LinkProps } from './interface';
+
+import LinkIcon from './link-icon';
+
+import LinkNotification from './link-notification';
 
 import './Link.scss';
 
@@ -34,35 +36,38 @@ export default function Link({
 
   const iconClassNameList = joinClass([
     `link__icon--position-${iconPosition}`,
-    `${iconColor ? `ds-color-${iconColor}` : ''} `,
+    iconColor && `ds-color-${iconColor}`,
     iconClassName,
-  ]);
-
-  const notificationCounterClassNameList = joinClass([
-    'link__content--notification-counter',
-    `${notificationColor ? `ds-color-${notificationColor}` : 'ds-color-white'} `,
-    `${notificationBackgroundColor ? `ds-bg-${notificationBackgroundColor}` : `ds-bg-${context}-80`} `,
-    notificationClassName,
   ]);
 
   return (
     <a className={classNameList} {...props}>
       <div className="link__content">
         {icon && iconPosition === 'left' && (
-          <Icon icon={icon} className={iconClassNameList} />
+          <LinkIcon
+            icon={icon}
+            color={iconColor}
+            position="left"
+            className={iconClassNameList}
+          />
         )}
         <>
           <div>{children}</div>
-          {notificationCounter && (
-            <div className="link__content--notification">
-              <div className={notificationCounterClassNameList}>
-                {notificationCounter > 9 ? '9+' : notificationCounter}
-              </div>
-            </div>
-          )}
+          <LinkNotification
+            color={notificationColor}
+            context={context}
+            counter={notificationCounter}
+            className={notificationClassName}
+            backgroundColor={notificationBackgroundColor}
+          />
         </>
         {icon && iconPosition === 'right' && (
-          <Icon icon={icon} className={iconClassNameList} />
+          <LinkIcon
+            icon={icon}
+            color={iconColor}
+            position="right"
+            className={iconClassNameList}
+          />
         )}
       </div>
     </a>
