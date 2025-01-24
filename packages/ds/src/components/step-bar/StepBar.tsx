@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { TContext } from '../../utils';
 import joinClass from '../../utils/join-class';
@@ -41,6 +41,25 @@ export default function StepBar({
   const itemsLength = items ? items.length : 0;
   const total = totalSteps ? totalSteps : itemsLength;
 
+  const renderHeaderStatus = (i: number) => {
+    return (
+      <div className="step-bar__item--header-status">
+        {isChecked(i) ? <Icon icon="check" /> : i + 1}
+      </div>
+    );
+  };
+
+  const renderBar = (i: number) => {
+    return (
+      <div
+        className={joinClass([
+          'step-bar__item--header-bar',
+          `${isChecked(i) ? 'step-bar__item--header-bar__checked' : ''}`,
+        ])}
+      />
+    );
+  };
+
   const renderSteps = () => {
     const itemsToShow: Array<React.ReactNode> = [];
 
@@ -51,29 +70,30 @@ export default function StepBar({
         `${currentStep === i + 1 ? 'step-bar__item--current' : ''}`,
       ]);
 
-      const barClassNameList = joinClass([
-        'step-bar__item--header-bar',
-        `${isChecked(i) ? 'step-bar__item--header-bar__checked' : ''}`,
-      ]);
-
       itemsToShow.push(
         <li
+          role="listitem"
           key={`step-bar__item-${i}`}
+          aria-label={
+            isChecked(i)
+              ? `Step ${i + 1} completed`
+              : currentStep === i + 1
+                ? `Step ${i + 1} current`
+                : `Step ${i + 1}`
+          }
           style={{ width: `calc(100% / ${vertical ? 1 : total})` }}
           className={liClassNameList}
           data-testid={`${dataTestId}-step-${i}`}
+          aria-current={currentStep === i + 1 ? 'step' : undefined}
         >
           <div className="step-bar__item--header">
             {!minimal && (
               <>
-                <div className="step-bar__item--header-status">
-                  {isChecked(i) && <Icon icon="check" />}
-                  {!isChecked(i) && i + 1}
-                </div>
+                {renderHeaderStatus(i)}
                 {items && <Text tag="p">{items[i]?.title}</Text>}
               </>
             )}
-            {!vertical && <div className={barClassNameList} />}
+            {!vertical && renderBar(i)}
           </div>
           {!minimal && items && (
             <div className="step-bar__item--label">{items[i]?.label}</div>
@@ -83,6 +103,10 @@ export default function StepBar({
     }
     return itemsToShow;
   };
+
+  const steps = useMemo(() => {
+    return renderSteps();
+  }, [items, totalSteps, currentStep, vertical, minimal]);
 
   const classNameList = joinClass([
     'step-bar',
@@ -115,12 +139,15 @@ export default function StepBar({
         </Text>
       </div>
       <ul
+        role="list"
         tabIndex={-1}
+        aria-label="Step progress bar"
+        aria-labelledby={`${dataTestId}-step-info`}
         className={classNameList}
         data-testid={dataTestId}
         {...props}
       >
-        {renderSteps()}
+        {steps}
       </ul>
     </div>
   ) : (
@@ -130,7 +157,7 @@ export default function StepBar({
       data-testid={dataTestId}
       {...props}
     >
-      {renderSteps()}
+      {steps}
     </ul>
   );
 }

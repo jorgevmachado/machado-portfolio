@@ -32,6 +32,10 @@
   gap:  var(--size-regular);
   display: flex;
 
+  ul, li {
+    list-style-type: none;
+  }
+
   .text {
     color: #8994a9;
     min-width: fit-content;
