@@ -4,6 +4,7 @@ import Feedback from './Feedback';
 
 const meta = {
   args: {
+    id: 'feedback-storybook',
     context: 'error',
     children: 'Hello, World!',
   },

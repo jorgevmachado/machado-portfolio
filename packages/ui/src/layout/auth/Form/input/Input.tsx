@@ -106,7 +106,6 @@ export default function Input({
           value={formatter ? formatter(currentValue) : currentValue}
           onBlur={() => setOnBlur(true)}
           onInput={onInputHandler}
-          variant="regular"
           isInvalid={inputValidator.invalid}
           iconContext={context}
           invalidMessage={inputValidator?.message}

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { OContext } from '../../utils/colors';
+import { OContext } from '../../utils';
 
 import RadioGroup, { RadioGroupProps } from './RadioGroup';
 
@@ -29,6 +29,7 @@ const meta = {
     context: 'neutral',
     appearance: 'standard',
     modelValue: 'natural-person',
+    onActionClick: (value) => console.log(value),
   },
   title: 'Components/RadioGroup',
   argTypes: {
@@ -84,10 +85,10 @@ const RenderTemplate = (args: RadioGroupProps) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <RadioGroup
+        {...args}
         onActionClick={(value) => {
           setModel(value);
         }}
-        {...args}
         modelValue={model}
       />
       {model && <p>Model value: {model}</p>}

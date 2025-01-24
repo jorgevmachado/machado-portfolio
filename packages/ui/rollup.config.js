@@ -6,8 +6,23 @@ import postcss from 'rollup-plugin-postcss';
 import sass from 'rollup-plugin-sass';
 import {defineConfig} from 'rollup';
 
-const currentBrand = process.env.BRAND || "geek";
-const brand = currentBrand.replace(/\s/g, '');
+const currentBrand = process.env.BRAND;
+const brand = currentBrand && currentBrand.replace(/\s/g, '');
+
+const includePathsStyles = (brand) => {
+    const stylesPaths = [
+        'node_modules',
+        'src/styles',
+    ]
+    if (brand) {
+        return stylesPaths.concat([
+            `@repo/tokens/dist/${brand}/css/_variables.css`,
+            `@repo/tokens/dist/${brand}/scss/_variables.scss`,
+        ]);
+    }
+
+    return stylesPaths;
+}
 
 const createConfig = (brand) => defineConfig({
     input: glob.sync('src/**/index.ts'),
@@ -35,12 +50,7 @@ const createConfig = (brand) => defineConfig({
         postcss({
             use: [
                 ['sass', {
-                    includePaths: [
-                        'node_modules',
-                        'src/styles',
-                        `@repo/tokens/dist/${brand}/css/_variables.css`,
-                        `@repo/tokens/dist/${brand}/scss/_variables.scss`,
-                    ]
+                    includePaths: includePathsStyles(brand)
                 }]
             ],
             extract: true,
