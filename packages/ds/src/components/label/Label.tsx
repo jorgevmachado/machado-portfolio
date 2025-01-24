@@ -1,5 +1,6 @@
 import React from 'react';
 
+import type { TColors } from '../../utils';
 import joinClass from '../../utils/join-class';
 
 import Text from '../../elements/text';
@@ -11,6 +12,7 @@ export type TTag = 'label' | 'legend';
 interface LabelProps extends React.HTMLAttributes<HTMLDivElement> {
   tip?: string;
   tag?: TTag;
+  color?: TColors;
   label?: string;
   componentId?: string;
 }
@@ -18,6 +20,7 @@ interface LabelProps extends React.HTMLAttributes<HTMLDivElement> {
 export default function Label({
   tip,
   tag = 'label',
+  color,
   label,
   componentId,
   className,
@@ -32,6 +35,7 @@ export default function Label({
       {label && (
         <Text
           tag={tag}
+          color={color}
           htmlFor={tag === 'label' ? componentId : undefined}
           className="label__text"
           aria-describedby={tip ? tipId : undefined}
@@ -40,7 +44,7 @@ export default function Label({
         </Text>
       )}
       {tip && (
-        <Text id={tipId} tag="span" variant="small">
+        <Text id={tipId} color={color} tag="span" variant="small">
           {tip}
         </Text>
       )}

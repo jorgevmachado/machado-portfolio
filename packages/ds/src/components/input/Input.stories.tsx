@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -8,7 +9,7 @@ import Icon from '../../elements/icon';
 
 import Button from '../button';
 
-import Input from './Input';
+import Input, { type InputProps } from './Input';
 
 const meta = {
   args: {
@@ -17,7 +18,6 @@ const meta = {
     addon: undefined,
     value: '',
     label: 'Label',
-    variant: 'regular',
     disabled: false,
     multiline: false,
     isInvalid: false,
@@ -68,14 +68,6 @@ const meta = {
         defaultValue: { summary: 'Label' },
       },
       control: { type: 'text' },
-    },
-    variant: {
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'regular' },
-      },
-      options: ['large', 'regular'],
-      control: { type: 'radio' },
     },
     disabled: {
       table: {
@@ -176,68 +168,129 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const inputs = [
-  {
-    id: 'input-default',
-    type: 'default',
-  },
-  {
-    id: 'input-icon',
-    type: 'icon',
-  },
-  {
-    id: 'input-icon-left',
-    type: 'icon-left',
-  },
-  {
-    id: 'input-addon',
-    type: 'addon',
-    addon: '0,00',
-  },
-  {
-    id: 'input-prepend',
-    type: 'prepend',
-  },
-  {
-    id: 'input-append',
-    type: 'append',
-  },
-  {
-    id: 'input-counter',
-    type: 'counter',
-  },
-];
+const InputRender = ({ value, ...props }: InputProps) => {
+  const [currentValue, setCurrentValue] = useState<string>(value ?? '');
+  const [onBlur, setOnBlur] = useState<boolean>(false);
+  const [inputValidator, setInputValidator] = useState<{
+    invalid: boolean;
+    message?: string;
+  }>({ invalid: false, message: undefined });
+  const [valueOnChange, setValueOnChange] = useState<string>('');
+
+  useEffect(() => {
+    if (onBlur) {
+      setInputValidator({
+        invalid: currentValue === '',
+        message: 'is Required',
+      });
+    }
+  }, [currentValue, onBlur]);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValueOnChange(e.target.value);
+  };
+
+  return (
+    <>
+      <Input
+        {...props}
+        value={value}
+        onBlur={() => setOnBlur(true)}
+        onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setCurrentValue(e.target.value)
+        }
+        onChange={handleOnChange}
+        isInvalid={inputValidator.invalid}
+        invalidMessage={inputValidator.message}
+      />
+      <p>Current Value: {currentValue}</p>
+      <p>On Change Value: {valueOnChange}</p>
+    </>
+  );
+};
 
 export const Default: Story = {
   args: {},
-  render: (args) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {inputs.map((item) => (
-        <Input
-          {...args}
-          id={item.id}
-          label={item.id.replace('-', ' ')}
-          placeholder={item.id.replace('-', ' ')}
-          addon={item?.addon}
-        >
-          {item.type === 'icon' ||
-            (item.type === 'icon-left' && (
-              <Icon icon="react" data-children={item.type} />
-            ))}
-        </Input>
-      ))}
-    </div>
-  ),
+  render: (args) => <InputRender {...args} />,
 };
 
-export const Password: Story = {
+export const InputPassword: Story = {
   args: {
     type: 'password',
   },
 };
 
-export const WithButtons: Story = {
-  args: {},
+export const InputIconRight: Story = {
+  args: {
+    label: 'Input Icon Right',
+    children: <Icon icon="react" data-children="icon-right" />,
+    placeholder: 'Input Icon Right Placeholder',
+    iconContext: 'primary',
+  },
+};
+
+export const InputIconLeft: Story = {
+  args: {
+    label: 'Input Icon Left',
+    children: <Icon icon="react" data-children="icon-left" />,
+    placeholder: 'Input Icon Left Placeholder',
+    iconContext: 'primary',
+  },
+};
+
+export const InputIconRightAndLeft: Story = {
+  args: {
+    label: 'Input Icon Right and  Left',
+    placeholder: 'Input Icon Right and Left Placeholder',
+    iconContext: 'primary',
+  },
+  render: (args) => (
+    <Input {...args}>
+      <Icon icon="user" data-children="icon-left" />
+      <Icon icon="like" data-children="icon-right" />
+    </Input>
+  ),
+};
+
+export const InputMultiline: Story = {
+  args: {
+    rows: 20,
+    multiline: true,
+  },
+};
+
+export const InputPrepend: Story = {
+  args: {
+    label: 'Input Prepend',
+    children: (
+      <Button size="small" context="primary" data-children="prepend">
+        prepend
+      </Button>
+    ),
+    placeholder: 'Input Prepend Placeholder',
+    iconContext: 'primary',
+  },
+};
+
+export const InputAppend: Story = {
+  args: {
+    label: 'Input Append',
+    children: (
+      <Button size="small" context="primary" data-children="append">
+        append
+      </Button>
+    ),
+    placeholder: 'Input Append Placeholder',
+    iconContext: 'primary',
+  },
+};
+
+export const InputPrependAndAppend: Story = {
+  args: {
+    label: 'Input Prepend and Append',
+    placeholder: 'Input Prepend and Append Placeholder',
+    iconContext: 'primary',
+  },
   render: (args) => (
     <Input {...args}>
       <Button size="small" context="primary" data-children="prepend">
@@ -250,95 +303,36 @@ export const WithButtons: Story = {
   ),
 };
 
-export const WithFloatingButtons: Story = {
+export const InputFloatingAppend: Story = {
   args: {
-    hasFloatingSlots: true,
-  },
-  render: (args) => (
-    <Input {...args}>
-      <Button
-        size="small"
-        style={{
-          top: '50%',
-          right: '4px',
-          position: 'absolute',
-          transform: 'translateY(-50%)',
-        }}
-        context="primary"
-        data-children="append"
-      >
+    label: 'Input Floating Append',
+    children: (
+      <Button size="small" context="primary" data-children="append">
         append
       </Button>
-    </Input>
-  ),
+    ),
+    placeholder: 'Input Floating Append Placeholder',
+    iconContext: 'primary',
+    hasFloatingSlots: true,
+  },
 };
 
-export const WithAddon: Story = {
+export const InputAddon: Story = {
   args: {
     addon: '0,00',
   },
 };
 
-export const WithError: Story = {
+export const InputCounter: Story = {
   args: {
-    isInvalid: true,
-    invalidMessage: 'Digite um email válido',
+    children: <div data-children="counter">9+</div>,
   },
 };
 
-export const WithFloatingLabel: Story = {
+export const InputFloatingLabel: Story = {
   args: {
-    placeholder: 'Testando',
+    label: 'Input Floating Label',
+    placeholder: 'Input Label',
     floatingLabel: true,
   },
-};
-
-export const WithRightIcon: Story = {
-  args: {
-    iconContext: 'primary',
-  },
-  render: (args) => (
-    <Input {...args}>
-      <Icon icon="react" data-children="icon-right" />
-    </Input>
-  ),
-};
-
-export const WithLeftIcon: Story = {
-  args: {
-    iconContext: 'secondary',
-  },
-  render: (args) => (
-    <Input {...args}>
-      <Icon icon="react" data-children="icon-left" />
-    </Input>
-  ),
-};
-
-export const WithBothIcons: Story = {
-  args: {
-    rows: 10,
-    iconContext: 'info',
-  },
-  render: (args) => (
-    <Input {...args}>
-      <Icon icon="user" data-children="icon-left" />
-      <Icon icon="like" data-children="icon-right" />
-    </Input>
-  ),
-};
-
-export const Multiline: Story = {
-  args: {
-    rows: 20,
-    multiline: true,
-  },
-};
-
-export const WithCounter: Story = {
-  render: (args) => (
-    <Input {...args}>
-      <div data-children="counter">9+</div>
-    </Input>
-  ),
 };
