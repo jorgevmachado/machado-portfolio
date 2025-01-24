@@ -1,37 +1,50 @@
-import React, { useEffect, useState } from 'react';
-
-import type { Style } from '../interface';
+import React, { CSSProperties, useEffect, useState } from 'react';
 
 interface FadeProps {
   enter?: boolean;
   delay?: number;
   timeout?: number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  transitionType?: string;
 }
 
-const styledShow = (timeout: number): Style => ({
+const styledShow = (
+  timeout: number,
+  transitionType: string,
+): CSSProperties => ({
   opacity: 1,
-  transition: `all ${timeout}s ease-in-out`,
+  transition: `${transitionType} ${timeout}s ease-in-out`,
 });
 
-const styledHide = (timeout: number): Style => ({
+const styledHide = (
+  timeout: number,
+  transitionType: string,
+): CSSProperties => ({
   opacity: 0,
-  transition: `all ${timeout}s ease-in-out`,
+  transition: `${transitionType} ${timeout}s ease-in-out`,
 });
 
 export default function Fade({
   enter = true,
   delay = 0,
   timeout = 0.2,
-  children,
+  children = null,
+  transitionType = 'all',
 }: FadeProps) {
-  const [style, setStyle] = useState<Style>(styledHide(timeout));
+  const [style, setStyle] = useState<CSSProperties>(
+    styledHide(timeout, transitionType),
+  );
 
   useEffect(() => {
-    setTimeout(() => {
-      setStyle(enter ? styledShow(timeout) : styledHide(timeout));
+    const timer = setTimeout(() => {
+      setStyle(
+        enter
+          ? styledShow(timeout, transitionType)
+          : styledHide(timeout, transitionType),
+      );
     }, delay);
-  }, [enter]);
+    return () => clearTimeout(timer);
+  }, [enter, delay, timeout]);
 
   return <div style={style}>{children}</div>;
 }
