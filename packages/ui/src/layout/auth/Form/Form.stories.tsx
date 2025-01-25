@@ -21,7 +21,7 @@ const meta = {
         defaultValue: { summary: 'primary' },
       },
       options: [
-        'blank',
+        'base-layout',
         'signUp',
         'signIn',
         'update',

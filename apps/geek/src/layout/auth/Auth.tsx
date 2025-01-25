@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Blank from '@repo/ui/layout/blank/Blank';
+import BaseLayout from '@repo/ui/layout/base-layout/BaseLayout';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
-  return <Blank>{children}</Blank>;
+  return <BaseLayout>{children}</BaseLayout>;
 }
