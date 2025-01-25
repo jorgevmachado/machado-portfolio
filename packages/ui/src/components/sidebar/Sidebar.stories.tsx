@@ -78,3 +78,22 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {},
 };
+
+export const WithNoUser: Story = {
+  args: {
+    user: undefined,
+  },
+};
+
+export const WithEmptyMenu: Story = {
+  args: {
+    menu: [],
+    logout: undefined,
+  },
+};
+
+export const MobileView: Story = {
+  args: {
+    showMobileMenu: true,
+  },
+};

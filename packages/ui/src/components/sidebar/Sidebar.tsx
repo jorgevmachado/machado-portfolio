@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { User } from '@repo/business/auth/interface';
 
@@ -33,19 +33,18 @@ export default function Sidebar({
   showMobileMenu,
   handleToggleMenu,
 }: SidebarProps) {
-  const navbar = menu?.find((group) => group.key === 'navbar')?.items;
-
-  const sidebar = menu?.find((item) => item.key === 'sidebar')?.items;
-
-  const groupProfile = sidebar?.find((item) => item.key === 'profile');
-
-  const profileSidebar = groupProfile?.items?.find(
-    (item) => item.key === 'profile',
-  );
-
-  const filteredSidebar = sidebar?.filter(
-    (item) => item.key !== 'profile' && item.key !== 'logout',
-  );
+  const [navbar, sidebar, profileSidebar, filteredSidebar] = useMemo(() => {
+    const navbar = menu?.find((group) => group.key === 'navbar')?.items ?? [];
+    const sidebar = menu?.find((item) => item.key === 'sidebar')?.items ?? [];
+    const groupProfile = sidebar?.find((item) => item.key === 'profile');
+    const profileSidebar = groupProfile?.items?.find(
+      (item) => item.key === 'profile',
+    );
+    const filteredSidebar = sidebar?.filter(
+      (item) => item.key !== 'profile' && item.key !== 'logout',
+    );
+    return [navbar, sidebar, profileSidebar, filteredSidebar];
+  }, [menu]);
 
   const classNameList = joinClass([
     'sidebar',
@@ -56,7 +55,7 @@ export default function Sidebar({
   return (
     <aside className={classNameList}>
       <div className="sidebar__container">
-        {user && (
+        {user ? (
           <div className="sidebar__container--profile">
             <Profile
               name={user?.name}
@@ -72,6 +71,8 @@ export default function Sidebar({
               </header>
             </Profile>
           </div>
+        ) : (
+          <Text color="neutral-60">No users logged in</Text>
         )}
 
         <div className="sidebar__container--list">
