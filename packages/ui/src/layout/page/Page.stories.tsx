@@ -6,7 +6,7 @@ import { ENTITY_USER_COMPLETE_FIXTURE } from '@repo/business/auth/fixture/user';
 
 import { OContext } from '@repo/ds/utils/colors/options';
 
-import { LOGO, LOGOUT_MENU, MENU } from '../../utils/menu';
+import { LOGO, LOGOUT_MENU, MENU } from '../../utils';
 
 import PageContent from '../page-content/PageContent';
 
@@ -16,7 +16,7 @@ const meta = {
   args: {
     user: ENTITY_USER_COMPLETE_FIXTURE,
     logo: {
-      src: 'https://via.placeholder.com/150',
+      src: 'https://placehold.co/150',
       alt: 'logo',
       title: 'logo',
       width: 80,
@@ -27,6 +27,7 @@ const meta = {
     logout: LOGOUT_MENU,
     context: 'primary',
     children: <PageContent title="Hello World!" children="PAGE" />,
+    className: undefined,
   },
   title: 'Layout/Page',
   argTypes: {
@@ -66,6 +67,13 @@ const meta = {
       options: OContext,
       control: { type: 'select' },
     },
+    className: {
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
+      },
+      control: { type: 'text' },
+    },
   },
   component: Page,
   decorators: [
@@ -83,4 +91,17 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
+};
+
+export const WithoutMenu: Story = {
+  args: {
+    menu: [],
+  },
+};
+
+export const NoSidebar: Story = {
+  args: {
+    menu: MENU.filter((group) => group.key === 'navbar'), // Apenas Navbar
+    logout: undefined,
+  },
 };

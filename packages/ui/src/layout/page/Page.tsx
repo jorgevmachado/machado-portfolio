@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import type { User } from '@repo/business/auth/interface';
 
 import type { TContext } from '@repo/ds/utils/colors/interface';
+import joinClass from '@repo/ds/utils/join-class/joinClass';
 
 import type { Logo, Menu } from '../../utils';
 
@@ -13,22 +14,27 @@ import Sidebar from '../../components/sidebar';
 
 import './Page.scss';
 
-interface PageProps {
+interface PageProps extends React.HTMLAttributes<HTMLDivElement> {
   user?: User;
   logo?: Logo;
   menu?: Array<Menu>;
   logout?: Menu['items'][number];
   context?: TContext;
   children: React.ReactNode;
+  ariaLabel?: string;
+  className?: string;
 }
 
 export default function Page({
   user,
   logo,
-  menu,
+  menu = [],
   logout,
   context,
   children,
+  ariaLabel = 'Page Layout',
+  className = '',
+  ...props
 }: PageProps) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
@@ -38,23 +44,30 @@ export default function Page({
 
   return (
     <Fade enter={true}>
-      <Header
-        logo={logo}
-        navbar={navbar}
-        context={context}
-        handleToggleMenu={handleToggleMenu}
-      />
-      <main className="page">
-        <Sidebar
-          user={user}
-          menu={menu}
+      <div
+        role="main"
+        className={joinClass(['page', className])}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        <Header
+          logo={logo}
+          navbar={navbar}
           context={context}
-          logout={logout}
-          showMobileMenu={showMobileMenu}
           handleToggleMenu={handleToggleMenu}
         />
-        {children}
-      </main>
+        <main className="page__content">
+          <Sidebar
+            user={user}
+            menu={menu}
+            context={context}
+            logout={logout}
+            showMobileMenu={showMobileMenu}
+            handleToggleMenu={handleToggleMenu}
+          />
+          {children}
+        </main>
+      </div>
     </Fade>
   );
 }
