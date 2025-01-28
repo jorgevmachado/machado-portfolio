@@ -53,26 +53,20 @@ export default function Input({
   ...props
 }: InputProps) {
   const [currentValue, setCurrentValue] = useState<string>(value ?? '');
-  const [onBlur, setOnBlur] = useState<boolean>(false);
   const [inputValidator, setInputValidator] = useState<{
     invalid: boolean;
     message?: string;
   }>({ invalid: false, message: undefined });
 
-  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentValue(e.currentTarget.value);
-    onInput && onInput(name ?? '', e.currentTarget.value);
-  };
-
-  const onActionClickHandler = (value: string) => {
-    setCurrentValue(value);
-    onInput && onInput(name ?? '', value);
-  };
+  useEffect(() => {
+    if (reloadValidate) {
+      handleValidate(reloadValidate);
+    }
+  }, [reloadValidate]);
 
   const handleValidate = (validatorMessage?: ValidatorMessage) => {
-    const currentValidatorMessage = validatorMessage
-      ? validatorMessage
-      : validate({ value: currentValue });
+    const currentValidatorMessage =
+      validatorMessage ?? validate({ value: currentValue });
 
     setInputValidator({
       invalid: !currentValidatorMessage.valid,
@@ -82,36 +76,20 @@ export default function Input({
     });
   };
 
-  useEffect(() => {
-    if (onBlur) {
-      handleValidate();
-    }
-  }, [currentValue, onBlur]);
+  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+    setCurrentValue(newValue);
+    onInput && onInput(name ?? '', newValue);
+  };
 
-  useEffect(() => {
-    if (reloadValidate) {
-      handleValidate(reloadValidate);
-    }
-  }, [reloadValidate]);
+  const onActionClickHandler = (value: string) => {
+    setCurrentValue(value);
+    onInput && onInput(name ?? '', value);
+  };
 
   return (
     <>
-      {type !== 'radio-group' && (
-        <InputComponent
-          {...props}
-          tip={tip}
-          name={name}
-          type={type}
-          label={label}
-          value={formatter ? formatter(currentValue) : currentValue}
-          onBlur={() => setOnBlur(true)}
-          onInput={onInputHandler}
-          isInvalid={inputValidator.invalid}
-          iconContext={context}
-          invalidMessage={inputValidator?.message}
-        />
-      )}
-      {type === 'radio-group' && options?.length && (
+      {type === 'radio-group' && options?.length ? (
         <div className="form-input__radio-group">
           <RadioGroup
             id={props.id}
@@ -125,6 +103,20 @@ export default function Input({
             onActionClick={(value) => onActionClickHandler(value as string)}
           />
         </div>
+      ) : (
+        <InputComponent
+          {...props}
+          tip={tip}
+          name={name}
+          type={type}
+          label={label}
+          value={formatter ? formatter(currentValue) : currentValue}
+          onBlur={() => handleValidate()}
+          onInput={onInputHandler}
+          isInvalid={inputValidator.invalid}
+          iconContext={context}
+          invalidMessage={inputValidator?.message}
+        />
       )}
     </>
   );

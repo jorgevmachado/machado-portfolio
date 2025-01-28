@@ -59,3 +59,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {},
 };
+
+export const RadioGroupExample: Story = {
+  args: {
+    type: 'radio-group',
+    options: [
+      { value: 'opt1', label: 'Option 1' },
+      { value: 'opt2', label: 'Option 2' },
+    ],
+  },
+};
