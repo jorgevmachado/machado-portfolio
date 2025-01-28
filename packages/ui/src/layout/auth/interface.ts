@@ -51,7 +51,7 @@ interface AuthPropsBase extends React.HTMLAttributes<HTMLDivElement> {
   description?: string;
 }
 
-export type AuthProps = AuthPropsBase & {
+export type AuthProps = Omit<AuthPropsBase, 'onSubmit'> & {
   onSubmit?: (values: AuthForm) => void;
   authLinks?: Array<AuthLink>;
   authSocials?: Array<AuthSocial>;

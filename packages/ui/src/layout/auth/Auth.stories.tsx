@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { OContext } from '@repo/ds/utils/colors/options';
 
 import Auth from './Auth';
+import { AuthForm } from './Form/interface';
 
 const redirectAction = (destination: string) => {
   alert(`redirect to ${destination}`);
@@ -107,6 +108,9 @@ export const SignUp: Story = {
         onClick: action('Facebook sign up clicked'),
       },
     ],
+    onSubmit: (values: AuthForm) => {
+      return values;
+    },
   },
 };
 
