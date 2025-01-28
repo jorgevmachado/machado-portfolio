@@ -2,16 +2,4 @@
   gap: 1rem;
   display: flex;
   flex-direction: column;
-  &--google {
-    &.button {
-      border-color: var(--color-social-google-90);
-      background-color: var(--color-social-google-90);
-    }
-  }
-  &--facebook {
-    &.button {
-      border-color: var(--color-social-facebook-90);
-      background-color: var(--color-social-facebook-90);
-    }
-  }
 }

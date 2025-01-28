@@ -11,12 +11,23 @@ export default function Link({
   title,
   label,
   context = 'neutral',
+  ariaLabel,
   clickAction,
 }: AuthLink) {
+  const handleOnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    clickAction?.();
+  };
+
   return (
-    <div className="link">
+    <div className="link-ui">
       {title && <Text color={`${context}-100`}>{title}</Text>}
-      <LinkComponent onClick={clickAction} context={context}>
+      <LinkComponent
+        role="button"
+        aria-label={ariaLabel ?? label}
+        onClick={handleOnClick}
+        context={context}
+      >
         {label}
       </LinkComponent>
     </div>

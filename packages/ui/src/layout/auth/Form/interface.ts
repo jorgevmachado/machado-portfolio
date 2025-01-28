@@ -13,7 +13,7 @@ import { TInput } from './input/Input';
 
 export interface FormProps
   extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
-  type?: Omit<TAuth, 'base-layout'>;
+  type?: TAuth;
   context?: TContext;
   loading?: boolean;
   onSubmit?: (values: AuthForm) => void;

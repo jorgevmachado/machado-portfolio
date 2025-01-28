@@ -1,15 +1,16 @@
 import React from 'react';
 
-import Image from '@repo/ds/elements/image/Image';
-import Text from '@repo/ds/elements/text/Text';
 import joinClass from '@repo/ds/utils/join-class/joinClass';
 
 import type { AuthProps } from './interface';
 import Form from './Form';
+import InfoText from './InfoText';
 import Links from './Links';
+import Logo from './Logo';
 import Socials from './Socials';
 
 import './Auth.scss';
+import FormSocialText from './FormSocialText';
 
 export default function Auth({
   type = 'blank',
@@ -19,64 +20,31 @@ export default function Auth({
   onSubmit,
   context = 'primary',
   loading,
-  googleAuth,
-  signUpLink,
-  signInLink,
+  className = '',
+  authLinks = [],
   description,
-  facebookAuth,
-  forgotPasswordLink,
+  authSocials = [],
+  formSocialText = 'Or register with your email',
   ...props
 }: AuthProps) {
-  const hasSocialAuth = googleAuth || facebookAuth;
-  const hasLink = signInLink || signUpLink || forgotPasswordLink;
-  const classNameList = joinClass(['auth', `${props.className ?? ''}`]);
+  const hasSocialAuth = authSocials.length > 0;
+  const classNameList = joinClass(['auth', className]);
 
   return (
     <div {...props} className={classNameList}>
-      {logo && (
-        <Image
-          src={logo.src}
-          alt={logo.alt ?? 'auth logo'}
-          title={logo.title ?? 'auth logo'}
-          style={{
-            width: logo.width ?? '15rem',
-            height: logo.height ?? '5rem',
-          }}
-        />
-      )}
-      {title && (
-        <Text tag="h1" weight="bold" variant="xlarge" className="auth__title">
-          {title}
-        </Text>
-      )}
-      {description && (
-        <Text tag="h2" variant="regular" className="auth__description">
-          {description}
-        </Text>
-      )}
-      {hasSocialAuth && (
-        <Socials googleAuth={googleAuth} facebookAuth={facebookAuth} />
-      )}
+      <Logo logo={logo} />
 
-      {type === 'blank' ? (
-        children
-      ) : (
-        <Form
-          type={type}
-          context={context}
-          onSubmit={onSubmit}
-          loading={loading}
-        />
-      )}
+      <InfoText title={title} description={description} />
 
-      {hasLink && (
-        <Links
-          signUpLink={signUpLink}
-          signInLink={signInLink}
-          forgotPasswordLink={forgotPasswordLink}
-          context={context}
-        />
-      )}
+      <Socials authSocials={authSocials} />
+
+      <FormSocialText text={formSocialText} hasSocialAuth={hasSocialAuth} />
+
+      <Form type={type} context={context} onSubmit={onSubmit} loading={loading}>
+        {children}
+      </Form>
+
+      <Links context={context} className="auth__links" authLinks={authLinks} />
     </div>
   );
 }

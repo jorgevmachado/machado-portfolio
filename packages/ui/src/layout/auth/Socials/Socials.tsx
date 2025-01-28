@@ -1,33 +1,24 @@
 import React from 'react';
 
-import Button from '@repo/ds/components/button/Button';
-
 import type { AuthSocial } from '../interface';
+
+import Social from './Social';
 
 import './Socials.scss';
 
 interface SocialsProps {
-  googleAuth?: AuthSocial;
-  facebookAuth?: AuthSocial;
+  authSocials?: Array<AuthSocial | undefined>;
 }
-export default function Socials({ googleAuth, facebookAuth }: SocialsProps) {
+export default function Socials({ authSocials = [] }: SocialsProps) {
+  const hasSocialAuth = authSocials.length > 0;
+
   return (
-    <div className="socials">
-      {googleAuth && (
-        <Button {...googleAuth} fluid icon="google" className="socials--google">
-          {googleAuth.label}
-        </Button>
-      )}
-      {facebookAuth && (
-        <Button
-          {...facebookAuth}
-          fluid
-          icon="facebook"
-          className="socials--facebook"
-        >
-          {facebookAuth.label}
-        </Button>
-      )}
-    </div>
+    hasSocialAuth && (
+      <div className="socials">
+        {authSocials.map((social) => (
+          <Social key={social?.platform} auth={social} />
+        ))}
+      </div>
+    )
   );
 }

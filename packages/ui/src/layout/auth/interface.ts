@@ -20,33 +20,40 @@ export interface LogoProps {
   title?: string;
   width?: string;
   height?: string;
+  hasLogo?: boolean;
 }
 
 export interface AuthLink {
+  order: number;
   title?: string;
   label: string;
   context?: TContext;
+  ariaLabel?: string;
   clickAction: () => void;
 }
+
+export type TSocialPlatform = 'google' | 'facebook' | 'github' | 'twitter';
 
 export interface AuthSocial
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
+  platform: TSocialPlatform;
+  ariaLabel?: string;
 }
 
-export interface AuthProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit'> {
+interface AuthPropsBase extends React.HTMLAttributes<HTMLDivElement> {
   type?: TAuth;
   user?: User;
   logo?: LogoProps;
   title?: string;
   context?: TContext;
   loading?: boolean;
-  onSubmit?: (values: AuthForm) => void;
-  googleAuth?: AuthSocial;
-  signUpLink?: AuthLink;
-  signInLink?: AuthLink;
   description?: string;
-  facebookAuth?: AuthSocial;
-  forgotPasswordLink?: AuthLink;
 }
+
+export type AuthProps = AuthPropsBase & {
+  onSubmit?: (values: AuthForm) => void;
+  authLinks?: Array<AuthLink>;
+  authSocials?: Array<AuthSocial>;
+  formSocialText?: string;
+};

@@ -1,0 +1,14 @@
+.social {
+  &__google {
+    &.button {
+      border-color: var(--color-social-google-90);
+      background-color: var(--color-social-google-90);
+    }
+  }
+  &__facebook {
+    &.button {
+      border-color: var(--color-social-facebook-90);
+      background-color: var(--color-social-facebook-90);
+    }
+  }
+}

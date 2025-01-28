@@ -3,10 +3,8 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  &__description {
-    width: 20rem;
-    display: flex;
-    text-align: center;
-    line-height: var(--font-line-height-small);
+
+  &__links {
+    margin-top: 1rem;
   }
 }

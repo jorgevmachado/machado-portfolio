@@ -24,9 +24,14 @@ export default function Form({
   context = 'primary',
   loading,
   onSubmit,
+  children,
   buttonLabel = 'save',
   ...props
 }: FormProps) {
+  if (type === 'blank') {
+    return children;
+  }
+
   const classNameList = joinClass(['form', `${props.className ?? ''}`]);
 
   const [currentForm, setCurrentForm] = useState<FormType>({

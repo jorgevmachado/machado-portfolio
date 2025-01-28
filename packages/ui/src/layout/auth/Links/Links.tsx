@@ -1,6 +1,8 @@
 import React from 'react';
 import type { TContext } from '@repo/ds/utils/colors/interface';
 
+import joinClass from '@repo/ds/utils/join-class/joinClass';
+
 import type { AuthLink } from '../interface';
 
 import Link from './Link';
@@ -9,31 +11,30 @@ import './Links.scss';
 
 interface LinksProps {
   context?: TContext;
-  signUpLink?: AuthLink;
-  signInLink?: AuthLink;
-  forgotPasswordLink?: AuthLink;
+  className?: string;
+  authLinks: Array<AuthLink>;
 }
 
 export default function Links({
   context,
-  signUpLink,
-  signInLink,
-  forgotPasswordLink,
+  className = '',
+  authLinks,
 }: LinksProps) {
+  if (!authLinks.length) {
+    return null;
+  }
   return (
-    <div className="links">
-      {signUpLink && (
-        <Link {...signUpLink} context={signUpLink.context ?? context} />
-      )}
-      {signInLink && (
-        <Link {...signInLink} context={signInLink.context ?? context} />
-      )}
-      {forgotPasswordLink && (
-        <Link
-          {...forgotPasswordLink}
-          context={forgotPasswordLink.context ?? context}
-        />
-      )}
+    <div className={joinClass(['links', className])}>
+      {authLinks
+        .slice()
+        .sort((a, b) => a.order - b.order)
+        .map((link) => (
+          <Link
+            key={`${link.label}-${link.order}`}
+            {...link}
+            context={link.context ?? context}
+          />
+        ))}
     </div>
   );
 }
