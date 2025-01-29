@@ -1,33 +1,49 @@
-# Turborepo starter
+<div align="center">
+    <h1>MACHADO-PORTFOLIO</h1>
+    <br/>
+<p>
+    <strong>Powered by</strong>
 
-This is an official starter Turborepo.
+![Turbo](https://img.shields.io/badge/Turborepo-orangered?style=for-the-badge&logo=turborepo&logoColor=white)
 
-## Using this example
+![Nest](https://img.shields.io/badge/-NestJs-ea2845?style=for-the-badge&logo=nestjs&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=turborepo&logoColor=white)
+![Next](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 
-Run the following command:
+![React](https://shields.io/badge/react-black?logo=react&style=falt)
+![Npm](https://shields.io/badge/npm-gray?logo=npm&style=falt)
+![Typescript](https://img.shields.io/badge/typescript-%23323330.svg?style=falt&logo=typescript&logoColor=%233178C6)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=falt&logo=node.js&logoColor=white)
+![Jest](https://img.shields.io/badge/jest-C53d15.svg?style=falt&logo=jest&logoColor=white)
+</p>
+</div>
 
-```bash
-npx create-turbo@latest -e with-nestjs
-```
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
+## Para que serve ?
+### Projeto Criado para aprimorar os meus conhecimentos em desenvolvimento de Software.
     .
     ├── apps
     │   ├── api                       # NestJS app (https://nestjs.com).
     │   └── web                       # Next.js app (https://nextjs.org).
+    │   └── geek                      # Projeto Front-end com nextjs para a marca geek.
     └── packages
-        ├── @repo/api                 # Shared `NestJS` resources.
-        ├── @repo/eslint-config       # `eslint` configurations (includes `prettier`)
-        ├── @repo/jest-config         # `jest` configurations
-        ├── @repo/typescript-config   # `tsconfig.json`s used throughout the monorepo
-        └── @repo/ui                  # Shareable stub React component library.
+        ├── @repo/eslint-config       # Módulo de configurações do `eslint` (inclui `prettier`).
+        ├── @repo/jest                # Módulo de configurações do `jest`.
+        ├── @repo/typescript          # Módulo de configurações do typescript com `tsconfig.json`s usado em todo o monorepo.
+        ├── @repo/services            # Módulo de utilitários.
+        ├── @repo/business            # Módulo de regras de negocio.   
+        └── @repo/tokens              # Biblioteca de estilos compartilhados divididos entre marcas.
+        └── @repo/ds                  # Biblioteca de componentes React de Sistema de Design.
+        └── @repo/ui                  # Biblioteca de componentes React de Interface do usuário.
 
-Each package and application are 100% [TypeScript](https://www.typescriptlang.org/) safe.
+## Apps
+### Mais informações sobre projeto api [clique aqui](./apps/api/README.md).
+### Mais informações sobre projeto web [clique aqui](./apps/web/README.md).
+### Mais informações sobre projeto geek [clique aqui](./apps/geek/README.md).
+
+## Packages
+### Mais informações sobre módulo eslint [clique aqui](./packages/eslint-config/README.md).
+### Mais informações sobre módulo jest [clique aqui](./packages/jest/README.md).
 
 ### Utilities
 
