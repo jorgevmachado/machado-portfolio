@@ -33,6 +33,7 @@ const createConfig = (brand) => defineConfig({
             sourcemap: true,
             preserveModules: true,
             preserveModulesRoot: 'src',
+            silenceDeprecations: ['legacy-js-api'],
         },
         {
             dir: path.dirname(`dist/index.js`),
@@ -40,6 +41,7 @@ const createConfig = (brand) => defineConfig({
             sourcemap: true,
             preserveModules: true,
             preserveModulesRoot: 'src',
+            silenceDeprecations: ['legacy-js-api'],
         },
     ],
     external: ['react/jsx-runtime', 'react', 'react-dom', '@repo/services', '@repo/business'],

@@ -10,7 +10,6 @@ const brand = currentBrand.replace(/\s/g, '');
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-
   addons: [
     '@storybook/addon-webpack5-compiler-swc',
     '@storybook/addon-onboarding',
@@ -18,12 +17,10 @@ const config: StorybookConfig = {
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
   ],
-
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
   },
-
   webpackFinal: async (config) => {
     // @ts-ignore
     config.resolve.plugins = [ new TsconfigPathsPlugin()];
