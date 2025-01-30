@@ -1,11 +1,18 @@
-# tokens com style-dictionary
-
-Powered by
+<div style="text-align: center;">
+    <h1>tokens com style-dictionary</h1>
+    <br/>
+<p>
+    <strong>Powered by</strong>
 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=falt&logo=node.js&logoColor=white)
+</p>
+</div>
 
 ## Para que serve?
 ### Tokens responsáveis por transformar e formatar Design Tokens para nossas marcas.
+
+## Instalação do Ambiente
+### Seguir as instruções do Readme Principal no ‘item’ Instalação do Ambiente [clique aqui](../../README.md).
 
 ## Como foi criado?
 ### Foram instaladas as bibliotecas style-dictionary que irá gerenciar a consistência em estilos visuais.

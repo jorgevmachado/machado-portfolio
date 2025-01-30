@@ -1,4 +1,4 @@
-<div align="center">
+<div style="text-align: center;">
     <h1>MACHADO-PORTFOLIO</h1>
     <br/>
 <p>
@@ -70,86 +70,98 @@ Instale todas as dependências:
   npm install
 ```
 
-
-## Comandos
+## 🏠  Comandos
 ### Build
 
 ```bash
-# Irá  construir todos os projetos e pacotes que possuírem o `build` no script.
+# Irá construir todos os projetos e pacotes que possuírem o `build` no script.
 npm run build
+
+# Irá construir somente as módulos dependentes. (@repo/services e @repo/business).
+npm run build:module-dependencies
+
+# Irá construir somente as bibliotecas dependentes. (@repo/tokens, @repo/ds e @repo/ui).
+npm run build:lib-dependencies
+
+# Irá construir somente o projeto api.
+npm run build:api
+
+# Irá construir somente o projeto web.
+npm run build:web
+
+# Irá construir somente o projeto geek.
+npm run build:geek
 ```
 
 ### Develop
 
 ```bash
-# Irá  executar todos os projetos e pacotes que possuírem o `dev` no script.
+# Irá executar em todos os projetos e pacotes que possuírem o `dev` no script.
 npm run dev
+
+# Irá executar somente o projeto api.
+npm run dev:api
+
+# Irá executar somente o projeto web.
+npm run dev:web
+
+# Irá executar somente o projeto geek.
+npm run dev:geek
 ```
 
 ### test
 
 ```bash
-# Will launch a test suites for all the app & packages with the supported `test` script.
-pnpm run test
+# Irá executar em todos os projetos e pacotes que possuírem o `test` no script.
+npm run test
 
-# You can launch e2e testes with `test:e2e`
-pnpm run test:e2e
+# Irá executar somente os módulos dependentes. (@repo/services e @repo/business).
+npm run test:module-dependencies
 
-# See `@repo/jest-config` to customize the behavior.
+# Irá executar somente as bibliotecas dependentes. (@repo/tokens, @repo/ds e @repo/ui).
+npm run test:lib-dependencies
+
+# Irá executar somente o projeto api.
+npm run test:api
+
+# Irá executar somente o projeto web.
+npm run test:web
+
+# Irá executar somente o projeto geek.
+npm run test:geek
+
+# Veja `@repo/jest` para personalizar o comportamento.
+# Também poderá ser executado o `test:e2e` nos projetos e pacotes que possuírem.
+npm run test:e2e
 ```
 
 #### Lint
 
 ```bash
-# Will lint all the app & packages with the supported `lint` script.
-# See `@repo/eslint-config` to customize the behavior.
-pnpm run lint
+# Irá executar o lint em todos os projetos e pacotes que possuírem o `lint` no script.
+# Veja `@repo/eslint-config` para personalizar o comportamento.
+npm run lint
+
+# Irá executar somente os módulos dependentes. (@repo/services e @repo/business).
+npm run lint:module-dependencies
+
+# Irá executar somente as bibliotecas dependentes. (@repo/tokens, @repo/ds e @repo/ui).
+npm run lint:lib-dependencies
+
+# Irá executar somente o projeto api.
+npm run lint:api
+
+# Irá executar somente o projeto web.
+npm run lint:web
+
+# Irá executar somente o projeto geek.
+npm run lint:geek
 ```
 
 #### Format
 
 ```bash
-# Will format all the supported `.ts,.js,json,.tsx,.jsx` files.
-# See `@repo/eslint-config/prettier-base.js` to customize the behavior.
-pnpm format
+# Formatará todos os arquivos `.ts,.js,json,.tsx,.jsx` suportados.
+# Veja `@repo/eslint-config/prettier-base.js` para personalizar o comportamento.
+npm format
 ```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```bash
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```bash
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
-
-
-
-
-- [TypeScript](https://www.typescriptlang.org/) for static type-safety
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-- [Jest](https://prettier.io) & [Playwright](https://playwright.dev/) for testing

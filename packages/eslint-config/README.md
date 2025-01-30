@@ -1,11 +1,51 @@
-# `@repo/eslint-config`
+<div style="text-align: center;">
+    <h1>Eslint</h1>
+    <br/>
+<p>
+    <strong>Powered by</strong>
 
-# Coleção de configurações internas do eslint.
+![Javascript](https://img.shields.io/badge/javascript-%23323330.svg?style=falt&logo=javascript)
+![Npm](https://shields.io/badge/npm-gray?logo=npm&style=falt)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=falt&logo=node.js&logoColor=white)
+</p>
+</div>
 
+## Para que serve ?
+### Módulo responsável pelas configurações de eslint de todos os módulos, bibliotecas e projetos.
 
-# rules
+## Instalação do Ambiente
+### Seguir as instruções do Readme Principal no ‘item’ Instalação do Ambiente [clique aqui](../../README.md).
 
-
+### Para usar o eslint-config dentro do projeto, basta adicionar o módulo no package.json do projeto.
+```json
+{
+  "devDependencies": {
+    "@repo/eslint-config": "*"
+  }      
+}
+```
+### Seguir os passos da instalação conforme [Instalação do Ambiente](#instalação-do-ambiente).
+### Depois criar um arquivo `.eslintrc.js` e selecionar qual grupo do eslint deseja adicionar ao projeto.
+```javascript
+// No Exemplo em extends está sendo utilizado o grupo de configurações do nest.js.
+/** @type {import("eslint").Linter.Config} */
+module.exports = {
+    extends: ['@repo/eslint-config/nest.js'],
+    parserOptions: {
+        project: 'tsconfig.lint.json',
+        tsconfigRootDir: __dirname,
+    },
+};
+```
+### por fim no `package.json` adicionar os comandos para executar o lint.
+```json
+{
+  "scripts": {
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0 --fix"
+  }      
+}
+```
+## rules
 ## semi
 ### É utilizado para verificar o uso de pont e vírgula no final de instruções JavaScript.
 #### Primeiro elemento do Array
