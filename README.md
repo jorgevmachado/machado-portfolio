@@ -80,8 +80,23 @@ npm run build
 # Irá construir somente as módulos dependentes. (@repo/services e @repo/business).
 npm run build:module-dependencies
 
+# Irá construir somente as módulos dependente service. (@repo/services).
+npm run build:services
+
+# Irá construir somente as módulos dependente business. (@repo/business).
+npm run build:business
+
 # Irá construir somente as bibliotecas dependentes. (@repo/tokens, @repo/ds e @repo/ui).
 npm run build:lib-dependencies
+
+# Irá construir somente a bibliotecas dependente tokens. (@repo/tokens).
+npm run build:tokens
+
+# Irá construir somente a bibliotecas dependente design system. (@repo/ds).
+npm run build:ds
+
+# Irá construir somente a bibliotecas dependente user interface. (@repo/ui).
+npm run build:ui
 
 # Irá construir somente o projeto api.
 npm run build:api
@@ -117,6 +132,12 @@ npm run test
 
 # Irá executar somente os módulos dependentes. (@repo/services e @repo/business).
 npm run test:module-dependencies
+
+# Irá executar somente o módulos dependente services. (@repo/services).
+npm run test:services
+
+# Irá executar somente o módulos dependente business. (@repo/business).
+npm run test:business
 
 # Irá executar somente as bibliotecas dependentes. (@repo/tokens, @repo/ds e @repo/ui).
 npm run test:lib-dependencies
