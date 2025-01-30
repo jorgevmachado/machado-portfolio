@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 
-import sass from 'sass';
+import * as sass from 'sass';
 
 const currentBrand = process.env.BRAND || 'geek';
 
