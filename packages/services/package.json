@@ -13,8 +13,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "dev": "pnpm build --watch",
-    "build": "tsc -b -v",
+    "dev": "npm build --watch",
+    "build": "rimraf dist && tsc -b -v",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0 --fix"
   },
   "exports": {
@@ -49,6 +49,7 @@
     "@repo/typescript": "*",
     "@types/node": "^20.3.1",
     "jest": "^29.7.0",
+    "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.2",
