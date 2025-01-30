@@ -18,7 +18,6 @@
 </p>
 </div>
 
-
 ## Para que serve ?
 ### Projeto Criado para aprimorar os meus conhecimentos em desenvolvimento de Software.
     .
@@ -37,45 +36,57 @@
         └── @repo/ui                  # Biblioteca de componentes React de Interface do usuário.
 
 ## Apps
-### Mais informações sobre projeto api [clique aqui](./apps/api/README.md).
-### Mais informações sobre projeto web [clique aqui](./apps/web/README.md).
-### Mais informações sobre projeto geek [clique aqui](./apps/geek/README.md).
+Mais informações sobre projeto api [clique aqui](./apps/api/README.md).
+
+Mais informações sobre projeto web [clique aqui](./apps/web/README.md).
+
+Mais informações sobre projeto geek [clique aqui](./apps/geek/README.md).
 
 ## Packages
-### Mais informações sobre módulo eslint [clique aqui](./packages/eslint-config/README.md).
-### Mais informações sobre módulo jest [clique aqui](./packages/jest/README.md).
+Mais informações sobre módulo eslint [clique aqui](./packages/eslint-config/README.md).
 
-### Utilities
+Mais informações sobre módulo jest [clique aqui](./packages/jest/README.md).
 
-This `Turborepo` has some additional tools already set for you:
+Mais informações sobre módulo typescript [clique aqui](./packages/typescript/README.md).
 
-- [TypeScript](https://www.typescriptlang.org/) for static type-safety
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-- [Jest](https://prettier.io) & [Playwright](https://playwright.dev/) for testing
+Mais informações sobre módulo services [clique aqui](./packages/services/README.md).
 
-### Commands
+Mais informações sobre módulo business [clique aqui](./packages/business/README.md).
 
-This `Turborepo` already configured useful commands for all your apps and packages.
+Mais informações sobre a biblioteca de tokens [clique aqui](./packages/tokens/README.md).
 
-#### Build
+Mais informações sobre a biblioteca de Design System [clique aqui](./packages/ds/README.md).
 
+Mais informações sobre a biblioteca de User Interface [clique aqui](./packages/ui/README.md).
+
+## Instalação do Ambiente
+Primeiramente, instale o [NVM](https://github.com/nvm-sh/nvm) e instale a versão específica do Node via terminal:
 ```bash
-# Will build all the app & packages with the supported `build` script.
-pnpm run build
-
-# ℹ️ If you plan to only build apps individually,
-# Please make sure you've built the packages first.
+  nvm install v22.13.1
+  nvm use
+```
+Instale todas as dependências:
+```bash
+  npm install
 ```
 
-#### Develop
+
+## Comandos
+### Build
 
 ```bash
-# Will run the development server for all the app & packages with the supported `dev` script.
-pnpm run dev
+# Irá  construir todos os projetos e pacotes que possuírem o `build` no script.
+npm run build
 ```
 
-#### test
+### Develop
+
+```bash
+# Irá  executar todos os projetos e pacotes que possuírem o `dev` no script.
+npm run dev
+```
+
+### test
 
 ```bash
 # Will launch a test suites for all the app & packages with the supported `test` script.
@@ -134,3 +145,11 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+
+
+
+
+- [TypeScript](https://www.typescriptlang.org/) for static type-safety
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
+- [Jest](https://prettier.io) & [Playwright](https://playwright.dev/) for testing
