@@ -2,6 +2,7 @@ import { glob } from 'glob';
 import path from 'path';
 
 import { defineConfig } from 'rollup';
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import sass from 'rollup-plugin-sass';
@@ -24,8 +25,16 @@ const createConfig = () => defineConfig({
             preserveModulesRoot: 'src',
         },
     ],
-    external: ['react/jsx-runtime', 'react', 'react-dom', '@repo/services', '@repo/business'],
+    external: [
+        'react/jsx-runtime',
+        'react',
+        'react-dom',
+        /^@repo\/ds/,
+        /^@repo\/services/,
+        /^@repo\/business/,
+    ],
     plugins: [
+        resolve(),
         typescript({ tsconfig: "./tsconfig.json" }),
         postcss({
             use: [
