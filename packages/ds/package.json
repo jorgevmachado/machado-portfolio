@@ -26,12 +26,7 @@
     "build": "rimraf dist && rollup -c",
     "build:law": "set BRAND=law && rimraf dist && rollup -c",
     "build:geek": "set BRAND=geek && rimraf dist && rollup -c",
-    "build:finance": "set BRAND=finance && rimraf dist && rollup -c",
-    "storybook:finance": "set BRAND=finance && storybook dev -p 6006",
-    "storybook:geek": "set BRAND=geek && storybook dev -p 6006",
-    "storybook:law": "BRAND=law storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "storybook": "storybook dev -p 6006"
+    "build:finance": "set BRAND=finance && rimraf dist && rollup -c"
   },
   "typesVersions": {
     "*": {
@@ -44,32 +39,21 @@
     "access": "public"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^3.2.3",
     "@repo/eslint-config": "*",
     "@repo/typescript": "*",
     "@rollup/plugin-typescript": "^12.1.2",
-    "@storybook/addon-essentials": "^8.4.7",
-    "@storybook/addon-interactions": "^8.4.7",
-    "@storybook/addon-onboarding": "^8.4.7",
-    "@storybook/addon-webpack5-compiler-swc": "^2.0.0",
-    "@storybook/blocks": "^8.4.7",
-    "@storybook/react": "^8.4.7",
-    "@storybook/react-webpack5": "^8.4.7",
-    "@storybook/test": "^8.4.7",
     "@turbo/gen": "^2.3.3",
     "@types/eslint": "^9.6.1",
     "@types/node": "^22.10.6",
     "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.3",
     "eslint": "^9.18.0",
-    "eslint-plugin-storybook": "^0.11.2",
     "glob": "^11.0.1",
     "react-icons": "^5.4.0",
     "rimraf": "^6.0.1",
     "rollup": "^4.30.1",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-sass": "^1.15.0",
-    "storybook": "^8.4.7",
     "typescript": "^5.7.3"
   },
   "dependencies": {

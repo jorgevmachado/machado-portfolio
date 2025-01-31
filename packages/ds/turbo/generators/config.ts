@@ -36,11 +36,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: 'add',
-        path: 'src/{{ type }}/{{ kebabCase name }}/{{ pascalCase name }}.stories.tsx',
-        templateFile: 'templates/storybook.hbs',
-      },
-      {
-        type: 'add',
         path: 'src/{{ type }}/{{ kebabCase name }}/{{ pascalCase name }}.scss',
         templateFile: 'templates/stylesheet.hbs',
       },

@@ -55,18 +55,6 @@ npm run build
 npm run lint
 ```
 
-### Storybook
-```bash
-# Irá executar o storybook da marca geek.
-npm run storybook:geek
-
-# Irá executar o storybook da marca law.
-npm run storybook:law
-
-# Irá executar o storybook da marca finance.
-npm run storybook:finance
-```
-
 ## Como usar?
 ### Para usar o design system dentro do projeto, basta adicionar a biblioteca no package.json e seguir os passos da instalação conforme [Instalação do Ambiente](#instalação-do-ambiente).
 ```json
