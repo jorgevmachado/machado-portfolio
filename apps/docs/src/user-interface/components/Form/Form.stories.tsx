@@ -5,8 +5,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { OContext } from '@repo/ds/utils/colors/options';
 
-import { AuthForm } from '@repo/ui/layout/auth/Form/interface';
-import Form from '@repo/ui/layout/auth/Form/Form';
+import type { AuthForm } from '@repo/ui/components/form/interface';
+import Form from '@repo/ui/components/form/Form';
 
 const meta = {
   args: {
@@ -19,7 +19,7 @@ const meta = {
     children: <p>Welcome</p>,
     buttonLabel: 'save',
   },
-  title: 'User-Interface/Layout/Auth/Form',
+  title: 'User-Interface/Components/Form',
   argTypes: {
     type: {
       table: {

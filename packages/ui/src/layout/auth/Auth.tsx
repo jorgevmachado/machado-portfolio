@@ -2,15 +2,16 @@ import React from 'react';
 
 import joinClass from '@repo/ds/utils/join-class/joinClass';
 
-import type { AuthProps } from './interface';
-import Form from './Form';
+import { Form } from '../../components';
+
+import type {AuthProps} from './interface';
 import InfoText from './InfoText';
 import Links from './Links';
 import Logo from './Logo';
 import Socials from './Socials';
+import FormSocialText from './FormSocialText';
 
 import './Auth.scss';
-import FormSocialText from './FormSocialText';
 
 export default function Auth({
   type = 'blank',

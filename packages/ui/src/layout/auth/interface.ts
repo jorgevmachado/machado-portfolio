@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { User } from '@repo/business/auth/interface';
+import type { User } from '@repo/business/auth/interface';
 
-import { TContext } from '@repo/ds/utils/colors/interface';
+import type { TContext } from '@repo/ds/utils/colors/interface';
 
-import { AuthForm } from './Form/interface';
+import type { AuthForm } from '../../components/form/interface';
 
 export type TAuth =
   | 'blank'

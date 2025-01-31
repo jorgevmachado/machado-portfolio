@@ -4,7 +4,7 @@ import type { ValidatorParams } from '@repo/services/validator/interface';
 
 import { OContext } from '@repo/ds/utils/colors/options';
 
-import Input from '@repo/ui/layout/auth/Form/input/Input';
+import Input from '@repo/ui/components/input/Input';
 
 const meta = {
   args: {
@@ -20,7 +20,7 @@ const meta = {
     }),
     placeholder: 'Input Placeholder',
   },
-  title: 'User-Interface/Layout/Auth/Form/Input',
+  title: 'User-Interface/Components/Input',
   argTypes: {
     type: {
       table: {

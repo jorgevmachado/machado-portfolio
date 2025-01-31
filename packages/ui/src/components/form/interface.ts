@@ -1,15 +1,15 @@
 import React from 'react';
 
-import {
+import type {
   ValidatorMessage,
   ValidatorParams,
 } from '@repo/services/validator/interface';
 
-import { TContext } from '@repo/ds/utils/colors/interface';
+import type { TContext } from '@repo/ds/utils/colors/interface';
 
-import { TAuth } from '../interface';
+import {TAuth} from "../../layout/auth/interface";
 
-import { TInput } from './input/Input';
+import type { TInput } from '../input/Input';
 
 export interface FormProps
   extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
