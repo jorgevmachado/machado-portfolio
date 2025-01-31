@@ -1,6 +1,7 @@
 {
   "name": "@repo/ds",
   "main": "dist/index.js",
+  "type": "module",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript": "*",
+    "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-typescript": "^12.1.2",
     "@turbo/gen": "^2.3.3",
     "@types/eslint": "^9.6.1",
@@ -56,6 +58,7 @@
   },
   "dependencies": {
     "@repo/tokens": "*",
+    "@repo/services": "*",
     "react": "^19.0.0",
     "sass": "^1.83.1",
     "sass-loader": "^16.0.4"

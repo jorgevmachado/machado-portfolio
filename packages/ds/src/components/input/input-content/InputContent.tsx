@@ -32,7 +32,7 @@ interface InputItemProps
   inputClassNameList?: string;
   isInputMouseFocused?: boolean;
 }
-const InputContent = forwardRef<any, InputItemProps>(
+export const InputContent = forwardRef<any, InputItemProps>(
   (
     {
       id,
@@ -159,5 +159,3 @@ const InputContent = forwardRef<any, InputItemProps>(
     );
   },
 );
-
-export default InputContent;

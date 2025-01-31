@@ -1,4 +1,4 @@
-@import "../../styles/main";
+@use "../../styles/main" as *;
 
 @mixin alert-type($text-color, $border-color, $background-color) {
   color: $text-color;

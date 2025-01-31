@@ -1,3 +1,7 @@
-@import "./colors";
-@import "./focus";
-@import "./line-overflow";
+@use "./colors" as *;
+@use "./focus" as *;
+@use "./line-overflow" as *;
+
+@forward "./colors";
+@forward "./focus";
+@forward "./line-overflow";

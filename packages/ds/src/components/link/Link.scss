@@ -1,4 +1,6 @@
-@import "../../styles/main";
+@use "../../styles/main" as *;
+@use "sass:list";
+
 
 @mixin context($WeakColor, $MediumColor, $StrongColor) {
   color: $WeakColor;
@@ -98,6 +100,6 @@ $contexts: (
 
 @each $key, $colors in $contexts {
   .link__context--#{$key} {
-    @include context(nth($colors, 1), nth($colors, 2), nth($colors, 3));
+    @include context(list.nth($colors, 1), list.nth($colors, 2), list.nth($colors, 3));
   }
 }

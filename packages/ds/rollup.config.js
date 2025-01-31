@@ -24,7 +24,13 @@ const createConfig = () => defineConfig({
             preserveModulesRoot: 'src',
         },
     ],
-    external: ['react/jsx-runtime', 'react', 'react-dom', '@repo/services'],
+    external: [
+        'react/jsx-runtime',
+        'react',
+        'react-dom',
+        /^@repo\/services/,
+        /react-icons(\/.*)?/
+    ],
     plugins: [
         typescript({ tsconfig: "./tsconfig.json" }),
         postcss({

@@ -1,4 +1,4 @@
-@import "../../styles/main";
+@use "../../styles/main" as *;
 
 @mixin context($color){
   &.step-bar__minimal.step-bar__vertical .step-bar__item--checked:after {

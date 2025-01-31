@@ -11,7 +11,7 @@ import { Text } from '../../elements';
 import Feedback from '../feedback';
 import Label from '../label';
 
-import InputContent from './input-content';
+import { InputContent }  from './input-content';
 
 import './Input.scss';
 
