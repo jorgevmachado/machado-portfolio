@@ -1,6 +1,4 @@
-import { ERole, EStatus } from '../../shared';
-
-import { EGender } from '../../api';
+import { EGender, ERole, EStatus } from '../../shared';
 
 import { User } from '../interface';
 
