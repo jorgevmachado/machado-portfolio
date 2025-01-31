@@ -1,0 +1,50 @@
+{
+  "name": "docs",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "gen": "turbo gen docs",
+    "dev:finance": "set BRAND=finance && storybook dev -p 6006",
+    "dev:geek": "set BRAND=geek && storybook dev -p 6006",
+    "dev:law": "BRAND=law storybook dev -p 6006",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0 --fix",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@repo/ds": "*",
+    "@repo/eslint-config": "*",
+    "@repo/tokens": "*",
+    "@repo/typescript": "*",
+    "@repo/ui": "*",
+    "@turbo/gen": "^2.3.3",
+    "@types/eslint": "^9.6.1",
+    "@types/node": "^22.10.6",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.3",
+    "eslint": "^9.18.0",
+    "glob": "^11.0.1",
+    "react-icons": "^5.4.0",
+    "rimraf": "^6.0.1",
+    "sass": "^1.83.4",
+    "sass-loader": "^16.0.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.4",
+    "@storybook/addon-essentials": "^8.5.2",
+    "@storybook/addon-interactions": "^8.5.2",
+    "@storybook/addon-onboarding": "^8.5.2",
+    "@storybook/addon-webpack5-compiler-swc": "^2.0.0",
+    "@storybook/blocks": "^8.5.2",
+    "@storybook/react": "^8.5.2",
+    "@storybook/react-webpack5": "^8.5.2",
+    "@storybook/test": "^8.5.2",
+    "eslint-plugin-storybook": "^0.11.2",
+    "storybook": "^8.5.2"
+  }
+}
