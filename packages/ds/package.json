@@ -24,9 +24,7 @@
     "lint": "eslint . --max-warnings 0 --fix",
     "gen": "turbo gen ds",
     "build": "rimraf dist && rollup -c",
-    "build:law": "set BRAND=law && rimraf dist && rollup -c",
-    "build:geek": "set BRAND=geek && rimraf dist && rollup -c",
-    "build:finance": "set BRAND=finance && rimraf dist && rollup -c"
+    "watch": "rimraf dist && rollup -c --watch"
   },
   "typesVersions": {
     "*": {

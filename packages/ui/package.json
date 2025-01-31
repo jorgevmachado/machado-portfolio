@@ -24,10 +24,7 @@
     "lint": "eslint . --max-warnings 0 --fix",
     "gen": "turbo gen ui",
     "build": "rimraf dist && rollup -c",
-    "build:law": "set BRAND=law && rimraf dist && rollup -c",
-    "build:geek": "set BRAND=geek && rimraf dist && rollup -c",
-    "watch:geek": "set BRAND=geek && rimraf dist && rollup -c --watch",
-    "build:finance": "set BRAND=finance && rimraf dist && rollup -c"
+    "watch": "rimraf dist && rollup -c --watch"
   },
   "typesVersions": {
     "*": {
@@ -58,6 +55,8 @@
   },
   "dependencies": {
     "@repo/tokens": "*",
+    "@repo/services": "*",
+    "@repo/business": "*",
     "react": "^19.0.0",
     "sass": "^1.83.1",
     "sass-loader": "^16.0.4",

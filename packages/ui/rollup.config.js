@@ -1,30 +1,12 @@
 import { glob } from 'glob';
 import path from 'path';
 
+import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import sass from 'rollup-plugin-sass';
-import {defineConfig} from 'rollup';
 
-const currentBrand = process.env.BRAND;
-const brand = currentBrand && currentBrand.replace(/\s/g, '');
-
-const includePathsStyles = (brand) => {
-    const stylesPaths = [
-        'node_modules',
-        'src/styles',
-    ]
-    if (brand) {
-        return stylesPaths.concat([
-            `@repo/tokens/dist/${brand}/css/_variables.css`,
-            `@repo/tokens/dist/${brand}/scss/_variables.scss`,
-        ]);
-    }
-
-    return stylesPaths;
-}
-
-const createConfig = (brand) => defineConfig({
+const createConfig = () => defineConfig({
     input: glob.sync('src/**/index.ts'),
     output: [
         {
@@ -33,7 +15,6 @@ const createConfig = (brand) => defineConfig({
             sourcemap: true,
             preserveModules: true,
             preserveModulesRoot: 'src',
-            silenceDeprecations: ['legacy-js-api'],
         },
         {
             dir: path.dirname(`dist/index.js`),
@@ -41,7 +22,6 @@ const createConfig = (brand) => defineConfig({
             sourcemap: true,
             preserveModules: true,
             preserveModulesRoot: 'src',
-            silenceDeprecations: ['legacy-js-api'],
         },
     ],
     external: ['react/jsx-runtime', 'react', 'react-dom', '@repo/services', '@repo/business'],
@@ -50,7 +30,10 @@ const createConfig = (brand) => defineConfig({
         postcss({
             use: [
                 ['sass', {
-                    includePaths: includePathsStyles(brand)
+                    includePaths: [
+                        'node_modules',
+                        'src/styles',
+                    ]
                 }]
             ],
             extract: true,
@@ -71,5 +54,5 @@ const createConfig = (brand) => defineConfig({
 });
 
 export default [
-    createConfig(brand),
+    createConfig(),
 ]
