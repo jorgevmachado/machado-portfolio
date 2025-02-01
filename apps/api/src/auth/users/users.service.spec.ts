@@ -65,7 +65,7 @@ describe('UsersService', () => {
           cpf: ENTITY_USER_COMPLETE_FIXTURE.cpf,
           name: ENTITY_USER_COMPLETE_FIXTURE.name,
           email: ENTITY_USER_COMPLETE_FIXTURE.email,
-          whatsup: ENTITY_USER_COMPLETE_FIXTURE.whatsup,
+          whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
           password: ENTITY_USER_COMPLETE_FIXTURE.password,
           date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
           password_confirmation: ENTITY_USER_COMPLETE_FIXTURE.password,

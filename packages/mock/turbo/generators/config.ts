@@ -38,16 +38,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         path: 'src/controllers/index.ts',
         templateFile: 'templates/controllers/index.hbs',
       },
-      {
-        type: 'add',
-        path: 'src/{{ kebabCase name }}/index.ts',
-        templateFile: 'templates/index.hbs',
-      },
-      {
-        type: 'append',
-        path: 'src/{{ type }}/index.ts',
-        template: "export * from './{{kebabCase name}}';",
-      },
     ],
   });
 }

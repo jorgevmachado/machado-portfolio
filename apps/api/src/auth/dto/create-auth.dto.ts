@@ -35,7 +35,7 @@ export class CreateAuthDto {
   @MaxLength(11)
   @MinLength(11)
   @IsNotEmpty()
-  whatsup: string;
+  whatsapp: string;
 
   @IsNotEmpty()
   @MinLength(6)

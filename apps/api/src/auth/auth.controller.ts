@@ -26,6 +26,12 @@ export class AuthController {
     return this.authService.signIn(credentialsAuthDto);
   }
 
+  @Get('me')
+  @UseGuards(AuthGuard(), AuthRoleGuards)
+  getMe(@GetUserAuth() user: User) {
+    return this.authService.me(user);
+  }
+
   @Get(':id')
   @UseGuards(AuthGuard(), AuthRoleGuards)
   findOne(@GetUserAuth() user: User, @Param('id') id: string) {

@@ -32,14 +32,14 @@ export class UserService extends Service<User> {
   }
 
   async create(createAuthDto: CreateAuthDto) {
-    const whatsUp = this.cleanFormatter(createAuthDto.whatsup);
+    const whatsapp = this.cleanFormatter(createAuthDto.whatsapp);
     const cpf = this.cleanFormatter(createAuthDto.cpf);
 
-    this.validateMobile(whatsUp);
+    this.validateMobile(whatsapp);
 
     await this.hasInactiveUser('cpf', cpf);
     await this.hasInactiveUser('email', createAuthDto.email);
-    await this.hasInactiveUser('whatsUp', whatsUp);
+    await this.hasInactiveUser('whatsapp', whatsapp);
 
     const user = new User();
     user.cpf = cpf;
@@ -49,7 +49,7 @@ export class UserService extends Service<User> {
     user.email = createAuthDto.email;
     user.gender = createAuthDto.gender;
     user.status = EStatus.ACTIVE;
-    user.whatsup = whatsUp;
+    user.whatsapp = whatsapp;
     user.password = await bcrypt.hash(createAuthDto.password, user.salt);
     user.date_of_birth = createAuthDto.date_of_birth;
     user.confirmation_token = crypto.randomBytes(32).toString('hex');

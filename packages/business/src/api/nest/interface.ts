@@ -14,8 +14,8 @@ export interface IUser {
   email: string;
   gender: EGender;
   status: EStatus;
-  whatsup: string;
   picture?: string;
+  whatsapp: string;
   password?: string;
   created_at: Date;
   updated_at: Date;

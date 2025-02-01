@@ -34,6 +34,10 @@ export class Nest extends Http {
     return this.get(`auth/${id}`);
   }
 
+  public async getMe(): Promise<IUser> {
+    return this.get('auth/me');
+  }
+
   public async getAllPokemons(
     parameters: QueryParameters,
   ): Promise<Paginate<PokemonEntity> | Array<PokemonEntity>> {

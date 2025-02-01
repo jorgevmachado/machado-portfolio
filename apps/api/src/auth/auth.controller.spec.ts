@@ -21,6 +21,7 @@ describe('AuthController', () => {
         {
           provide: AuthService,
           useValue: {
+            me: jest.fn(),
             signUp: jest.fn(),
             signIn: jest.fn(),
             findOne: jest.fn(),
@@ -49,7 +50,7 @@ describe('AuthController', () => {
           cpf: ENTITY_USER_COMPLETE_FIXTURE.cpf,
           name: ENTITY_USER_COMPLETE_FIXTURE.name,
           email: ENTITY_USER_COMPLETE_FIXTURE.email,
-          whatsup: ENTITY_USER_COMPLETE_FIXTURE.whatsup,
+          whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
           password: ENTITY_USER_COMPLETE_FIXTURE.password,
           date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
           password_confirmation: ENTITY_USER_COMPLETE_FIXTURE.password,
@@ -84,7 +85,7 @@ describe('AuthController', () => {
         email: ENTITY_USER_COMPLETE_FIXTURE.email,
         status: ENTITY_USER_COMPLETE_FIXTURE.status,
         gender: ENTITY_USER_COMPLETE_FIXTURE.gender,
-        whatsup: ENTITY_USER_COMPLETE_FIXTURE.whatsup,
+        whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
         date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
         created_at: ENTITY_USER_COMPLETE_FIXTURE.created_at,
         updated_at: ENTITY_USER_COMPLETE_FIXTURE.updated_at,
@@ -104,7 +105,40 @@ describe('AuthController', () => {
         email: ENTITY_USER_COMPLETE_FIXTURE.email,
         status: ENTITY_USER_COMPLETE_FIXTURE.status,
         gender: ENTITY_USER_COMPLETE_FIXTURE.gender,
-        whatsup: ENTITY_USER_COMPLETE_FIXTURE.whatsup,
+        whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
+        date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
+        created_at: ENTITY_USER_COMPLETE_FIXTURE.created_at,
+        updated_at: ENTITY_USER_COMPLETE_FIXTURE.updated_at,
+      });
+    });
+  });
+
+  describe('me', () => {
+    it('should be able to find user', async () => {
+      jest.spyOn(service, 'me').mockResolvedValueOnce({
+        id: ENTITY_USER_COMPLETE_FIXTURE.id,
+        cpf: ENTITY_USER_COMPLETE_FIXTURE.cpf,
+        role: ENTITY_USER_COMPLETE_FIXTURE.role,
+        name: ENTITY_USER_COMPLETE_FIXTURE.name,
+        email: ENTITY_USER_COMPLETE_FIXTURE.email,
+        status: ENTITY_USER_COMPLETE_FIXTURE.status,
+        gender: ENTITY_USER_COMPLETE_FIXTURE.gender,
+        whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
+        date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
+        created_at: ENTITY_USER_COMPLETE_FIXTURE.created_at,
+        updated_at: ENTITY_USER_COMPLETE_FIXTURE.updated_at,
+        deleted_at: ENTITY_USER_COMPLETE_FIXTURE.deleted_at,
+      });
+
+      expect(await controller.getMe(ENTITY_USER_COMPLETE_FIXTURE)).toEqual({
+        id: ENTITY_USER_COMPLETE_FIXTURE.id,
+        cpf: ENTITY_USER_COMPLETE_FIXTURE.cpf,
+        role: ENTITY_USER_COMPLETE_FIXTURE.role,
+        name: ENTITY_USER_COMPLETE_FIXTURE.name,
+        email: ENTITY_USER_COMPLETE_FIXTURE.email,
+        status: ENTITY_USER_COMPLETE_FIXTURE.status,
+        gender: ENTITY_USER_COMPLETE_FIXTURE.gender,
+        whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
         date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
         created_at: ENTITY_USER_COMPLETE_FIXTURE.created_at,
         updated_at: ENTITY_USER_COMPLETE_FIXTURE.updated_at,

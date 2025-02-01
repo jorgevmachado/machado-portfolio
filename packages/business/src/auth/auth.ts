@@ -16,4 +16,8 @@ export class Auth {
   public async get(id: string): Promise<User> {
     return this.nest.getUser(id);
   }
+
+  public async me(): Promise<User> {
+    return this.nest.getMe();
+  }
 }

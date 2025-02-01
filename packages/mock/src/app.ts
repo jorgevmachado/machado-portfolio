@@ -33,6 +33,10 @@ server.post('/auth/signIn', (req, res) => {
   res.json(controllers.signIn());
 });
 
+server.get('/me', (req, res) => {
+  res.json(controllers.getMe());
+});
+
 server.get('/auth/:id', (req, res) => {
   res.json(controllers.getUser());
 });

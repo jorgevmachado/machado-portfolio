@@ -56,7 +56,7 @@ describe('AuthService', () => {
           cpf: ENTITY_USER_COMPLETE_FIXTURE.cpf,
           name: ENTITY_USER_COMPLETE_FIXTURE.name,
           email: ENTITY_USER_COMPLETE_FIXTURE.email,
-          whatsup: ENTITY_USER_COMPLETE_FIXTURE.whatsup,
+          whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
           password: ENTITY_USER_COMPLETE_FIXTURE.password,
           date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
           password_confirmation: ENTITY_USER_COMPLETE_FIXTURE.password,
@@ -99,7 +99,25 @@ describe('AuthService', () => {
         email: ENTITY_USER_COMPLETE_FIXTURE.email,
         status: ENTITY_USER_COMPLETE_FIXTURE.status,
         gender: ENTITY_USER_COMPLETE_FIXTURE.gender,
-        whatsup: ENTITY_USER_COMPLETE_FIXTURE.whatsup,
+        whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
+        date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
+        created_at: ENTITY_USER_COMPLETE_FIXTURE.created_at,
+        updated_at: ENTITY_USER_COMPLETE_FIXTURE.updated_at,
+      });
+    });
+  });
+
+  describe('me', () => {
+    it('should be found a complete user', async () => {
+      expect(await service.me(ENTITY_USER_COMPLETE_FIXTURE)).toEqual({
+        id: ENTITY_USER_COMPLETE_FIXTURE.id,
+        cpf: ENTITY_USER_COMPLETE_FIXTURE.cpf,
+        role: ENTITY_USER_COMPLETE_FIXTURE.role,
+        name: ENTITY_USER_COMPLETE_FIXTURE.name,
+        email: ENTITY_USER_COMPLETE_FIXTURE.email,
+        status: ENTITY_USER_COMPLETE_FIXTURE.status,
+        gender: ENTITY_USER_COMPLETE_FIXTURE.gender,
+        whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
         date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
         created_at: ENTITY_USER_COMPLETE_FIXTURE.created_at,
         updated_at: ENTITY_USER_COMPLETE_FIXTURE.updated_at,

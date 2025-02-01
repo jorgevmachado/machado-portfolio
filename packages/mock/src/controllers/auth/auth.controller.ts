@@ -1,4 +1,7 @@
-import { USER_FIXTURE } from '../../fixtures';
+import {
+  AUTH_TOKEN,
+  USER_COMPLETE_FIXTURE,
+} from '@repo/business/auth/fixture/user';
 
 export function signUp() {
   return {
@@ -8,12 +11,15 @@ export function signUp() {
 
 export function signIn() {
   return {
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxNGIxMDQ0LTdjOWItNDM4Ny04MGIyLTZjMmJhNzRmYmYwMCIsImlhdCI6MTczNzI0MTc1OSwiZXhwIjoxNzM3MzI4MTU5fQ.DfQIqD3NQ-IFlDYIsmzZzGOgMwYSSpbWX_UTt-I2X9c',
+    token: AUTH_TOKEN,
     message: 'Authentication Successfully!',
   };
 }
 
 export function getUser() {
-  return USER_FIXTURE;
+  return USER_COMPLETE_FIXTURE;
+}
+
+export function getMe() {
+  return USER_COMPLETE_FIXTURE;
 }

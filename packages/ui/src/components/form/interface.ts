@@ -43,7 +43,7 @@ export interface AuthFields {
   name?: string;
   email?: string;
   gender?: string;
-  whatsup?: string;
+  whatsapp?: string;
   password?: string;
   dateOfBirth?: string;
   passwordConfirmation?: string;
@@ -54,7 +54,7 @@ export interface AuthErrors {
   name?: ValidatorMessage;
   email?: ValidatorMessage;
   gender?: ValidatorMessage;
-  whatsup?: ValidatorMessage;
+  whatsapp?: ValidatorMessage;
   password?: ValidatorMessage;
   dateOfBirth?: ValidatorMessage;
   passwordConfirmation?: ValidatorMessage;

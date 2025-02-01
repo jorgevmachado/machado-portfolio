@@ -43,7 +43,7 @@ export class User implements EntityUser {
   status: EStatus;
 
   @Column({ nullable: false, unique: true, length: 11 })
-  whatsup: string;
+  whatsapp: string;
 
   @Column({ nullable: true })
   picture?: string;
@@ -79,7 +79,7 @@ export class User implements EntityUser {
       this.email = user.email ?? this.email;
       this.gender = user.gender ?? this.gender;
       this.status = user.status ?? this.status;
-      this.whatsup = user.whatsup ?? this.whatsup;
+      this.whatsapp = user.whatsapp ?? this.whatsapp;
       this.picture = user.picture ?? this.picture;
       this.password = user.password ?? this.password;
       this.created_at = user.created_at ?? this.created_at;

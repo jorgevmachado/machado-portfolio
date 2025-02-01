@@ -32,7 +32,7 @@ export type TBy =
   | 'order'
   | 'name'
   | 'email'
-  | 'whatsUp'
+  | 'whatsapp'
   | 'accountId';
 
 export interface FindOneParams<T, R> {

@@ -45,6 +45,10 @@ export class AuthService extends Base {
     return this.clean(currentUser);
   }
 
+  async me(user: User) {
+    return this.clean(user);
+  }
+
   private validateCurrentUser(id: string, user: User) {
     if (id !== user.id && user.role !== ERole.ADMIN) {
       throw new UnprocessableEntityException(
@@ -62,7 +66,7 @@ export class AuthService extends Base {
       email: user.email,
       status: user.status,
       gender: user.gender,
-      whatsup: user.whatsup,
+      whatsapp: user.whatsapp,
       date_of_birth: user.date_of_birth,
       created_at: user.created_at,
       updated_at: user.updated_at,
