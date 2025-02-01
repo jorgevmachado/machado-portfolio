@@ -27,14 +27,6 @@ export enum DeviceBreakpoints {
   MIN_FULL_HD = '(min-width: 1440px)',
 }
 
-const MEDIAS = {
-  mobile: DeviceBreakpoints.MAX_MOBILE,
-  tablet: `${DeviceBreakpoints.MIN_TABLET} and ${DeviceBreakpoints.MAX_TABLET}`,
-  desktop: `${DeviceBreakpoints.MIN_DESKTOP} and ${DeviceBreakpoints.MAX_DESKTOP}`,
-  widescreen: `${DeviceBreakpoints.MIN_WIDESCREEN} and ${DeviceBreakpoints.MAX_WIDESCREEN}`,
-  fullHD: DeviceBreakpoints.MIN_FULL_HD,
-};
-
 export default function useResize(
   { onMobile, onTablet, onDesktop, onWidescreen, onFullHD }: ResizeProps,
   deps: React.DependencyList = [],
@@ -47,20 +39,23 @@ export default function useResize(
     fullHD: onFullHD,
   };
 
+  const medias: Medias = {
+    mobile: window.matchMedia(DeviceBreakpoints.MAX_MOBILE),
+    tablet: window.matchMedia(
+      `${DeviceBreakpoints.MIN_TABLET} and ${DeviceBreakpoints.MAX_TABLET}`,
+    ),
+    desktop: window.matchMedia(
+      `${DeviceBreakpoints.MIN_DESKTOP} and ${DeviceBreakpoints.MAX_DESKTOP}`,
+    ),
+    widescreen: window.matchMedia(
+      `${DeviceBreakpoints.MIN_WIDESCREEN} and ${DeviceBreakpoints.MAX_WIDESCREEN}`,
+    ),
+    fullHD: window.matchMedia(DeviceBreakpoints.MIN_FULL_HD),
+  };
+
   useEffect(() => {
-    const medias = getMedias();
     initialize(medias);
   }, []);
-
-  const getMedias = (): Medias => {
-    return {
-      mobile: window.matchMedia(MEDIAS.mobile),
-      tablet: window.matchMedia(MEDIAS.tablet),
-      desktop: window.matchMedia(MEDIAS.desktop),
-      widescreen: window.matchMedia(MEDIAS.widescreen),
-      fullHD: window.matchMedia(MEDIAS.fullHD),
-    };
-  };
 
   const initialize = (medias: Medias) => {
     const key = Object.keys(medias).find(
@@ -70,56 +65,25 @@ export default function useResize(
   };
 
   useEffect(() => {
-    const medias = getMedias();
-    onMobile && medias.mobile.addEventListener('change', makeMobile);
-    onTablet && medias.tablet.addEventListener('change', makeTablet);
-    onDesktop && medias.desktop.addEventListener('change', makeDesktop);
-    onWidescreen &&
-      medias.widescreen.addEventListener('change', makeWidescreen);
-    onFullHD && medias.fullHD.addEventListener('change', makeFullHD);
+    Object.keys(medias).forEach((key) => {
+      const mediaKey = key as keyof Medias;
+      medias[mediaKey].addEventListener('change', handleMediaChange(mediaKey));
+    });
     return () => {
-      onMobile && medias.mobile.removeEventListener('change', makeMobile);
-      onTablet && medias.tablet.removeEventListener('change', makeTablet);
-      onDesktop && medias.desktop.removeEventListener('change', makeDesktop);
-      onWidescreen &&
-        medias.widescreen.removeEventListener('change', makeWidescreen);
-      onFullHD && medias.fullHD.removeEventListener('change', makeFullHD);
+      Object.keys(medias).forEach((key) => {
+        const mediaKey = key as keyof Medias;
+        medias[mediaKey].removeEventListener(
+          'change',
+          handleMediaChange(mediaKey),
+        );
+      });
     };
   }, [deps]);
 
-  const makeMobile = (event: MediaQueryListEvent) => {
-    if (onMobile) {
-      checker(event, onMobile);
-    }
-  };
-
-  const makeTablet = (event: MediaQueryListEvent) => {
-    if (onTablet) {
-      checker(event, onTablet);
-    }
-  };
-
-  const makeDesktop = (event: MediaQueryListEvent) => {
-    if (onDesktop) {
-      checker(event, onDesktop);
-    }
-  };
-
-  const makeWidescreen = (event: MediaQueryListEvent) => {
-    if (onWidescreen) {
-      checker(event, onWidescreen);
-    }
-  };
-
-  const makeFullHD = (event: MediaQueryListEvent) => {
-    if (onFullHD) {
-      checker(event, onFullHD);
-    }
-  };
-
-  const checker = (event: MediaQueryListEvent, fn: () => void) => {
-    if (event.matches) {
-      fn();
-    }
-  };
+  const handleMediaChange =
+    (key: keyof Medias) => (event: MediaQueryListEvent) => {
+      if (mapCallbacks[key] && event.matches) {
+        mapCallbacks[key]!();
+      }
+    };
 }
