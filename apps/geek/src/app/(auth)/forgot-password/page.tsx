@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import Auth from '@repo/ui/layout/auth/Auth';
 
-import type { AuthForm } from '@repo/ui/layout/auth/Form/interface';
+import type { AuthForm } from '@repo/ui/components/Form/interface';
 
 import { forgotPassword } from '../../../actions';
 
@@ -39,10 +39,13 @@ export default function ForgotPassword() {
       className="forgot-password"
       onSubmit={handleSubmit}
       description="Enter your registered email to reset your password"
-      signInLink={{
-        label: 'Back to login',
-        clickAction: () => router.push('/sign-in'),
-      }}
+      authLinks={[
+        {
+          order: 1,
+          label: 'Back to login',
+          clickAction: () => router.push('/sign-in'),
+        },
+      ]}
     />
   );
 }

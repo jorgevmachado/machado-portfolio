@@ -4,7 +4,7 @@ import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Auth from '@repo/ui/layout/auth/Auth';
-import type { AuthForm } from '@repo/ui/layout/auth/Form/interface';
+import type { AuthForm } from '@repo/ui/components/Form/interface';
 
 import { signUp } from '../../../actions';
 
@@ -39,11 +39,14 @@ export default function SignUp() {
       context="primary"
       loading={pending}
       className="sign-up"
-      signInLink={{
-        title: 'Already have an account ?',
-        label: 'Sign in here',
-        clickAction: () => router.push('/sign-in'),
-      }}
+      authLinks={[
+        {
+          order: 1,
+          title: 'Already have an account ?',
+          label: 'Sign in here',
+          clickAction: () => router.push('/sign-in'),
+        },
+      ]}
       description="By continuing, you affirm that you are over 18 years old and allow the sharing of your data in interactions with the platform."
     />
   );

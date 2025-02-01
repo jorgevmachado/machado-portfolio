@@ -4,7 +4,7 @@ import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Auth from '@repo/ui/layout/auth/Auth';
-import type { AuthForm } from '@repo/ui/layout/auth/Form/interface';
+import type { AuthForm } from '@repo/ui/components/Form/interface';
 
 import { signIn } from '../../../actions';
 
@@ -39,16 +39,20 @@ export default function SignIn() {
       context="primary"
       loading={pending}
       className="sign-in"
-      signUpLink={{
-        title: 'Dont have an account ?',
-        label: 'Register here',
-        clickAction: () => router.push('/sign-up'),
-      }}
+      authLinks={[
+        {
+          order: 1,
+          title: 'Dont have an account ?',
+          label: 'Register here',
+          clickAction: () => router.push('/sign-up'),
+        },
+        {
+          order: 2,
+          label: 'I forgot my password',
+          clickAction: () => router.push('/forgot-password'),
+        },
+      ]}
       description="By continuing, you affirm that you are over 18 years old and allow the sharing of your data in interactions with the platform."
-      forgotPasswordLink={{
-        label: 'I forgot my password',
-        clickAction: () => router.push('/forgot-password'),
-      }}
     />
   );
 }

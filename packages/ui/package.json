@@ -1,7 +1,6 @@
 {
   "name": "@repo/ui",
   "main": "dist/index.js",
-  "type": "module",
   "types": "dist/index.d.ts",
   "files": [
     "dist"

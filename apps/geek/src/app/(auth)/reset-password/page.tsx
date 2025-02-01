@@ -2,8 +2,8 @@
 import { useActionState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import type { AuthForm } from '@repo/ui/layout/auth/Form/interface';
-import Form from '@repo/ui/layout/auth/Form/Form';
+import type { AuthForm } from '@repo/ui/components/Form/interface';
+import Form from '@repo/ui/components/Form/Form';
 
 import { resetPassword } from '../../../actions';
 

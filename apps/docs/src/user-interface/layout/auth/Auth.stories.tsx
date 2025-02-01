@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 
 import { OContext } from '@repo/ds/utils/colors/options';
 
-import type { AuthForm } from '@repo/ui/layout/auth/Form/interface';
+import type { AuthForm } from '@repo/ui/components/Form/interface';
 
 import Auth from '@repo/ui/layout/auth/Auth';
 
