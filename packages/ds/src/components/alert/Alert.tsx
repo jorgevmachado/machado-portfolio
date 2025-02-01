@@ -13,7 +13,7 @@ interface LinkProps {
   clickAction: () => void;
 }
 
-interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   type: TAlert;
   link?: LinkProps;
   onClose?: () => void;
