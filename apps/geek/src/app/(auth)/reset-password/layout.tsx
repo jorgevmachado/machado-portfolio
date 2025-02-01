@@ -7,8 +7,7 @@ interface ResetPasswordLayoutProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Reset Password | Geek',
-  description: 'Reset Password Geek',
+  title: 'Reset Password',
 };
 
 export default function ResetPasswordLayoutLayout({

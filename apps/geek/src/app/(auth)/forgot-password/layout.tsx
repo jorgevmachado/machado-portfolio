@@ -7,8 +7,7 @@ interface ForgotPasswordLayoutProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Forgot Password | Geek',
-  description: 'Forgot Password Geek',
+  title: 'Forgot Password',
 };
 
 export default function ForgotPasswordLayoutLayout({

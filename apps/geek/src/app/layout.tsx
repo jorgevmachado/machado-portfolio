@@ -7,7 +7,10 @@ import '../styles/global.scss';
 import Layout from '../layout';
 
 export const metadata: Metadata = {
-  title: 'Welcome to Geek | Geek',
+  title: {
+    template: '%s | Geek',
+    default: 'Welcome to Geek',
+  },
   description: 'Welcome to Geek',
 };
 

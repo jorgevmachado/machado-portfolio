@@ -7,8 +7,7 @@ interface ProfileLayoutProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Profile Geek | Geek',
-  description: 'Profile Geek',
+  title: 'Profile',
 };
 
 export default function ProfileLayout({ children }: ProfileLayoutProps) {

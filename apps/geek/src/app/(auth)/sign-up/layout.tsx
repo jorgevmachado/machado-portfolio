@@ -7,8 +7,7 @@ interface SignUpLayoutProps {
 }
 
 export const metadata: Metadata = {
-  title: 'SignUp | Geek',
-  description: 'SignUp Geek',
+  title: 'Sign-up',
 };
 
 export default function SignUpLayout({ children }: SignUpLayoutProps) {
