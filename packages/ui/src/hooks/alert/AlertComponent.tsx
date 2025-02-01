@@ -18,10 +18,12 @@ export default function AlertComponent({
   onRemove,
 }: AlertComponentProps) {
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       onRemove(alert);
     }, alert.delay);
-  }, []);
+
+    return () => clearTimeout(timeout);
+  }, [alert, onRemove]);
 
   return elem({
     type: alert.type,
