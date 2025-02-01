@@ -1,5 +1,5 @@
 'use client';
-import { useActionState, useEffect } from 'react';
+import { startTransition, useActionState, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -22,11 +22,13 @@ export default function SignIn() {
     if (state?.valid) {
       router.push('/');
     }
-  }, [state]);
+  }, [state, pending]);
 
   const handleSubmit = (authForm: AuthForm) => {
     if (authForm.formData) {
-      action(authForm.formData);
+      startTransition(() => {
+        action(authForm.formData as FormData);
+      });
     }
   };
 
