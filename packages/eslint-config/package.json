@@ -10,6 +10,9 @@
     "prettier-base.js",
     "react-internal.js"
   ],
+  "scripts": {
+    "clean": "rimraf node_modules"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
@@ -18,6 +21,7 @@
     "eslint-config-turbo": "^2.0.0",
     "eslint-plugin-only-warn": "^1.1.0",
     "eslint-plugin-prettier": "^5.1.3",
+    "rimraf": "^6.0.1",
     "typescript": "5.5.4"
   }
 }

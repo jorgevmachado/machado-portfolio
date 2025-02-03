@@ -12,7 +12,8 @@
     "gen": "turbo gen business",
     "watch": "nodemon --exec ts-node src/app.ts",
     "build": "rimraf dist && tsc -b -v",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0 --fix"
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0 --fix",
+    "clean": "rimraf dist && rimraf node_modules"
   },
   "exports": {
     ".": {

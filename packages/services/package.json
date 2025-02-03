@@ -15,7 +15,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "dev": "npm build --watch",
     "build": "rimraf dist && tsc -b -v",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0 --fix"
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0 --fix",
+    "clean": "rimraf dist && rimraf node_modules"
   },
   "exports": {
     ".": {

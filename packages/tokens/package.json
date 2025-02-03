@@ -5,7 +5,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "rimraf build && node config.mjs"
+    "build": "rimraf dist && node config.mjs",
+    "clean": "rimraf dist && rimraf node_modules"
   },
   "devDependencies": {
     "style-dictionary": "^4.3.0"

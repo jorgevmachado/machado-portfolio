@@ -1,2 +1,2 @@
-export { Nest } from './Nest';
+export { Nest } from './nest';
 export * from './interface';

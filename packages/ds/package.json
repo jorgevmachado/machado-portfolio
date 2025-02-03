@@ -24,7 +24,8 @@
     "lint": "eslint . --max-warnings 0 --fix",
     "gen": "turbo gen ds",
     "build": "rimraf dist && rollup -c",
-    "watch": "rimraf dist && rollup -c --watch"
+    "watch": "rimraf dist && rollup -c --watch",
+    "clean": "rimraf dist && rimraf node_modules"
   },
   "typesVersions": {
     "*": {

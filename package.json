@@ -6,6 +6,7 @@
   "author": "",
   "license": "UNLICENSED",
   "scripts": {
+    "clean": "turbo clean",
     "dev": "turbo dev",
     "dev:api": "turbo dev --filter=./apps/api",
     "dev:web": "turbo dev --filter=./apps/web",
@@ -42,6 +43,7 @@
     "@repo/eslint-config": "*",
     "@repo/typescript": "*",
     "prettier": "^3.2.5",
+    "rimraf": "^6.0.1",
     "turbo": "^2.3.3"
   },
   "engines": {
