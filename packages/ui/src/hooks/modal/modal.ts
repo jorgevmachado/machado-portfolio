@@ -31,8 +31,10 @@ export default class Modal {
   }
 
   private toggle(visibility: boolean) {
-    this.visibility = visibility;
-    this.update({ visibility: this.visibility });
+    if(this.visibility !== visibility) {
+      this.visibility = visibility;
+      this.update({ visibility });
+    }
   }
 
   public open() {

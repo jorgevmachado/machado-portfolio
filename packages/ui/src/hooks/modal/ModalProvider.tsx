@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import joinClass from '@repo/ds/utils/join-class/joinClass';
 import ModalComponent from '@repo/ds/components/modal/Modal';
@@ -17,20 +17,24 @@ export default function ModalProvider({
   context = 'primary',
   onCloseFunction,
 }: Readonly<ModalProviderProps>) {
-  const style = { width: '100%', height: '100%' };
+  const style = useMemo(() => (
+      modal.visibility
+      ? { width: '100%', height: '100%' }
+      : {}
+  ), [modal.visibility]);
+
+  const handleClose = () => {
+      onCloseFunction?.();
+      modal.close();
+  }
+
   return (
     <ModalContext.Provider value={{ modal }}>
-      <div
-        style={modal.visibility ? style : {}}
-        className={joinClass(['modal', context])}
-      >
+      <div style={style} className={joinClass(['modal', context])}>
           <ModalComponent
               key={modal.title}
               title={modal.title}
-              onClose={() => {
-                  onCloseFunction && onCloseFunction();
-                  modal.close();
-              }}
+              onClose={handleClose}
               isOpen={modal.visibility}
               closeOnEsc
               closeOnOutsideClick

@@ -5,9 +5,20 @@ import type {Meta, StoryObj} from '@storybook/react';
 
 import Button from "@repo/ds/components/button/Button";
 import ModalProvider from '@repo/ui/hooks/modal/ModalProvider';
+import Modal from "@repo/ui/hooks/modal/modal";
 import useModal from "@repo/ui/hooks/modal/useModal";
 
+
 const meta = {
+    args: {
+        modal: new Modal({
+            title: 'Hello Modal',
+            body: <h1>Hello World</h1>,
+            visibility: false,
+        }),
+        context: 'primary',
+        onCloseFunction: () =>  {}
+    },
     title: 'User-Interface/Hooks/Modal',
     component: ModalProvider,
     decorators: [
@@ -62,26 +73,24 @@ export const Default: Story = {
         const [count, setCount] = useState(0);
         const [modal] = useModal({
             title: 'Title: ' + count,
-            body: <BodyModal
-                count={count}
-                onClose={() => closeModals()}
-                onAgree={() => { addCount(); }}
-            />,
+            body: (
+                <BodyModal
+                    count={count}
+                    onClose={() => modal?.close()}
+                    onAgree={() => { setCount((prev) => prev + 1)}}
+                />
+            ),
         }, [count]);
-
-        const closeModals = () => { modal.close(); };
-        const handleOpenModal = () => { modal.open(); };
-        const addCount = () => { setCount(count + 1); };
 
         return (
             <>
-                <ModalProvider modal={modal} />
-                <Child onOpen={handleOpenModal} />
+                {modal && <ModalProvider modal={modal} />}
+                <Child onOpen={() => modal?.open()} />
                 <Button
                     type="button"
                     appearance="outline"
                     context="secondary"
-                    onClick={addCount}
+                    onClick={() => setCount((prev) => prev + 1)}
                 >
                     Add count: {count}
                 </Button>
