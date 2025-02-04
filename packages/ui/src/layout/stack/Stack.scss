@@ -1,0 +1,25 @@
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.row {
+    flex-direction: row;
+  }
+
+  &.small {
+    gap: var(--size-x-small);
+  }
+
+  &.medium {
+    gap: var(--size-small);
+  }
+
+  &.large {
+    gap: var(--size-medium);
+  }
+}
