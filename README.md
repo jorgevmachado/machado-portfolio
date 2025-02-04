@@ -186,3 +186,20 @@ npm run lint:geek
 # Veja `@repo/eslint-config/prettier-base.js` para personalizar o comportamento.
 npm format
 ```
+
+## Dicas
+Como utilizar o TurboRepo [clique aqui.](HOW-TO-USE-TURBOREPO.md)
+
+Como usar o Rollup para realizar build das bibliotecas [clique aqui.](HOW-TO-USE-ROLLUP-TO-BUILD-REACT-LIBRARY.md)
+
+Como utilizar o Storybook [clique aqui.](HOW-TO-USE-STORYBOOK-WITH-REACT.md)
+
+Como utilizar o Style Dictionary [clique aqui.](HOW-TO-USE-STYLE-DICTIONARY.md)
+
+Como utilizar o Typeorm com NestJS [clique aqui.](HOW-TO-USE-TYPEORM-WITH-NEST.md)
+
+Como utilizar o Docker para criar o banco de dados [clique aqui.](HOW-USING-DOCKER-WITH-THIS-PROJECT.md)
+
+Bibliotecas mais utilizadas no projeto [clique aqui.](MOST-USED-LIBRARY.md)
+
+Comandos mais utilizados [clique aqui.](MOST-USED-COMMAND-LIBRARY.md)

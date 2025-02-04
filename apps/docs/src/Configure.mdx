@@ -1,177 +1,33 @@
 import { Meta } from "@storybook/blocks";
 
-export const RightArrow = () => <svg
-    viewBox="0 0 14 14"
-    width="8px"
-    height="14px"
-    style={{
-        marginLeft: '4px',
-        display: 'inline-block',
-        shapeRendering: 'inherit',
-        verticalAlign: 'middle',
-        fill: 'currentColor',
-        'path fill': 'currentColor'
-    }}
->
-    <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
-</svg>
+<Meta title="Documentation" />
 
-<Meta title="Design System" />
+# Documentação de Componentes com Storybook
 
-<style>
-    {`
-  .sb-container {
-    margin-bottom: 48px;
-  }
+Este projeto utiliza o **Storybook** como ferramenta para documentar e testar os componentes do nosso sistema. Aqui, os componentes são divididos em duas principais categorias:
 
-      .sb-section {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-      }
+## 1. **Design System (DS)**:
+O **Design System** é uma coleção de componentes reutilizáveis, como botões, inputs, modais e estilos tipográficos, que seguem uma identidade visual consistente. Ele serve como base para construção de interfaces em qualquer projeto que siga as diretrizes de design estabelecidas. Esses componentes são simples, genéricos e desacoplados de lógicas específicas de negócios, podendo ser utilizados em diversos contextos.
 
-      img {
-        object-fit: cover;
-      }
+## 2. **User-Interface (UI)**:
+A camada de **User-Interface** é composta por hooks e abstrações construídas sobre o Design System e outras dependências do projeto. Esta camada oferece componentes mais especializados e preparados para lidar com funcionalidades e interações específicas de projetos reais.
 
-      .sb-section-title {
-        margin-bottom: 32px;
-      }
+## Como Utilizar
+ - Você pode instalar o Design System em outros projetos como uma dependência de base. Garanta que os estilos globais e configurações (como temas) sejam importados apropriadamente para harmonizar com o restante do projeto.
+ - Para componentes específicos da **User-Interface**, verifique as dependências do projeto atual e integre as que forem necessárias para permitir a reutilização desses componentes.
 
-      .sb-section a:not(h1 a, h2 a, h3 a) {
-        font-size: 14px;
-      }
 
-      .sb-section-item, .sb-grid-item {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
+## **Execução do Storybook**
+ - Execute o Storybook para visualizar e testar individualmente os componentes disponíveis. Os componentes documentados são exibidos como histórias interativas, permitindo que você explore suas características e personalizá-los de acordo com as necessidades do seu projeto.
+ - Exemplos: Como um botão pode ser estilizado, como modais podem ser configurados (como no exemplo `Modal`) e como hooks, como o `useModal`, podem ser utilizados para estender comportamentos.
 
-      .sb-section-item-heading {
-        padding-top: 20px !important;
-        padding-bottom: 5px !important;
-        margin: 0 !important;
-      }
-      .sb-section-item-paragraph {
-        margin: 0;
-        padding-bottom: 10px;
-      }
+## **Integração com Outros Projetos**:
+ - Reutilize os componentes do Design System copiando-os diretamente para outro projeto ou publicando-os em um repositório compartilhado como um pacote NPM.
+ - Para funcionalidades específicas (presentes na camada de **User-Interface**) que não pertencem ao Design System—como hooks (`useModal`) e provedores (`ModalProvider`)—avalie suas dependências e certifique-se de que toda a base necessária está configurada no novo projeto antes de utilizá-las.
 
-      .sb-chevron {
-        margin-left: 5px;
-      }
+### Benefícios do Storybook:
+- **Pode ser utilizado como guia visual para desenvolvedores e designers**, ajudando a alinhar ideias enquanto desenvolvem componentes reutilizáveis.
+- Facilita a **documentação interativa**, mostrando não apenas a aparência dos componentes, mas também como utilizá-los com exemplos práticos.
+- Torna os componentes reutilizáveis **portáveis e escaláveis**, promovendo consistência entre equipes e projetos diferentes.
 
-      .sb-features-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 32px 20px;
-      }
-
-      .sb-socials {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .sb-socials p {
-        margin-bottom: 10px;
-      }
-
-      .sb-explore-image {
-        max-height: 32px;
-        align-self: flex-start;
-      }
-
-      .sb-addon {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        position: relative;
-        background-color: #EEF3F8;
-        border-radius: 5px;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        background: #EEF3F8;
-        height: 180px;
-        margin-bottom: 48px;
-        overflow: hidden;
-      }
-
-      .sb-addon-text {
-        padding-left: 48px;
-        max-width: 240px;
-      }
-
-      .sb-addon-text h4 {
-        padding-top: 0px;
-      }
-
-      .sb-addon-img {
-        position: absolute;
-        left: 345px;
-        top: 0;
-        height: 100%;
-        width: 200%;
-        overflow: hidden;
-      }
-
-      .sb-addon-img img {
-        width: 650px;
-        transform: rotate(-15deg);
-        margin-left: 40px;
-        margin-top: -72px;
-        box-shadow: 0 0 1px rgba(255, 255, 255, 0);
-        backface-visibility: hidden;
-      }
-
-      @media screen and (max-width: 800px) {
-        .sb-addon-img {
-          left: 300px;
-        }
-      }
-
-      @media screen and (max-width: 600px) {
-        .sb-section {
-          flex-direction: column;
-        }
-
-        .sb-features-grid {
-          grid-template-columns: repeat(1, 1fr);
-        }
-
-        .sb-socials {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        .sb-addon {
-          height: 280px;
-          align-items: flex-start;
-          padding-top: 32px;
-          overflow: hidden;
-        }
-
-        .sb-addon-text {
-          padding-left: 24px;
-        }
-
-        .sb-addon-img {
-          right: 0;
-          left: 0;
-          top: 130px;
-          bottom: 0;
-          overflow: hidden;
-          height: auto;
-          width: 124%;
-        }
-
-        .sb-addon-img img {
-          width: 1200px;
-          transform: rotate(-12deg);
-          margin-left: 0;
-          margin-top: 48px;
-          margin-bottom: -40px;
-          margin-left: -24px;
-        }
-      }
-`}
-</style>
+O Storybook é uma poderosa ferramenta para garantir que os componentes e hooks construídos neste projeto sejam acessíveis e fáceis de utilizar em qualquer novo projeto, incentivando o reuso e reduzindo o retrabalho.

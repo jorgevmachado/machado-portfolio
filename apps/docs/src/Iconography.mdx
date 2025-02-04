@@ -5,12 +5,52 @@ import {OIcon} from "@repo/ds/utils/icons/options";
 
 <Meta title="Iconography" />
 
-# Iconography
+# **Guia de Uso de Icones**
+
+O projeto possui um conjunto abrangente de ícones disponíveis para uso em diferentes contextos, seguindo as diretrizes visuais do nosso sistema. Esses ícones do **Design System** garantem consistência visual e funcionalidade nas interfaces.
+
+## O que são os ícones?
+Ícones são elementos visuais utilizados para comunicar mensagens de forma rápida e intuitiva, ajudando a guiar os usuários em diferentes contextos. Nesta documentação, você encontrará tudo que precisa para utilizá-los de forma eficiente, com total integração ao Design System.
+
+## Como Utilizar os Ícones no Projeto:
+### 1. **Seleção do Ícone**:
+ - Todos os ícones disponíveis no projeto podem ser visualizados e testados através da documentação interativa no Storybook, por meio da sessão **Iconography**.
+ - A galeria exibe todos os ícones disponíveis (`OIcon`), com seus respectivos `names`, facilitando a seleção do ícone desejado.
+
+### 2. **Implementação**:
+ - Para utilizar um ícone, importe o componente de ícones do Design System e adicione o ícone escolhido utilizando o `name` correspondente.
+ - Opções como **tamanho** e **cor** podem ser ajustadas facilmente para atender aos requisitos do design de cada parte da interface.
+
+### 3. **Personalização**:
+ - **Tamanho**: Configure utilizando o parâmetro `size` (ex.: `2rem`, `24px`, etc.).
+ - **Cor**: Use as configurações de cores do Design System, como `primary-80` ou `secondary-100`.
+#### Exemplos:
+- Ícone pequeno (`size: 1rem`) com cor primária:
+```tsx
+    import Icon from '@repo/ds/elements/icon/Icon';
+
+    <Icon icon="check" size="1rem" color="primary-80" aria-label="Mais informações" />
+```
+- Ícone Dinâmico:
+Você também pode utilizar ícones dinamicamente baseados em estados ou valores do seu código:
+```tsx
+    import Icon from '@repo/ds/elements/icon/Icon';
+    const statusIcon = status === 'success' ? 'check' : 'error';
+
+    <Icon icon={statusIcon} size="1rem" color="primary-80" aria-label="Successo" />
+```
+### 4. **Reutilização**:
+Os ícones e componentes de ícones são projetados para serem **reutilizáveis** e podem ser implementados em qualquer parte do projeto ou em outros projetos que sigam as mesmas diretrizes de design.
+
+<br/>
+<br/>
 
 <IconGallery>
     {OIcon.map((icon) => (
         <IconItem name={icon}>
-            <IconExample icon={icon} size="2rem" color="primary-100"/>
+            <div aria-label={`Este é o ícone ${icon}`}>
+                <IconExample icon={icon} size="2rem" color="primary-100"/>
+            </div>
         </IconItem>
     ))}
 </IconGallery>
