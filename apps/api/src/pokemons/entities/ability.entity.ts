@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import type { AbilityEntity } from '@repo/business/pokemon/modules/ability/interface';
+import type { AbilityEntity } from '@repo/business/pokemon/interface';
 
 @Entity({ name: 'abilities' })
 export class Ability implements AbilityEntity {

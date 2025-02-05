@@ -1,5 +1,12 @@
-import type { TypeColor, TypeEntity } from './interface';
-import type { PokemonTypeInformationExternalResponse } from '../../../api/external/pokemon/modules';
+import type { TypeEntity } from '../interface';
+import type { PokemonTypeInformationExternalResponse } from '../../api/external/pokemon/modules';
+
+interface TypeColor {
+  id: number;
+  name: string;
+  textColor: string;
+  backgroundColor: string;
+}
 
 export class Type implements TypeEntity {
   id: string;

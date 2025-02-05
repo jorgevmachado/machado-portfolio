@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import type { TypeEntity } from '@repo/business/pokemon/modules/type/interface';
+import type { TypeEntity } from '@repo/business/pokemon/interface';
 
 @Entity({ name: 'types' })
 export class Type implements TypeEntity {

@@ -9,9 +9,12 @@ import type {
 
 import type { ExternalResponseOfEvolutionByUrl } from '../../api/external/pokemon/modules/evolution';
 
-import type { PokemonStatsAttributes } from './modules';
+import type { PokemonStatsAttributes } from './attributes';
 
-import { Ability, Move, MoveEntity, PokemonEntity, Type } from '../modules';
+import { Ability } from '../ability';
+import { Move } from '../move';
+import { Type } from '../type';
+import type { MoveEntity, PokemonEntity } from '../interface';
 
 export class PokemonExternalBusiness {
   limit: number = 1302;

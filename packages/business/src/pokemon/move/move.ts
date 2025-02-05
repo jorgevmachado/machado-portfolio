@@ -1,4 +1,4 @@
-import type { MoveEntity } from './interface';
+import type { MoveEntity } from '../interface';
 
 export class Move implements MoveEntity {
   id: string;

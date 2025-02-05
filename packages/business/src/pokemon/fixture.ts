@@ -1,22 +1,18 @@
-import { EStatus } from '../../../shared';
-
+import type { PokemonEntity } from './interface';
 import {
   POKEMON_EXTERNAL_BASIC_RESPONSE_BULBASAUR_FIXTURE,
   POKEMON_EXTERNAL_BASIC_RESPONSE_IVYSAUR_FIXTURE,
   POKEMON_EXTERNAL_BASIC_RESPONSE_VENUSAUR_FIXTURE,
   POKEMON_SPRITES_INFORMATION_EXTERNAL_RESPONSE_BULBASAUR_FIXTURE,
-} from '../../../api/external/pokemon/modules';
+} from '../api/external/pokemon/modules';
 
-import {
-  POKEMON_SPECIE_ATTRIBUTES_BULBASAUR_FIXTURE,
-  POKEMON_STATS_ATTRIBUTES_BULBASAUR_FIXTURE,
-} from '../../external';
+import { EStatus } from '../shared';
+import { POKEMON_SPECIE_ATTRIBUTES_BULBASAUR_FIXTURE } from './external/specie';
+import { POKEMON_STATS_ATTRIBUTES_BULBASAUR_FIXTURE } from './external/attributes';
+import { ABILITY_ENTITY_LIST_FIXTURE } from './ability';
+import { MOVE_ENTITY_LIST_FIXTURE } from './move';
 
-import { ABILITY_ENTITY_LIST_FIXTURE } from '../ability';
-import { MOVE_ENTITY_LIST_FIXTURE } from '../move';
-import { TYPE_ENTITY_LIST_FIXTURE } from '../type';
-
-import type { PokemonEntity } from './interface';
+import { TYPE_ENTITY_LIST_FIXTURE } from './type';
 
 export const POKEMON_ENTITY_BASIC_BULBASAUR_FIXTURE: PokemonEntity = {
   id: '981553ee-e275-4f0a-8d88-5bf778ff772d',

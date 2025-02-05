@@ -2,7 +2,7 @@ import { Nest } from '../api';
 import { Paginate } from '../paginate';
 import type { QueryParameters } from '../shared';
 
-import { PokemonEntity } from './modules';
+import type { PokemonEntity } from './interface';
 
 export class Pokemon {
   constructor(private nest: Nest) {}

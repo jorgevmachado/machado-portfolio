@@ -7,8 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { ERole, EStatus } from '@repo/business/shared/enum';
-import { EGender } from '@repo/business/api/nest/enum';
+import { ERole, EStatus , EGender} from '@repo/business/shared/enum';
 import type { User as EntityUser } from '@repo/business/auth/interface';
 
 @Entity({ name: 'users' })

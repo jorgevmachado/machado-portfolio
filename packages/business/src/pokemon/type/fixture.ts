@@ -1,9 +1,9 @@
 import {
   POKEMON_TYPE_INFORMATION_EXTERNAL_RESPONSE_GRASS_FIXTURE,
   POKEMON_TYPE_INFORMATION_EXTERNAL_RESPONSE_POISON_FIXTURE,
-} from '../../../api/external/pokemon/modules';
+} from '../../api/external/pokemon/modules';
 
-import type { TypeEntity } from './interface';
+import type { TypeEntity } from '../interface';
 
 export const TYPE_ENTITY_GRASS_FIXTURE: TypeEntity = {
   id: '6d343a19-39e5-42a2-9e45-55a181984635',

@@ -11,10 +11,12 @@ import {
 
 import { EStatus } from '@repo/business/shared/enum';
 
-import type { AbilityEntity } from '@repo/business/pokemon/modules/ability/interface';
-import type { MoveEntity } from '@repo/business/pokemon/modules/move/interface';
-import type { PokemonEntity } from '@repo/business/pokemon/modules/entity/interface';
-import type { TypeEntity } from '@repo/business/pokemon/modules/type/interface';
+import type {
+  AbilityEntity,
+  MoveEntity,
+  PokemonEntity,
+  TypeEntity,
+} from '@repo/business/pokemon/interface';
 
 import { Ability } from './ability.entity';
 import { Move } from './move.entity';

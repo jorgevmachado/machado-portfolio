@@ -1,9 +1,9 @@
 import {
   POKEMON_ABILITY_INFORMATION_EXTERNAL_RESPONSE_CHLOROPHYLL_FIXTURE,
   POKEMON_ABILITY_INFORMATION_EXTERNAL_RESPONSE_OVERGROW_FIXTURE,
-} from '../../../api/external/pokemon/modules';
+} from '../../api/external/pokemon/modules';
 
-import type { AbilityEntity } from './interface';
+import type { AbilityEntity } from '../interface';
 
 export const ABILITY_ENTITY_OVERGROW_FIXTURE: AbilityEntity = {
   id: 'fc6e1615-2061-4e44-95c2-270dabda7cf7',

@@ -1,6 +1,6 @@
-import type { PokemonAbilityInformationExternalResponse } from '../../../api/external/pokemon/modules';
+import type { PokemonAbilityInformationExternalResponse } from '../../api/external/pokemon/modules';
 
-import type { AbilityEntity } from './interface';
+import type { AbilityEntity } from '../interface';
 
 export class Ability implements AbilityEntity {
   id: string;

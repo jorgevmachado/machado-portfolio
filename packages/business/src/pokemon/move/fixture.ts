@@ -1,4 +1,4 @@
-import type { MoveEntity } from './interface';
+import type { MoveEntity } from '../interface';
 
 import {
   EXTERNAL_RESPONSE_OF_MOVE_BY_URL_CUT_FIXTURE,
@@ -7,7 +7,7 @@ import {
   POKEMON_MOVE_INFORMATION_EXTERNAL_RESPONSE_CUT_FIXTURE,
   POKEMON_MOVE_INFORMATION_EXTERNAL_RESPONSE_RAZOR_WIND_FIXTURE,
   POKEMON_MOVE_INFORMATION_EXTERNAL_RESPONSE_SWORDS_DANCE_FIXTURE,
-} from '../../../api/external/pokemon/modules';
+} from '../../api/external/pokemon/modules';
 
 export const MOVE_ENTITY_RAZOR_WIND_FIXTURE: MoveEntity = {
   id: 'fc6e1615-2061-4e44-95c2-270dabda7cf7',

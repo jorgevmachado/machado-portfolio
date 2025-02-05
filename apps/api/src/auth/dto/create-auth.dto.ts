@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-import { EGender } from '@repo/business/api/nest/enum';
+import { EGender } from '@repo/business/shared/enum';
 
 import { CPF } from '../../decorators/cpf.decorator';
 import { Match } from '../../decorators/match.decorator';
