@@ -1,14 +1,13 @@
 import { Http } from '@repo/services/http/http';
 
 import {
-  ExternalResponseOfMoveByUrl,
-} from './move';
-import {
-  PokemonExternalPaginate,
-} from './basic';
-import { ExternalResponseOfEvolutionByUrl } from './evolution';
-import { ExternalResponseOfPokemonAttributesByPokemonName } from './attributes';
-import { ExternalResponseOfPokemonSpecieByPokemonName } from './specie';
+  IPokemonExternalPaginate,
+  IExternalResponseOfEvolutionByUrl,
+  IExternalResponseOfMoveByUrl,
+  IExternalResponseOfPokemonAttributesByPokemonName,
+  IExternalResponseOfPokemonSpecieByPokemonName
+} from './interface';
+
 
 export class PokemonExternalApi extends Http {
   constructor() {
@@ -20,29 +19,29 @@ export class PokemonExternalApi extends Http {
   async getAll(
     offset: number,
     limit: number,
-  ): Promise<PokemonExternalPaginate> {
+  ): Promise<IPokemonExternalPaginate> {
     return this.get('pokemon', { params: { offset, limit } });
   }
 
   async getByName(
     name: string,
-  ): Promise<ExternalResponseOfPokemonAttributesByPokemonName> {
+  ): Promise<IExternalResponseOfPokemonAttributesByPokemonName> {
     return this.get(`pokemon/${name}`);
   }
 
   async getSpecieByPokemonName(
     name: string,
-  ): Promise<ExternalResponseOfPokemonSpecieByPokemonName> {
+  ): Promise<IExternalResponseOfPokemonSpecieByPokemonName> {
     return this.get(`pokemon-species/${name}`);
   }
 
   async getEvolutionsByOrder(
     order: number,
-  ): Promise<ExternalResponseOfEvolutionByUrl> {
+  ): Promise<IExternalResponseOfEvolutionByUrl> {
     return this.get(`evolution-chain/${order}`);
   }
 
-  async getMoveByOrder(order: number): Promise<ExternalResponseOfMoveByUrl> {
+  async getMoveByOrder(order: number): Promise<IExternalResponseOfMoveByUrl> {
     return this.get(`move/${order}`);
   }
 }
