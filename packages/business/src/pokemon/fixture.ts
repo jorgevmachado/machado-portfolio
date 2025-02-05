@@ -4,7 +4,7 @@ import {
   POKEMON_EXTERNAL_BASIC_RESPONSE_IVYSAUR_FIXTURE,
   POKEMON_EXTERNAL_BASIC_RESPONSE_VENUSAUR_FIXTURE,
   POKEMON_SPRITES_INFORMATION_EXTERNAL_RESPONSE_BULBASAUR_FIXTURE,
-} from '../api/external/pokemon/modules';
+} from '../api';
 
 import { EStatus } from '../shared';
 import { POKEMON_SPECIE_ATTRIBUTES_BULBASAUR_FIXTURE } from './external/specie';

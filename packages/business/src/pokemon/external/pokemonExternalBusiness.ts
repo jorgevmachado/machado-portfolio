@@ -5,9 +5,9 @@ import { PokemonExternalApi } from '../../api';
 import type {
   PokemonSpritesInformationExternalResponse,
   PokemonStatsInformationExternalResponse,
-} from '../../api/external/pokemon/modules';
+} from '../../api';
 
-import type { ExternalResponseOfEvolutionByUrl } from '../../api/external/pokemon/modules/evolution';
+import type { ExternalResponseOfEvolutionByUrl } from '../../api';
 
 import type { PokemonStatsAttributes } from './attributes';
 

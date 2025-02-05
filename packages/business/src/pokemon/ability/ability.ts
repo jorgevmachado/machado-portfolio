@@ -1,4 +1,4 @@
-import type { PokemonAbilityInformationExternalResponse } from '../../api/external/pokemon/modules';
+import type { PokemonAbilityInformationExternalResponse } from '../../api';
 
 import type { AbilityEntity } from '../interface';
 

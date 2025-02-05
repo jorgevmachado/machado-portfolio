@@ -1,5 +1,5 @@
 import type { TypeEntity } from '../interface';
-import type { PokemonTypeInformationExternalResponse } from '../../api/external/pokemon/modules';
+import type { PokemonTypeInformationExternalResponse } from '../../api';
 
 interface TypeColor {
   id: number;

@@ -2,11 +2,13 @@ import { Http } from '@repo/services/http/http';
 
 import {
   ExternalResponseOfMoveByUrl,
+} from './move';
+import {
   PokemonExternalPaginate,
-} from './modules';
-import { ExternalResponseOfEvolutionByUrl } from './modules/evolution';
-import { ExternalResponseOfPokemonAttributesByPokemonName } from './modules/attributes';
-import { ExternalResponseOfPokemonSpecieByPokemonName } from './modules/specie';
+} from './basic';
+import { ExternalResponseOfEvolutionByUrl } from './evolution';
+import { ExternalResponseOfPokemonAttributesByPokemonName } from './attributes';
+import { ExternalResponseOfPokemonSpecieByPokemonName } from './specie';
 
 export class PokemonExternalApi extends Http {
   constructor() {

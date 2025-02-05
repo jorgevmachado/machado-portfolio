@@ -1,1 +1,10 @@
 export { PokemonExternalApi } from './PokemonExternalApi';
+export * from './ability';
+export * from './attributes';
+export * from './basic';
+export * from './evolution';
+export * from './move';
+export * from './specie';
+export * from './sprites';
+export * from './stat';
+export * from './type';

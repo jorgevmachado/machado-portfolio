@@ -1,7 +1,7 @@
 import {
   POKEMON_ABILITY_INFORMATION_EXTERNAL_RESPONSE_CHLOROPHYLL_FIXTURE,
   POKEMON_ABILITY_INFORMATION_EXTERNAL_RESPONSE_OVERGROW_FIXTURE,
-} from '../../api/external/pokemon/modules';
+} from '../../api';
 
 import type { AbilityEntity } from '../interface';
 

@@ -5,7 +5,7 @@ import {
   POKEMON_STAT_INFORMATION_EXTERNAL_RESPONSE_SPECIAL_ATTACK_FIXTURE,
   POKEMON_STAT_INFORMATION_EXTERNAL_RESPONSE_SPECIAL_DEFENSE_FIXTURE,
   POKEMON_STAT_INFORMATION_EXTERNAL_RESPONSE_SPEED_FIXTURE,
-} from '../../../api/external/pokemon/modules';
+} from '../../../api';
 
 import type { PokemonStatsAttributes } from './interface';
 

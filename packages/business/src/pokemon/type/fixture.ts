@@ -1,7 +1,7 @@
 import {
   POKEMON_TYPE_INFORMATION_EXTERNAL_RESPONSE_GRASS_FIXTURE,
   POKEMON_TYPE_INFORMATION_EXTERNAL_RESPONSE_POISON_FIXTURE,
-} from '../../api/external/pokemon/modules';
+} from '../../api';
 
 import type { TypeEntity } from '../interface';
 

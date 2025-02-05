@@ -1,4 +1,4 @@
-import { EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE } from '../../../api/external/pokemon/modules/specie';
+import { EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE } from '../../../api';
 
 import type { PokemonSpecieAttributes } from './interface';
 
