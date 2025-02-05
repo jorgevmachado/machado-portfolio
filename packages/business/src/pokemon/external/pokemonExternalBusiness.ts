@@ -1,14 +1,15 @@
 import { EStatus } from '../../shared';
 
-import { PokemonExternalApi } from '../../api/external/pokemon';
+import { PokemonExternalApi } from '../../api';
 
-import {
+import type {
   PokemonSpritesInformationExternalResponse,
   PokemonStatsInformationExternalResponse,
 } from '../../api/external/pokemon/modules';
-import type { IResponsePokemonEvolution } from '../../api/pokemon';
 
-import { PokemonStatsAttributes } from './modules/attributes';
+import type { ExternalResponseOfEvolutionByUrl } from '../../api/external/pokemon/modules/evolution';
+
+import type { PokemonStatsAttributes } from './modules';
 
 import { Ability, Move, MoveEntity, PokemonEntity, Type } from '../modules';
 
@@ -168,7 +169,7 @@ export class PokemonExternalBusiness {
   }
 
   private nextEvolution(
-    evolves: IResponsePokemonEvolution['chain']['evolves_to'],
+    evolves: ExternalResponseOfEvolutionByUrl['chain']['evolves_to'],
   ) {
     return evolves
       .map((item) =>
