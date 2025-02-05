@@ -1,9 +1,9 @@
-import {
+import type {
   ISignInParams,
   ISignUpParams,
   IUpdateUserParams,
-  type IUser,
-} from '../api';
+  IUser,
+} from '../api/nest/auth';
 
 export type User = IUser;
 

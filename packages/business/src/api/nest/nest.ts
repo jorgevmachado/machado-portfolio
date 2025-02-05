@@ -1,50 +1,25 @@
-import { Http } from '@repo/services/http/http';
+import type { INestConfig } from './interface';
+import { Auth } from './auth';
+import { Pokemon } from './pokemon';
 
-import { QueryParameters } from '../../shared';
+export class Nest {
+  private readonly authModule: Auth;
+  private readonly pokemonModule: Pokemon;
 
-import { Paginate } from '../../paginate';
-import { PokemonEntity } from '../../pokemon/modules';
-
-import type {
-  INestConfig,
-  ISignInParams,
-  ISignUpParams,
-  IUser,
-} from './interface';
-
-export class Nest extends Http {
   constructor({ baseUrl = 'http://localhost:3000', token = '' }: INestConfig) {
-    super(baseUrl, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'content-type': 'application/json; charset=UTF-8',
-      },
-    });
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'application/json; charset=UTF-8',
+    };
+    this.authModule = new Auth(baseUrl, headers);
+    this.pokemonModule = new Pokemon(baseUrl, headers);
   }
 
-  public async signUp(params: ISignUpParams): Promise<{ message: string }> {
-    return this.post('auth/signUp', { body: params });
+  get auth(): Auth {
+    return this.authModule;
   }
 
-  public async signIn(params: ISignInParams): Promise<{ token: string }> {
-    return this.post('auth/signIn', { body: params });
-  }
-
-  public async getUser(id: string): Promise<IUser> {
-    return this.get(`auth/${id}`);
-  }
-
-  public async getMe(): Promise<IUser> {
-    return this.get('auth/me');
-  }
-
-  public async getAllPokemons(
-    parameters: QueryParameters,
-  ): Promise<Paginate<PokemonEntity> | Array<PokemonEntity>> {
-    return this.get('pokemon', { params: parameters });
-  }
-
-  public async getPokemon(param: string): Promise<PokemonEntity> {
-    return this.get(`pokemon/${param}`);
+  get pokemon(): Pokemon {
+    return this.pokemonModule;
   }
 }

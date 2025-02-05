@@ -10,10 +10,10 @@ export class Pokemon {
   public async getAll(
     parameters: QueryParameters,
   ): Promise<Paginate<PokemonEntity> | Array<PokemonEntity>> {
-    return this.nest.getAllPokemons(parameters);
+    return this.nest.pokemon.getAll(parameters);
   }
 
   public async getOne(param: string): Promise<PokemonEntity> {
-    return this.nest.getPokemon(param);
+    return this.nest.pokemon.getOne(param);
   }
 }

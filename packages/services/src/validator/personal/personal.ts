@@ -1,4 +1,4 @@
-import { EGender } from '@repo/business/api/nest/enum';
+import { EGender } from '@repo/business/shared/enum';
 
 import { isUnderMinimumAge } from '../../date';
 
