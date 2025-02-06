@@ -1,17 +1,17 @@
 import { Http } from '@repo/services/http/http';
 
 import {
-  IPokemonExternalPaginate,
   IExternalResponseOfEvolutionByUrl,
   IExternalResponseOfMoveByUrl,
   IExternalResponseOfPokemonAttributesByPokemonName,
-  IExternalResponseOfPokemonSpecieByPokemonName
+  IExternalResponseOfPokemonSpecieByPokemonName,
+  IPokemonExternalConfig,
+  IPokemonExternalPaginate,
 } from './interface';
 
-
 export class PokemonExternalApi extends Http {
-  constructor() {
-    super('https://pokeapi.co/api/v2', {
+  constructor({ baseUrl = 'https://pokeapi.co/api/v2' }: IPokemonExternalConfig = {}) {
+    super( baseUrl, {
       headers: { 'Content-Type': 'application/json' },
     });
   }

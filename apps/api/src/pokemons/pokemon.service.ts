@@ -7,6 +7,7 @@ import { isUUID } from '@repo/services/string/string';
 import { EStatus } from '@repo/business/shared/enum';
 import type { PaginateParameters } from '@repo/business/paginate/interface';
 import { PokemonExternalBusiness } from '@repo/business/pokemon/external/pokemonExternalBusiness';
+import { ExternalPokemonService } from '@repo/business/pokemonNew/externalPokemonService';
 import type { QueryParameters } from '@repo/business/shared/interface';
 
 import { Pokemon } from './entities/pokemon.entity';
@@ -23,6 +24,7 @@ export class PokemonService extends Service<Pokemon> {
     @InjectRepository(Pokemon)
     protected repository: Repository<Pokemon>,
     protected businessExternal: PokemonExternalBusiness,
+    protected business: ExternalPokemonService,
     protected typeService: TypeService,
     protected moveService: MoveService,
     protected abilityService: AbilityService,
@@ -44,11 +46,13 @@ export class PokemonService extends Service<Pokemon> {
   private async initializeDatabase(): Promise<void> {
     const total = await this.repository.count();
 
-    if (total !== this.businessExternal.limit) {
-      const pokemonList = await this.businessExternal
-        .getAll()
+    if (total !== this.business.limit) {
+      const pokemonList = await this.business
+        .BuildList({})
         .then((response) => response)
-        .catch((error) => this.error(error));
+        .catch((error) => {
+          throw this.error(error);
+        });
 
       if (total === 0) {
         return this.createPokemonList(pokemonList);

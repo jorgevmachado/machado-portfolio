@@ -14,9 +14,6 @@ export interface IPokemon extends IBase {
   shape_url?: string;
   abilities?: Array<IAbility>;
   evolutions?: Array<IPokemon>;
-  created_at: Date;
-  deleted_at: Date;
-  updated_at: Date;
   shape_name?: string;
   is_mythical?: boolean;
   gender_rate?: number;

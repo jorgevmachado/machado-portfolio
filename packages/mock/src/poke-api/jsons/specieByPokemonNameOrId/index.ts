@@ -1,0 +1,9 @@
+import SPECIE_BULBASAUR_FIXTURE from './bulbasaur.json';
+import SPECIE_IVYSAUR_FIXTURE from './ivysaur.json';
+import SPECIE_VENUSAUR_FIXTURE from './venusaur.json';
+
+export const SPECIE_BY_POKEMON_NAME_OR_ID_LIST_FIXTURE = [
+  SPECIE_BULBASAUR_FIXTURE,
+  SPECIE_IVYSAUR_FIXTURE,
+  SPECIE_VENUSAUR_FIXTURE,
+];

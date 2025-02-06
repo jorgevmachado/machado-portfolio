@@ -1,5 +1,3 @@
-import { EStatus } from '../../shared';
-
 import { PokemonExternalApi } from '../../api';
 
 import type {
@@ -22,24 +20,6 @@ export class PokemonExternalBusiness {
 
   constructor() {
     this.pokemonExternalApi = new PokemonExternalApi();
-  }
-
-  async getAll(
-    offset: number = 0,
-    limit: number = this.limit,
-  ): Promise<Array<PokemonEntity>> {
-    return this.pokemonExternalApi.getAll(offset, limit).then((response) =>
-      response.results.map((pokemon) => ({
-        id: undefined,
-        url: pokemon.url,
-        name: pokemon.name,
-        order: this.generateOrder(pokemon.url, 'pokemon'),
-        status: EStatus.INCOMPLETE,
-        created_at: undefined,
-        deleted_at: undefined,
-        updated_at: undefined,
-      })),
-    );
   }
 
   async getOne(entity: PokemonEntity): Promise<PokemonEntity> {

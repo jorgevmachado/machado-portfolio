@@ -14,12 +14,11 @@ export abstract class Base {
       throw new ConflictException(message ?? 'Field type error');
     }
 
-    if (!error || error?.status === 500) {
+    if (!error || error?.status === 500 || error?.statusCode === 500) {
       throw new InternalServerErrorException(
-        error?.message || 'Internal Server Error',
+        error?.message || 'Internal Server Error 2025',
       );
     }
-
     return error;
   }
 }

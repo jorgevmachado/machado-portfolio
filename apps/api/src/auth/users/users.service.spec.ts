@@ -3,10 +3,9 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import {
-  ENTITY_USER_COMPLETE_FIXTURE,
-  ENTITY_USER_PASSWORD,
-} from '@repo/business/auth/fixture/user';
+import { ENTITY_USER_COMPLETE_FIXTURE } from '@repo/business/auth/fixture/user';
+
+import { USER_PASSWORD } from '@repo/mock/auth/fixture';
 
 import { User } from './user.entity';
 
@@ -86,7 +85,7 @@ describe('UsersService', () => {
       expect(
         await service.checkCredentials({
           email: ENTITY_USER_COMPLETE_FIXTURE.email,
-          password: ENTITY_USER_PASSWORD,
+          password: USER_PASSWORD,
         }),
       ).toEqual(ENTITY_USER_COMPLETE_FIXTURE);
     });

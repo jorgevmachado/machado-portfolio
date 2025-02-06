@@ -1,3 +1,7 @@
+export interface IPokemonExternalConfig {
+    baseUrl?: string;
+}
+
 export interface IPokemonExternalPaginate {
     next: string;
     count: number;

@@ -1,6 +1,7 @@
 import {
   IExternalResponseOfEvolutionByUrl,
   IExternalResponseOfMoveByUrl,
+  IExternalResponseOfPokemonAttributesByPokemonName,
   IPokemonAbilitiesInformationExternalResponse,
   IPokemonAbilityInformationExternalResponse,
   IPokemonMoveInformationExternalResponse,
@@ -12,6 +13,9 @@ import {
 
 export type ExternalResponseOfEvolutionByUrl =
   IExternalResponseOfEvolutionByUrl;
+
+export type ExternalResponseOfPokemonAttributesByPokemonName =
+  IExternalResponseOfPokemonAttributesByPokemonName;
 
 export type PokemonSpritesInformationExternalResponse =
   IPokemonSpritesInformationExternalResponse;

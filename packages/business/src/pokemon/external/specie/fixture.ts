@@ -1,38 +1,18 @@
-import { EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE } from '../../../api';
-
 import type { PokemonSpecieAttributes } from './interface';
 
 export const POKEMON_SPECIE_ATTRIBUTES_BULBASAUR_FIXTURE: PokemonSpecieAttributes =
   {
-    habitat:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE
-        .habitat.name,
-    is_baby:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE.is_baby,
-    shape_url:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE
-        .shape.url,
-    shape_name:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE
-        .shape.name,
-    is_mythical:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE.is_mythical,
-    gender_rate:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE.gender_rate,
-    is_legendary:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE.is_legendary,
-    capture_rate:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE.capture_rate,
-    hatch_counter:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE.hatch_counter,
-    base_happiness:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE.base_happiness,
-    evolution_chain_url:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE
-        .evolution_chain.url,
-    evolves_from_species:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE
-        .evolves_from_species?.name,
-    has_gender_differences:
-      EXTERNAL_RESPONSE_OF_POKEMON_SPECIE_BY_POKEMON_NAME_BULBASAUR_FIXTURE.has_gender_differences,
+    habitat: 'grassland',
+    is_baby: false,
+    shape_url: 'https://pokeapi.co/api/v2/pokemon-shape/8/',
+    shape_name: 'quadruped',
+    is_mythical: false,
+    gender_rate: 1,
+    is_legendary: false,
+    capture_rate: 45,
+    hatch_counter: 20,
+    base_happiness: 50,
+    evolution_chain_url: 'https://pokeapi.co/api/v2/evolution-chain/1/',
+    evolves_from_species: undefined,
+    has_gender_differences: false,
   };

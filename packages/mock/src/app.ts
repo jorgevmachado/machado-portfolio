@@ -1,6 +1,7 @@
 import jsonServer from 'json-server';
-
-import * as controllers from './controllers';
+import authRouter from './auth/auth';
+import pokeApiRouter from './poke-api/poke-api';
+import pokemonRouter from './pokemon/pokemon';
 
 const PORT = 9000;
 const server = jsonServer.create();
@@ -25,21 +26,9 @@ server.use((req, res, next) => {
 });
 server.use(jsonServer.bodyParser);
 
-server.post('/auth/signUp', (req, res) => {
-  res.json(controllers.signUp());
-});
-
-server.post('/auth/signIn', (req, res) => {
-  res.json(controllers.signIn());
-});
-
-server.get('/me', (req, res) => {
-  res.json(controllers.getMe());
-});
-
-server.get('/auth/:id', (req, res) => {
-  res.json(controllers.getUser());
-});
+server.use(authRouter);
+server.use(pokeApiRouter);
+server.use(pokemonRouter);
 
 server.listen(PORT, () => {
   console.log('---------------------------------');

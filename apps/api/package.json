@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 nest start --watch",
+    "dev": "nest start --watch",
+    "dev:tls-reject": "NODE_TLS_REJECT_UNAUTHORIZED=0 nest start --watch",
     "build": "nest build",
     "start": "nest start",
     "start:debug": "nest start --debug --watch",
@@ -23,6 +24,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@repo/business": "*",
     "@repo/services": "*",
+    "@repo/mock": "*",
     "bcryptjs": "^2.4.3",
     "passport-jwt": "^4.0.1",
     "pg": "^8.13.1",
