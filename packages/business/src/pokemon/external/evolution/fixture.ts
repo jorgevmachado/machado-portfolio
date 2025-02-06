@@ -1,4 +1,4 @@
-import type { ExternalResponseOfEvolutionByUrl } from './interface';
+import type { ExternalResponseOfEvolutionByUrl } from '../interface';
 
 const EXTERNAL_RESPONSE_OF_EVOLUTION_EVOLVES_TO_VENUSAUR: ExternalResponseOfEvolutionByUrl['chain']['evolves_to'] =
   [
