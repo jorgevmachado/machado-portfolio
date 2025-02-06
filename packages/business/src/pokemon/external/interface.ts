@@ -1,7 +1,10 @@
 import {
   IExternalResponseOfEvolutionByUrl,
+  IExternalResponseOfMoveByUrl,
   IPokemonAbilitiesInformationExternalResponse,
   IPokemonAbilityInformationExternalResponse,
+  IPokemonMoveInformationExternalResponse,
+  IPokemonMovesInformationExternalResponse,
   IPokemonSpritesInformationExternalResponse,
   IPokemonStatsInformationExternalResponse,
 } from '../../api';
@@ -20,3 +23,11 @@ export type PokemonAbilitiesInformationExternalResponse =
 
 export type PokemonAbilityInformationExternalResponse =
   IPokemonAbilityInformationExternalResponse;
+
+export type ExternalResponseOfMoveByUrl = IExternalResponseOfMoveByUrl;
+
+export type PokemonMoveInformationExternalResponse =
+  IPokemonMoveInformationExternalResponse;
+
+export type PokemonMovesInformationExternalResponse =
+  IPokemonMovesInformationExternalResponse;

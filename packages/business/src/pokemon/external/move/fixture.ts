@@ -2,7 +2,7 @@ import type {
   ExternalResponseOfMoveByUrl,
   PokemonMoveInformationExternalResponse,
   PokemonMovesInformationExternalResponse,
-} from './interface';
+} from '../interface';
 
 export const POKEMON_MOVE_INFORMATION_EXTERNAL_RESPONSE_RAZOR_WIND_FIXTURE: PokemonMoveInformationExternalResponse =
   {
