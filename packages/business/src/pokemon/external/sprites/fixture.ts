@@ -1,4 +1,4 @@
-import type { PokemonSpritesInformationExternalResponse } from './interface';
+import type { PokemonSpritesInformationExternalResponse } from '../interface';
 
 export const POKEMON_SPRITES_INFORMATION_EXTERNAL_RESPONSE_BULBASAUR_FIXTURE: PokemonSpritesInformationExternalResponse =
   {
