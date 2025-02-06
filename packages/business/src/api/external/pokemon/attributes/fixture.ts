@@ -1,5 +1,5 @@
 import type { ExternalResponseOfPokemonAttributesByPokemonName } from './interface';
-import { POKEMON_ABILITY_INFORMATION_EXTERNAL_RESPONSE_LIST_FIXTURE } from '../ability';
+import { POKEMON_ABILITY_INFORMATION_EXTERNAL_RESPONSE_LIST_FIXTURE } from '../../../../pokemon/external';
 import { POKEMON_MOVE_INFORMATION_EXTERNAL_RESPONSE_LIST_FIXTURE } from '../move';
 import { POKEMON_SPRITES_INFORMATION_EXTERNAL_RESPONSE_BULBASAUR_FIXTURE } from '../sprites';
 import { POKEMON_STAT_INFORMATION_EXTERNAL_RESPONSE_LIST_FIXTURE } from '../stat';

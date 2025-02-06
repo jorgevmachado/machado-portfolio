@@ -3,11 +3,10 @@ import { EStatus } from '../../shared';
 import { PokemonExternalApi } from '../../api';
 
 import type {
+  ExternalResponseOfEvolutionByUrl,
   PokemonSpritesInformationExternalResponse,
   PokemonStatsInformationExternalResponse,
-} from '../../api';
-
-import type { ExternalResponseOfEvolutionByUrl } from '../../api';
+} from './interface';
 
 import type { PokemonStatsAttributes } from './attributes';
 

@@ -1,7 +1,7 @@
 import type {
   PokemonAbilitiesInformationExternalResponse,
   PokemonAbilityInformationExternalResponse,
-} from './interface';
+} from '../interface';
 
 export const POKEMON_ABILITY_INFORMATION_EXTERNAL_RESPONSE_OVERGROW_FIXTURE: PokemonAbilityInformationExternalResponse =
   {

@@ -1,4 +1,4 @@
-import { PokemonAbilitiesInformationExternalResponse } from '../ability';
+import { IPokemonAbilitiesInformationExternalResponse } from '../interface';
 import { PokemonMovesInformationExternalResponse } from '../move';
 import { PokemonSpritesInformationExternalResponse } from '../sprites';
 import { PokemonStatsInformationExternalResponse } from '../stat';
@@ -10,5 +10,5 @@ export interface ExternalResponseOfPokemonAttributesByPokemonName {
   moves: PokemonMovesInformationExternalResponse;
   stats: PokemonStatsInformationExternalResponse;
   sprites: PokemonSpritesInformationExternalResponse;
-  abilities: PokemonAbilitiesInformationExternalResponse;
+  abilities: IPokemonAbilitiesInformationExternalResponse;
 }
