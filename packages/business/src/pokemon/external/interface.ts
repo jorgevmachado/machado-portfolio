@@ -6,6 +6,7 @@ import {
   IPokemonMoveInformationExternalResponse,
   IPokemonMovesInformationExternalResponse,
   IPokemonSpritesInformationExternalResponse,
+  IPokemonStatInformationExternalResponse,
   IPokemonStatsInformationExternalResponse,
 } from '../../api';
 
@@ -31,3 +32,6 @@ export type PokemonMoveInformationExternalResponse =
 
 export type PokemonMovesInformationExternalResponse =
   IPokemonMovesInformationExternalResponse;
+
+export type PokemonStatInformationExternalResponse =
+  IPokemonStatInformationExternalResponse;

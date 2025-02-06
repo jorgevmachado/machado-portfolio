@@ -1,7 +1,7 @@
 import type {
   PokemonStatInformationExternalResponse,
   PokemonStatsInformationExternalResponse,
-} from './interface';
+} from '../interface';
 
 export const POKEMON_STAT_INFORMATION_EXTERNAL_RESPONSE_HP_FIXTURE: PokemonStatInformationExternalResponse =
   {
