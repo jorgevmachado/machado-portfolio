@@ -4,7 +4,7 @@ import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Auth from '@repo/ui/layout/auth/Auth';
-import type { AuthForm } from '@repo/ui/components/Form/interface';
+import type { AuthForm } from '@repo/ui/components/form/interface';
 
 import { signUp } from '../../../actions';
 

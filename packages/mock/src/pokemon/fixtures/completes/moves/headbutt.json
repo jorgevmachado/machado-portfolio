@@ -1,0 +1,19 @@
+{
+  "id": "ee5b08cc-a701-4265-b5f8-dcc329c94e44",
+  "pp": 15,
+  "url": "https://pokeapi.co/api/v2/move/29/",
+  "type": "normal",
+  "name": "headbutt",
+  "order": 29,
+  "power": 70,
+  "target": "selected-pokemon",
+  "effect": "Inflicts regular damage.  Has a 30% chance to make the target flinch.",
+  "priority": 0,
+  "accuracy": 100,
+  "created_at": "2025-02-07T19:00:23.286Z",
+  "updated_at": "2025-02-07T19:00:23.286Z",
+  "deleted_at": null,
+  "short_effect": "Has a 30% chance to make the target flinch.",
+  "damage_class": "physical",
+  "effect_chance": 30
+}

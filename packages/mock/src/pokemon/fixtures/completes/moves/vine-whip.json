@@ -1,0 +1,19 @@
+{
+  "id": "0cc41299-3f85-4417-a877-e7a351e06952",
+  "pp": 25,
+  "url": "https://pokeapi.co/api/v2/move/22/",
+  "type": "grass",
+  "name": "vine-whip",
+  "order": 22,
+  "power": 45,
+  "target": "selected-pokemon",
+  "effect": "Inflicts regular damage.",
+  "priority": 0,
+  "accuracy": 100,
+  "created_at": "2025-02-07T19:00:23.239Z",
+  "updated_at": "2025-02-07T19:00:23.239Z",
+  "deleted_at": null,
+  "short_effect": "Inflicts regular damage with no additional effect.",
+  "damage_class": "physical",
+  "effect_chance": null
+}

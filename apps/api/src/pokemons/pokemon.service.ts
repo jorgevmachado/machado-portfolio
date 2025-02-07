@@ -6,7 +6,7 @@ import { isUUID } from '@repo/services/string/string';
 
 import { EStatus } from '@repo/business/shared/enum';
 import type { PaginateParameters } from '@repo/business/paginate/interface';
-import { PokemonExternalBusiness } from '@repo/business/pokemon/external/pokemonExternalBusiness';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
 import type { QueryParameters } from '@repo/business/shared/interface';
 
 import { Pokemon } from './entities/pokemon.entity';
@@ -22,7 +22,7 @@ export class PokemonService extends Service<Pokemon> {
   constructor(
     @InjectRepository(Pokemon)
     protected repository: Repository<Pokemon>,
-    protected businessExternal: PokemonExternalBusiness,
+    protected business: ExternalPokemonService,
     protected typeService: TypeService,
     protected moveService: MoveService,
     protected abilityService: AbilityService,
@@ -44,11 +44,13 @@ export class PokemonService extends Service<Pokemon> {
   private async initializeDatabase(): Promise<void> {
     const total = await this.repository.count();
 
-    if (total !== this.businessExternal.limit) {
-      const pokemonList = await this.businessExternal
-        .getAll()
+    if (total !== this.business.limit) {
+      const pokemonList = await this.business
+        .buildList({})
         .then((response) => response)
-        .catch((error) => this.error(error));
+        .catch((error) => {
+          throw this.error(error);
+        });
 
       if (total === 0) {
         return this.createPokemonList(pokemonList);
@@ -92,7 +94,7 @@ export class PokemonService extends Service<Pokemon> {
   }
 
   private async completingPokemonData(pokemon: Pokemon) {
-    const pokemonEntity = await this.businessExternal.getOne(pokemon);
+    const pokemonEntity = await this.business.completeOne(pokemon);
     pokemonEntity.moves = await this.moveService.findList(pokemonEntity.moves);
     pokemonEntity.types = await this.typeService.findList(pokemonEntity.types);
     pokemonEntity.abilities = await this.abilityService.findList(
@@ -109,8 +111,7 @@ export class PokemonService extends Service<Pokemon> {
   }
 
   private async getEvolutions(url: string): Promise<Array<Pokemon>> {
-    const response = await this.businessExternal.getEvolutions(url);
-
+    const response = await this.business.getEvolutions(url);
     return await Promise.all(
       response.map(async (name) => await this.findOne(name, false)),
     );

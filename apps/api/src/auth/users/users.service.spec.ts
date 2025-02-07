@@ -4,9 +4,10 @@ import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 import {
-  ENTITY_USER_COMPLETE_FIXTURE,
-  ENTITY_USER_PASSWORD,
-} from '@repo/business/auth/fixture/user';
+  ENTITY_USER_FIXTURE,
+  USER_FIXTURE,
+  USER_PASSWORD,
+} from '@repo/mock/auth/fixture';
 
 import { User } from './user.entity';
 
@@ -56,21 +57,19 @@ describe('UsersService', () => {
         getOne: jest.fn().mockReturnValueOnce(null),
       } as any);
 
-      jest
-        .spyOn(repository, 'save')
-        .mockResolvedValueOnce(ENTITY_USER_COMPLETE_FIXTURE);
+      jest.spyOn(repository, 'save').mockResolvedValueOnce(USER_FIXTURE);
 
       expect(
         await service.create({
-          cpf: ENTITY_USER_COMPLETE_FIXTURE.cpf,
-          name: ENTITY_USER_COMPLETE_FIXTURE.name,
-          email: ENTITY_USER_COMPLETE_FIXTURE.email,
-          whatsapp: ENTITY_USER_COMPLETE_FIXTURE.whatsapp,
-          password: ENTITY_USER_COMPLETE_FIXTURE.password,
-          date_of_birth: ENTITY_USER_COMPLETE_FIXTURE.date_of_birth,
-          password_confirmation: ENTITY_USER_COMPLETE_FIXTURE.password,
+          cpf: ENTITY_USER_FIXTURE.cpf,
+          name: ENTITY_USER_FIXTURE.name,
+          email: ENTITY_USER_FIXTURE.email,
+          whatsapp: ENTITY_USER_FIXTURE.whatsapp,
+          password: USER_PASSWORD,
+          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
+          password_confirmation: USER_PASSWORD,
         }),
-      ).toEqual(ENTITY_USER_COMPLETE_FIXTURE);
+      ).toEqual(USER_FIXTURE);
     });
   });
 
@@ -80,15 +79,15 @@ describe('UsersService', () => {
         andWhere: jest.fn(),
         withDeleted: jest.fn(),
         leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_COMPLETE_FIXTURE),
+        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
       } as any);
 
       expect(
         await service.checkCredentials({
-          email: ENTITY_USER_COMPLETE_FIXTURE.email,
-          password: ENTITY_USER_PASSWORD,
+          email: USER_FIXTURE.email,
+          password: USER_PASSWORD,
         }),
-      ).toEqual(ENTITY_USER_COMPLETE_FIXTURE);
+      ).toEqual(ENTITY_USER_FIXTURE);
     });
   });
 
@@ -98,11 +97,11 @@ describe('UsersService', () => {
         andWhere: jest.fn(),
         withDeleted: jest.fn(),
         leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_COMPLETE_FIXTURE),
+        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
       } as any);
 
-      expect(await service.findOne(ENTITY_USER_COMPLETE_FIXTURE.id)).toEqual(
-        ENTITY_USER_COMPLETE_FIXTURE,
+      expect(await service.findOne(ENTITY_USER_FIXTURE.id)).toEqual(
+        ENTITY_USER_FIXTURE,
       );
     });
   });

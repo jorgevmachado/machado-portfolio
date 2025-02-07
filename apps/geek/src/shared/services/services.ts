@@ -1,17 +1,23 @@
 import process from 'process';
 
-import { Nest } from '@repo/business/api/nest/Nest';
+import { Nest } from '@repo/business/api/nest/nest';
 
 import { Auth } from '@repo/business/auth/auth';
+
+import { PokemonService } from '@repo/business/pokemon/pokemonService';
 
 import { getAccessToken } from '../cookies';
 
 const baseUrl = process.env.NEXT_PUBLIC_API ?? 'http://localhost:3001';
+const token = getAccessToken() || '';
 console.log('# => services => baseUrl => ', baseUrl);
+console.log('# => services => token => ', token);
 
 const nest = new Nest({
-  token: getAccessToken() || '',
+  token,
   baseUrl,
 });
 
 export const authService = new Auth(nest);
+
+export const pokemonService = new PokemonService(nest);

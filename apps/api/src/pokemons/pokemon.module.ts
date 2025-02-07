@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PokemonExternalBusiness } from '@repo/business/pokemon/external/pokemonExternalBusiness';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
 
 import { AbilityModule } from './ability/ability.module';
 import { MoveModule } from './move/move.module';
@@ -23,6 +23,6 @@ import { PokemonService } from './pokemon.service';
     AbilityModule,
   ],
   controllers: [PokemonController],
-  providers: [PokemonService, PokemonExternalBusiness],
+  providers: [PokemonService, ExternalPokemonService],
 })
 export class PokemonModule {}

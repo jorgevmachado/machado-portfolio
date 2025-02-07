@@ -1,2 +1,1 @@
-export { Move } from './move';
-export * from './fixture';
+export { default } from './move';

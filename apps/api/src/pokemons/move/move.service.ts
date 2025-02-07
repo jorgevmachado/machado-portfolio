@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
-import { PokemonExternalBusiness } from '@repo/business/pokemon/external/pokemonExternalBusiness';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
 
 import { Service } from '../../shared';
 
@@ -13,7 +13,7 @@ export class MoveService extends Service<Move> {
   constructor(
     @InjectRepository(Move)
     protected repository: Repository<Move>,
-    protected pokemonExternalBusiness: PokemonExternalBusiness,
+    protected business: ExternalPokemonService,
   ) {
     super('moves', [], repository);
   }
@@ -34,8 +34,8 @@ export class MoveService extends Service<Move> {
 
   async completingData(entity: Move, response: Move) {
     if (!entity) {
-      const move = await this.pokemonExternalBusiness
-        .getMove(response)
+      const move = await this.business
+        .buildMove(response)
         .then((response) => response)
         .catch((error) => this.error(error));
 

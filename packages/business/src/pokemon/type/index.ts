@@ -1,2 +1,1 @@
-export { Type } from './type';
-export * from './fixture';
+export { default } from './type';

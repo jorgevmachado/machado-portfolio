@@ -6,7 +6,7 @@ export interface AuthFields {
   email?: string;
   token?: string;
   gender?: string;
-  whatsup?: string;
+  whatsapp?: string;
   password?: string;
   dateOfBirth?: string;
   passwordConfirmation?: string;
@@ -18,7 +18,7 @@ export interface AuthErrors {
   email?: ValidatorMessage;
   token?: ValidatorMessage;
   gender?: ValidatorMessage;
-  whatsup?: ValidatorMessage;
+  whatsapp?: ValidatorMessage;
   password?: ValidatorMessage;
   dateOfBirth?: ValidatorMessage;
   passwordConfirmation?: ValidatorMessage;

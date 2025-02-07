@@ -1,0 +1,19 @@
+{
+  "id": "b9fbff07-9eea-4d28-80e6-2956a9bbe18c",
+  "pp": 35,
+  "url": "https://pokeapi.co/api/v2/move/33/",
+  "type": "normal",
+  "name": "tackle",
+  "order": 33,
+  "power": 40,
+  "target": "selected-pokemon",
+  "effect": "Inflicts regular damage.",
+  "priority": 0,
+  "accuracy": 100,
+  "created_at": "2025-02-07T19:00:23.288Z",
+  "updated_at": "2025-02-07T19:00:23.288Z",
+  "deleted_at": null,
+  "short_effect": "Inflicts regular damage with no additional effect.",
+  "damage_class": "physical",
+  "effect_chance": null
+}

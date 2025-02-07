@@ -1,0 +1,11 @@
+{
+  "id": "972c5b9b-f95e-40dd-974d-d63adb4be35e",
+  "url": "https://pokeapi.co/api/v2/ability/65/",
+  "name": "overgrow",
+  "slot": 1,
+  "order": 65,
+  "is_hidden": false,
+  "created_at": "2025-02-07T19:00:23.496Z",
+  "updated_at": "2025-02-07T19:00:23.496Z",
+  "deleted_at": null
+}

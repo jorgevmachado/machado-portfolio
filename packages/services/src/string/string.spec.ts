@@ -1,5 +1,8 @@
+import { describe, expect, it } from '@jest/globals';
+
 import {
   capitalize,
+  extractLastItemFromUrl,
   formatUrl,
   isUUID,
   separateCamelCase,
@@ -7,8 +10,6 @@ import {
   toSnakeCase,
   uuid,
 } from './string';
-
-import { describe, expect, it } from '@jest/globals';
 
 describe('String functions', () => {
   describe('formatUrl', () => {
@@ -59,6 +60,19 @@ describe('String functions', () => {
   describe('separateCamelCase', () => {
     it('Must separate camel case string', () => {
       expect(separateCamelCase('helloWorld')).toEqual('hello World');
+    });
+  });
+
+  describe('extractLastItemFromUrl', () => {
+    it('Must separate item from url', () => {
+      expect(
+        extractLastItemFromUrl(
+          'http://localhost:9000/external/api/v2/ability/65/',
+        ),
+      ).toEqual('65');
+    });
+    it('Must return empty string if url is undefined', () => {
+      expect(extractLastItemFromUrl()).toEqual('');
     });
   });
 });
