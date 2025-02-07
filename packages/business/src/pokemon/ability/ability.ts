@@ -1,5 +1,5 @@
 import { Base } from '../../shared';
-import { IAbility } from '../../api/nest/pokemon';
+import type { IAbility } from '../../api/nest/pokemon';
 
 interface AbilityConstructorParams extends Pick<IAbility, 'url' | 'name'> {
     id?: IAbility['id'];
