@@ -18,8 +18,8 @@ export const USER_FIXTURE: User = {
 
 export const ENTITY_USER_FIXTURE: User = {
   ...USER_FIXTURE,
-    salt: '$2b$10$Tq6pTLw4GKQ6yddESAdIWO',
-    password: '$2b$10$Tq6pTLw4GKQ6yddESAdIWOigeP3FRbx.H9OjNCK55c85b//PcKJ5.',
+    salt: '$2a$10$5pv7wQmv3rnXyB9YMqgocO',
+    password: '$2a$10$5pv7wQmv3rnXyB9YMqgocOAicud4eH9FQcN8beudNS9WMb.sSE5WS',
     recover_token: undefined,
     confirmation_token:
         '9bd0aceff9012467fce99a8c2efdfacd3a27255d87f0b516adfd5e889ad3668e',

@@ -1,0 +1,19 @@
+{
+  "id": "890bcec4-e91c-46f0-bdc4-9f28a93ef7e9",
+  "pp": 20,
+  "url": "https://pokeapi.co/api/v2/move/14/",
+  "type": "normal",
+  "name": "swords-dance",
+  "order": 14,
+  "power": null,
+  "target": "user",
+  "effect": "Raises the user's Attack by two stages.",
+  "priority": 0,
+  "accuracy": null,
+  "created_at": "2025-02-07T19:00:23.337Z",
+  "updated_at": "2025-02-07T19:00:23.337Z",
+  "deleted_at": null,
+  "short_effect": "Raises the user's Attack by two stages.",
+  "damage_class": "status",
+  "effect_chance": null
+}

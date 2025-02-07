@@ -3,10 +3,15 @@ import { Repository } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { PokemonExternalBusiness } from '@repo/business/pokemon/external/pokemonExternalBusiness';
-import { ExternalPokemonService } from '@repo/business/pokemonNew/externalPokemonService';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
 
-import { LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE } from '@repo/mock/pokemon/fixtures';
+import {
+  BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+  IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+  LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+  VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+} from '@repo/mock/pokemon/fixtures/incompletes/index';
+import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/mock/pokemon/fixtures/completes/index';
 
 import { PokemonService } from './pokemon.service';
 import { Pokemon } from './entities/pokemon.entity';
@@ -20,7 +25,6 @@ describe('PokemonService', () => {
   let typeService: TypeService;
   let moveService: MoveService;
   let abilityService: AbilityService;
-  let businessExternal: PokemonExternalBusiness;
   let business: ExternalPokemonService;
 
   beforeEach(async () => {
@@ -29,18 +33,12 @@ describe('PokemonService', () => {
         PokemonService,
         { provide: getRepositoryToken(Pokemon), useClass: Repository },
         {
-          provide: PokemonExternalBusiness,
-          useValue: {
-            limit: 1302,
-            getOne: jest.fn(),
-            getEvolutions: jest.fn(),
-          },
-        },
-        {
           provide: ExternalPokemonService,
           useValue: {
             limit: 1302,
-            BuildList: jest.fn(),
+            buildList: jest.fn(),
+            completeOne: jest.fn(),
+            getEvolutions: jest.fn(),
           },
         },
         {
@@ -69,9 +67,6 @@ describe('PokemonService', () => {
     typeService = module.get<TypeService>(TypeService);
     moveService = module.get<MoveService>(MoveService);
     abilityService = module.get<AbilityService>(AbilityService);
-    businessExternal = module.get<PokemonExternalBusiness>(
-      PokemonExternalBusiness,
-    );
     business = module.get<ExternalPokemonService>(ExternalPokemonService);
   });
 
@@ -80,7 +75,6 @@ describe('PokemonService', () => {
     expect(typeService).toBeDefined();
     expect(moveService).toBeDefined();
     expect(abilityService).toBeDefined();
-    expect(businessExternal).toBeDefined();
     expect(business).toBeDefined();
   });
 
@@ -89,7 +83,7 @@ describe('PokemonService', () => {
       jest.spyOn(repository, 'count').mockResolvedValueOnce(0);
 
       jest
-        .spyOn(business, 'BuildList')
+        .spyOn(business, 'buildList')
         .mockResolvedValueOnce(LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE);
 
       LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE.forEach((pokemon) => {
@@ -100,13 +94,136 @@ describe('PokemonService', () => {
         orderBy: jest.fn(),
         leftJoinAndSelect: jest.fn(),
         getMany: jest
-            .fn()
-            .mockReturnValueOnce(LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
+          .fn()
+          .mockReturnValueOnce(LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
       } as any);
 
       expect(await service.findAll({})).toEqual(
-          LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+        LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
       );
+    });
+    it('Must return error when the api failed', async () => {
+      jest.spyOn(repository, 'count').mockResolvedValueOnce(0);
+
+      jest
+        .spyOn(business, 'buildList')
+        .mockRejectedValueOnce(new Error('Internal Server Error'));
+
+      const errorSpy = jest
+        .spyOn(service as any, 'error')
+        .mockImplementation((err) => {
+          throw err;
+        });
+
+      await expect(service.findAll({})).rejects.toThrow(
+        'Internal Server Error',
+      );
+      expect(errorSpy).toHaveBeenCalledWith(new Error('Internal Server Error'));
+    });
+  });
+
+  describe('findOne(value)', () => {
+    it('must return a complete pokemon from the database', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest
+          .fn()
+          .mockReturnValueOnce(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE),
+      } as any);
+      expect(
+        await service.findOne(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name),
+      ).toEqual(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE);
+    });
+    it('must return a incomplete pokemon from the database', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest
+          .fn()
+          .mockReturnValueOnce(BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
+      } as any);
+      expect(
+        await service.findOne(
+          BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE.id,
+          false,
+        ),
+      ).toEqual(BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE);
+    });
+    it('must complete the data of a pokemon from the database through external api', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest
+          .fn()
+          .mockReturnValueOnce(BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
+      } as any);
+
+      jest
+        .spyOn(business, 'completeOne')
+        .mockResolvedValueOnce(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE);
+
+      jest
+        .spyOn(moveService, 'findList')
+        .mockResolvedValueOnce(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.moves);
+
+      jest
+        .spyOn(typeService, 'findList')
+        .mockResolvedValueOnce(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.types);
+
+      jest
+        .spyOn(abilityService, 'findList')
+        .mockResolvedValueOnce(
+          BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.abilities,
+        );
+
+      jest
+        .spyOn(business, 'getEvolutions')
+        .mockResolvedValueOnce(
+          BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.evolutions.map(
+            (evolution) => evolution.name,
+          ),
+        );
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest
+          .fn()
+          .mockReturnValueOnce(BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
+      } as any);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest
+          .fn()
+          .mockReturnValueOnce(IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
+      } as any);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest
+          .fn()
+          .mockReturnValueOnce(VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
+      } as any);
+
+      jest
+        .spyOn(repository, 'save')
+        .mockResolvedValueOnce(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest
+          .fn()
+          .mockReturnValueOnce(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE),
+      } as any);
+
+      expect(
+        await service.findOne(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name),
+      ).toEqual(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE);
     });
   });
 });

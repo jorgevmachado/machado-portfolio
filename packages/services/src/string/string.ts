@@ -49,3 +49,12 @@ export function separateCamelCase(value: string) {
     )
     .join(' ');
 }
+
+export function extractLastItemFromUrl(url?: string) {
+  if(!url) {
+    return '';
+  }
+  const sanitizedUrl = url.endsWith('/') ? url.slice(0, -1) : url;
+  const segments = sanitizedUrl.split('/');
+  return segments[segments.length - 1];
+}

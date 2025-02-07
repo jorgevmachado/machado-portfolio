@@ -100,6 +100,11 @@ npm run lint
 ```
     npm run test -- --findRelatedTests src/string/string.spec.ts               
 ```
+### number:
+#### Utilitários relacionados a manipulação ou validação de numbers.
+```
+    npm run test -- --findRelatedTests src/number/number.spec.ts               
+```
 ### validator:
 #### Funções para validação de entrada de dados ou outros tipos de verificações.
 ```

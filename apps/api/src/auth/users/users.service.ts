@@ -56,7 +56,7 @@ export class UserService extends Service<User> {
     return await this.save(user);
   }
 
-  cleanFormatter(value: string) {
+  private cleanFormatter(value: string) {
     return value
       .replace('-', ' ')
       .replaceAll('.', ' ')
@@ -66,7 +66,7 @@ export class UserService extends Service<User> {
       .trim();
   }
 
-  validateMobile(value: string) {
+  private validateMobile(value: string) {
     const validatorMessage = mobileValidator({ value });
     if (!validatorMessage.valid) {
       throw new BadRequestException(validatorMessage.message);

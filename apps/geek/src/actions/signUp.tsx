@@ -15,7 +15,7 @@ import {
 } from '@repo/services/validator/contact/contact';
 import { cpfValidator } from '@repo/services/validator/document/document';
 
-import { EGender } from '@repo/business/api/nest/enum';
+import { EGender } from '@repo/business/shared/enum';
 
 import { authService } from '../shared';
 
@@ -27,7 +27,7 @@ export async function signUp(prevState: AuthFormState, formData: FormData) {
     name: formData.get('name')?.toString(),
     email: formData.get('email')?.toString(),
     gender: formData.get('gender')?.toString(),
-    whatsup: formData.get('whatsapp')?.toString(),
+    whatsapp: formData.get('whatsapp')?.toString(),
     password: formData.get('password')?.toString(),
     dateOfBirth: formData.get('dateOfBirth')?.toString(),
     passwordConfirmation: formData.get('passwordConfirmation')?.toString(),
@@ -47,7 +47,7 @@ export async function signUp(prevState: AuthFormState, formData: FormData) {
       name: prevState?.fields?.name ?? '',
       email: prevState?.fields?.email ?? '',
       gender: (prevState?.fields?.gender ?? EGender.OTHER) as EGender,
-      whatsup: prevState?.fields?.whatsup ?? '',
+      whatsapp: prevState?.fields?.whatsapp ?? '',
       password: prevState?.fields?.password ?? '',
       date_of_birth: new Date(prevState?.fields?.dateOfBirth ?? ''),
       created_at: new Date(),
@@ -73,7 +73,7 @@ function validate(fields: AuthFields): AuthFormState {
     name: nameValidator({ value: fields.name }),
     email: emailValidator({ value: fields.email }),
     gender: genderValidator({ value: fields.gender }),
-    whatsup: mobileValidator({ value: fields.whatsup }),
+    whatsapp: mobileValidator({ value: fields.whatsapp }),
     password: passwordValidator({ value: fields.password }),
     dateOfBirth: dateOfBirthValidator({ value: fields.dateOfBirth }),
     passwordConfirmation: confirmPasswordValidator({
@@ -110,9 +110,9 @@ function validate(fields: AuthFields): AuthFormState {
     messages.push(`Gender: ${errors?.gender?.message ?? 'invalid'}`);
   }
 
-  if (!errors?.whatsup?.valid) {
+  if (!errors?.whatsapp?.valid) {
     formState.valid = false;
-    messages.push(`Whatsapp: ${errors?.whatsup?.message ?? 'invalid'}`);
+    messages.push(`Whatsapp: ${errors?.whatsapp?.message ?? 'invalid'}`);
   }
 
   if (!errors?.password?.valid) {

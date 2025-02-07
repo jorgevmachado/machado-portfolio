@@ -1,0 +1,19 @@
+{
+  "id": "d36f52f8-2d5b-4edf-9488-c5cefc28c56f",
+  "pp": 15,
+  "url": "https://pokeapi.co/api/v2/move/34/",
+  "type": "normal",
+  "name": "body-slam",
+  "order": 34,
+  "power": 85,
+  "target": "selected-pokemon",
+  "effect": "Inflicts regular damage.  Has a 30% chance to paralyze the target.",
+  "priority": 0,
+  "accuracy": 100,
+  "created_at": "2025-02-07T19:00:23.257Z",
+  "updated_at": "2025-02-07T19:00:23.257Z",
+  "deleted_at": null,
+  "short_effect": "Has a 30% chance to paralyze the target.",
+  "damage_class": "physical",
+  "effect_chance": 30
+}

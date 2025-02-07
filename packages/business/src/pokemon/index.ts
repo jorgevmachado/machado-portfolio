@@ -1,6 +1,4 @@
-// export { Pokemon } from './pokemon';
-export * from './fixture';
+export { default } from './pokemon';
+export { ExternalPokemonService } from './externalPokemonService';
+export { PokemonService } from './pokemonService';
 export * from './interface';
-export * from './move';
-export * from './ability';
-export * from './type';

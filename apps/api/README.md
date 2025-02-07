@@ -23,4 +23,10 @@ To learn more about NestJs, take a look at the following resources:
 - [GitHub Repo](https://github.com/nestjs/nest)
 
 
+npm run test -- --findRelatedTests src/auth/users/users.service.spec.ts
+npm run test -- --findRelatedTests src/auth/auth.service.spec.ts
+npm run test -- --findRelatedTests src/auth/auth.controller.spec.ts
 npm run test -- --findRelatedTests src/pokemons/pokemon.service.spec.ts
+npm run test -- --findRelatedTests src/pokemons/move/move.service.spec.ts
+npm run test -- --findRelatedTests src/pokemons/type/type.service.spec.ts
+npm run test -- --findRelatedTests src/pokemons/ability/ability.service.spec.ts

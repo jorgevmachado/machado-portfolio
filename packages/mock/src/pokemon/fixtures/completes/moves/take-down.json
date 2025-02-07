@@ -1,0 +1,19 @@
+{
+  "id": "901d5f0d-1453-42a1-bd85-4df57ca8654c",
+  "pp": 20,
+  "url": "https://pokeapi.co/api/v2/move/36/",
+  "type": "normal",
+  "name": "take-down",
+  "order": 36,
+  "power": 90,
+  "target": "selected-pokemon",
+  "effect": "Inflicts regular damage.  User takes 1/4 the damage it inflicts in recoil.",
+  "priority": 0,
+  "accuracy": 85,
+  "created_at": "2025-02-07T19:00:23.313Z",
+  "updated_at": "2025-02-07T19:00:23.313Z",
+  "deleted_at": null,
+  "short_effect": "User receives 1/4 the damage it inflicts in recoil.",
+  "damage_class": "physical",
+  "effect_chance": null
+}
