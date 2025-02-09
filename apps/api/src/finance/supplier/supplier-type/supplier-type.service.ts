@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Service } from '../../shared';
+import { Service } from '../../../shared';
 
 import { SupplierType } from './supplierType.entity';
-import { CreateSupplierTypeDto } from '../dto/supplier/create-supplier-type.dto';
+import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
 import { LIST__SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier/type/type';
 
 @Injectable()

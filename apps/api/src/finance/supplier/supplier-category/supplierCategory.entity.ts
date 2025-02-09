@@ -12,7 +12,7 @@ import {
 import type { SupplierCategory as EntitySupplierCategory } from '@repo/business/finance/interface';
 
 import { SupplierType } from '../supplier-type/supplierType.entity';
-import { Supplier } from '../supplier/supplier.entity';
+import { Supplier } from '../supplier.entity';
 
 @Entity({ name: 'supplier_categories' })
 export class SupplierCategory implements EntitySupplierCategory {
