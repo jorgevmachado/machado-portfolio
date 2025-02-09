@@ -4,9 +4,15 @@ import { NotFoundException } from '@nestjs/common';
 import { Paginate } from '@repo/business/paginate/paginate';
 import { PaginateParameters } from '@repo/business/paginate/interface';
 
-import type { FindOneParams, FindParams, ListParams } from '../interface';
+import {
+  FindByParams,
+  FindOneByOrder,
+  FindOneByParams,
+  ListParams,
+} from '../interface';
 import { Base } from '../base';
 import { Query } from '../query';
+import { isUUID } from '@repo/services/string/string';
 
 export abstract class Service<T extends ObjectLiteral> extends Base {
   protected constructor(
@@ -50,7 +56,7 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
     withThrow = true,
     response,
     completingData,
-  }: FindOneParams<T, R>): Promise<T> {
+  }: FindOneByOrder<T, R>): Promise<T> {
     const result = await this.findBy({
       searchParams: {
         by: 'order',
@@ -71,7 +77,7 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
     searchParams,
     withDeleted,
     withRelations,
-  }: FindParams) {
+  }: FindByParams) {
     const query = new Query<T>({
       alias: this.alias,
       relations: this.relations,
@@ -90,10 +96,29 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
     return result;
   }
 
-  async save(data: T): Promise<void> {
+  async findOne({
+    value,
+    withThrow = true,
+    withDeleted = false,
+    withRelations = true,
+  }: FindOneByParams) {
+    return await this.findBy({
+      searchParams: {
+        by: isUUID(value) ? 'id' : 'name',
+        value,
+      },
+      withThrow,
+      withDeleted,
+      withRelations,
+    });
+  }
+
+  async save(data: T): Promise<void | T> {
     return this.repository
       .save(data)
       .then()
-      .catch((error) => this.error(error));
+      .catch((error) => {
+        throw this.error(error);
+      });
   }
 }

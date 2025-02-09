@@ -109,16 +109,4 @@ export class UserService extends Service<User> {
 
     throw new UnprocessableEntityException('Invalid credentials');
   }
-
-  async findOne(id: string, withDeleted?: boolean) {
-    return await this.findBy({
-      searchParams: {
-        by: 'id',
-        value: id,
-      },
-      withThrow: true,
-      withDeleted,
-      withRelations: true,
-    });
-  }
 }

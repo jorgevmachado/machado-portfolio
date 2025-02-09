@@ -3,26 +3,20 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppService } from './app.service';
-
 import { AppController } from './app.controller';
+import { dataSourceOptions } from './app.data-source';
+
 import { AuthModule } from './auth/auth.module';
 import { PokemonModule } from './pokemons/pokemon.module';
+import { FinanceModule } from './finance/finance.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'localhost',
-      password: 'localhost',
-      database: 'portfolio',
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     AuthModule,
     PokemonModule,
+    FinanceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

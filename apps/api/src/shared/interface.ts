@@ -14,7 +14,7 @@ export interface FilterParams {
   condition: string;
 }
 
-export interface FindParams {
+export interface FindByParams {
   withThrow?: boolean;
   searchParams: SearchParams;
   withDeleted?: boolean;
@@ -35,10 +35,14 @@ export type TBy =
   | 'whatsapp'
   | 'accountId';
 
-export interface FindOneParams<T, R> {
+export interface FindOneByOrder<T, R> {
   order: number;
   response?: R;
   complete?: boolean;
   withThrow?: boolean;
   completingData?: (result: T, response: R | T) => Promise<T>;
+}
+
+export interface FindOneByParams extends Omit<FindByParams, 'searchParams'> {
+  value: string;
 }

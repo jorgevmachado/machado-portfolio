@@ -24,17 +24,27 @@ export interface ISupplier extends IFinanceBase {
 }
 
 export type TExpense = 'FIXED' | 'VARIABLE';
-export type TStatusExpense = 'PENDING' | 'PAID' | 'CANCELLED' | 'REFUNDED' | 'OVERDUE' | 'EXPIRED' | 'NOT PAID';
+export type TStatusExpense = 'PENDING' | 'PAID' | 'CANCELLED' | 'EXPIRED' | 'NOT PAID';
 
 export type TMonth = 'JANUARY'| 'FEBRUARY'| 'MARCH'| 'APRIL'| 'MAY'| 'JUNE'| 'JULY'| 'AUGUST'| 'SEPTEMBER'| 'OCTOBER'| 'NOVEMBER'| 'DECEMBER';
 
+export type TFrequency = 'MONTHLY' | 'QUARTERLY' | 'SEMIANNUALLY' | 'ANNUALLY';
 export interface IExpense extends IFinanceBase {
     type: TExpense;
-    value: number;
-    date: Date;
-    months: Array<TMonth>;
+    total: number;
+    year: number;
+    month: TMonth;
+    active?: boolean;
     status: TStatusExpense;
     supplier: ISupplier;
+    frequency?: TFrequency;
     description?: string;
     payment_method: IPaymentMethod;
+}
+
+export interface IInstallment extends IFinanceBase {
+    value: number;
+    expense:IExpense;
+    installment_number: number;
+    payment_status: 'PENDING' | 'PAID';
 }

@@ -41,7 +41,10 @@ export class AuthService extends Base {
   async findOne(id: string, user: User) {
     this.validateCurrentUser(id, user);
     const withDeleted = user.role === ERole.ADMIN;
-    const currentUser = await this.userService.findOne(id, withDeleted);
+    const currentUser = await this.userService.findOne({
+      value: id,
+      withDeleted
+    });
     return this.clean(currentUser);
   }
 

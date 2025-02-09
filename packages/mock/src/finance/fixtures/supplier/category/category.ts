@@ -1,0 +1,17 @@
+import SupplierCategory from '@repo/business/finance/supplier/category/supplierCategory';
+
+import { LIST_HOUSING_SUPPLIER_CATEGORY_FIXTURE } from './housing';
+import { LIST_FOOD_SUPPLIER_CATEGORY_FIXTURE } from './food';
+import { LIST_TRANSPORT_SUPPLIER_CATEGORY_FIXTURE } from './transport';
+import { LIST_HEALTH_SUPPLIER_CATEGORY_FIXTURE } from './health';
+import { LIST_LEISURE_SUPPLIER_CATEGORY_FIXTURE } from './leisure';
+import { LIST_EDUCATION_CATEGORY_FIXTURE } from './education';
+
+export const LIST_SUPPLIER_CATEGORY_FIXTURE: Array<SupplierCategory> = [
+  ...LIST_HOUSING_SUPPLIER_CATEGORY_FIXTURE,
+  ...LIST_FOOD_SUPPLIER_CATEGORY_FIXTURE,
+  ...LIST_TRANSPORT_SUPPLIER_CATEGORY_FIXTURE,
+  ...LIST_HEALTH_SUPPLIER_CATEGORY_FIXTURE,
+  ...LIST_LEISURE_SUPPLIER_CATEGORY_FIXTURE,
+  ...LIST_EDUCATION_CATEGORY_FIXTURE,
+];

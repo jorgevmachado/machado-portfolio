@@ -72,7 +72,7 @@ export class PokemonService extends Service<Pokemon> {
       .catch((error) => this.error(error));
   }
 
-  async findOne(value: string, complete: boolean = true) {
+  async findOnePokemon(value: string, complete: boolean = true) {
     const result = await this.findBy({
       searchParams: {
         by: isUUID(value) ? 'id' : 'name',
@@ -107,13 +107,13 @@ export class PokemonService extends Service<Pokemon> {
 
     await this.save(pokemonEntity);
 
-    return await this.findOne(pokemon.name, false);
+    return await this.findOnePokemon(pokemon.name, false);
   }
 
   private async getEvolutions(url: string): Promise<Array<Pokemon>> {
     const response = await this.business.getEvolutions(url);
     return await Promise.all(
-      response.map(async (name) => await this.findOne(name, false)),
+      response.map(async (name) => await this.findOnePokemon(name, false)),
     );
   }
 }
