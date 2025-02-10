@@ -6,9 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+
+import { QueryParameters } from '@repo/business/shared/interface';
 
 import { AuthRoleGuards } from '../../../auth/guards/auth-role.guards';
 import { AuthStatusGuards } from '../../../auth/guards/auth-status.guards';
@@ -17,38 +20,36 @@ import { ExpenseCategoryService } from './expense-category.service';
 import { CreateExpenseCategoryDto } from './dto/create-expense-category.dto';
 import { UpdateExpenseCategoryDto } from './dto/update-expense-category.dto';
 
-@Controller('finance/expense/category')
+@Controller('finance/expense')
 @UseGuards(AuthGuard(), AuthRoleGuards, AuthStatusGuards)
 export class ExpenseCategoryController {
-  constructor(
-    private readonly expenseCategoryService: ExpenseCategoryService,
-  ) {}
+  constructor(private readonly service: ExpenseCategoryService) {}
 
-  @Post()
+  @Post('category')
   create(@Body() createExpenseCategoryDto: CreateExpenseCategoryDto) {
-    return this.expenseCategoryService.create(createExpenseCategoryDto);
+    return this.service.create(createExpenseCategoryDto);
   }
 
-  @Get()
-  findAll() {
-    return this.expenseCategoryService.findAll();
+  @Get('list/category')
+  findAll(@Query() parameters: QueryParameters) {
+    return this.service.list(parameters);
   }
 
-  @Get('/:param')
+  @Get(':param/category')
   findOne(@Param('param') param: string) {
-    return this.expenseCategoryService.findOne({ value: param });
+    return this.service.findOne({ value: param });
   }
 
-  @Patch(':id')
+  @Patch(':param/category')
   update(
     @Param('id') id: string,
     @Body() updateExpenseCategoryDto: UpdateExpenseCategoryDto,
   ) {
-    return this.expenseCategoryService.update(+id, updateExpenseCategoryDto);
+    return this.service.update(+id, updateExpenseCategoryDto);
   }
 
-  @Delete(':id')
+  @Delete(':id/category')
   remove(@Param('id') id: string) {
-    return this.expenseCategoryService.remove(+id);
+    return this.service.remove(+id);
   }
 }

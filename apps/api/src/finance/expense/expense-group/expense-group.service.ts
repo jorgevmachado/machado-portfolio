@@ -30,12 +30,12 @@ export class ExpenseGroupService extends Service<ExpenseGroup> {
     return `This action returns all expenseGroup`;
   }
 
-  update(id: number, updateExpenseGroupDto: UpdateExpenseGroupDto) {
-    return `This action updates a #${id} expenseGroup`;
+  update(param: string, updateExpenseGroupDto: UpdateExpenseGroupDto) {
+    return `This action updates a #${param} expenseGroup`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} expenseGroup`;
+  remove(param: string) {
+    return `This action removes a #${param} expenseGroup`;
   }
 
   async seed() {

@@ -6,6 +6,7 @@ import { Service } from '../../../shared';
 import { SupplierType } from './supplierType.entity';
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
 import { LIST__SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier/type/type';
+import {UpdateSupplierTypeDto} from "./dto/update-supplier-type.dto";
 
 @Injectable()
 export class SupplierTypeService extends Service<SupplierType> {
@@ -37,4 +38,10 @@ export class SupplierTypeService extends Service<SupplierType> {
       }),
     )) as Array<SupplierType>;
   }
+
+    async update(param: string, updateSupplierTypeDto: UpdateSupplierTypeDto) {
+      const result = await this.findOne({ value: param})
+      result.name = updateSupplierTypeDto.name;
+      return this.save(result);
+    }
 }

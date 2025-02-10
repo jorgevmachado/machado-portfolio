@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+
+import { QueryParameters } from '@repo/business/shared/interface';
 
 import { AuthRoleGuards } from '../../auth/guards/auth-role.guards';
 import { AuthStatusGuards } from '../../auth/guards/auth-status.guards';
@@ -14,11 +24,8 @@ export class ExpenseController {
   constructor(private readonly service: ExpenseService) {}
 
   @Get()
-  find() {
-    // return this.financeService.createSupplierType(createSupplierTypeDto);
-    return {
-      message: 'Find',
-    };
+  findAll(@Query() parameters: QueryParameters) {
+    return this.service.list(parameters);
   }
 
   @Post()
@@ -26,7 +33,7 @@ export class ExpenseController {
     return await this.service.create(createExpenseDto);
   }
 
-  @Get('/:param')
+  @Get(':param')
   findOne(@Param('param') param: string) {
     return this.service.findOne({ value: param });
   }

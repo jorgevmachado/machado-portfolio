@@ -10,6 +10,7 @@ import { Supplier } from './supplier.entity';
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { SupplierType } from './supplier-type/supplierType.entity';
+import { UpdateSupplierDto } from './dto/update-supplier.dto';
 
 @Injectable()
 export class SupplierService extends Service<Supplier> {
@@ -26,6 +27,14 @@ export class SupplierService extends Service<Supplier> {
     supplier.name = name;
     supplier.type = await this.getSupplierType(type);
     return await this.save(supplier);
+  }
+
+  async update(param: string, { name, type }: UpdateSupplierDto) {
+    const result = await this.findOne({ value: param });
+    const supplierType = await this.getSupplierType(type);
+    result.name = name;
+    result.type = supplierType;
+    return this.save(result);
   }
 
   private async getSupplierType(
@@ -56,7 +65,8 @@ export class SupplierService extends Service<Supplier> {
 
   async seed() {
     const supplierTypes = await this.supplierTypeService.seed();
-    const suppliers = (await Promise.all(
+    const suppliers = (
+      await Promise.all(
         LIST_SUPPLIER_FIXTURE.map(async (supplier) => {
           const result = await this.findOne({
             value: supplier.name,
@@ -65,11 +75,11 @@ export class SupplierService extends Service<Supplier> {
           });
           if (!result) {
             const type = supplierTypes.find(
-                (type) => type.name === supplier.type.name,
+              (type) => type.name === supplier.type.name,
             );
             if (!type) {
               throw new Error(
-                  'The selected Supplier Type does not exist, try another one or create one.',
+                'The selected Supplier Type does not exist, try another one or create one.',
               );
             }
             return this.create({
@@ -79,11 +89,12 @@ export class SupplierService extends Service<Supplier> {
           }
           return result;
         }),
-    )).filter((supplier): supplier is Supplier => supplier !== undefined);
+      )
+    ).filter((supplier): supplier is Supplier => supplier !== undefined);
 
     return {
       supplierTypes,
       suppliers,
-    }
+    };
   }
 }

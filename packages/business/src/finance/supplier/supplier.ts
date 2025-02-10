@@ -10,8 +10,8 @@ interface SupplierConstructorParams
 
 export default class Supplier implements ISupplier {
   id: ISupplier['id'];
-  name: ISupplier['name'];
-  type: ISupplier['type'];
+  name!: ISupplier['name'];
+  type!: ISupplier['type'];
   active?: ISupplier['active'];
   created_at: ISupplier['created_at'];
   updated_at: ISupplier['updated_at'];
@@ -21,8 +21,14 @@ export default class Supplier implements ISupplier {
   constructor(params?: SupplierConstructorParams) {
     if (params) {
       this.id = params?.id ?? this.id;
-      this.name = params?.name ?? this.name;
-      this.type = params?.type ?? this.type;
+      if(!params.name) {
+        throw new Error('name is required');
+      }
+      this.name = params.name;
+      if(!params.type) {
+        throw new Error('type is required');
+      }
+      this.type = params.type;
       this.active = params?.active ?? this.active;
       this.created_at = params?.created_at ?? this.created_at;
       this.updated_at = params?.updated_at ?? this.updated_at;

@@ -6,9 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+
+import { QueryParameters } from '@repo/business/shared/interface';
 
 import { AuthRoleGuards } from '../../../auth/guards/auth-role.guards';
 import { AuthStatusGuards } from '../../../auth/guards/auth-status.guards';
@@ -18,36 +21,36 @@ import { UpdateExpenseGroupDto } from './dto/update-expense-group.dto';
 
 import { ExpenseGroupService } from './expense-group.service';
 
-@Controller('finance/expense/group')
+@Controller('finance/expense')
 @UseGuards(AuthGuard(), AuthRoleGuards, AuthStatusGuards)
 export class ExpenseGroupController {
-  constructor(private readonly expenseGroupService: ExpenseGroupService) {}
+  constructor(private readonly service: ExpenseGroupService) {}
 
-  @Post()
+  @Get('list/group')
+  findAll(@Query() parameters: QueryParameters) {
+    return this.service.list(parameters);
+  }
+
+  @Post('group')
   create(@Body() createExpenseGroupDto: CreateExpenseGroupDto) {
-    return this.expenseGroupService.create(createExpenseGroupDto);
+    return this.service.create(createExpenseGroupDto);
   }
 
-  @Get()
-  findAll() {
-    return this.expenseGroupService.findAll();
-  }
-
-  @Get('/:param')
+  @Get(':param/group')
   findOne(@Param('param') param: string) {
-    return this.expenseGroupService.findOne({ value: param });
+    return this.service.findOne({ value: param });
   }
 
-  @Patch(':id')
+  @Patch(':param/group')
   update(
-    @Param('id') id: string,
+    @Param('param') param: string,
     @Body() updateExpenseGroupDto: UpdateExpenseGroupDto,
   ) {
-    return this.expenseGroupService.update(+id, updateExpenseGroupDto);
+    return this.service.update(param, updateExpenseGroupDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.expenseGroupService.remove(+id);
+  @Delete(':param/group')
+  remove(@Param('param') param: string) {
+    return this.service.remove(param);
   }
 }

@@ -29,10 +29,10 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
   }
 
   update(
-    id: number,
+    param: string,
     updateExpenseCategoryTypeDto: UpdateExpenseCategoryTypeDto,
   ) {
-    return `This action updates a #${id} expenseCategoryType`;
+    return `This action updates a #${param} expenseCategoryType`;
   }
 
   remove(id: number) {

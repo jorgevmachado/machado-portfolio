@@ -5,7 +5,7 @@ import {
   Get,
   Param,
   Patch,
-  Post,
+  Post, Query,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -16,42 +16,43 @@ import { AuthStatusGuards } from '../../../../auth/guards/auth-status.guards';
 import { ExpenseCategoryTypeService } from './expense-category-type.service';
 import { CreateExpenseCategoryTypeDto } from './dto/create-expense-category-type.dto';
 import { UpdateExpenseCategoryTypeDto } from './dto/update-expense-category-type.dto';
+import {QueryParameters} from "@repo/business/shared/interface";
 
-@Controller('finance/expense/category/type')
+@Controller('finance/expense/category')
 @UseGuards(AuthGuard(), AuthRoleGuards, AuthStatusGuards)
 export class ExpenseCategoryTypeController {
   constructor(
-    private readonly expenseCategoryTypeService: ExpenseCategoryTypeService,
+    private readonly service: ExpenseCategoryTypeService,
   ) {}
 
-  @Post()
+  @Get('list/type')
+  findAll(@Query() parameters: QueryParameters) {
+    return this.service.list(parameters);
+  }
+
+  @Post('type')
   create(@Body() createExpenseCategoryTypeDto: CreateExpenseCategoryTypeDto) {
-    return this.expenseCategoryTypeService.create(createExpenseCategoryTypeDto);
+    return this.service.create(createExpenseCategoryTypeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.expenseCategoryTypeService.findAll();
-  }
-
-  @Get('/:param')
+  @Get(':param/type')
   findOne(@Param('param') param: string) {
-    return this.expenseCategoryTypeService.findOne({ value: param });
+    return this.service.findOne({ value: param });
   }
 
-  @Patch(':id')
+  @Patch(':param/type')
   update(
-    @Param('id') id: string,
+    @Param('param') param: string,
     @Body() updateExpenseCategoryTypeDto: UpdateExpenseCategoryTypeDto,
   ) {
-    return this.expenseCategoryTypeService.update(
-      +id,
+    return this.service.update(
+      param,
       updateExpenseCategoryTypeDto,
     );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.expenseCategoryTypeService.remove(+id);
+    return this.service.remove(+id);
   }
 }

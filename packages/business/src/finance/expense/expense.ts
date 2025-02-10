@@ -9,7 +9,7 @@ interface ExpenseConstructorParams extends Omit<IExpense, 'id' | 'created_at' | 
 
 export default class Expense implements IExpense {
   id: IExpense['id'];
-  year?: IExpense['year'];
+  year?: IExpense['year'] = new Date().getFullYear();
   type: IExpense['type'];
   paid: IExpense['paid'];
   value: IExpense['value'];
