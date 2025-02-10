@@ -1,13 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { Base } from '../shared';
-import { CreateSupplierTypeDto } from './supplier/supplier-type/dto/create-supplier-type.dto';
-import { CreateSupplierCategoryDto } from './supplier/supplier-category/dto/create-supplier-category.dto';
 import { SupplierService } from './supplier/supplier.service';
+import { ExpenseService } from './expense/expense.service';
 
 @Injectable()
 export class FinanceService extends Base {
-  constructor(protected supplierervice: SupplierService) {
+  constructor(
+    protected expenseService: ExpenseService,
+    protected supplierService: SupplierService,
+  ) {
     super();
+  }
+
+  async seeds() {
+    const suppliers = await this.supplierService.seed();
+    if(!suppliers) {
+      throw Error('Error seeding suppliers');
+    }
+    const expenses = await this.expenseService.seed();
+    if(!expenses) {
+      throw Error('Error seeding expenses');
+    }
+    return {
+      message: 'Seeds executed successfully',
+    };
   }
   // async createSupplierType({ name }: CreateSupplierTypeDto) {
   //   return await this.supplierTypeService.create({ name });

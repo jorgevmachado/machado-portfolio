@@ -1,7 +1,7 @@
 import { type ISupplier } from '../../api/nest/finance';
 
 interface SupplierConstructorParams
-  extends Pick<ISupplier, 'name' | 'category' | 'description'> {
+  extends Omit<ISupplier, 'id' | 'created_at' | 'updated_at' | 'deleted_at'> {
   id?: ISupplier['id'];
   created_at?: ISupplier['created_at'];
   updated_at?: ISupplier['updated_at'];
@@ -11,7 +11,8 @@ interface SupplierConstructorParams
 export default class Supplier implements ISupplier {
   id: ISupplier['id'];
   name: ISupplier['name'];
-  category: ISupplier['category'];
+  type: ISupplier['type'];
+  active?: ISupplier['active'];
   created_at: ISupplier['created_at'];
   updated_at: ISupplier['updated_at'];
   deleted_at: ISupplier['deleted_at'];
@@ -21,7 +22,8 @@ export default class Supplier implements ISupplier {
     if (params) {
       this.id = params?.id ?? this.id;
       this.name = params?.name ?? this.name;
-      this.category = params?.category ?? this.category;
+      this.type = params?.type ?? this.type;
+      this.active = params?.active ?? this.active;
       this.created_at = params?.created_at ?? this.created_at;
       this.updated_at = params?.updated_at ?? this.updated_at;
       this.deleted_at = params?.deleted_at ?? this.deleted_at;

@@ -1,64 +1,115 @@
-// enum EExpense {
-//  RESTAURANT = 'RESTAURANT',
-//  CLOTHES = 'CLOTHES',
-//  MARKET = 'MARKET',
-//  SHOPPING = 'SHOPPING',
-// }
-// interface IExpense {
-//     name: string;
-//     type: EExpense;
-// }
-// export const Expenses: Array<IExpense> = [
-//     { name: 'Sans Souci', type: EExpense.RESTAURANT },
-//     { name: 'Lojas Milano', type: EExpense.CLOTHES },
-//     { name: 'Pão de Açucar', type: EExpense.MARKET },
-//     { name: 'Cadeira Design Studio', type: EExpense.SHOPPING },
-//     { name: 'Old Bikers' },
-//     { name: 'O baden Baden' },
-//     { name: 'Castelo Campos do jordão' },
-//     { name: 'Brossman' },
-//     { name: 'kinoplex' },
-//     { name: 'Bg Norte Petroleo' },
-//     { name: 'Guararema' },
-//     { name: 'Itaquacetuba' },
-//     { name: 'Brascansthrp' },
-//     { name: 'Ecopista FPay' },
-//     { name: 'São Jose' },
-//     { name: 'Posto San Remo' },
-//     { name: 'Drogaria Brasil' },
-//     { name: 'Petz' },
-//     { name: 'Mb Parking' },
-//     { name: 'Gambar' },
-//     { name: 'levvo DF' },
-//     { name: 'Daiso' },
-//     { name: 'paygo Divino Lanche' },
-//     { name: 'Starbuck Venancio' },
-//     { name: 'Drogaria Pacheco' },
-//     { name: 'NetShop Informatica' },
-//     { name: 'Motiva Imóveis' },
-//     { name: 'Sushiloko' },
-//     { name: 'Condominio Civil Brasil' },
-//     { name: 'Spoleto' },
-//     { name: 'Prime Global' },
-//     { name: 'Nova Rede Express' },
-//     { name: 'Senhora Baforada' },
-//     { name: 'MADERO' },
-//     { name: 'Playtime Combustivel' },
-//     { name: 'Bar do Japa' },
-//     { name: 'Caiocesarrochamen' },
-//     { name: 'Atacadão Dia a Dia' },
-//     { name: 'ets pizzaria express' },
-//     { name: 'Dunkin Donuts' },
-//     { name: 'Dona de Casa' },
-//     { name: 'Vero Tratoria' },
-//     { name: 'Ancar Gestao de emp' },
-//     { name: 'Baruc Restaurante' },
-//     { name: 'Cascol Combustiveis' },
-//     { name: 'PG TON ANESIA MARTINS' },
-//     { name: 'Espetinho Elena' },
-//     { name: 'Confiance Gestao Condo' },
-//     { name: 'Confraria da Barba' },
-//     { name: 'Djaci Martins Bezerra' },
-//     { name: 'Rota de Casa' },
-//     { name: 'Apache' },
-// ]
+import Expense from '@repo/business/finance/expense/expense';
+
+import {
+  MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
+  PERSONAL_EXPENSE_GROUP_FIXTURE,
+} from './group';
+
+import {
+  CLARO_HOUSING_SUPPLIER_FIXTURE,
+  CONDOMINIUM_HOUSING_SUPPLIER_FIXTURE,
+  DAY_LABORER_DIDI_HOUSING_SUPPLIER_FIXTURE,
+  GARAGE_HOUSING_SUPPLIER_FIXTURE,
+  IPTU_HOUSING_SUPPLIER_FIXTURE,
+  NEOENERGIA_HOUSING_SUPPLIER_FIXTURE,
+  OLD_BIKERS_TRANSPORT_SUPPLIER_FIXTURE,
+} from '../supplier';
+import {
+  ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+  PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
+} from './category';
+
+import { EExpenseType, EMonth } from '@repo/business/finance/enum';
+
+export const NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
+  year: 2025,
+  type: EExpenseType.VARIABLE,
+  paid: false,
+  value: 93.0,
+  month: EMonth.JANUARY,
+  group: MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
+  active: true,
+  supplier: NEOENERGIA_HOUSING_SUPPLIER_FIXTURE,
+  category: ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+});
+
+export const IPTU_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
+  year: 2025,
+  type: EExpenseType.VARIABLE,
+  paid: false,
+  value: 250.0,
+  month: EMonth.JANUARY,
+  group: MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
+  active: true,
+  supplier: IPTU_HOUSING_SUPPLIER_FIXTURE,
+  category: ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+});
+
+export const CLARO_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
+  year: 2025,
+  type: EExpenseType.VARIABLE,
+  paid: false,
+  value: 502.61,
+  month: EMonth.JANUARY,
+  group: MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
+  active: true,
+  supplier: CLARO_HOUSING_SUPPLIER_FIXTURE,
+  category: ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+});
+
+export const DAY_LABORER_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
+  year: 2025,
+  type: EExpenseType.VARIABLE,
+  paid: false,
+  value: 150,
+  month: EMonth.JANUARY,
+  group: MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
+  active: true,
+  supplier: DAY_LABORER_DIDI_HOUSING_SUPPLIER_FIXTURE,
+  category: ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+});
+
+export const CONDOMINIUM_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
+  year: 2025,
+  type: EExpenseType.VARIABLE,
+  paid: false,
+  value: 780.34,
+  month: EMonth.JANUARY,
+  group: MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
+  active: true,
+  supplier: CONDOMINIUM_HOUSING_SUPPLIER_FIXTURE,
+  category: ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+});
+
+export const GARAGE_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
+  year: 2025,
+  type: EExpenseType.VARIABLE,
+  paid: false,
+  value: 220.0,
+  month: EMonth.JANUARY,
+  group: MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
+  active: true,
+  supplier: GARAGE_HOUSING_SUPPLIER_FIXTURE,
+  category: ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+});
+
+export const LIST_MONTE_CARLO_EXPENSE_FIXTURE: Array<Expense> = [
+  NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE,
+  IPTU_MONTE_CARLO_EXPENSE_FIXTURE,
+  CLARO_MONTE_CARLO_EXPENSE_FIXTURE,
+  DAY_LABORER_MONTE_CARLO_EXPENSE_FIXTURE,
+  CONDOMINIUM_MONTE_CARLO_EXPENSE_FIXTURE,
+  GARAGE_MONTE_CARLO_EXPENSE_FIXTURE,
+];
+
+export const OLD_BIKERS_EXPENSE_FIXTURE: Expense = new Expense({
+  year: 2025,
+  type: EExpenseType.VARIABLE,
+  paid: false,
+  value: 700,
+  month: EMonth.JANUARY,
+  group: PERSONAL_EXPENSE_GROUP_FIXTURE,
+  active: true,
+  supplier: OLD_BIKERS_TRANSPORT_SUPPLIER_FIXTURE,
+  category: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
+});

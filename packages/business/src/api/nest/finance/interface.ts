@@ -1,3 +1,5 @@
+import {EExpenseType, EMonth} from "./enum";
+
 interface IFinanceBase {
     id: string;
     name: string;
@@ -6,45 +8,59 @@ interface IFinanceBase {
     deleted_at: Date;
 }
 
+export type IExpenseGroup = IFinanceBase;
+
+export type IExpenseCategoryType = IFinanceBase;
+
+export interface IExpenseCategory extends IFinanceBase {
+    type: IExpenseCategoryType;
+}
+
 export type ISupplierType = IFinanceBase;
 
-export interface ISupplierCategory extends IFinanceBase {
-    type: ISupplierType;
-}
-
-export type ITypePaymentMethod = IFinanceBase;
-
-export interface IPaymentMethod extends IFinanceBase {
-    type: ITypePaymentMethod;
-}
-
 export interface ISupplier extends IFinanceBase {
-    category: ISupplierCategory;
-    description?: string;
-}
-
-export type TExpense = 'FIXED' | 'VARIABLE';
-export type TStatusExpense = 'PENDING' | 'PAID' | 'CANCELLED' | 'EXPIRED' | 'NOT PAID';
-
-export type TMonth = 'JANUARY'| 'FEBRUARY'| 'MARCH'| 'APRIL'| 'MAY'| 'JUNE'| 'JULY'| 'AUGUST'| 'SEPTEMBER'| 'OCTOBER'| 'NOVEMBER'| 'DECEMBER';
-
-export type TFrequency = 'MONTHLY' | 'QUARTERLY' | 'SEMIANNUALLY' | 'ANNUALLY';
-export interface IExpense extends IFinanceBase {
-    type: TExpense;
-    total: number;
-    year: number;
-    month: TMonth;
+    type: ISupplierType;
+    name: string;
     active?: boolean;
-    status: TStatusExpense;
-    supplier: ISupplier;
-    frequency?: TFrequency;
     description?: string;
-    payment_method: IPaymentMethod;
 }
 
-export interface IInstallment extends IFinanceBase {
+export interface IExpense extends Omit<IFinanceBase, 'name'> {
+    year?: number;
+    type: EExpenseType;
+    paid?: boolean;
     value: number;
-    expense:IExpense;
-    installment_number: number;
-    payment_status: 'PENDING' | 'PAID';
+    total?: number;
+    month?: EMonth;
+    group: IExpenseGroup;
+    active?: boolean;
+    supplier: ISupplier;
+    category: IExpenseCategory;
+    total_paid?: number;
+    january?: number;
+    january_paid?: boolean;
+    february?: number;
+    february_paid?: boolean;
+    march?: number;
+    march_paid?: boolean;
+    april?: number;
+    april_paid?: boolean;
+    may?: number;
+    may_paid?: boolean;
+    june?: number;
+    june_paid?: boolean;
+    july?: number;
+    july_paid?: boolean;
+    august?: number;
+    august_paid?: boolean;
+    september?: number;
+    september_paid?: boolean;
+    october?: number;
+    october_paid?: boolean;
+    november?: number;
+    november_paid?: boolean;
+    december?: number;
+    december_paid?: boolean;
+    description?: string;
+    instalment_number?: number;
 }

@@ -22,8 +22,8 @@ export class SupplierController {
   }
 
   @Post()
-  async create(@Body() { name, category }: CreateSupplierDto) {
-    return await this.service.create({ name, category });
+  async create(@Body() { name, type }: CreateSupplierDto) {
+    return await this.service.create({ name, type });
   }
 
   @Get('/:param')

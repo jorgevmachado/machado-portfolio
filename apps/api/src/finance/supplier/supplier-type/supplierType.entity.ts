@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import type { SupplierType as EntitySupplierType } from '@repo/business/finance/interface';
 
-import { SupplierCategory } from '../supplier-category/supplierCategory.entity';
+import { Supplier } from '../supplier.entity';
 
 @Entity({ name: 'supplier_types' })
 export class SupplierType implements EntitySupplierType {
@@ -20,15 +20,9 @@ export class SupplierType implements EntitySupplierType {
   @Column({ nullable: false, unique: true, length: 200 })
   name: string;
 
-  @OneToMany(
-    () => SupplierCategory,
-    (supplierCategory) => supplierCategory.type,
-    {
-      nullable: false,
-    },
-  )
+  @OneToMany(() => Supplier, (supplier) => supplier.type)
   @JoinTable()
-  categories!: Array<SupplierCategory>;
+  suppliers!: Array<Supplier>;
 
   @CreateDateColumn()
   created_at: Date;

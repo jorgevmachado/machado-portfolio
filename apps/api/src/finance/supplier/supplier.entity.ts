@@ -5,13 +5,16 @@ import {
   Entity,
   JoinTable,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import type { Supplier as EntitySupplier } from '@repo/business/finance/interface';
 
-import { SupplierCategory } from './supplier-category/supplierCategory.entity';
+import { Expense } from '../expense/expense.entity';
+
+import { SupplierType } from './supplier-type/supplierType.entity';
 
 @Entity({ name: 'suppliers' })
 export class Supplier implements EntitySupplier {
@@ -21,15 +24,15 @@ export class Supplier implements EntitySupplier {
   @Column({ nullable: false, unique: true, length: 200 })
   name: string;
 
-  @ManyToOne(
-    () => SupplierCategory,
-    (supplierCategory) => supplierCategory.suppliers,
-    {
-      nullable: false,
-    },
-  )
+  @ManyToOne(() => SupplierType, (supplierType) => supplierType.suppliers, {
+    nullable: false,
+  })
   @JoinTable()
-  category: SupplierCategory;
+  type: SupplierType;
+
+  @OneToMany(() => Expense, (expense) => expense.group)
+  @JoinTable()
+  expenses!: Array<Expense>;
 
   @CreateDateColumn()
   created_at: Date;
@@ -44,7 +47,7 @@ export class Supplier implements EntitySupplier {
     if (supplier) {
       this.id = supplier?.id ?? this.id;
       this.name = supplier?.name ?? this.name;
-      this.category = supplier?.category ?? this.category;
+      this.type = supplier?.type ?? this.type;
       this.created_at = supplier?.created_at ?? this.created_at;
       this.updated_at = supplier?.updated_at ?? this.updated_at;
       this.deleted_at = supplier?.deleted_at ?? this.deleted_at;

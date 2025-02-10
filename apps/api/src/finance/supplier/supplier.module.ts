@@ -5,7 +5,6 @@ import { PassportModule } from '@nestjs/passport';
 import { SupplierService } from './supplier.service';
 import { Supplier } from './supplier.entity';
 import { SupplierTypeModule } from './supplier-type/supplier-type.module';
-import { SupplierCategoryModule } from './supplier-category/supplier-category.module';
 import { SupplierController } from './supplier.controller';
 
 
@@ -15,7 +14,6 @@ import { SupplierController } from './supplier.controller';
     TypeOrmModule.forFeature([Supplier]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     SupplierTypeModule,
-    SupplierCategoryModule,
   ],
   providers: [SupplierService],
   exports: [SupplierService],

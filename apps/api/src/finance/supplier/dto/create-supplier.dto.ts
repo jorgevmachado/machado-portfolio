@@ -1,5 +1,5 @@
 import { IsNotEmpty, MaxLength } from 'class-validator';
-import { SupplierCategory } from '../supplier-category/supplierCategory.entity';
+import { SupplierType } from '../supplier-type/supplierType.entity';
 
 export class CreateSupplierDto {
   @IsNotEmpty()
@@ -8,5 +8,5 @@ export class CreateSupplierDto {
 
   @IsNotEmpty()
   @MaxLength(200)
-  category: string | SupplierCategory;
+  type: string | SupplierType;
 }

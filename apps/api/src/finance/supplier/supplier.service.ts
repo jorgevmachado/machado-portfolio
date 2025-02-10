@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/fixtures/supplier/supplier';
+
 import { Service } from '../../shared';
 
 import { Supplier } from './supplier.entity';
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
-import { SupplierCategoryService } from './supplier-category/supplier-category.service';
-import { SupplierCategory } from './supplier-category/supplierCategory.entity';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
-
+import { SupplierType } from './supplier-type/supplierType.entity';
 
 @Injectable()
 export class SupplierService extends Service<Supplier> {
@@ -17,33 +17,32 @@ export class SupplierService extends Service<Supplier> {
     @InjectRepository(Supplier)
     protected repository: Repository<Supplier>,
     protected supplierTypeService: SupplierTypeService,
-    protected supplierCategoryService: SupplierCategoryService,
   ) {
-    super('suppliers', ['category'], repository);
+    super('suppliers', ['type'], repository);
   }
 
-  async create({ name, category }: CreateSupplierDto) {
+  async create({ name, type }: CreateSupplierDto) {
     const supplier = new Supplier();
     supplier.name = name;
-    supplier.category = await this.getSupplierCategory(category);
+    supplier.type = await this.getSupplierType(type);
     return await this.save(supplier);
   }
 
-  private async getSupplierCategory(
-    category: string | SupplierCategory,
-  ): Promise<SupplierCategory> {
-    this.validateSupplierCategory(category);
-    if (this.isSupplierCategory(category)) {
-      return category;
+  private async getSupplierType(
+    type: string | SupplierType,
+  ): Promise<SupplierType> {
+    this.validateSupplierType(type);
+    if (this.isSupplierType(type)) {
+      return type;
     }
-    const supplierCategory = await this.supplierCategoryService.findOne({
-      value: category,
+    const supplierType = await this.supplierTypeService.findOne({
+      value: type,
     });
-    this.validateSupplierCategory(supplierCategory);
-    return supplierCategory;
+    this.validateSupplierType(supplierType);
+    return supplierType;
   }
 
-  private validateSupplierCategory(type: string | SupplierCategory) {
+  private validateSupplierType(type: string | SupplierType) {
     if (!type) {
       throw new Error(
         'The selected Supplier Type does not exist, try another one or create one.',
@@ -51,17 +50,40 @@ export class SupplierService extends Service<Supplier> {
     }
   }
 
-  private isSupplierCategory(value: any): value is SupplierCategory {
+  private isSupplierType(value: any): value is SupplierType {
     return typeof value === 'object' && 'id' in value && 'name' in value;
   }
 
-  async seeds() {
+  async seed() {
     const supplierTypes = await this.supplierTypeService.seed();
-    const supplierCategories =
-      await this.supplierCategoryService.seed(supplierTypes);
+    const suppliers = (await Promise.all(
+        LIST_SUPPLIER_FIXTURE.map(async (supplier) => {
+          const result = await this.findOne({
+            value: supplier.name,
+            withThrow: false,
+            withDeleted: true,
+          });
+          if (!result) {
+            const type = supplierTypes.find(
+                (type) => type.name === supplier.type.name,
+            );
+            if (!type) {
+              throw new Error(
+                  'The selected Supplier Type does not exist, try another one or create one.',
+              );
+            }
+            return this.create({
+              name: supplier.name,
+              type: type,
+            });
+          }
+          return result;
+        }),
+    )).filter((supplier): supplier is Supplier => supplier !== undefined);
 
-    console.log('supplierTypes => ', supplierTypes.length);
-    console.log('supplierCategories => ', supplierCategories.length);
-    return { message: 'Seeds Executed Successfully!!!' };
+    return {
+      supplierTypes,
+      suppliers,
+    }
   }
 }

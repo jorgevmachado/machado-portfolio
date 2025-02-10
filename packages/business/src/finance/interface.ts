@@ -1,20 +1,20 @@
 import type {
-  IExpense,
-  IPaymentMethod,
+  IExpense, IExpenseCategory, IExpenseCategoryType,
+  IExpenseGroup,
   ISupplier,
-  ISupplierCategory,
   ISupplierType,
-  ITypePaymentMethod,
 } from '../api/nest/finance';
 
 export type SupplierType = ISupplierType;
 
-export type SupplierCategory = ISupplierCategory;
-
-export type TypePaymentMethod = ITypePaymentMethod;
-
-export type PaymentMethod = IPaymentMethod;
-
 export type Supplier = ISupplier;
 
+export type ExpenseGroup = IExpenseGroup;
+
+export type ExpenseCategoryType = IExpenseCategoryType;
+
+export type ExpenseCategory = IExpenseCategory;
+
 export type Expense = IExpense;
+
+
