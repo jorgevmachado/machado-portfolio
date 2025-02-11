@@ -16,6 +16,7 @@ export interface FilterParams {
 
 export interface FindByParams {
   withThrow?: boolean;
+  relations?: Array<string>;
   searchParams: SearchParams;
   withDeleted?: boolean;
   withRelations?: boolean;

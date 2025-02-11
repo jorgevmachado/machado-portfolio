@@ -74,14 +74,14 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
 
   async findBy({
     withThrow,
+    relations,
     searchParams,
     withDeleted,
     withRelations,
   }: FindByParams) {
-    console.log('# => searchParams => ', searchParams)
     const query = new Query<T>({
       alias: this.alias,
-      relations: this.relations,
+      relations: relations ?? this.relations,
       repository: this.repository,
       withDeleted,
       searchParams,
@@ -99,6 +99,7 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
 
   async findOne({
     value,
+    relations,
     withThrow = true,
     withDeleted = false,
     withRelations = true,
@@ -108,6 +109,7 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
         by: isUUID(value) ? 'id' : 'name',
         value,
       },
+      relations,
       withThrow,
       withDeleted,
       withRelations,

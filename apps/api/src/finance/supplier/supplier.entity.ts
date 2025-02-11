@@ -32,7 +32,7 @@ export class Supplier implements EntitySupplier {
 
   @OneToMany(() => Expense, (expense) => expense.group)
   @JoinTable()
-  expenses!: Array<Expense>;
+  expenses?: Array<Expense>;
 
   @CreateDateColumn()
   created_at: Date;

@@ -22,7 +22,7 @@ export class SupplierType implements EntitySupplierType {
 
   @OneToMany(() => Supplier, (supplier) => supplier.type)
   @JoinTable()
-  suppliers!: Array<Supplier>;
+  suppliers?: Array<Supplier>;
 
   @CreateDateColumn()
   created_at: Date;
