@@ -9,13 +9,13 @@ import type { PaginateParameters } from '@repo/business/paginate/interface';
 import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
 import type { QueryParameters } from '@repo/business/shared/interface';
 
-import { Pokemon } from './entities/pokemon.entity';
+import { Pokemon } from './pokemon.entity';
 
 import { Service } from '../shared';
 
-import { AbilityService } from './ability/ability.service';
-import { MoveService } from './move/move.service';
-import { TypeService } from './type/type.service';
+import { PokemonAbilityService } from './pokemon-ability/pokemon-ability.service';
+import { PokemonMoveService } from './pokemon-move/pokemon-move.service';
+import { PokemonTypeService } from './pokemon-type/pokemon-type.service';
 
 @Injectable()
 export class PokemonService extends Service<Pokemon> {
@@ -23,9 +23,9 @@ export class PokemonService extends Service<Pokemon> {
     @InjectRepository(Pokemon)
     protected repository: Repository<Pokemon>,
     protected business: ExternalPokemonService,
-    protected typeService: TypeService,
-    protected moveService: MoveService,
-    protected abilityService: AbilityService,
+    protected typeService: PokemonTypeService,
+    protected moveService: PokemonMoveService,
+    protected abilityService: PokemonAbilityService,
   ) {
     super(
       'pokemons',

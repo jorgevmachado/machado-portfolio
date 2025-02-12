@@ -4,21 +4,21 @@ import { Repository } from 'typeorm';
 
 import { Service } from '../../shared';
 
-import { Ability } from '../entities/ability.entity';
+import { PokemonType } from './pokemon-type.entity';
 
 @Injectable()
-export class AbilityService extends Service<Ability> {
+export class PokemonTypeService extends Service<PokemonType> {
   constructor(
-    @InjectRepository(Ability)
-    protected repository: Repository<Ability>,
+    @InjectRepository(PokemonType)
+    protected repository: Repository<PokemonType>,
   ) {
-    super('abilities', [], repository);
+    super('pokemon_types', [], repository);
   }
 
-  async findList(types: Array<Ability>) {
+  async findList(types: Array<PokemonType>) {
     return await Promise.all(
       types.map(async (response) =>
-        this.findOneByOrder<Ability>({
+        this.findOneByOrder<PokemonType>({
           order: response.order,
           response,
           withThrow: false,
@@ -29,10 +29,7 @@ export class AbilityService extends Service<Ability> {
     );
   }
 
-  async completingData(
-    entity: Ability,
-    responseType: Ability,
-  ): Promise<Ability> {
+  async completingData(entity: PokemonType, responseType: PokemonType): Promise<PokemonType> {
     if (!entity) {
       await this.save(responseType);
 

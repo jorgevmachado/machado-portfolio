@@ -8,20 +8,20 @@ import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonSe
 
 import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/mock/pokemon/fixtures/completes/index';
 
-import { Move } from '../entities/move.entity';
+import { PokemonMove } from './pokemon-move.entity';
 
-import { MoveService } from './move.service';
+import { PokemonMoveService } from './pokemon-move.service';
 
 describe('MoveService', () => {
-  let service: MoveService;
-  let repository: Repository<Move>;
+  let service: PokemonMoveService;
+  let repository: Repository<PokemonMove>;
   let business: ExternalPokemonService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        MoveService,
-        { provide: getRepositoryToken(Move), useClass: Repository },
+        PokemonMoveService,
+        { provide: getRepositoryToken(PokemonMove), useClass: Repository },
         {
           provide: ExternalPokemonService,
           useValue: {
@@ -31,8 +31,8 @@ describe('MoveService', () => {
       ],
     }).compile();
 
-    service = module.get<MoveService>(MoveService);
-    repository = module.get<Repository<Move>>(getRepositoryToken(Move));
+    service = module.get<PokemonMoveService>(PokemonMoveService);
+    repository = module.get<Repository<PokemonMove>>(getRepositoryToken(PokemonMove));
     business = module.get<ExternalPokemonService>(ExternalPokemonService);
   });
 

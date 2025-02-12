@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {ConflictException, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -26,16 +26,27 @@ export class ExpenseGroupService extends Service<ExpenseGroup> {
     return await this.save(expenseGroup);
   }
 
-  findAll() {
-    return `This action returns all expenseGroup`;
+  async update(param: string, { name }: UpdateExpenseGroupDto) {
+    const result = await this.findOne({ value: param });
+    result.name = name;
+    return this.save(result);
   }
 
-  update(param: string, updateExpenseGroupDto: UpdateExpenseGroupDto) {
-    return `This action updates a #${param} expenseGroup`;
-  }
-
-  remove(param: string) {
-    return `This action removes a #${param} expenseGroup`;
+  async remove(param: string) {
+    const result = await this.findOne({
+      value: param,
+      withDeleted: true,
+      relations: ['categories'],
+    });
+    if (result?.expenses?.length) {
+      throw this.error(
+          new ConflictException(
+              'You cannot delete the expense group because it is already in use.',
+          ),
+      );
+    }
+    await this.repository.softRemove(result);
+    return { message: 'Successfully removed' };
   }
 
   async seed() {

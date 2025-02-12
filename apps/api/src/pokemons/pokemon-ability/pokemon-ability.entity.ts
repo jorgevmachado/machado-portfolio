@@ -8,8 +8,8 @@ import {
 } from 'typeorm';
 import type { AbilityEntity } from '@repo/business/pokemon/interface';
 
-@Entity({ name: 'abilities' })
-export class Ability implements AbilityEntity {
+@Entity({ name: 'pokemon_abilities' })
+export class PokemonAbility implements AbilityEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -37,7 +37,7 @@ export class Ability implements AbilityEntity {
   @DeleteDateColumn()
   deleted_at: Date;
 
-  constructor(ability?: Ability) {
+  constructor(ability?: PokemonAbility) {
     if (ability) {
       this.id = ability.id ?? this.id;
       this.url = ability.url ?? this.url;

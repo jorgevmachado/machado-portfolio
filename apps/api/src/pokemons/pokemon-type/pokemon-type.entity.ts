@@ -9,8 +9,8 @@ import {
 
 import type { TypeEntity } from '@repo/business/pokemon/interface';
 
-@Entity({ name: 'types' })
-export class Type implements TypeEntity {
+@Entity({ name: 'pokemon_types' })
+export class PokemonType implements TypeEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -38,7 +38,7 @@ export class Type implements TypeEntity {
   @Column({ nullable: false, type: 'varchar', length: 200 })
   background_color: string;
 
-  constructor(type?: Type) {
+  constructor(type?: PokemonType) {
     if (type) {
       this.id = type?.id ?? this.id;
       this.url = type.url ?? this.url;

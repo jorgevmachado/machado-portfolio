@@ -5,24 +5,24 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/mock/pokemon/fixtures/completes/index';
 
-import { Type } from '../entities/type.entity';
+import { PokemonType } from './pokemon-type.entity';
 
-import { TypeService } from './type.service';
+import { PokemonTypeService } from './pokemon-type.service';
 
 describe('TypeService', () => {
-  let service: TypeService;
-  let repository: Repository<Type>;
+  let service: PokemonTypeService;
+  let repository: Repository<PokemonType>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        TypeService,
-        { provide: getRepositoryToken(Type), useClass: Repository },
+        PokemonTypeService,
+        { provide: getRepositoryToken(PokemonType), useClass: Repository },
       ],
     }).compile();
 
-    service = module.get<TypeService>(TypeService);
-    repository = module.get<Repository<Type>>(getRepositoryToken(Type));
+    service = module.get<PokemonTypeService>(PokemonTypeService);
+    repository = module.get<Repository<PokemonType>>(getRepositoryToken(PokemonType));
   });
 
   it('should be defined', () => {

@@ -14,5 +14,11 @@ export const config = {
   coveragePathIgnorePatterns: [
       'interface.ts',
       'index.ts',
+      '.module.ts',
+      '.strategy.ts',
+      '.decorator.ts',
+      '.guards.ts',
+      '.entity.ts',
+      '.dto.ts',
   ]
 } as const satisfies Config;

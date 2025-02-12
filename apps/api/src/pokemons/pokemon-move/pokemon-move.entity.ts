@@ -8,8 +8,8 @@ import {
 } from 'typeorm';
 import type { MoveEntity } from '@repo/business/pokemon/interface';
 
-@Entity({ name: 'moves' })
-export class Move implements MoveEntity {
+@Entity({ name: 'pokemon_moves' })
+export class PokemonMove implements MoveEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -61,7 +61,7 @@ export class Move implements MoveEntity {
   @Column({ nullable: true })
   effect_chance?: number;
 
-  constructor(move?: Move) {
+  constructor(move?: PokemonMove) {
     if (move) {
       this.id = move.id ?? this.id;
       this.pp = move.pp ?? this.pp;

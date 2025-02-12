@@ -6,22 +6,22 @@ import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonSe
 
 import { Service } from '../../shared';
 
-import { Move } from '../entities/move.entity';
+import { PokemonMove } from './pokemon-move.entity';
 
 @Injectable()
-export class MoveService extends Service<Move> {
+export class PokemonMoveService extends Service<PokemonMove> {
   constructor(
-    @InjectRepository(Move)
-    protected repository: Repository<Move>,
+    @InjectRepository(PokemonMove)
+    protected repository: Repository<PokemonMove>,
     protected business: ExternalPokemonService,
   ) {
-    super('moves', [], repository);
+    super('pokemon_moves', [], repository);
   }
 
-  async findList(moves: Array<Move>) {
+  async findList(moves: Array<PokemonMove>) {
     return await Promise.all(
       moves.map(async (move) =>
-        this.findOneByOrder<Move>({
+        this.findOneByOrder<PokemonMove>({
           order: move.order,
           response: move,
           withThrow: false,
@@ -32,7 +32,7 @@ export class MoveService extends Service<Move> {
     );
   }
 
-  async completingData(entity: Move, response: Move) {
+  async completingData(entity: PokemonMove, response: PokemonMove) {
     if (!entity) {
       const move = await this.business
         .buildMove(response)

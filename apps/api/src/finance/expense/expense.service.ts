@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {ConflictException, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -27,17 +27,20 @@ export class ExpenseService extends Service<Expense> {
   }
 
   async seed() {
+    const result = await this.expenseCategoryService.seed();
+    if(!result) {
+      throw this.error(new ConflictException('Error seeding expense categories'));
+    }
+
     const expenseGroups = await this.expenseGroupService.seed();
     if(!expenseGroups) {
-      throw Error('Error seeding expense groups');
+      throw this.error(new ConflictException('Error seeding expense groups'));
     }
-    const expenseCategories = await this.expenseCategoryService.seed();
-    if(!expenseCategories) {
-      throw Error('Error seeding expense categories');
-    }
+
     return {
+      expenseCategoryTypes: result.expenseCategoryTypes,
+      expenseCategories: result.expenseCategories,
       expenseGroups,
-      expenseCategories,
     };
   }
 }

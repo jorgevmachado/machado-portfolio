@@ -18,9 +18,9 @@ import type {
   TypeEntity,
 } from '@repo/business/pokemon/interface';
 
-import { Ability } from './ability.entity';
-import { Move } from './move.entity';
-import { Type } from './type.entity';
+import { PokemonAbility } from './pokemon-ability/pokemon-ability.entity';
+import { PokemonMove } from './pokemon-move/pokemon-move.entity';
+import { PokemonType } from './pokemon-type/pokemon-type.entity';
 
 @Entity({ name: 'pokemons' })
 export class Pokemon implements PokemonEntity {
@@ -42,14 +42,14 @@ export class Pokemon implements PokemonEntity {
   @Column({ nullable: true })
   speed?: number;
 
-  @ManyToMany(() => Move, { nullable: true })
+  @ManyToMany(() => PokemonMove, { nullable: true })
   @JoinTable()
   moves?: Array<MoveEntity>;
 
   @Column({ nullable: false })
   order: number;
 
-  @ManyToMany(() => Type, { nullable: true })
+  @ManyToMany(() => PokemonType, { nullable: true })
   @JoinTable()
   types?: Array<TypeEntity>;
 
@@ -71,7 +71,7 @@ export class Pokemon implements PokemonEntity {
   @Column({ nullable: true, length: 200 })
   shape_url?: string;
 
-  @ManyToMany(() => Ability, { nullable: true })
+  @ManyToMany(() => PokemonAbility, { nullable: true })
   @JoinTable()
   abilities?: Array<AbilityEntity>;
 
