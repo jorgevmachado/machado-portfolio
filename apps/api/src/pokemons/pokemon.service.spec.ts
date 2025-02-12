@@ -132,7 +132,7 @@ describe('PokemonService', () => {
           .mockReturnValueOnce(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE),
       } as any);
       expect(
-        await service.findOne(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name),
+        await service.findOne({ value: BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name }),
       ).toEqual(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE);
     });
     it('must return a incomplete pokemon from the database', async () => {
@@ -144,7 +144,7 @@ describe('PokemonService', () => {
           .mockReturnValueOnce(BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
       } as any);
       expect(
-        await service.findOne(
+        await service.findOnePokemon(
           BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE.id,
           false,
         ),
@@ -222,7 +222,7 @@ describe('PokemonService', () => {
       } as any);
 
       expect(
-        await service.findOne(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name),
+        await service.findOnePokemon(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name),
       ).toEqual(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE);
     });
   });

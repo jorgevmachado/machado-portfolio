@@ -5,7 +5,7 @@ import { Service } from '../../../shared';
 
 import { SupplierType } from './supplierType.entity';
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
-import { LIST__SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier/type/type';
+import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier/type/type';
 import { UpdateSupplierTypeDto } from './dto/update-supplier-type.dto';
 
 @Injectable()
@@ -35,12 +35,13 @@ export class SupplierTypeService extends Service<SupplierType> {
 
       throw this.error(new ConflictException('You cannot delete the supplier type because it is already in use.'));
     }
-    return this.repository.softRemove(result);
+    await this.repository.softRemove(result);
+    return { message: 'Successfully removed' };
   }
 
   async seed(): Promise<Array<SupplierType>> {
     return (await Promise.all(
-      LIST__SUPPLIER_TYPE_FIXTURE.map(async (type) => {
+      LIST_SUPPLIER_TYPE_FIXTURE.map(async (type) => {
         const result = await this.findOne({
           value: type.name,
           withThrow: false,

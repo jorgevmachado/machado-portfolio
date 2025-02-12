@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {ConflictException, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -18,25 +18,36 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
   ) {
     super('expense_category_types', [], repository);
   }
-  create(createExpenseCategoryTypeDto: CreateExpenseCategoryTypeDto) {
+  async create({ name }: CreateExpenseCategoryTypeDto) {
     const expenseCategoryType = new ExpenseCategoryType();
-    expenseCategoryType.name = createExpenseCategoryTypeDto.name;
-    return this.save(expenseCategoryType);
+    expenseCategoryType.name = name;
+    return await this.save(expenseCategoryType);
   }
 
-  findAll() {
-    return `This action returns all expenseCategoryType`;
-  }
-
-  update(
+  async update(
     param: string,
-    updateExpenseCategoryTypeDto: UpdateExpenseCategoryTypeDto,
+    { name }: UpdateExpenseCategoryTypeDto,
   ) {
-    return `This action updates a #${param} expenseCategoryType`;
+    const result = await this.findOne({ value: param });
+    result.name = name;
+    return this.save(result);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} expenseCategoryType`;
+  async remove(param: string) {
+    const result = await this.findOne({
+      value: param,
+      withDeleted: true,
+      relations: ['categories'],
+    });
+    if (result?.categories?.length) {
+      throw this.error(
+          new ConflictException(
+              'You cannot delete the expense category type because it is already in use.',
+          ),
+      );
+    }
+    await this.repository.softRemove(result);
+    return { message: 'Successfully removed' };
   }
 
   async seed(): Promise<Array<ExpenseCategoryType>> {

@@ -42,14 +42,14 @@ export class ExpenseCategoryController {
 
   @Patch(':param/category')
   update(
-    @Param('id') id: string,
+    @Param('param') param: string,
     @Body() updateExpenseCategoryDto: UpdateExpenseCategoryDto,
   ) {
-    return this.service.update(+id, updateExpenseCategoryDto);
+    return this.service.update(param, updateExpenseCategoryDto);
   }
 
-  @Delete(':id/category')
-  remove(@Param('id') id: string) {
-    return this.service.remove(+id);
+  @Delete(':param/category')
+  remove(@Param('param') param: string) {
+    return this.service.remove(param);
   }
 }

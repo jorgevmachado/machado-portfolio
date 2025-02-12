@@ -57,7 +57,7 @@ export const UNKNOWN_SUPPLIER_TYPE_FIXTURE: SupplierType = new SupplierType({
   deleted_at: null
 });
 
-export const LIST__SUPPLIER_TYPE_FIXTURE: Array<SupplierType> = [
+export const LIST_SUPPLIER_TYPE_FIXTURE: Array<SupplierType> = [
   HOUSING_SUPPLIER_TYPE_FIXTURE,
   FOOD_SUPPLIER_TYPE_FIXTURE,
   TRANSPORT_SUPPLIER_TYPE_FIXTURE,

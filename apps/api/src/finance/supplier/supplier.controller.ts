@@ -47,4 +47,9 @@ export class SupplierController {
   ) {
     return this.service.update(param, updateSupplierDto);
   }
+
+  @Put(':param')
+  remove(@Param('param') param: string) {
+    return this.service.remove(param);
+  }
 }

@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 
 import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
-  LIST__SUPPLIER_TYPE_FIXTURE,
+  LIST_SUPPLIER_TYPE_FIXTURE,
 } from '@repo/mock/finance/fixtures/supplier/type/type';
 
 import { VIVO_HOUSING_SUPPLIER_FIXTURE } from '@repo/mock/finance/fixtures/supplier/supplier';
@@ -100,10 +100,7 @@ describe('SupplierTypeService', () => {
         deleted_at: HOUSING_SUPPLIER_TYPE_FIXTURE.created_at,
       });
 
-      expect(await service.remove(HOUSING_SUPPLIER_TYPE_FIXTURE.id)).toEqual({
-        ...expected,
-        deleted_at: HOUSING_SUPPLIER_TYPE_FIXTURE.created_at,
-      });
+      expect(await service.remove(HOUSING_SUPPLIER_TYPE_FIXTURE.id)).toEqual({ message: 'Successfully removed' });
     });
 
     it('should throw a ConflictException when SupplierType is in use', async () => {
@@ -127,7 +124,7 @@ describe('SupplierTypeService', () => {
 
   describe('seed', () => {
     it('should seed the database when exist in database', async () => {
-      LIST__SUPPLIER_TYPE_FIXTURE.forEach((type) => {
+      LIST_SUPPLIER_TYPE_FIXTURE.forEach((type) => {
         jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
           andWhere: jest.fn(),
           withDeleted: jest.fn(),
@@ -135,10 +132,10 @@ describe('SupplierTypeService', () => {
         } as any);
       });
 
-      expect(await service.seed()).toEqual(LIST__SUPPLIER_TYPE_FIXTURE);
+      expect(await service.seed()).toEqual(LIST_SUPPLIER_TYPE_FIXTURE);
     });
     it('should seed the database when not exist in database', async () => {
-      LIST__SUPPLIER_TYPE_FIXTURE.forEach(() => {
+      LIST_SUPPLIER_TYPE_FIXTURE.forEach(() => {
         jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
           andWhere: jest.fn(),
           withDeleted: jest.fn(),
@@ -146,10 +143,10 @@ describe('SupplierTypeService', () => {
         } as any);
       });
 
-      LIST__SUPPLIER_TYPE_FIXTURE.forEach((type) => {
+      LIST_SUPPLIER_TYPE_FIXTURE.forEach((type) => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(type);
       });
-      expect(await service.seed()).toEqual(LIST__SUPPLIER_TYPE_FIXTURE);
+      expect(await service.seed()).toEqual(LIST_SUPPLIER_TYPE_FIXTURE);
     });
   });
 });

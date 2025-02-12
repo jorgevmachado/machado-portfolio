@@ -23,7 +23,7 @@ export class ExpenseGroup implements EntityExpenseGroup {
 
   @OneToMany(() => Expense, (expense) => expense.group)
   @JoinTable()
-  expenses!: Array<Expense>;
+  expenses?: Array<Expense>;
 
   @CreateDateColumn()
   created_at: Date;

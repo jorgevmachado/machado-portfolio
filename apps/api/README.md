@@ -33,3 +33,15 @@ npm run test -- --findRelatedTests src/pokemons/type/type.service.spec.ts
 npm run test -- --findRelatedTests src/pokemons/ability/ability.service.spec.ts
 
 npm run test -- --findRelatedTests src/finance/supplier/supplier-type/supplier-type.service.spec.ts
+npm run test -- --findRelatedTests src/finance/supplier/supplier-type/supplier-type.controller.spec.ts
+
+npm run test -- --findRelatedTests src/finance/supplier/supplier.service.spec.ts
+npm run test -- --findRelatedTests src/finance/supplier/supplier.controller.spec.ts
+
+
+npm run test -- --findRelatedTests src/finance/expense/expense-category/expense-category-type/expense-category-type.service.spec.ts
+npm run test -- --findRelatedTests src/finance/expense/expense-category/expense-category-type/expense-category-type.controller.spec.ts
+
+npm run test -- --findRelatedTests src/finance/expense/expense-category/expense-category.service.spec.ts
+npm run test -- --findRelatedTests src/finance/expense/expense-category/expense-category.controller.spec.ts
+

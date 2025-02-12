@@ -51,8 +51,8 @@ export class ExpenseCategoryTypeController {
     );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.service.remove(+id);
+  @Delete(':param/type')
+  remove(@Param('param') param: string) {
+    return this.service.remove(param);
   }
 }

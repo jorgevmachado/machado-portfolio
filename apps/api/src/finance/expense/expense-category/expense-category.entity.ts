@@ -33,7 +33,7 @@ export class ExpenseCategory implements EntityExpenseCategory {
 
   @OneToMany(() => Expense, (expense) => expense.group)
   @JoinTable()
-  expenses!: Array<Expense>;
+  expenses?: Array<Expense>;
 
   @Column({ nullable: false, unique: true, length: 200 })
   name: string;

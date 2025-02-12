@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -31,10 +31,27 @@ export class SupplierService extends Service<Supplier> {
 
   async update(param: string, { name, type }: UpdateSupplierDto) {
     const result = await this.findOne({ value: param });
-    const supplierType = await this.getSupplierType(type);
+    const supplierType = !type ? result.type : await this.getSupplierType(type);
     result.name = name;
     result.type = supplierType;
     return this.save(result);
+  }
+
+  async remove(param: string) {
+    const result = await this.findOne({
+      value: param,
+      withDeleted: true,
+      relations: ['expenses'],
+    });
+    if (result?.expenses?.length) {
+      throw this.error(
+        new ConflictException(
+          'You cannot delete the supplier because it is already in use.',
+        ),
+      );
+    }
+    await this.repository.softRemove(result);
+    return { message: 'Successfully removed' };
   }
 
   private async getSupplierType(
@@ -53,8 +70,10 @@ export class SupplierService extends Service<Supplier> {
 
   private validateSupplierType(type: string | SupplierType) {
     if (!type) {
-      throw new Error(
-        'The selected Supplier Type does not exist, try another one or create one.',
+      throw this.error(
+        new ConflictException(
+          'The selected Supplier Type does not exist, try another one or create one.',
+        ),
       );
     }
   }
@@ -78,8 +97,10 @@ export class SupplierService extends Service<Supplier> {
               (type) => type.name === supplier.type.name,
             );
             if (!type) {
-              throw new Error(
-                'The selected Supplier Type does not exist, try another one or create one.',
+              throw this.error(
+                new ConflictException(
+                  'The selected Supplier Type does not exist, try another one or create one.',
+                ),
               );
             }
             return this.create({

@@ -22,7 +22,7 @@ export class ExpenseCategoryType implements EntityExpenseCategoryType {
 
   @OneToMany(() => ExpenseCategory, (expenseCategory) => expenseCategory.type)
   @JoinTable()
-  categories!: Array<ExpenseCategory>;
+  categories?: Array<ExpenseCategory>;
 
   @CreateDateColumn()
   created_at: Date;
