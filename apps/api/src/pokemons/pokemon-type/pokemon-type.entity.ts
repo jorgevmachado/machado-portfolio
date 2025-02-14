@@ -7,10 +7,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import type { TypeEntity } from '@repo/business/pokemon/interface';
+import type { PokemonTypeEntity } from '@repo/business/pokemon/pokemon-type/interface';
 
 @Entity({ name: 'pokemon_types' })
-export class PokemonType implements TypeEntity {
+export class PokemonType implements PokemonTypeEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -30,7 +30,7 @@ export class PokemonType implements TypeEntity {
   updated_at: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at?: Date;
 
   @Column({ nullable: false, type: 'varchar', length: 200 })
   text_color: string;

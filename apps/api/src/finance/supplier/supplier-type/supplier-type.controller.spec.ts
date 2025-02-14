@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
   LIST_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/supplier/type/type';
+} from '@repo/mock/finance/fixtures/supplier-type/supplierType';
 
 import { SupplierTypeController } from './supplier-type.controller';
 import { SupplierTypeService } from './supplier-type.service';

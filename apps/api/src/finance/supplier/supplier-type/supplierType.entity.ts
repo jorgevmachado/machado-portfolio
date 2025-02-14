@@ -8,12 +8,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import type { SupplierType as EntitySupplierType } from '@repo/business/finance/interface';
+import type { SupplierTypeEntity } from '@repo/business/finance/supplier-type/interface';
 
 import { Supplier } from '../supplier.entity';
 
 @Entity({ name: 'supplier_types' })
-export class SupplierType implements EntitySupplierType {
+export class SupplierType implements SupplierTypeEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -31,7 +31,7 @@ export class SupplierType implements EntitySupplierType {
   updated_at: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at?: Date;
 
   constructor(supplierType?: SupplierType) {
     if (supplierType) {

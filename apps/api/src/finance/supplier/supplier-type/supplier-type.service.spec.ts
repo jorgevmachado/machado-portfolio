@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
   LIST_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/supplier/type/type';
+} from '@repo/mock/finance/fixtures/supplier-type/supplierType';
 
 import { VIVO_HOUSING_SUPPLIER_FIXTURE } from '@repo/mock/finance/fixtures/supplier/supplier';
 

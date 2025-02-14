@@ -124,4 +124,14 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
         throw this.error(error);
       });
   }
+
+  async treatEntityParam<T>(value?: string | T, label?: string) {
+    this.validateParam<T>(value, label);
+    if(this.paramIsEntity<T>(value)) {
+      return value;
+    }
+    const entity = await this.findOne({ value, withThrow: false });
+    this.validateParam<T>(entity as unknown as string | T, label);
+    return entity;
+  }
 }

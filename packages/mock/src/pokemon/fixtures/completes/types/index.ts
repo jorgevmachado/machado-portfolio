@@ -1,4 +1,4 @@
-import Type from '@repo/business/pokemon/type/type';
+import Type from '@repo/business/pokemon/pokemon-type/pokemonType';
 
 import GRASS_FIXTURE from './grass.json';
 import POISON_FIXTURE from './poison.json';

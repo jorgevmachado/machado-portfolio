@@ -10,13 +10,7 @@ import {
 } from 'typeorm';
 
 import { EStatus } from '@repo/business/shared/enum';
-
-import type {
-  AbilityEntity,
-  MoveEntity,
-  PokemonEntity,
-  TypeEntity,
-} from '@repo/business/pokemon/interface';
+import type { PokemonEntity } from '@repo/business/pokemon/interface';
 
 import { PokemonAbility } from './pokemon-ability/pokemon-ability.entity';
 import { PokemonMove } from './pokemon-move/pokemon-move.entity';
@@ -44,14 +38,14 @@ export class Pokemon implements PokemonEntity {
 
   @ManyToMany(() => PokemonMove, { nullable: true })
   @JoinTable()
-  moves?: Array<MoveEntity>;
+  moves?: Array<PokemonMove>;
 
   @Column({ nullable: false })
   order: number;
 
   @ManyToMany(() => PokemonType, { nullable: true })
   @JoinTable()
-  types?: Array<TypeEntity>;
+  types?: Array<PokemonType>;
 
   @Column({ nullable: false, default: EStatus.INCOMPLETE })
   status: EStatus;
@@ -73,7 +67,7 @@ export class Pokemon implements PokemonEntity {
 
   @ManyToMany(() => PokemonAbility, { nullable: true })
   @JoinTable()
-  abilities?: Array<AbilityEntity>;
+  abilities?: Array<PokemonAbility>;
 
   @ManyToMany(() => Pokemon, { nullable: true })
   @JoinTable()
@@ -86,7 +80,7 @@ export class Pokemon implements PokemonEntity {
   updated_at: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at?: Date;
 
   @Column({ nullable: true, length: 200 })
   shape_name?: string;

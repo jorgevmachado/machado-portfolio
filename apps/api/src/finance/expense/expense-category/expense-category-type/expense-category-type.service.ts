@@ -1,8 +1,8 @@
-import {ConflictException, Injectable} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/expense/category/type/type';
+import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
 
 import { Service } from '../../../../shared';
 
@@ -24,10 +24,7 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
     return await this.save(expenseCategoryType);
   }
 
-  async update(
-    param: string,
-    { name }: UpdateExpenseCategoryTypeDto,
-  ) {
+  async update(param: string, { name }: UpdateExpenseCategoryTypeDto) {
     const result = await this.findOne({ value: param });
     result.name = name;
     return this.save(result);
@@ -41,9 +38,9 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
     });
     if (result?.categories?.length) {
       throw this.error(
-          new ConflictException(
-              'You cannot delete the expense category type because it is already in use.',
-          ),
+        new ConflictException(
+          'You cannot delete the expense category type because it is already in use.',
+        ),
       );
     }
     await this.repository.softRemove(result);
@@ -66,5 +63,10 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
     )) as Array<ExpenseCategoryType>;
   }
 
-
+  async treatExpenseCategoryTypeParam(type: string | ExpenseCategoryType) {
+    return await this.treatEntityParam<ExpenseCategoryType>(
+        type,
+        'Expense Category Type',
+    );
+  }
 }

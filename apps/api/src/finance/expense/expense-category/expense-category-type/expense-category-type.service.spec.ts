@@ -7,9 +7,9 @@ import { ConflictException } from '@nestjs/common';
 import {
   CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
   LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense/category/type/type';
+} from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
 
-import { PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/fixtures/expense/category/category';
+import { PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/fixtures/expense-category/expenseCategory';
 
 import { SupplierType } from '../../../supplier/supplier-type/supplierType.entity';
 
@@ -162,4 +162,12 @@ describe('ExpenseCategoryTypeService', () => {
       expect(await service.seed()).toEqual(LIST_EXPENSE_CATEGORY_TYPE_FIXTURE);
     });
   });
+
+  describe('treatExpenseCategoryTypeParam', () => {
+    it('should return expense category type by category type object', async () => {
+      expect(await service.treatExpenseCategoryTypeParam(
+          CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
+      )).toEqual(CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE);
+    })
+  })
 });

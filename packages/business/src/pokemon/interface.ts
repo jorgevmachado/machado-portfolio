@@ -1,4 +1,5 @@
 import {
+  IEvolutionByOrderResponse,
   type IPokemonByNameResponse,
   type ISpecieByPokemonNameResponse,
 } from '../api';
@@ -57,6 +58,7 @@ export interface EnsureSpecieParams {
 }
 
 export type PokemonEntity = IPokemon;
-export type AbilityEntity = IAbility;
-export type MoveEntity = IMove;
-export type TypeEntity = IType;
+
+export type PokemonByNameResponse = IPokemonByNameResponse;
+
+export type EvolutionByOrderResponse = IEvolutionByOrderResponse;

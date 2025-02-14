@@ -7,7 +7,7 @@ import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
   LIST_SUPPLIER_TYPE_FIXTURE,
   TRANSPORT_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/supplier/type/type';
+} from '@repo/mock/finance/fixtures/supplier-type/supplierType';
 import {
   LIST_SUPPLIER_FIXTURE,
   VIVO_HOUSING_SUPPLIER_FIXTURE,
@@ -37,6 +37,7 @@ describe('SupplierService', () => {
           useValue: {
             findOne: jest.fn(),
             seed: jest.fn(),
+            treatSupplierTypeParam: jest.fn(),
           },
         },
       ],
@@ -51,6 +52,70 @@ describe('SupplierService', () => {
     expect(repository).toBeDefined();
     expect(supplierTypeService).toBeDefined();
     expect(service).toBeDefined();
+  });
+
+  describe('seed', () => {
+    it('should seed the database when exist in database', async () => {
+      jest
+        .spyOn(supplierTypeService, 'seed')
+        .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
+
+      LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
+        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+          andWhere: jest.fn(),
+          withDeleted: jest.fn(),
+          leftJoinAndSelect: jest.fn(),
+          getOne: jest.fn().mockReturnValueOnce(supplier),
+        } as any);
+      });
+
+      expect(await service.seed()).toEqual({
+        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
+        suppliers: LIST_SUPPLIER_FIXTURE,
+      });
+    });
+    it('should seed the database when not exist in database', async () => {
+      jest
+        .spyOn(supplierTypeService, 'seed')
+        .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
+
+      LIST_SUPPLIER_FIXTURE.forEach(() => {
+        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+          andWhere: jest.fn(),
+          withDeleted: jest.fn(),
+          leftJoinAndSelect: jest.fn(),
+          getOne: jest.fn().mockReturnValueOnce(null),
+        } as any);
+      });
+
+      LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
+        jest.spyOn(repository, 'save').mockResolvedValueOnce(supplier);
+      });
+      expect(await service.seed()).toEqual({
+        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
+        suppliers: LIST_SUPPLIER_FIXTURE,
+      });
+    });
+    it('should return conflict Exception because dont exist one SupplierType in dataBase', async () => {
+      jest
+        .spyOn(supplierTypeService, 'seed')
+        .mockResolvedValueOnce(
+          LIST_SUPPLIER_TYPE_FIXTURE.filter(
+            (type) => type.id !== HOUSING_SUPPLIER_TYPE_FIXTURE.id,
+          ),
+        );
+
+      LIST_SUPPLIER_FIXTURE.forEach(() => {
+        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+          andWhere: jest.fn(),
+          withDeleted: jest.fn(),
+          leftJoinAndSelect: jest.fn(),
+          getOne: jest.fn().mockReturnValueOnce(null),
+        } as any);
+      });
+
+      await expect(service.seed()).rejects.toThrowError(ConflictException);
+    });
   });
 
   describe('create', () => {
@@ -76,7 +141,7 @@ describe('SupplierService', () => {
       };
 
       jest
-        .spyOn(supplierTypeService, 'findOne')
+        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
         .mockResolvedValueOnce(HOUSING_SUPPLIER_TYPE_FIXTURE);
 
       jest
@@ -85,17 +150,6 @@ describe('SupplierService', () => {
 
       expect(await service.create(createDto)).toEqual(
         VIVO_HOUSING_SUPPLIER_FIXTURE,
-      );
-    });
-
-    it('should return error with supplier-type undefined', async () => {
-      const createDto: CreateSupplierDto = {
-        name: VIVO_HOUSING_SUPPLIER_FIXTURE.name,
-        type: undefined,
-      };
-
-      await expect(service.create(createDto)).rejects.toThrow(
-        ConflictException,
       );
     });
   });
@@ -200,67 +254,11 @@ describe('SupplierService', () => {
     });
   });
 
-  describe('seed', () => {
-    it('should seed the database when exist in database', async () => {
-      jest
-        .spyOn(supplierTypeService, 'seed')
-        .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
-
-      LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(supplier),
-        } as any);
-      });
-
-      expect(await service.seed()).toEqual({
-        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
-        suppliers: LIST_SUPPLIER_FIXTURE,
-      });
-    });
-    it('should seed the database when not exist in database', async () => {
-      jest
-        .spyOn(supplierTypeService, 'seed')
-        .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
-
-      LIST_SUPPLIER_FIXTURE.forEach(() => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(null),
-        } as any);
-      });
-
-      LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
-        jest.spyOn(repository, 'save').mockResolvedValueOnce(supplier);
-      });
-      expect(await service.seed()).toEqual({
-        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
-        suppliers: LIST_SUPPLIER_FIXTURE,
-      });
-    });
-    it('should return conflict Exception because dont exist one SupplierType in dataBase', async () => {
-      jest
-        .spyOn(supplierTypeService, 'seed')
-        .mockResolvedValueOnce(
-          LIST_SUPPLIER_TYPE_FIXTURE.filter(
-            (type) => type.id !== HOUSING_SUPPLIER_TYPE_FIXTURE.id,
-          ),
-        );
-
-      LIST_SUPPLIER_FIXTURE.forEach(() => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(null),
-        } as any);
-      });
-
-      await expect(service.seed()).rejects.toThrowError(ConflictException);
+  describe('treatSupplierParam', () => {
+    it('should return supplier by supplier object', async () => {
+      expect(
+        await service.treatSupplierParam(VIVO_HOUSING_SUPPLIER_FIXTURE),
+      ).toEqual(VIVO_HOUSING_SUPPLIER_FIXTURE);
     });
   });
 });

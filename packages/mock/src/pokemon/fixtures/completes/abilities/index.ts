@@ -1,4 +1,4 @@
-import Ability from '@repo/business/pokemon/ability/ability';
+import Ability from '@repo/business/pokemon/pokemon-ability/pokemonAbility';
 
 import OVERGROW_FIXTURE from './overgrow.json';
 import CHLOROPHYLL_FIXTURE from './chlorophyll.json';

@@ -1,4 +1,4 @@
-import Move from '@repo/business/pokemon/move/move';
+import Move from '@repo/business/pokemon/pokemon-move/pokemonMove';
 
 import BIND_FIXTURE from './bind.json';
 import BODY_SLAM_FIXTURE from './body-slam.json';

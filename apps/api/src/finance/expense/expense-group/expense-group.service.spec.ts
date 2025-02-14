@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import {
   LIST_EXPENSE_GROUP_FIXTURE,
   PERSONAL_EXPENSE_GROUP_FIXTURE
-} from '@repo/mock/finance/fixtures/expense/group/group';
+} from '@repo/mock/finance/fixtures/expense-group/expenseGroup';
 import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/fixtures/expense/expense';
 
 import { CreateExpenseGroupDto } from './dto/create-expense-group.dto';
@@ -150,4 +150,11 @@ describe('ExpenseGroupService', () => {
       expect(await service.seed()).toEqual(LIST_EXPENSE_GROUP_FIXTURE);
     });
   });
+
+  describe('treatExpenseGroupParam', () => {
+    it('should return expense group by group object', async () => {
+      expect(await service.treatExpenseGroupParam(
+          PERSONAL_EXPENSE_GROUP_FIXTURE,
+      )).toEqual(PERSONAL_EXPENSE_GROUP_FIXTURE);
+    })})
 });

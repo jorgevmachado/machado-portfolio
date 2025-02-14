@@ -1,2 +1,2 @@
-export * from './type';
+export * from '../supplier-type';
 export * from './supplier';

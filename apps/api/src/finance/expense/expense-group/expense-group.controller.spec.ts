@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import {
   LIST_EXPENSE_GROUP_FIXTURE,
   PERSONAL_EXPENSE_GROUP_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense/group/group';
+} from '@repo/mock/finance/fixtures/expense-group/expenseGroup';
 
 import { CreateExpenseGroupDto } from './dto/create-expense-group.dto';
 import { UpdateExpenseGroupDto } from './dto/update-expense-group.dto';

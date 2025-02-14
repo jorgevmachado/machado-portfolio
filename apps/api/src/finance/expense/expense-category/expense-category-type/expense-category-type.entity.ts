@@ -9,11 +9,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import type { ExpenseCategoryType as EntityExpenseCategoryType } from '@repo/business/finance/interface';
 import { ExpenseCategory } from '../expense-category.entity';
+import type { ExpenseCategoryTypeEntity } from '@repo/business/finance/expense-category-type/interface';
 
 @Entity({ name: 'expense_category_types' })
-export class ExpenseCategoryType implements EntityExpenseCategoryType {
+export class ExpenseCategoryType implements ExpenseCategoryTypeEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -31,7 +31,7 @@ export class ExpenseCategoryType implements EntityExpenseCategoryType {
   updated_at: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at?: Date;
 
   constructor(expenseCategoryType?: ExpenseCategoryType) {
     if (expenseCategoryType) {

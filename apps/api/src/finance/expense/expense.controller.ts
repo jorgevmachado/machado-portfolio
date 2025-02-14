@@ -17,6 +17,8 @@ import { AuthStatusGuards } from '../../auth/guards/auth-status.guards';
 import { ExpenseService } from './expense.service';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
+import {GetUserAuth} from "../../auth/decorators/auth-user.decorator";
+import {User} from "../../auth/users/user.entity";
 
 @Controller('finance/expense')
 @UseGuards(AuthGuard(), AuthRoleGuards, AuthStatusGuards)
@@ -29,8 +31,8 @@ export class ExpenseController {
   }
 
   @Post()
-  async create(@Body() createExpenseDto: CreateExpenseDto) {
-    return await this.service.create(createExpenseDto);
+  async create(@GetUserAuth() user: User, @Body() createExpenseDto: CreateExpenseDto) {
+    return await this.service.create({...createExpenseDto, user});
   }
 
   @Get(':param')

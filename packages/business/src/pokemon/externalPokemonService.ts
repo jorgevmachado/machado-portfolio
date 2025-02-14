@@ -1,10 +1,10 @@
 import { extractLastNumberFromUrl } from '@repo/services/number/number';
 
-import { type IEvolutionByOrderResponse, PokeApi } from '../api';
-import type { IMove, IPokemon } from '../api/nest/pokemon';
+import { PokeApi } from '../api';
 
 import Pokemon from './pokemon';
-import Move from './move';
+import PokemonMove, { PokemonMoveEntity } from './pokemon-move';
+import { PokemonEntity, EvolutionByOrderResponse } from './interface';
 
 export class ExternalPokemonService {
   public limit: number = 1302;
@@ -33,7 +33,7 @@ export class ExternalPokemonService {
     );
   }
 
-  async completeOne(pokemon: IPokemon): Promise<Pokemon> {
+  async completeOne(pokemon: PokemonEntity): Promise<Pokemon> {
     return await Promise.all([
       await this.pokeApi.getByName(pokemon.name),
       await this.pokeApi.getSpecieByPokemonName(pokemon.name),
@@ -46,10 +46,10 @@ export class ExternalPokemonService {
     });
   }
 
-  async buildMove(move: IMove): Promise<Move> {
+  async buildMove(move: PokemonMoveEntity): Promise<PokemonMove> {
     return this.pokeApi.getMoveByOrder(move.order).then(
       (moveByOrder) =>
-        new Move({
+        new PokemonMove({
           ...move,
           moveByOrder,
         }),
@@ -67,7 +67,7 @@ export class ExternalPokemonService {
   }
 
   private getNamesNextEvolution(
-    evolves_to: IEvolutionByOrderResponse['chain']['evolves_to'],
+    evolves_to: EvolutionByOrderResponse['chain']['evolves_to'],
   ) {
     return evolves_to
       .map((item) =>

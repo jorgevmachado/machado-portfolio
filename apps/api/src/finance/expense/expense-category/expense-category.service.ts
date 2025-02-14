@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/fixtures/expense/category/category';
+import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/fixtures/expense-category/expenseCategory';
 
 import { Service } from '../../../shared';
 
@@ -10,7 +10,6 @@ import { CreateExpenseCategoryDto } from './dto/create-expense-category.dto';
 import { UpdateExpenseCategoryDto } from './dto/update-expense-category.dto';
 import { ExpenseCategory } from './expense-category.entity';
 import { ExpenseCategoryTypeService } from './expense-category-type/expense-category-type.service';
-import { ExpenseCategoryType } from './expense-category-type/expense-category-type.entity';
 
 @Injectable()
 export class ExpenseCategoryService extends Service<ExpenseCategory> {
@@ -24,7 +23,8 @@ export class ExpenseCategoryService extends Service<ExpenseCategory> {
   async create({ name, type }: CreateExpenseCategoryDto) {
     const expenseCategory = new ExpenseCategory();
     expenseCategory.name = name;
-    expenseCategory.type = await this.getExpenseCategoryType(type);
+    expenseCategory.type =
+      await this.expenseCategoryTypeService.treatExpenseCategoryTypeParam(type);
     return await this.save(expenseCategory);
   }
 
@@ -32,36 +32,12 @@ export class ExpenseCategoryService extends Service<ExpenseCategory> {
     const result = await this.findOne({ value: param });
     const expenseCategoryType = !type
       ? result.type
-      : await this.getExpenseCategoryType(type);
+      : await this.expenseCategoryTypeService.treatExpenseCategoryTypeParam(
+          type,
+        );
     result.name = name;
     result.type = expenseCategoryType;
     return this.save(result);
-  }
-
-  private async getExpenseCategoryType(type: string | ExpenseCategoryType) {
-    this.validateExpenseCategoryType(type);
-    if (this.isExpenseCategoryType(type)) {
-      return type;
-    }
-    const expenseCategoryType = await this.expenseCategoryTypeService.findOne({
-      value: type,
-    });
-    this.validateExpenseCategoryType(expenseCategoryType);
-    return expenseCategoryType;
-  }
-
-  private validateExpenseCategoryType(type: string | ExpenseCategoryType) {
-    if (!type) {
-      throw this.error(
-        new ConflictException(
-          'The selected Expense Category Type does not exist, try another one or create one.',
-        ),
-      );
-    }
-  }
-
-  private isExpenseCategoryType(value: any): value is ExpenseCategoryType {
-    return typeof value === 'object' && 'id' in value && 'name' in value;
   }
 
   async remove(param: string) {
@@ -124,5 +100,12 @@ export class ExpenseCategoryService extends Service<ExpenseCategory> {
       expenseCategoryTypes,
       expenseCategories,
     };
+  }
+
+  async treatExpenseCategoryParam(category: string | ExpenseCategory) {
+    return await this.treatEntityParam<ExpenseCategory>(
+      category,
+      'Expense Category',
+    );
   }
 }

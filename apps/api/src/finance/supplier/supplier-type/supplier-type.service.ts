@@ -1,11 +1,11 @@
-import {ConflictException, Injectable} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Service } from '../../../shared';
 
 import { SupplierType } from './supplierType.entity';
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
-import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier/type/type';
+import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier-type/supplierType';
 import { UpdateSupplierTypeDto } from './dto/update-supplier-type.dto';
 
 @Injectable()
@@ -30,10 +30,17 @@ export class SupplierTypeService extends Service<SupplierType> {
   }
 
   async remove(param: string) {
-    const result = await this.findOne({ value: param, relations: ['suppliers'],  withDeleted: true });
-    if(result.suppliers.length) {
-
-      throw this.error(new ConflictException('You cannot delete the supplier type because it is already in use.'));
+    const result = await this.findOne({
+      value: param,
+      relations: ['suppliers'],
+      withDeleted: true,
+    });
+    if (result.suppliers.length) {
+      throw this.error(
+        new ConflictException(
+          'You cannot delete the supplier type because it is already in use.',
+        ),
+      );
     }
     await this.repository.softRemove(result);
     return { message: 'Successfully removed' };
@@ -53,5 +60,12 @@ export class SupplierTypeService extends Service<SupplierType> {
         return result;
       }),
     )) as Array<SupplierType>;
+  }
+
+  async treatSupplierTypeParam(supplierType: string | SupplierType) {
+    return await this.treatEntityParam<SupplierType>(
+      supplierType,
+      'Supplier Type',
+    );
   }
 }

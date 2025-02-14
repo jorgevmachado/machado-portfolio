@@ -7,12 +7,12 @@ import { ConflictException } from '@nestjs/common';
 import {
   LIST_EXPENSE_CATEGORY_FIXTURE,
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense/category/category';
+} from '@repo/mock/finance/fixtures/expense-category/expenseCategory';
 
 import {
   CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
   LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense/category/type/type';
+} from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
 
 import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/fixtures/expense/expense';
 
@@ -23,7 +23,6 @@ import { CreateExpenseCategoryDto } from './dto/create-expense-category.dto';
 import { ExpenseCategoryService } from './expense-category.service';
 import { ExpenseCategory } from './expense-category.entity';
 import { UpdateSupplierDto } from '../../supplier/dto/update-supplier.dto';
-import { Supplier } from '../../supplier/supplier.entity';
 
 describe('ExpenseCategoryService', () => {
   let repository: Repository<ExpenseCategory>;
@@ -39,6 +38,7 @@ describe('ExpenseCategoryService', () => {
           provide: ExpenseCategoryTypeService,
           useValue: {
             findOne: jest.fn(),
+            treatExpenseCategoryTypeParam: jest.fn(),
             seed: jest.fn(),
           },
         },
@@ -79,11 +79,11 @@ describe('ExpenseCategoryService', () => {
     it('should create a new expense category with expense category type string and save it', async () => {
       const createDto: CreateExpenseCategoryDto = {
         name: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.name,
-        type: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.type.name,
+        type: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.type,
       };
 
       jest
-        .spyOn(expenseCategoryTypeService, 'findOne')
+        .spyOn(expenseCategoryTypeService, 'treatExpenseCategoryTypeParam')
         .mockResolvedValueOnce(
           PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.type,
         );
@@ -96,24 +96,13 @@ describe('ExpenseCategoryService', () => {
         PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
       );
     });
-
-    it('should return error with supplier-type undefined', async () => {
-      const createDto: CreateExpenseCategoryDto = {
-        name: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.name,
-        type: undefined,
-      };
-
-      await expect(service.create(createDto)).rejects.toThrow(
-        ConflictException,
-      );
-    });
   });
 
   describe('update', () => {
     it('should update a expense category and save it', async () => {
       const updateDto: UpdateSupplierDto = {
         name: `${PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.name}2`,
-        type: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.type,
+        type: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.type.name,
       };
 
       const expected: ExpenseCategory = {
@@ -134,6 +123,12 @@ describe('ExpenseCategoryService', () => {
           .mockReturnValueOnce(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE),
       } as any);
 
+      jest
+        .spyOn(expenseCategoryTypeService, 'treatExpenseCategoryTypeParam')
+        .mockResolvedValueOnce(
+          PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.type,
+        );
+
       jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
 
       expect(
@@ -148,7 +143,7 @@ describe('ExpenseCategoryService', () => {
         name: `${PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.name}2`,
       };
 
-      const expected: Supplier = {
+      const expected: ExpenseCategory = {
         id: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.id,
         name: `${PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.name}2`,
         type: PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.type,
@@ -179,7 +174,7 @@ describe('ExpenseCategoryService', () => {
 
   describe('remove', () => {
     it('should remove expense category when there are no associated expenses', async () => {
-      const expected: Supplier = {
+      const expected: ExpenseCategory = {
         ...PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
         expenses: [],
       };
@@ -204,7 +199,7 @@ describe('ExpenseCategoryService', () => {
     });
 
     it('should throw a ConflictException when Expense Category is in use', async () => {
-      const expected: Supplier = {
+      const expected: ExpenseCategory = {
         ...PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
         expenses: [NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE],
       };
@@ -292,4 +287,26 @@ describe('ExpenseCategoryService', () => {
       await expect(service.seed()).rejects.toThrowError(ConflictException);
     });
   });
+
+  describe('treatExpenseCategoryParam', () => {
+    it('should return category by category name', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest
+            .fn()
+            .mockReturnValueOnce(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE),
+      } as any);
+      expect(await service.treatExpenseCategoryParam(
+          PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.name,
+      )).toEqual(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE);
+    })
+
+    it('should return category by category object', async () => {
+      expect(await service.treatExpenseCategoryParam(
+          PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
+      )).toEqual(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE);
+    })
+  })
 });

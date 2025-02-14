@@ -6,10 +6,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import type { MoveEntity } from '@repo/business/pokemon/interface';
+
+import type { PokemonMoveEntity } from '@repo/business/pokemon/pokemon-move/interface';
 
 @Entity({ name: 'pokemon_moves' })
-export class PokemonMove implements MoveEntity {
+export class PokemonMove implements PokemonMoveEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -50,7 +51,7 @@ export class PokemonMove implements MoveEntity {
   updated_at: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at?: Date;
 
   @Column({ nullable: true })
   short_effect: string;

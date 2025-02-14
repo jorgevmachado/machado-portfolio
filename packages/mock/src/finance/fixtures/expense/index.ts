@@ -1,3 +1,3 @@
-export * from './group';
-export * from './category';
+export * from '../expense-group';
+export * from '../expense-category';
 export * from './expense';

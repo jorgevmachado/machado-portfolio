@@ -9,7 +9,6 @@ import { Service } from '../../shared';
 import { Supplier } from './supplier.entity';
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
-import { SupplierType } from './supplier-type/supplierType.entity';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 
 @Injectable()
@@ -25,13 +24,15 @@ export class SupplierService extends Service<Supplier> {
   async create({ name, type }: CreateSupplierDto) {
     const supplier = new Supplier();
     supplier.name = name;
-    supplier.type = await this.getSupplierType(type);
+    supplier.type = await this.supplierTypeService.treatSupplierTypeParam(type);
     return await this.save(supplier);
   }
 
   async update(param: string, { name, type }: UpdateSupplierDto) {
     const result = await this.findOne({ value: param });
-    const supplierType = !type ? result.type : await this.getSupplierType(type);
+    const supplierType = !type
+      ? result.type
+      : await this.supplierTypeService.treatSupplierTypeParam(type);
     result.name = name;
     result.type = supplierType;
     return this.save(result);
@@ -54,34 +55,6 @@ export class SupplierService extends Service<Supplier> {
     return { message: 'Successfully removed' };
   }
 
-  private async getSupplierType(
-    type: string | SupplierType,
-  ): Promise<SupplierType> {
-    this.validateSupplierType(type);
-    if (this.isSupplierType(type)) {
-      return type;
-    }
-    const supplierType = await this.supplierTypeService.findOne({
-      value: type,
-    });
-    this.validateSupplierType(supplierType);
-    return supplierType;
-  }
-
-  private validateSupplierType(type: string | SupplierType) {
-    if (!type) {
-      throw this.error(
-        new ConflictException(
-          'The selected Supplier Type does not exist, try another one or create one.',
-        ),
-      );
-    }
-  }
-
-  private isSupplierType(value: any): value is SupplierType {
-    return typeof value === 'object' && 'id' in value && 'name' in value;
-  }
-
   async seed() {
     const supplierTypes = await this.supplierTypeService.seed();
     const suppliers = (
@@ -94,7 +67,7 @@ export class SupplierService extends Service<Supplier> {
           });
           if (!result) {
             const type = supplierTypes.find(
-              (type) => type.name === supplier.type.name,
+              (type) => type.name === supplier?.type?.name,
             );
             if (!type) {
               throw this.error(
@@ -117,5 +90,9 @@ export class SupplierService extends Service<Supplier> {
       supplierTypes,
       suppliers,
     };
+  }
+
+  async treatSupplierParam(supplier: string | Supplier) {
+    return await this.treatEntityParam<Supplier>(supplier, 'Supplier');
   }
 }

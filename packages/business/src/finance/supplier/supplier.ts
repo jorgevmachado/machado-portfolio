@@ -1,31 +1,34 @@
-import { type ISupplier } from '../../api/nest/finance';
+import type { SupplierEntity } from './interface';
 
 interface SupplierConstructorParams
-  extends Omit<ISupplier, 'id' | 'created_at' | 'updated_at' | 'deleted_at'> {
-  id?: ISupplier['id'];
-  created_at?: ISupplier['created_at'];
-  updated_at?: ISupplier['updated_at'];
-  deleted_at?: ISupplier['deleted_at'];
+  extends Omit<
+    SupplierEntity,
+    'id' | 'created_at' | 'updated_at' | 'deleted_at'
+  > {
+  id?: SupplierEntity['id'];
+  created_at?: SupplierEntity['created_at'];
+  updated_at?: SupplierEntity['updated_at'];
+  deleted_at?: SupplierEntity['deleted_at'];
 }
 
-export default class Supplier implements ISupplier {
-  id: ISupplier['id'];
-  name!: ISupplier['name'];
-  type!: ISupplier['type'];
-  active?: ISupplier['active'];
-  created_at: ISupplier['created_at'];
-  updated_at: ISupplier['updated_at'];
-  deleted_at: ISupplier['deleted_at'];
-  description?: ISupplier['description'];
+export default class Supplier implements SupplierEntity {
+  id: SupplierEntity['id'];
+  name!: SupplierEntity['name'];
+  type!: SupplierEntity['type'];
+  active?: SupplierEntity['active'];
+  created_at: SupplierEntity['created_at'];
+  updated_at: SupplierEntity['updated_at'];
+  deleted_at: SupplierEntity['deleted_at'];
+  description?: SupplierEntity['description'];
 
   constructor(params?: SupplierConstructorParams) {
     if (params) {
       this.id = params?.id ?? this.id;
-      if(!params.name) {
+      if (!params.name) {
         throw new Error('name is required');
       }
       this.name = params.name;
-      if(!params.type) {
+      if (!params.type) {
         throw new Error('type is required');
       }
       this.type = params.type;

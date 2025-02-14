@@ -6,10 +6,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import type { AbilityEntity } from '@repo/business/pokemon/interface';
+
+import type { PokemonAbilityEntity } from '@repo/business/pokemon/pokemon-ability/interface';
 
 @Entity({ name: 'pokemon_abilities' })
-export class PokemonAbility implements AbilityEntity {
+export class PokemonAbility implements PokemonAbilityEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -35,7 +36,7 @@ export class PokemonAbility implements AbilityEntity {
   updated_at: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at?: Date;
 
   constructor(ability?: PokemonAbility) {
     if (ability) {

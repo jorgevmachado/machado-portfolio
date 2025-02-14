@@ -1,4 +1,14 @@
 import { EStatus } from '../../../shared';
+import type { INestBaseEntity } from '../interface';
+import type { IAbility } from './pokemon-ability';
+import type { IMove } from './pokemon-move';
+import type { IType } from './pokemon-type';
+
+export interface IBase extends INestBaseEntity {
+  url: string;
+  name: string;
+  order: number;
+}
 
 export interface IPokemon extends IBase {
   hp?: number;
@@ -28,35 +38,6 @@ export interface IPokemon extends IBase {
   has_gender_differences?: boolean;
 }
 
-interface IBase {
-  id: string;
-  url: string;
-  name: string;
-  order: number;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
-}
-
-export interface IAbility extends IBase {
-    slot: number;
-    is_hidden: boolean;
-}
-
-export interface IMove extends IBase {
-  pp: number;
-  type: string;
-  power?: number;
-  target: string;
-  effect: string;
-  priority: number;
-  accuracy?: number;
-  short_effect: string;
-  damage_class: string;
-  effect_chance?: number;
-}
-
-export interface IType extends IBase {
-  text_color: string;
-  background_color: string;
-}
+export * from './pokemon-ability/interface';
+export * from './pokemon-move/interface';
+export * from './pokemon-type/interface';

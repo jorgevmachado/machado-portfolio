@@ -1,9 +1,10 @@
 import { Http } from '@repo/services/http/http';
 
+import type { INestModuleConfig } from '../interface';
 import type { ISignInParams, ISignUpParams, IUser } from './interface';
 
 export class Auth extends Http {
-  constructor(baseUrl: string, headers: Record<string, string>) {
+  constructor({ baseUrl, headers }: INestModuleConfig) {
     super(baseUrl, { headers });
   }
 

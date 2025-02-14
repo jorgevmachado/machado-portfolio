@@ -1,8 +1,8 @@
-import {ConflictException, Injectable} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/fixtures/expense/group/group';
+import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/fixtures/expense-group/expenseGroup';
 
 import { Service } from '../../../shared';
 
@@ -40,9 +40,9 @@ export class ExpenseGroupService extends Service<ExpenseGroup> {
     });
     if (result?.expenses?.length) {
       throw this.error(
-          new ConflictException(
-              'You cannot delete the expense group because it is already in use.',
-          ),
+        new ConflictException(
+          'You cannot delete the expense group because it is already in use.',
+        ),
       );
     }
     await this.repository.softRemove(result);
@@ -63,5 +63,9 @@ export class ExpenseGroupService extends Service<ExpenseGroup> {
         return result;
       }),
     );
+  }
+
+  async treatExpenseGroupParam(group?: string | ExpenseGroup) {
+    return await this.treatEntityParam<ExpenseGroup>(group, 'Expense Group');
   }
 }

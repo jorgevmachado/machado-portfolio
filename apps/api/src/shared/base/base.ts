@@ -21,4 +21,14 @@ export abstract class Base {
     }
     return error;
   }
+
+  paramIsEntity<T>(value: any): value is T {
+    return typeof value === 'object' && 'id' in value;
+  }
+
+  validateParam<T>(value: string | T, label?: string) {
+    if (!value) {
+      throw this.error(new ConflictException(`The selected ${label ?? 'field'} does not exist, try another one or create one.`));
+    }
+  }
 }

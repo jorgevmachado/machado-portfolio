@@ -9,12 +9,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import type { ExpenseGroup as EntityExpenseGroup } from '@repo/business/finance/interface';
+import type { ExpenseGroupEntity } from '@repo/business/finance/expense-group/interface';
 
 import { Expense } from '../expense.entity';
 
 @Entity({ name: 'expense_groups' })
-export class ExpenseGroup implements EntityExpenseGroup {
+export class ExpenseGroup implements ExpenseGroupEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -32,7 +32,7 @@ export class ExpenseGroup implements EntityExpenseGroup {
   updated_at: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at?: Date;
 
   constructor(expenseGroup?: ExpenseGroup) {
     if (expenseGroup) {
