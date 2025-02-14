@@ -2,6 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import SupplierBusiness from '@repo/business/finance/supplier/supplier';
+
 import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/fixtures/supplier/supplier';
 
 import { Service } from '../../shared';
@@ -22,9 +24,12 @@ export class SupplierService extends Service<Supplier> {
   }
 
   async create({ name, type }: CreateSupplierDto) {
-    const supplier = new Supplier();
-    supplier.name = name;
-    supplier.type = await this.supplierTypeService.treatSupplierTypeParam(type);
+    const supplierType =
+      await this.supplierTypeService.treatSupplierTypeParam(type);
+    const supplier = new SupplierBusiness({
+      name,
+      type: supplierType,
+    });
     return await this.save(supplier);
   }
 
@@ -33,9 +38,11 @@ export class SupplierService extends Service<Supplier> {
     const supplierType = !type
       ? result.type
       : await this.supplierTypeService.treatSupplierTypeParam(type);
-    result.name = name;
-    result.type = supplierType;
-    return this.save(result);
+    const supplier = new SupplierBusiness({
+      name,
+      type: supplierType,
+    });
+    return await this.save(supplier);
   }
 
   async remove(param: string) {

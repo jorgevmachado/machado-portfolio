@@ -9,9 +9,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { mobileValidator } from '@repo/services/validator/contact/contact';
-
 import { ERole, EStatus } from '@repo/business/shared/enum';
+
+import UserBusiness from '@repo/business/auth/user';
 
 import { Service } from '../../shared';
 
@@ -31,46 +31,36 @@ export class UserService extends Service<User> {
     super('users', [], repository);
   }
 
-  async create(createAuthDto: CreateAuthDto) {
-    const whatsapp = this.cleanFormatter(createAuthDto.whatsapp);
-    const cpf = this.cleanFormatter(createAuthDto.cpf);
+  async create({
+    cpf,
+    name,
+    email,
+    gender,
+    whatsapp,
+    password,
+    date_of_birth,
+  }: CreateAuthDto) {
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(password, salt);
+    const confirmation_token = crypto.randomBytes(32).toString('hex');
+    const user = new UserBusiness({
+      cpf,
+      salt,
+      role: ERole.USER,
+      name,
+      email,
+      gender,
+      status: EStatus.ACTIVE,
+      whatsapp,
+      password: hashPassword,
+      date_of_birth,
+      confirmation_token,
+    });
 
-    this.validateMobile(whatsapp);
-
-    await this.hasInactiveUser('cpf', cpf);
-    await this.hasInactiveUser('email', createAuthDto.email);
-    await this.hasInactiveUser('whatsapp', whatsapp);
-
-    const user = new User();
-    user.cpf = cpf;
-    user.salt = await bcrypt.genSalt();
-    user.role = ERole.USER;
-    user.name = createAuthDto.name;
-    user.email = createAuthDto.email;
-    user.gender = createAuthDto.gender;
-    user.status = EStatus.ACTIVE;
-    user.whatsapp = whatsapp;
-    user.password = await bcrypt.hash(createAuthDto.password, user.salt);
-    user.date_of_birth = createAuthDto.date_of_birth;
-    user.confirmation_token = crypto.randomBytes(32).toString('hex');
+    await this.hasInactiveUser('cpf', user.cpf);
+    await this.hasInactiveUser('email', user.email);
+    await this.hasInactiveUser('whatsapp', user.whatsapp);
     return await this.save(user);
-  }
-
-  private cleanFormatter(value: string) {
-    return value
-      .replace('-', ' ')
-      .replaceAll('.', ' ')
-      .replace('(', '')
-      .replace(')', '')
-      .replace(/\s/g, '')
-      .trim();
-  }
-
-  private validateMobile(value: string) {
-    const validatorMessage = mobileValidator({ value });
-    if (!validatorMessage.valid) {
-      throw new BadRequestException(validatorMessage.message);
-    }
   }
 
   private async hasInactiveUser(by: TBy, value: string) {

@@ -2,6 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import ExpenseGroupBusiness from '@repo/business/finance/expense-group/expenseGroup';
+
 import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/fixtures/expense-group/expenseGroup';
 
 import { Service } from '../../../shared';
@@ -21,15 +23,14 @@ export class ExpenseGroupService extends Service<ExpenseGroup> {
   }
 
   async create({ name }: CreateExpenseGroupDto) {
-    const expenseGroup = new ExpenseGroup();
-    expenseGroup.name = name;
+    const expenseGroup = new ExpenseGroupBusiness({ name });
     return await this.save(expenseGroup);
   }
 
   async update(param: string, { name }: UpdateExpenseGroupDto) {
     const result = await this.findOne({ value: param });
-    result.name = name;
-    return this.save(result);
+    const expenseGroup = new ExpenseGroupBusiness({ ...result, name });
+    return this.save(expenseGroup);
   }
 
   async remove(param: string) {

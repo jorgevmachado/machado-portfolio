@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { JwtService } from '@nestjs/jwt';
 
+import AuthBusiness from '@repo/business/auth/authBusiness';
+
 import { ENTITY_USER_FIXTURE, USER_PASSWORD } from '@repo/mock/auth/fixture';
 
 import { UserService } from './users/users.service';
@@ -17,6 +19,7 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
+        AuthBusiness,
         {
           provide: UserService,
           useValue: {

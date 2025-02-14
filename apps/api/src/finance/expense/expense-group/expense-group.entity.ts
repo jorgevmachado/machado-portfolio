@@ -33,14 +33,4 @@ export class ExpenseGroup implements ExpenseGroupEntity {
 
   @DeleteDateColumn()
   deleted_at?: Date;
-
-  constructor(expenseGroup?: ExpenseGroup) {
-    if (expenseGroup) {
-      this.id = expenseGroup.id ?? this.id;
-      this.name = expenseGroup.name ?? this.name;
-      this.created_at = expenseGroup.created_at ?? this.created_at;
-      this.updated_at = expenseGroup.updated_at ?? this.updated_at;
-      this.deleted_at = expenseGroup.deleted_at ?? this.deleted_at;
-    }
-  }
 }

@@ -8,11 +8,11 @@ import {
 } from 'typeorm';
 
 import { ERole, EStatus , EGender} from '@repo/business/shared/enum';
-import type { User as EntityUser } from '@repo/business/auth/interface';
+import type { UserEntity } from '@repo/business/auth/interface';
 import {Expense} from "../../finance/expense/expense.entity";
 
 @Entity({ name: 'users' })
-export class User implements EntityUser {
+export class User implements UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

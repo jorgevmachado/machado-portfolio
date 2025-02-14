@@ -37,18 +37,4 @@ export class PokemonType implements PokemonTypeEntity {
 
   @Column({ nullable: false, type: 'varchar', length: 200 })
   background_color: string;
-
-  constructor(type?: PokemonType) {
-    if (type) {
-      this.id = type?.id ?? this.id;
-      this.url = type.url ?? this.url;
-      this.name = type.name ?? this.name;
-      this.order = type.order ?? this.order;
-      this.created_at = type.created_at ?? this.created_at;
-      this.updated_at = type.updated_at ?? this.updated_at;
-      this.deleted_at = type.deleted_at ?? this.deleted_at;
-      this.text_color = type.text_color ?? this.text_color;
-      this.background_color = type.background_color ?? this.background_color;
-    }
-  }
 }

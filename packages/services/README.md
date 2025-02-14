@@ -122,5 +122,9 @@ npm run lint
     npm run test -- --findRelatedTests src/window/window.spec.ts               
 ```
 
-
+### error:
+#### Função relacionado a tratamento de erros.
+```
+    npm run test -- --findRelatedTests src/error/error.spec.ts               
+```
 

@@ -1,11 +1,16 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import SupplierTypeBusiness from '@repo/business/finance/supplier-type/supplierType';
+
+import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier-type/supplierType';
+
 import { Service } from '../../../shared';
 
 import { SupplierType } from './supplierType.entity';
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
-import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier-type/supplierType';
+
 import { UpdateSupplierTypeDto } from './dto/update-supplier-type.dto';
 
 @Injectable()
@@ -18,15 +23,17 @@ export class SupplierTypeService extends Service<SupplierType> {
   }
 
   async create({ name }: CreateSupplierTypeDto) {
-    const supplierType = new SupplierType();
-    supplierType.name = name;
+    const supplierType = new SupplierTypeBusiness({ name });
     return await this.save(supplierType);
   }
 
-  async update(param: string, updateSupplierTypeDto: UpdateSupplierTypeDto) {
+  async update(param: string, { name }: UpdateSupplierTypeDto) {
     const result = await this.findOne({ value: param, withDeleted: true });
-    result.name = updateSupplierTypeDto.name;
-    return this.save(result);
+    const supplierType = new SupplierTypeBusiness({
+      ...result,
+      name,
+    });
+    return this.save(supplierType);
   }
 
   async remove(param: string) {

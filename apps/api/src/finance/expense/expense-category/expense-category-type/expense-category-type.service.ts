@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
+import ExpenseCategoryTypeBusiness from '@repo/business/finance/expense-category-type/expenseCategoryType';
 
 import { Service } from '../../../../shared';
 
@@ -19,15 +20,17 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
     super('expense_category_types', [], repository);
   }
   async create({ name }: CreateExpenseCategoryTypeDto) {
-    const expenseCategoryType = new ExpenseCategoryType();
-    expenseCategoryType.name = name;
+    const expenseCategoryType = new ExpenseCategoryTypeBusiness({ name });
     return await this.save(expenseCategoryType);
   }
 
   async update(param: string, { name }: UpdateExpenseCategoryTypeDto) {
     const result = await this.findOne({ value: param });
-    result.name = name;
-    return this.save(result);
+    const expenseCategoryType = new ExpenseCategoryTypeBusiness({
+      ...result,
+      name,
+    });
+    return this.save(expenseCategoryType);
   }
 
   async remove(param: string) {
@@ -48,7 +51,7 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
   }
 
   async seed(): Promise<Array<ExpenseCategoryType>> {
-    return (await Promise.all(
+    return await Promise.all(
       LIST_EXPENSE_CATEGORY_TYPE_FIXTURE.map(async (type) => {
         const result = await this.findOne({
           value: type.name,
@@ -60,13 +63,13 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
         }
         return result;
       }),
-    )) as Array<ExpenseCategoryType>;
+    );
   }
 
   async treatExpenseCategoryTypeParam(type: string | ExpenseCategoryType) {
     return await this.treatEntityParam<ExpenseCategoryType>(
-        type,
-        'Expense Category Type',
+      type,
+      'Expense Category Type',
     );
   }
 }

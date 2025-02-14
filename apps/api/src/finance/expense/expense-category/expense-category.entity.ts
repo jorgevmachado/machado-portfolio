@@ -46,15 +46,4 @@ export class ExpenseCategory implements ExpenseCategoryEntity {
 
   @DeleteDateColumn()
   deleted_at?: Date;
-
-  constructor(expenseCategory?: ExpenseCategory) {
-    if (expenseCategory) {
-      this.id = expenseCategory.id ?? this.id;
-      this.name = expenseCategory.name ?? this.name;
-      this.type = expenseCategory.type ?? this.type;
-      this.created_at = expenseCategory.created_at ?? this.created_at;
-      this.updated_at = expenseCategory.updated_at ?? this.updated_at;
-      this.deleted_at = expenseCategory.deleted_at ?? this.deleted_at;
-    }
-  }
 }

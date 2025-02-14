@@ -2,6 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { isUUID } from '@repo/services/string/string';
+
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
 
 import { Service } from '../../shared';
@@ -13,7 +15,6 @@ import { ExpenseGroupService } from './expense-group/expense-group.service';
 import { ExpenseCategoryService } from './expense-category/expense-category.service';
 import { SupplierService } from '../supplier/supplier.service';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
-import { isUUID } from '@repo/services/string/string';
 
 @Injectable()
 export class ExpenseService extends Service<Expense> {

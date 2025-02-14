@@ -61,26 +61,4 @@ export class PokemonMove implements PokemonMoveEntity {
 
   @Column({ nullable: true })
   effect_chance?: number;
-
-  constructor(move?: PokemonMove) {
-    if (move) {
-      this.id = move.id ?? this.id;
-      this.pp = move.pp ?? this.pp;
-      this.url = move.url ?? this.url;
-      this.type = move.type ?? this.type;
-      this.name = move.name ?? this.name;
-      this.order = move.order ?? this.order;
-      this.power = move.power ?? this.power;
-      this.target = move.target ?? this.target;
-      this.effect = move.effect ?? this.effect;
-      this.priority = move.priority ?? this.priority;
-      this.accuracy = move.accuracy ?? this.accuracy;
-      this.created_at = move.created_at ?? this.created_at;
-      this.updated_at = move.updated_at ?? this.updated_at;
-      this.deleted_at = move.deleted_at ?? this.deleted_at;
-      this.short_effect = move.short_effect ?? this.short_effect;
-      this.damage_class = move.damage_class ?? this.damage_class;
-      this.effect_chance = move.effect_chance ?? this.effect_chance;
-    }
-  }
 }

@@ -32,14 +32,4 @@ export class SupplierType implements SupplierTypeEntity {
 
   @DeleteDateColumn()
   deleted_at?: Date;
-
-  constructor(supplierType?: SupplierType) {
-    if (supplierType) {
-      this.id = supplierType?.id ?? this.id;
-      this.name = supplierType?.name ?? this.name;
-      this.created_at = supplierType?.created_at ?? this.created_at;
-      this.updated_at = supplierType?.updated_at ?? this.updated_at;
-      this.deleted_at = supplierType?.deleted_at ?? this.deleted_at;
-    }
-  }
 }

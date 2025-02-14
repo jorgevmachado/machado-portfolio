@@ -89,6 +89,7 @@ describe('SupplierService', () => {
       });
 
       LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
+        jest.spyOn(supplierTypeService, 'treatSupplierTypeParam').mockResolvedValueOnce(supplier.type);
         jest.spyOn(repository, 'save').mockResolvedValueOnce(supplier);
       });
       expect(await service.seed()).toEqual({
@@ -122,8 +123,12 @@ describe('SupplierService', () => {
     it('should create a new supplier with supplier-type object and save it', async () => {
       const createDto: CreateSupplierDto = {
         name: VIVO_HOUSING_SUPPLIER_FIXTURE.name,
-        type: HOUSING_SUPPLIER_TYPE_FIXTURE,
+        type: VIVO_HOUSING_SUPPLIER_FIXTURE.type,
       };
+
+      jest
+        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
+        .mockResolvedValueOnce(VIVO_HOUSING_SUPPLIER_FIXTURE.type);
 
       jest
         .spyOn(repository, 'save')
@@ -176,6 +181,10 @@ describe('SupplierService', () => {
         leftJoinAndSelect: jest.fn(),
         getOne: jest.fn().mockReturnValueOnce(VIVO_HOUSING_SUPPLIER_FIXTURE),
       } as any);
+
+      jest
+        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
+        .mockResolvedValueOnce(TRANSPORT_SUPPLIER_TYPE_FIXTURE);
 
       jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
 

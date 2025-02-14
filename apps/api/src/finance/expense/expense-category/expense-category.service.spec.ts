@@ -68,6 +68,12 @@ describe('ExpenseCategoryService', () => {
       };
 
       jest
+        .spyOn(expenseCategoryTypeService, 'treatExpenseCategoryTypeParam')
+        .mockResolvedValueOnce(
+          PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.type,
+        );
+
+      jest
         .spyOn(repository, 'save')
         .mockResolvedValueOnce(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE);
 
@@ -197,7 +203,6 @@ describe('ExpenseCategoryService', () => {
         message: 'Successfully removed',
       });
     });
-
     it('should throw a ConflictException when Expense Category is in use', async () => {
       const expected: ExpenseCategory = {
         ...PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
@@ -251,6 +256,9 @@ describe('ExpenseCategoryService', () => {
       });
 
       LIST_EXPENSE_CATEGORY_FIXTURE.forEach((category) => {
+        jest
+          .spyOn(expenseCategoryTypeService, 'treatExpenseCategoryTypeParam')
+          .mockResolvedValueOnce(category.type);
         jest.spyOn(repository, 'save').mockResolvedValueOnce(category);
       });
       expect(await service.seed()).toEqual({
@@ -278,7 +286,6 @@ describe('ExpenseCategoryService', () => {
 
       await expect(service.seed()).rejects.toThrowError(ConflictException);
     });
-
     it('should return conflict Exception because dont exist Expense Category type in dataBase', async () => {
       jest
         .spyOn(expenseCategoryTypeService, 'seed')
@@ -295,18 +302,22 @@ describe('ExpenseCategoryService', () => {
         withDeleted: jest.fn(),
         leftJoinAndSelect: jest.fn(),
         getOne: jest
-            .fn()
-            .mockReturnValueOnce(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE),
+          .fn()
+          .mockReturnValueOnce(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE),
       } as any);
-      expect(await service.treatExpenseCategoryParam(
+      expect(
+        await service.treatExpenseCategoryParam(
           PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE.name,
-      )).toEqual(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE);
-    })
+        ),
+      ).toEqual(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE);
+    });
 
     it('should return category by category object', async () => {
-      expect(await service.treatExpenseCategoryParam(
+      expect(
+        await service.treatExpenseCategoryParam(
           PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
-      )).toEqual(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE);
-    })
-  })
+        ),
+      ).toEqual(PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE);
+    });
+  });
 });

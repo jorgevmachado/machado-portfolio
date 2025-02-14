@@ -1,3 +1,4 @@
+import { Error, ERROR_STATUS_CODE } from '@repo/services/error/error';
 import type { ExpenseGroupEntity } from './interface';
 
 interface ExpenseGroupConstructorParams
@@ -19,7 +20,7 @@ export default class ExpenseGroup implements ExpenseGroupEntity {
     if (params) {
       this.id = params?.id ?? this.id;
       if (!params.name) {
-        throw new Error('name is required');
+        throw new Error(ERROR_STATUS_CODE.CONFLICT_EXCEPTION,'name is required');
       }
       this.name = params.name;
       this.created_at = params?.created_at ?? this.created_at;
