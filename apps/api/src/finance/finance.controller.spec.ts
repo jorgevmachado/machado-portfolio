@@ -20,6 +20,7 @@ describe('FinanceController', () => {
             create: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
+            seeds: jest.fn(),
           },
         },
       ],
@@ -32,5 +33,15 @@ describe('FinanceController', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
     expect(controller).toBeDefined();
+  });
+
+  describe('seeds', () => {
+    it('should seed the database ', async () => {
+      jest.spyOn(service, 'seeds').mockResolvedValueOnce({
+        message: 'Seeds executed successfully',
+      });
+
+      expect(await controller.seeds()).toEqual({ message: 'Seeds executed successfully' });
+    });
   });
 });

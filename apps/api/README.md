@@ -49,4 +49,5 @@ npm run test -- --findRelatedTests src/finance/expense/expense-group/expense-gro
 npm run test -- --findRelatedTests src/finance/expense/expense-group/expense-group.controller.spec.ts
 
 npm run test -- --findRelatedTests src/finance/expense/expense.service.spec.ts
+npm run test -- --findRelatedTests src/finance/expense/expense.controller.spec.ts
 

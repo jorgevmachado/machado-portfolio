@@ -100,7 +100,9 @@ describe('SupplierTypeService', () => {
         deleted_at: HOUSING_SUPPLIER_TYPE_FIXTURE.created_at,
       });
 
-      expect(await service.remove(HOUSING_SUPPLIER_TYPE_FIXTURE.id)).toEqual({ message: 'Successfully removed' });
+      expect(await service.remove(HOUSING_SUPPLIER_TYPE_FIXTURE.id)).toEqual({
+        message: 'Successfully removed',
+      });
     });
 
     it('should throw a ConflictException when SupplierType is in use', async () => {
@@ -147,6 +149,14 @@ describe('SupplierTypeService', () => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(type);
       });
       expect(await service.seed()).toEqual(LIST_SUPPLIER_TYPE_FIXTURE);
+    });
+  });
+
+  describe('treatSupplierTypeParam', () => {
+    it('should return supplier type by supplier object', async () => {
+      expect(
+        await service.treatSupplierTypeParam(HOUSING_SUPPLIER_TYPE_FIXTURE),
+      ).toEqual(HOUSING_SUPPLIER_TYPE_FIXTURE);
     });
   });
 });
