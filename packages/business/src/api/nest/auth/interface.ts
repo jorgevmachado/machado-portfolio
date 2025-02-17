@@ -17,7 +17,17 @@ export interface IUser extends INestBaseEntity {
   confirmation_token?: string;
 }
 
-export interface ISignUpParams extends Omit<IUser, 'id' | 'role' | 'status' | 'password'> {
+export interface ISignUpParams
+  extends Omit<
+    IUser,
+    | 'id'
+    | 'role'
+    | 'status'
+    | 'password'
+    | 'created_at'
+    | 'updated_at'
+    | 'deleted_at'
+  > {
   password: string;
   password_confirmation: string;
 }

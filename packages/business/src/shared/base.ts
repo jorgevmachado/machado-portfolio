@@ -5,6 +5,9 @@ export abstract class Base {
     if (order) {
       return order;
     }
+    if(!url) {
+      return 0;
+    }
     return extractLastNumberFromUrl(url);
   }
 }

@@ -1,9 +1,10 @@
-import { Http } from '@repo/services/http/http';
-
 import type { INestModuleConfig } from '../../interface';
+import { NestModuleAbstract } from '../../nestModuleAbstract';
 
-export class PokemonMove extends Http {
-  constructor({ baseUrl, headers }: INestModuleConfig) {
-    super(baseUrl, { headers });
+import type { IMove } from './interface';
+
+export class PokemonMove extends NestModuleAbstract<IMove, unknown, unknown> {
+  constructor(nestModuleConfig: INestModuleConfig) {
+    super('pokemon/move', nestModuleConfig);
   }
 }

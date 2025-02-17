@@ -1,8 +1,23 @@
-import { Http } from '@repo/services/http/http';
 import type { INestModuleConfig } from '../../interface';
 
-export class Supplier extends Http {
-    constructor({ baseUrl, headers }: INestModuleConfig) {
-        super(baseUrl, { headers });
-    }
+import { NestModuleAbstract } from '../../nestModuleAbstract';
+
+import { SupplierType } from '../supplier-type';
+
+import type { ISupplier, ISupplierParams } from './interface';
+
+export class Supplier extends NestModuleAbstract<
+  ISupplier,
+  ISupplierParams,
+  ISupplierParams
+> {
+  private readonly supplierTypeModule: SupplierType;
+  constructor(nestModuleConfig: INestModuleConfig) {
+    super('finance/supplier', nestModuleConfig);
+    this.supplierTypeModule = new SupplierType(nestModuleConfig);
+  }
+
+  get type(): SupplierType {
+    return this.supplierTypeModule;
+  }
 }

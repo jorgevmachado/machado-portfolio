@@ -1,8 +1,15 @@
-import { Http } from '@repo/services/http/http';
 import type { INestModuleConfig } from '../../interface';
 
-export class ExpenseCategoryType extends Http {
-  constructor({ baseUrl, headers }: INestModuleConfig) {
-    super(baseUrl, { headers });
+import { NestModuleAbstract } from '../../nestModuleAbstract';
+
+import type { IExpenseCategoryType, IExpenseCategoryTypeParams } from './interface';
+
+export class ExpenseCategoryType extends NestModuleAbstract<
+  IExpenseCategoryType,
+  IExpenseCategoryTypeParams,
+  IExpenseCategoryTypeParams
+> {
+  constructor(nestModuleConfig: INestModuleConfig) {
+    super('finance/expense/category/type', nestModuleConfig);
   }
 }

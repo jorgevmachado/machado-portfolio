@@ -1,4 +1,5 @@
 import { Error, ERROR_STATUS_CODE } from '@repo/services/error/error';
+
 import type { ExpenseCategoryTypeEntity } from './interface';
 
 interface ExpenseCategoryTypeConstructorParams
@@ -20,10 +21,10 @@ export default class ExpenseCategoryType implements ExpenseCategoryTypeEntity {
     if (params) {
       this.id = params.id ?? this.id;
       if (!params?.name) {
-        throw new Error(
-          ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
-          'name is required',
-        );
+        throw new Error({
+          message: 'name is required',
+          statusCode: ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
+        });
       }
       this.name = params.name;
       this.created_at = params?.created_at ?? this.created_at;

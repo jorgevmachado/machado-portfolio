@@ -1,9 +1,11 @@
-import { IUser } from '../../auth';
+import type { IUser } from '../../auth';
+
+import type { IFinanceBase, IFinanceResponse } from '../interface';
 import { EExpenseType, EMonth } from '../enum';
-import { ISupplier } from '../supplier';
-import { IFinanceBase } from '../interface';
-import { IExpenseCategory } from '../expense-category';
-import { IExpenseGroup } from '../expense-group';
+
+import type { ISupplier } from '../supplier';
+import type { IExpenseCategory } from '../expense-category';
+import type { IExpenseGroup } from '../expense-group';
 
 export interface IExpense extends Omit<IFinanceBase, 'name'> {
   user: IUser;
@@ -45,3 +47,37 @@ export interface IExpense extends Omit<IFinanceBase, 'name'> {
   description?: string;
   instalment_number?: number;
 }
+
+export interface IExpenseCreateParams
+  extends Pick<
+    IExpense,
+    | 'year'
+    | 'type'
+    | 'paid'
+    | 'value'
+    | 'month'
+    | 'description'
+    | 'instalment_number'
+  > {
+  group: string | IExpense['group'];
+  supplier: string | IExpense['supplier'];
+  category: string | IExpense['category'];
+}
+
+export interface IExpenseUpdateParams
+  extends Omit<
+    IExpense,
+    | 'id'
+    | 'created_at'
+    | 'updated_at'
+    | 'deleted_at'
+    | 'group'
+    | 'supplier'
+    | 'category'
+  > {
+  group: string | IExpense['group'];
+  supplier: string | IExpense['supplier'];
+  category: string | IExpense['category'];
+}
+
+export type IExpenseResponse = IFinanceResponse;

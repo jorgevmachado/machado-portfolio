@@ -1,9 +1,14 @@
-import { Http } from '@repo/services/http/http';
-
 import type { INestModuleConfig } from '../../interface';
+import { NestModuleAbstract } from '../../nestModuleAbstract';
 
-export class PokemonAbility extends Http {
-    constructor({ baseUrl, headers }: INestModuleConfig) {
-        super(baseUrl, { headers });
-    }
+import type { IAbility } from './interface';
+
+export class PokemonAbility extends NestModuleAbstract<
+  IAbility,
+  unknown,
+  unknown
+> {
+  constructor(nestModuleConfig: INestModuleConfig) {
+    super('pokemon/ability', nestModuleConfig);
+  }
 }

@@ -1,8 +1,15 @@
-import { Http } from '@repo/services/http/http';
 import type { INestModuleConfig } from '../../interface';
 
-export class ExpenseGroup extends Http {
-  constructor({ baseUrl, headers }: INestModuleConfig) {
-    super(baseUrl, { headers });
+import { NestModuleAbstract } from '../../nestModuleAbstract';
+
+import { IExpenseGroup, IExpenseGroupParams } from './interface';
+
+export class ExpenseGroup extends NestModuleAbstract<
+  IExpenseGroup,
+  IExpenseGroupParams,
+  IExpenseGroupParams
+> {
+  constructor(nestModuleConfig: INestModuleConfig) {
+    super('finance/expense/group', nestModuleConfig);
   }
 }
