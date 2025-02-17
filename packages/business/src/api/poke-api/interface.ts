@@ -3,10 +3,10 @@ export interface IPokeApiConfig {
 }
 
 export interface IPokemonPaginateResponse {
-    next: string;
+    next?: string;
     count: number;
     results: Array<IPokemonBasicResponse>;
-    previous: string;
+    previous?: string;
 }
 
 export interface IPokemonBasicResponse {
@@ -56,7 +56,7 @@ interface IPokemonSpritesResponse {
             front_shiny_transparent?: string;
         };
     };
-    front_default: string;
+    front_default?: string;
 }
 
 interface IPokemonAbilityResponse {
@@ -100,11 +100,11 @@ export interface IMoveByOrderResponse {
     target: IPokemonBasicResponse;
     priority: number;
     accuracy: number;
+    damage_class: IPokemonBasicResponse;
+    effect_chance?: number;
     effect_entries: Array<{
         effect: string;
         short_effect: string;
     }>;
-    damage_class: IPokemonBasicResponse;
-    effect_chance?: number;
     learned_by_pokemon: Array<IPokemonBasicResponse>;
 }

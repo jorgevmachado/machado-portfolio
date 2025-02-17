@@ -84,13 +84,16 @@ npm run lint
     npm run test -- --findRelatedTests src/api/nest/finance/expense-group/expenseGroup.spec.ts
     npm run test -- --findRelatedTests src/api/nest/finance/expense-category-type/expenseCategoryType.spec.ts
     npm run test -- --findRelatedTests src/api/nest/finance/expense-category/expenseCategory.spec.ts
-    npm run test -- --findRelatedTests src/api/nest/finance/expense/expense.spec.ts
-    
-    npm run test -- --findRelatedTests src/auth/authBusiness.spec.ts
-                                       
+    npm run test -- --findRelatedTests src/api/nest/finance/expense/expense.spec.ts                                       
 ```
 ### auth:
 #### Regras de negócios relacionadas a autenticação.
+```
+    npm run test -- --findRelatedTests src/auth/authBusiness.spec.ts
+    npm run test -- --findRelatedTests src/auth/authService.spec.ts                                 
+    npm run test -- --findRelatedTests src/auth/config.spec.ts                                 
+    npm run test -- --findRelatedTests src/auth/user.spec.ts                                 
+```
 
 ### paginate:
 #### Funções utilitárias para construção de paginação.
@@ -100,6 +103,10 @@ npm run lint
 
 ### pokemon:
 #### Regras de negócios relacionadas a api de pokemon.
+```
+    npm run test -- --findRelatedTests src/pokemon/externalPokemonService.spec.ts                                 
+    npm run test -- --findRelatedTests src/pokemon/config.spec.ts                                 
+```
 
 ### shared:
 #### Funções utilitárias de recursos compartilhados de regras de negócios.

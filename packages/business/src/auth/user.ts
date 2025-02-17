@@ -1,15 +1,16 @@
 import type { UserConstructorParams, UserEntity } from './interface';
+import { ERole, EStatus } from '../shared';
 import { cleanFormatter, validateMobile } from './config';
 
 export default class User implements UserEntity {
   id: UserEntity['id'];
   cpf: UserEntity['cpf'];
-  role: UserEntity['role'];
+  role: UserEntity['role'] = ERole.USER;
   salt?: UserEntity['salt'];
   name: UserEntity['name'];
   email: UserEntity['email'];
   gender: UserEntity['gender'];
-  status: UserEntity['status'];
+  status: UserEntity['status'] = EStatus.ACTIVE;
   picture?: UserEntity['picture'];
   whatsapp: UserEntity['whatsapp'];
   password?: UserEntity['password'];
@@ -22,23 +23,20 @@ export default class User implements UserEntity {
 
   constructor(params?: UserConstructorParams) {
     if (params) {
-      const { clean = false, cleanAllFormatter = true } = params || {};
+      const { clean = false, cleanAllFormatter = true } = params;
       this.id = params.id ?? this.id;
-      this.cpf = cleanFormatter(params.cpf ?? this.cpf, cleanAllFormatter);
-      this.role = params.role ?? this.role;
-      this.name = params.name ?? this.name;
-      this.email = params.email ?? this.email;
-      this.gender = params.gender ?? this.gender;
-      this.status = params.status ?? this.status;
+      this.cpf = cleanFormatter(params.cpf, cleanAllFormatter);
+      this.role = params.role;
+      this.name = params.name;
+      this.email = params.email;
+      this.gender = params.gender;
+      this.status = params.status;
       this.picture = params.picture ?? this.picture;
-      this.whatsapp = validateMobile(
-        params.whatsapp ?? this.whatsapp,
-        cleanAllFormatter,
-      );
+      this.whatsapp = validateMobile(params.whatsapp, cleanAllFormatter);
       this.created_at = params.created_at ?? this.created_at;
       this.updated_at = params.updated_at ?? this.updated_at;
       this.deleted_at = params.deleted_at ?? this.deleted_at;
-      this.date_of_birth = params.date_of_birth ?? this.date_of_birth;
+      this.date_of_birth = params.date_of_birth;
       if (!clean) {
         this.salt = params.salt ?? this.salt;
         this.password = params.password ?? this.password;

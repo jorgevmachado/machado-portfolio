@@ -1,4 +1,4 @@
-import { Base } from '../../shared';
+import { ensureOrder } from '../config';
 
 import { findColor } from './config';
 import type { PokemonTypeEntity } from './interface';
@@ -23,7 +23,7 @@ interface TypeConstructorParams
   background_color?: string;
 }
 
-export default class PokemonType extends Base implements PokemonTypeEntity {
+export default class PokemonType implements PokemonTypeEntity {
   id!: PokemonTypeEntity['id'];
   url!: PokemonTypeEntity['url'];
   name!: PokemonTypeEntity['name'];
@@ -35,13 +35,11 @@ export default class PokemonType extends Base implements PokemonTypeEntity {
   background_color!: PokemonTypeEntity['background_color'];
 
   constructor(type?: TypeConstructorParams) {
-    super();
     if (type) {
       this.id = type.id ?? this.id;
       this.url = type.url ?? this.url;
       this.name = type.name ?? this.name;
-      this.order =
-        type.order ?? this.ensureOrder(this.order, type.url ?? this.url);
+      this.order = type.order ?? ensureOrder(this.order, type.url ?? this.url);
       this.created_at = type.created_at ?? this.created_at;
       this.updated_at = type.updated_at ?? this.updated_at;
       this.deleted_at = type.deleted_at ?? this.deleted_at;

@@ -22,7 +22,7 @@ export interface PokemonConstructorParams
 
 export interface EnsureImageParams {
   image: string;
-  sprites: IPokemonByNameResponse['sprites'];
+  sprites?: IPokemonByNameResponse['sprites'];
 }
 
 export interface EnsureAttributesParams {
