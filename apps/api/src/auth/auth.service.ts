@@ -1,8 +1,10 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { ERole } from '@repo/business/shared/enum';
 
+import AuthBusiness from '@repo/business/auth/authBusiness';
+import UserBusiness from '@repo/business/auth/user';
 import { Base } from '../shared';
 
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -17,6 +19,7 @@ export class AuthService extends Base {
   constructor(
     protected userService: UserService,
     protected jwtService: JwtService,
+    protected authBusiness: AuthBusiness,
   ) {
     super();
   }
@@ -39,38 +42,15 @@ export class AuthService extends Base {
   }
 
   async findOne(id: string, user: User) {
-    this.validateCurrentUser(id, user);
     const withDeleted = user.role === ERole.ADMIN;
-    const currentUser = await this.userService.findOne(id, withDeleted);
-    return this.clean(currentUser);
+    const currentUser = await this.userService.findOne({
+      value: id,
+      withDeleted,
+    });
+    return this.authBusiness.currentUser(currentUser, user);
   }
 
   async me(user: User) {
-    return this.clean(user);
-  }
-
-  private validateCurrentUser(id: string, user: User) {
-    if (id !== user.id && user.role !== ERole.ADMIN) {
-      throw new UnprocessableEntityException(
-        'You are not authorized to access this feature',
-      );
-    }
-  }
-
-  private clean(user: User) {
-    return Promise.resolve({
-      id: user.id,
-      cpf: user.cpf,
-      role: user.role,
-      name: user.name,
-      email: user.email,
-      status: user.status,
-      gender: user.gender,
-      whatsapp: user.whatsapp,
-      date_of_birth: user.date_of_birth,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
-      ...(user.deleted_at && { deleted_at: user.deleted_at }),
-    });
+    return new UserBusiness({ ...user, clean: true });
   }
 }

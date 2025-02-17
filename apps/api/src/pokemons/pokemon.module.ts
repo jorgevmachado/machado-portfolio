@@ -4,11 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
 
-import { AbilityModule } from './ability/ability.module';
-import { MoveModule } from './move/move.module';
-import { TypeModule } from './type/type.module';
+import { PokemonAbilityModule } from './pokemon-ability/pokemon-ability.module';
+import { PokemonMoveModule } from './pokemon-move/pokemon-move.module';
+import { PokemonTypeModule } from './pokemon-type/pokemon-type.module';
 
-import { Pokemon } from './entities/pokemon.entity';
+import { Pokemon } from './pokemon.entity';
 
 import { PokemonController } from './pokemon.controller';
 
@@ -18,9 +18,9 @@ import { PokemonService } from './pokemon.service';
   imports: [
     TypeOrmModule.forFeature([Pokemon]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    TypeModule,
-    MoveModule,
-    AbilityModule,
+    PokemonTypeModule,
+    PokemonMoveModule,
+    PokemonAbilityModule,
   ],
   controllers: [PokemonController],
   providers: [PokemonService, ExternalPokemonService],

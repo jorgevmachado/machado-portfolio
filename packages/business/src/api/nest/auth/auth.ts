@@ -1,25 +1,22 @@
-import { Http } from '@repo/services/http/http';
+import type { INestModuleConfig } from '../interface';
+import { NestModuleAbstract } from '../nestModuleAbstract';
 
 import type { ISignInParams, ISignUpParams, IUser } from './interface';
 
-export class Auth extends Http {
-  constructor(baseUrl: string, headers: Record<string, string>) {
-    super(baseUrl, { headers });
+export class Auth extends NestModuleAbstract<IUser, unknown, unknown> {
+  constructor(nestModuleConfig: INestModuleConfig) {
+    super('auth', nestModuleConfig);
   }
 
   public async signUp(params: ISignUpParams): Promise<{ message: string }> {
-    return this.post('auth/signUp', { body: params });
+    return this.post(`${this.pathUrl}/signUp`, { body: params });
   }
 
   public async signIn(params: ISignInParams): Promise<{ token: string }> {
-    return this.post('auth/signIn', { body: params });
-  }
-
-  public async getOne(id: string): Promise<IUser> {
-    return this.get(`auth/${id}`);
+    return this.post(`${this.pathUrl}/signIn`, { body: params });
   }
 
   public async me(): Promise<IUser> {
-    return this.get('auth/me');
+    return this.get(`${this.pathUrl}/me`);
   }
 }

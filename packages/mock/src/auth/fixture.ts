@@ -1,4 +1,4 @@
-import { User } from '@repo/business/auth/interface';
+import { User, UserEntity } from '@repo/business/auth/interface';
 import { EGender, ERole, EStatus } from '@repo/business/shared/enum';
 
 export const USER_FIXTURE: User = {
@@ -16,7 +16,7 @@ export const USER_FIXTURE: User = {
     date_of_birth: new Date('1990-01-01'),
 }
 
-export const ENTITY_USER_FIXTURE: User = {
+export const ENTITY_USER_FIXTURE: UserEntity = {
   ...USER_FIXTURE,
     salt: '$2a$10$5pv7wQmv3rnXyB9YMqgocO',
     password: '$2a$10$5pv7wQmv3rnXyB9YMqgocOAicud4eH9FQcN8beudNS9WMb.sSE5WS',

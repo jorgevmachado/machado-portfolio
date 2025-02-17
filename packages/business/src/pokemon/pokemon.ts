@@ -1,50 +1,50 @@
-import type { IPokemon } from '../api/nest/pokemon';
 import { Base, EStatus } from '../shared';
-import type { IPokemonByNameResponse } from '../api';
-import Type from './type';
-import Move from './move';
-import Ability from './ability';
+
+import PokemonType from './pokemon-type';
+import PokemonMove from './pokemon-move';
+import PokemonAbility from './pokemon-ability';
 import {
   EnsureAttributesParams,
   EnsureImageParams,
   EnsureRelationsParams,
   EnsureSpecieParams,
-  PokemonConstructorParams,
+  PokemonConstructorParams, PokemonEntity,
+  PokemonByNameResponse
 } from './interface';
 
-export default class Pokemon extends Base implements IPokemon {
-  id: IPokemon['id'];
-  hp?: IPokemon['hp'];
-  url: IPokemon['url'];
-  name: IPokemon['name'];
-  order: IPokemon['order'];
-  image?: IPokemon['image'];
-  speed?: IPokemon['speed'];
-  moves?: IPokemon['moves'];
-  types?: IPokemon['types'];
-  status: IPokemon['status'];
-  attack?: IPokemon['attack'];
-  defense?: IPokemon['defense'];
-  habitat?: IPokemon['habitat'];
-  is_baby?: IPokemon['is_baby'];
-  shape_url?: IPokemon['url'];
-  abilities?: IPokemon['abilities'];
-  created_at: IPokemon['created_at'];
-  updated_at: IPokemon['updated_at'];
-  deleted_at: IPokemon['deleted_at'];
-  evolutions?: IPokemon['evolutions'];
-  shape_name?: IPokemon['shape_name'];
-  is_mythical?: IPokemon['is_mythical'];
-  gender_rate?: IPokemon['gender_rate'];
-  is_legendary?: IPokemon['is_legendary'];
-  capture_rate?: IPokemon['capture_rate'];
-  hatch_counter?: IPokemon['hatch_counter'];
-  base_happiness?: IPokemon['base_happiness'];
-  special_attack?: IPokemon['special_attack'];
-  special_defense?: IPokemon['special_defense'];
-  evolution_chain_url?: IPokemon['evolution_chain_url'];
-  evolves_from_species?: IPokemon['evolves_from_species'];
-  has_gender_differences?: IPokemon['has_gender_differences'];
+export default class Pokemon extends Base implements PokemonEntity {
+  id: PokemonEntity['id'];
+  hp?: PokemonEntity['hp'];
+  url: PokemonEntity['url'];
+  name: PokemonEntity['name'];
+  order: PokemonEntity['order'];
+  image?: PokemonEntity['image'];
+  speed?: PokemonEntity['speed'];
+  moves?: PokemonEntity['moves'];
+  types?: PokemonEntity['types'];
+  status: PokemonEntity['status'];
+  attack?: PokemonEntity['attack'];
+  defense?: PokemonEntity['defense'];
+  habitat?: PokemonEntity['habitat'];
+  is_baby?: PokemonEntity['is_baby'];
+  shape_url?: PokemonEntity['url'];
+  abilities?: PokemonEntity['abilities'];
+  created_at: PokemonEntity['created_at'];
+  updated_at: PokemonEntity['updated_at'];
+  deleted_at: PokemonEntity['deleted_at'];
+  evolutions?: PokemonEntity['evolutions'];
+  shape_name?: PokemonEntity['shape_name'];
+  is_mythical?: PokemonEntity['is_mythical'];
+  gender_rate?: PokemonEntity['gender_rate'];
+  is_legendary?: PokemonEntity['is_legendary'];
+  capture_rate?: PokemonEntity['capture_rate'];
+  hatch_counter?: PokemonEntity['hatch_counter'];
+  base_happiness?: PokemonEntity['base_happiness'];
+  special_attack?: PokemonEntity['special_attack'];
+  special_defense?: PokemonEntity['special_defense'];
+  evolution_chain_url?: PokemonEntity['evolution_chain_url'];
+  evolves_from_species?: PokemonEntity['evolves_from_species'];
+  has_gender_differences?: PokemonEntity['has_gender_differences'];
 
   constructor(params?: PokemonConstructorParams) {
     super();
@@ -111,7 +111,7 @@ export default class Pokemon extends Base implements IPokemon {
     this.image = params?.image ?? this.image;
   }
 
-  private ensureStatus(status?: IPokemon['status']) {
+  private ensureStatus(status?: PokemonEntity['status']) {
     this.status = status ?? this.status;
     if (!this.status) {
       this.status = EStatus.INCOMPLETE;
@@ -138,7 +138,7 @@ export default class Pokemon extends Base implements IPokemon {
     this.special_defense = params?.special_defense ?? this.special_defense;
   }
 
-  private convertStatsToAttributes(stats: IPokemonByNameResponse['stats']) {
+  private convertStatsToAttributes(stats: PokemonByNameResponse['stats']) {
     return stats.reduce(
       (acc, stat) => {
         switch (stat.stat.name) {
@@ -179,21 +179,21 @@ export default class Pokemon extends Base implements IPokemon {
     if (params?.pokemonByName) {
       this.types = params.pokemonByName.types.map(
         (type) =>
-          new Type({
+          new PokemonType({
             url: type.type.url,
             name: type.type.name,
           }),
       );
       this.moves = params.pokemonByName.moves.map(
         (move) =>
-          new Move({
+          new PokemonMove({
             url: move.move.url,
             name: move.move.name,
           }),
       );
       this.abilities = params.pokemonByName.abilities.map(
         (ability) =>
-          new Ability({
+          new PokemonAbility({
             url: ability?.ability?.url,
             slot: ability?.slot,
             name: ability?.ability?.name,

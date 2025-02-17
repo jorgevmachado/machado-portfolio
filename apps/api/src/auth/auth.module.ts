@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import AuthBusiness from '@repo/business/auth/authBusiness';
+
 import { AuthJwtStrategy } from './strategy/auth-jwt.strategy';
 
 import { AuthController } from './auth.controller';
@@ -12,7 +14,7 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, AuthJwtStrategy],
+  providers: [AuthService, AuthJwtStrategy, AuthBusiness],
   imports: [
     UsersModule,
     TypeOrmModule.forFeature([User]),

@@ -12,7 +12,14 @@ export const config = {
   coverageDirectory: '../coverage',
   collectCoverageFrom: ['**/*.(t|j)s'],
   coveragePathIgnorePatterns: [
+      'enum.ts',
       'interface.ts',
       'index.ts',
+      '.module.ts',
+      '.strategy.ts',
+      '.decorator.ts',
+      '.guards.ts',
+      '.entity.ts',
+      '.dto.ts',
   ]
 } as const satisfies Config;

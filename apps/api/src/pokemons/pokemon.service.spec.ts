@@ -14,17 +14,17 @@ import {
 import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/mock/pokemon/fixtures/completes/index';
 
 import { PokemonService } from './pokemon.service';
-import { Pokemon } from './entities/pokemon.entity';
-import { TypeService } from './type/type.service';
-import { MoveService } from './move/move.service';
-import { AbilityService } from './ability/ability.service';
+import { Pokemon } from './pokemon.entity';
+import { PokemonTypeService } from './pokemon-type/pokemon-type.service';
+import { PokemonMoveService } from './pokemon-move/pokemon-move.service';
+import { PokemonAbilityService } from './pokemon-ability/pokemon-ability.service';
 
 describe('PokemonService', () => {
   let service: PokemonService;
   let repository: Repository<Pokemon>;
-  let typeService: TypeService;
-  let moveService: MoveService;
-  let abilityService: AbilityService;
+  let typeService: PokemonTypeService;
+  let moveService: PokemonMoveService;
+  let abilityService: PokemonAbilityService;
   let business: ExternalPokemonService;
 
   beforeEach(async () => {
@@ -42,19 +42,19 @@ describe('PokemonService', () => {
           },
         },
         {
-          provide: TypeService,
+          provide: PokemonTypeService,
           useValue: {
             findList: jest.fn(),
           },
         },
         {
-          provide: MoveService,
+          provide: PokemonMoveService,
           useValue: {
             findList: jest.fn(),
           },
         },
         {
-          provide: AbilityService,
+          provide: PokemonAbilityService,
           useValue: {
             findList: jest.fn(),
           },
@@ -64,9 +64,9 @@ describe('PokemonService', () => {
 
     service = module.get<PokemonService>(PokemonService);
     repository = module.get<Repository<Pokemon>>(getRepositoryToken(Pokemon));
-    typeService = module.get<TypeService>(TypeService);
-    moveService = module.get<MoveService>(MoveService);
-    abilityService = module.get<AbilityService>(AbilityService);
+    typeService = module.get<PokemonTypeService>(PokemonTypeService);
+    moveService = module.get<PokemonMoveService>(PokemonMoveService);
+    abilityService = module.get<PokemonAbilityService>(PokemonAbilityService);
     business = module.get<ExternalPokemonService>(ExternalPokemonService);
   });
 
@@ -132,7 +132,7 @@ describe('PokemonService', () => {
           .mockReturnValueOnce(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE),
       } as any);
       expect(
-        await service.findOne(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name),
+        await service.findOne({ value: BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name }),
       ).toEqual(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE);
     });
     it('must return a incomplete pokemon from the database', async () => {
@@ -144,7 +144,7 @@ describe('PokemonService', () => {
           .mockReturnValueOnce(BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE),
       } as any);
       expect(
-        await service.findOne(
+        await service.findOnePokemon(
           BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE.id,
           false,
         ),
@@ -222,7 +222,7 @@ describe('PokemonService', () => {
       } as any);
 
       expect(
-        await service.findOne(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name),
+        await service.findOnePokemon(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE.name),
       ).toEqual(BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE);
     });
   });

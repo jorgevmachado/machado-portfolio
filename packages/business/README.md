@@ -63,7 +63,32 @@ npm run lint
 ## Módulos
 ### api:
 #### Funções de configurações de apis externas.
-
+```
+    npm run test -- --findRelatedTests src/api/poke-api/pokeApi.spec.ts  
+                                   
+    npm run test -- --findRelatedTests src/api/nest/nest.spec.ts                                 
+    npm run test -- --findRelatedTests src/api/nest/nestModuleAbstract.spec.ts                                 
+    
+    npm run test -- --findRelatedTests src/api/nest/auth/auth.spec.ts
+    
+    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon.spec.ts                                 
+    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-ability/pokemonAbility.spec.ts                                 
+    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-move/pokemonMove.spec.ts                                 
+    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-type/pokemonType.spec.ts
+    
+    npm run test -- --findRelatedTests src/api/nest/finance/finance.spec.ts
+    
+    npm run test -- --findRelatedTests src/api/nest/finance/supplier-type/supplierType.spec.ts
+    npm run test -- --findRelatedTests src/api/nest/finance/supplier/supplier.spec.ts
+    
+    npm run test -- --findRelatedTests src/api/nest/finance/expense-group/expenseGroup.spec.ts
+    npm run test -- --findRelatedTests src/api/nest/finance/expense-category-type/expenseCategoryType.spec.ts
+    npm run test -- --findRelatedTests src/api/nest/finance/expense-category/expenseCategory.spec.ts
+    npm run test -- --findRelatedTests src/api/nest/finance/expense/expense.spec.ts
+    
+    npm run test -- --findRelatedTests src/auth/authBusiness.spec.ts
+                                       
+```
 ### auth:
 #### Regras de negócios relacionadas a autenticação.
 
@@ -78,3 +103,7 @@ npm run lint
 
 ### shared:
 #### Funções utilitárias de recursos compartilhados de regras de negócios.
+```
+    npm run test -- --findRelatedTests src/shared/base.spec.ts                                 
+```
+

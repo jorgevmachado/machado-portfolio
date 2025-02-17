@@ -100,7 +100,7 @@ describe('UsersService', () => {
         getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
       } as any);
 
-      expect(await service.findOne(ENTITY_USER_FIXTURE.id)).toEqual(
+      expect(await service.findOne({ value: ENTITY_USER_FIXTURE.id })).toEqual(
         ENTITY_USER_FIXTURE,
       );
     });

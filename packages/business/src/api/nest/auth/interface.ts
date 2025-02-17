@@ -1,7 +1,7 @@
 import { EGender, ERole, EStatus } from '../../../shared';
+import { INestBaseEntity } from '../interface';
 
-export interface IUser {
-  id: string;
+export interface IUser extends INestBaseEntity {
   cpf: string;
   role: ERole;
   salt?: string;
@@ -12,15 +12,22 @@ export interface IUser {
   picture?: string;
   whatsapp: string;
   password?: string;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at?: Date;
   date_of_birth: Date;
   recover_token?: string;
   confirmation_token?: string;
 }
 
-export interface ISignUpParams extends Omit<IUser, 'id' | 'role' | 'status'> {
+export interface ISignUpParams
+  extends Omit<
+    IUser,
+    | 'id'
+    | 'role'
+    | 'status'
+    | 'password'
+    | 'created_at'
+    | 'updated_at'
+    | 'deleted_at'
+  > {
   password: string;
   password_confirmation: string;
 }

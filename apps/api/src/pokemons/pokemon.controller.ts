@@ -20,6 +20,6 @@ export class PokemonController {
 
   @Get(':param')
   findOne(@Param('param') param: string) {
-    return this.pokemonService.findOne(param);
+    return this.pokemonService.findOnePokemon(param);
   }
 }
