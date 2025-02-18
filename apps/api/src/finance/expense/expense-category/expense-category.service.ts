@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import ExpenseCategoryBusiness from '@repo/business/finance/expense-category/expenseCategory';
 
-import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/fixtures/expense-category/expenseCategory';
+import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/expense-category/fixtures/expenseCategory';
 
 import { Service } from '../../../shared';
 
@@ -23,10 +23,11 @@ export class ExpenseCategoryService extends Service<ExpenseCategory> {
     super('expense_categories', ['type'], repository);
   }
   async create({ name, type }: CreateExpenseCategoryDto) {
-    const currentType = await this.expenseCategoryTypeService.treatExpenseCategoryTypeParam(type);
+    const currentType =
+      await this.expenseCategoryTypeService.treatExpenseCategoryTypeParam(type);
     const expenseCategory = new ExpenseCategoryBusiness({
       name,
-      type: currentType
+      type: currentType,
     });
     expenseCategory.name = name;
 
@@ -36,9 +37,9 @@ export class ExpenseCategoryService extends Service<ExpenseCategory> {
   async update(param: string, { name, type }: UpdateExpenseCategoryDto) {
     const result = await this.findOne({ value: param });
     const expenseCategoryType = !type
-        ? result.type
-        : await this.expenseCategoryTypeService.treatExpenseCategoryTypeParam(
-            type,
+      ? result.type
+      : await this.expenseCategoryTypeService.treatExpenseCategoryTypeParam(
+          type,
         );
     const expenseCategory = new ExpenseCategoryBusiness({
       name,
@@ -69,7 +70,7 @@ export class ExpenseCategoryService extends Service<ExpenseCategory> {
     const expenseCategoryTypes = await this.expenseCategoryTypeService.seed();
     if (!expenseCategoryTypes) {
       throw this.error(
-          new ConflictException('Error seeding expense category types'),
+        new ConflictException('Error seeding expense category types'),
       );
     }
     const expenseCategories = (

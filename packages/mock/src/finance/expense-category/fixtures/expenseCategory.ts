@@ -3,7 +3,7 @@ import ExpenseCategory from '@repo/business/finance/expense-category/expenseCate
 import {
   ACCOUNT_DEBIT_EXPENSE_CATEGORY_TYPE_FIXTURE,
   CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
-} from '../expense-category-type';
+} from '../../expense-category-type';
 
 export const PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
   new ExpenseCategory({

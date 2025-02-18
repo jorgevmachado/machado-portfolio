@@ -7,14 +7,14 @@ import { ConflictException } from '@nestjs/common';
 import {
   LIST_EXPENSE_CATEGORY_FIXTURE,
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense-category/expenseCategory';
+} from '@repo/mock/finance/expense-category/fixtures/expenseCategory';
 
 import {
   CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
   LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
+} from '@repo/mock/finance/expense-category-type/fixtures/expenseCategoryType';
 
-import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/fixtures/expense/expense';
+import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
 
 import { ExpenseCategoryTypeService } from './expense-category-type/expense-category-type.service';
 

@@ -4,7 +4,7 @@ import {beforeEach, describe, expect, it, jest} from '@jest/globals';
 import {
   CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
   LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
+} from '@repo/mock/finance/expense-category-type/fixtures/expenseCategoryType';
 
 import { ExpenseCategoryTypeController } from './expense-category-type.controller';
 import { ExpenseCategoryTypeService } from './expense-category-type.service';

@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import ExpenseGroupBusiness from '@repo/business/finance/expense-group/expenseGroup';
 
-import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/fixtures/expense-group/expenseGroup';
+import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/expense-group/fixtures/expenseGroup';
 
 import { Service } from '../../../shared';
 

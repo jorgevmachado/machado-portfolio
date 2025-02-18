@@ -7,12 +7,12 @@ import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
   LIST_SUPPLIER_TYPE_FIXTURE,
   TRANSPORT_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/supplier-type/supplierType';
+} from '@repo/mock/finance/supplier-type/fixtures/supplierType';
 import {
   LIST_SUPPLIER_FIXTURE,
   VIVO_HOUSING_SUPPLIER_FIXTURE,
-} from '@repo/mock/finance/fixtures/supplier/supplier';
-import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/fixtures/expense/expense';
+} from '@repo/mock/finance/supplier/fixtures/supplier';
+import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
 
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
 

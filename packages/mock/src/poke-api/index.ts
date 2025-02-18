@@ -1,1 +1,1 @@
-export * from './poke-api';
+export { default } from './poke-api';

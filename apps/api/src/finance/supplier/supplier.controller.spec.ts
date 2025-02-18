@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import {
   LIST_SUPPLIER_FIXTURE,
   VIVO_HOUSING_SUPPLIER_FIXTURE,
-} from '@repo/mock/finance/fixtures/supplier/supplier';
+} from '@repo/mock/finance/supplier/fixtures/supplier';
 
 import { SupplierService } from './supplier.service';
 

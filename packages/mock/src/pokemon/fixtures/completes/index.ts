@@ -1,9 +1,10 @@
 import { EStatus } from '@repo/business/shared/enum';
 import Pokemon from '@repo/business/pokemon/pokemon';
 
-import { LIST_MOVE_FIXTURE } from './moves';
-import { LIST_ABILITIES_FIXTURE } from './abilities';
-import { LIST_TYPES_FIXTURE } from './types';
+import { LIST_MOVE_FIXTURE } from '../../pokemon-move';
+import { LIST_ABILITIES_FIXTURE } from '../../pokemon-ability';
+import { LIST_TYPES_FIXTURE } from '../../pokemon-type';
+
 import {
     IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
     VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,

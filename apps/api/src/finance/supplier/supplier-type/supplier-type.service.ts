@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import SupplierTypeBusiness from '@repo/business/finance/supplier-type/supplierType';
 
-import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier-type/supplierType';
+import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/supplier-type/fixtures/supplierType';
 
 import { Service } from '../../../shared';
 

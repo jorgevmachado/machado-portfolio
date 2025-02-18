@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
+import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/expense-category-type/fixtures/expenseCategoryType';
 import ExpenseCategoryTypeBusiness from '@repo/business/finance/expense-category-type/expenseCategoryType';
 
 import { Service } from '../../../../shared';

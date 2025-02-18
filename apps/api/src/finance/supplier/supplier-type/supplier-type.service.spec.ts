@@ -6,9 +6,9 @@ import { Repository } from 'typeorm';
 import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
   LIST_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/fixtures/supplier-type/supplierType';
+} from '@repo/mock/finance/supplier-type/fixtures/supplierType';
 
-import { VIVO_HOUSING_SUPPLIER_FIXTURE } from '@repo/mock/finance/fixtures/supplier/supplier';
+import { VIVO_HOUSING_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
 
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
 

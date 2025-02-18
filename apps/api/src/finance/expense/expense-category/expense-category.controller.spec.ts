@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import {
   LIST_EXPENSE_CATEGORY_FIXTURE,
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense-category/expenseCategory';
+} from '@repo/mock/finance/expense-category/fixtures/expenseCategory';
 
 import { CreateExpenseCategoryDto } from './dto/create-expense-category.dto';
 import { UpdateExpenseCategoryDto } from './dto/update-expense-category.dto';

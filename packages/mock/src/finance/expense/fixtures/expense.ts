@@ -1,9 +1,11 @@
 import Expense from '@repo/business/finance/expense/expense';
 
+import { EExpenseType, EMonth } from '@repo/business/finance/enum';
+
 import {
   MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
   PERSONAL_EXPENSE_GROUP_FIXTURE,
-} from '../expense-group';
+} from '../../expense-group';
 
 import {
   CLARO_HOUSING_SUPPLIER_FIXTURE,
@@ -13,13 +15,12 @@ import {
   IPTU_HOUSING_SUPPLIER_FIXTURE,
   NEOENERGIA_HOUSING_SUPPLIER_FIXTURE,
   OLD_BIKERS_TRANSPORT_SUPPLIER_FIXTURE,
-} from '../supplier';
+} from '../../supplier';
 import {
   ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
-} from '../expense-category';
+} from '../../expense-category';
 
-import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 import { USER_FIXTURE } from '../../../auth';
 
 export const NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
@@ -259,3 +260,8 @@ export const NEOENERGIA_ALL_PAYMENT_FIXTURE: Expense = new Expense({
   description: 'Any comment',
   instalment_number: 1,
 });
+
+export const LIST_ALL_PAYMENT_EXPENSE_FIXTURE: Array<Expense> = [
+  OLD_BIKERS_EXPENSE_FIXTURE,
+  NEOENERGIA_ALL_PAYMENT_FIXTURE,
+];

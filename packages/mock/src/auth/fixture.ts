@@ -11,8 +11,8 @@ export const USER_FIXTURE: User = {
     gender: EGender.MALE,
     whatsapp: '11998765432',
     created_at: new Date('2024-09-09'),
+    updated_at: new Date('2024-09-09'),
     deleted_at: undefined,
-    updated_at: undefined,
     date_of_birth: new Date('1990-01-01'),
 }
 

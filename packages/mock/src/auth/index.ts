@@ -1,2 +1,2 @@
-export * from './auth';
+export  { default } from './auth';
 export * from './fixture';

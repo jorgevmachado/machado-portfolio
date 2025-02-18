@@ -5,15 +5,15 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { SupplierService } from './supplier/supplier.service';
 import { ExpenseService } from './expense/expense.service';
 
-import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/supplier-type/supplierType';
+import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/supplier-type/fixtures/supplierType';
 
-import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/fixtures/supplier/supplier';
+import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
 
-import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
+import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/expense-category-type/fixtures/expenseCategoryType';
 
-import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/fixtures/expense-category/expenseCategory';
+import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/expense-category/fixtures/expenseCategory';
 
-import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/fixtures/expense-group/expenseGroup';
+import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/expense-group/fixtures/expenseGroup';
 
 describe('FinanceService', () => {
   let service: FinanceService;

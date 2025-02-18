@@ -7,8 +7,8 @@ import { Repository } from 'typeorm';
 import {
   LIST_EXPENSE_GROUP_FIXTURE,
   PERSONAL_EXPENSE_GROUP_FIXTURE
-} from '@repo/mock/finance/fixtures/expense-group/expenseGroup';
-import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/fixtures/expense/expense';
+} from '@repo/mock/finance/expense-group/fixtures/expenseGroup';
+import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
 
 import { CreateExpenseGroupDto } from './dto/create-expense-group.dto';
 import { UpdateExpenseGroupDto } from './dto/update-expense-group.dto';

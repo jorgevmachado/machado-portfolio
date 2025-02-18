@@ -6,15 +6,15 @@ import { Repository } from 'typeorm';
 
 import { EMonth } from '@repo/business/finance/enum';
 
-import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/fixtures/expense-category-type/expenseCategoryType';
-import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/fixtures/expense-category/expenseCategory';
-import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/fixtures/expense-group/expenseGroup';
+import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/expense-category-type/fixtures/expenseCategoryType';
+import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/expense-category/fixtures/expenseCategory';
+import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/expense-group/fixtures/expenseGroup';
 import {
   GARAGE_MONTE_CARLO_EXPENSE_FIXTURE,
   NEOENERGIA_ALL_PAYMENT_FIXTURE,
   NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE,
   OLD_BIKERS_EXPENSE_FIXTURE,
-} from '@repo/mock/finance/fixtures/expense/expense';
+} from '@repo/mock/finance/expense/fixtures/expense';
 
 import { ExpenseCategoryService } from './expense-category/expense-category.service';
 import { ExpenseGroupService } from './expense-group/expense-group.service';

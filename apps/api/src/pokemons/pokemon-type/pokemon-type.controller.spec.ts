@@ -5,7 +5,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   GRASS_TYPE_FIXTURE,
   LIST_TYPES_FIXTURE,
-} from '@repo/mock/pokemon/fixtures/completes/types/index';
+} from  '@repo/mock/pokemon/pokemon-type/fixtures/index'
 
 describe('PokemonTypeController', () => {
   let service: PokemonTypeService;

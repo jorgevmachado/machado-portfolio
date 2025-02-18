@@ -4,7 +4,7 @@ import {
     HEALTH_SUPPLIER_TYPE_FIXTURE,
     HOUSING_SUPPLIER_TYPE_FIXTURE,
     TRANSPORT_SUPPLIER_TYPE_FIXTURE,
-} from '../supplier-type';
+} from '../../supplier-type';
 
 export const VIVO_HOUSING_SUPPLIER_FIXTURE: Supplier = new Supplier({
     id: '4dff3e08-fe12-4d95-b810-b9d70710d95d',
