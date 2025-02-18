@@ -1,4 +1,8 @@
 import { PaginateParameters } from './interface';
+import {
+  getSkipIntoPagination,
+  getTotalNumberOfPagesIntoPagination,
+} from './config';
 
 export class Paginate<T> implements PaginateParameters<T> {
   skip: number = 0;
@@ -11,69 +15,23 @@ export class Paginate<T> implements PaginateParameters<T> {
   current_page: number = 0;
 
   constructor(page: number, limit: number, total: number, results: Array<T>) {
-    this.insertCurrentPageNumberIntoPagination(page);
-    limit = this.calculateLimit(limit);
-    this.insertTotalNumberOfItemsIntoPagination(total);
-    this.insertTotalNumberOfItemsPerPageIntoPagination(limit);
-    this.insertTotalNumberOfPagesIntoPagination(total, limit);
-    this.insertSkipIntoPagination();
-    this.insertNumberOfNextPageIntoPagination();
-    this.insertNumberOfPreviousPageIntoPagination();
-    this.insertResultsIntoPagination(results);
-  }
-
-  private insertCurrentPageNumberIntoPagination(page: number) {
     this.current_page = page < 1 ? 1 : page;
-  }
-
-  private calculateLimit(limit: number) {
-    return limit > 100 ? 100 : limit;
-  }
-
-  private insertTotalNumberOfItemsIntoPagination(total: number) {
+    limit = limit > 100 ? 100 : limit;
     this.total = total;
-  }
-
-  private insertTotalNumberOfItemsPerPageIntoPagination(limit: number) {
     this.per_page = limit === 0 ? this.total : limit;
-  }
-
-  private insertTotalNumberOfPagesIntoPagination(total: number, limit: number) {
-    if (limit === 0) {
-      this.pages = Math.ceil(total / this.per_page);
-      return;
-    }
-    this.pages = Math.ceil(total / limit);
-  }
-
-  private insertSkipIntoPagination() {
-    if (this.current_page === 1) {
-      this.skip = 0;
-      return;
-    }
-
-    if (this.current_page === 2) {
-      this.skip = this.per_page;
-      return;
-    }
-
-    if (this.current_page === this.pages) {
-      this.skip = this.total;
-      return;
-    }
-
-    this.skip = this.current_page * this.per_page;
-  }
-
-  private insertNumberOfNextPageIntoPagination() {
+    this.pages = getTotalNumberOfPagesIntoPagination(
+      this.total,
+      limit,
+      this.per_page,
+    );
+    this.skip = getSkipIntoPagination(
+      this.current_page,
+      this.per_page,
+      this.pages,
+      this.total,
+    );
     this.next = this.current_page === this.pages ? 0 : this.current_page + 1;
-  }
-
-  private insertNumberOfPreviousPageIntoPagination() {
     this.prev = this.current_page === 1 ? 0 : this.current_page - 1;
-  }
-
-  private insertResultsIntoPagination(results: Array<T>) {
     this.results = results;
   }
 }

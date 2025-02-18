@@ -105,6 +105,7 @@ npm run lint
 #### Regras de negócios relacionadas a api de pokemon.
 ```
     npm run test -- --findRelatedTests src/pokemon/externalPokemonService.spec.ts                                 
+    npm run test -- --findRelatedTests src/pokemon/pokemonService.spec.ts                                 
     npm run test -- --findRelatedTests src/pokemon/config.spec.ts                                 
     npm run test -- --findRelatedTests src/pokemon/pokemon-move/config.spec.ts                                 
 ```
