@@ -114,6 +114,7 @@ npm run lint
 #### Regras de negócios relacionadas a api de finanças.
 ```
     npm run test -- --findRelatedTests src/finance/financeService.spec.ts                                                                     
+    npm run test -- --findRelatedTests src/finance/supplier-type/supplierType.spec.ts                                                                     
 ```
 
 ### shared:
