@@ -106,6 +106,7 @@ npm run lint
 ```
     npm run test -- --findRelatedTests src/pokemon/externalPokemonService.spec.ts                                 
     npm run test -- --findRelatedTests src/pokemon/config.spec.ts                                 
+    npm run test -- --findRelatedTests src/pokemon/pokemon-move/config.spec.ts                                 
 ```
 
 ### shared:
