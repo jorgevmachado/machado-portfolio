@@ -110,6 +110,12 @@ npm run lint
     npm run test -- --findRelatedTests src/pokemon/pokemon-move/config.spec.ts                                 
 ```
 
+### finance:
+#### Regras de negócios relacionadas a api de finanças.
+```
+    npm run test -- --findRelatedTests src/finance/financeService.spec.ts                                                                     
+```
+
 ### shared:
 #### Funções utilitárias de recursos compartilhados de regras de negócios.
 ```
