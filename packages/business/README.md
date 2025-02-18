@@ -115,6 +115,7 @@ npm run lint
 ```
     npm run test -- --findRelatedTests src/finance/financeService.spec.ts                                                                     
     npm run test -- --findRelatedTests src/finance/supplier-type/supplierType.spec.ts                                                                     
+    npm run test -- --findRelatedTests src/finance/supplier/supplier.spec.ts                                                                     
 ```
 
 ### shared:

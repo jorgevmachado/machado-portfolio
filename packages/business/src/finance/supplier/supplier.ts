@@ -26,11 +26,17 @@ export default class Supplier implements SupplierEntity {
     if (params) {
       this.id = params?.id ?? this.id;
       if (!params.name) {
-        throw new Error(ERROR_STATUS_CODE.CONFLICT_EXCEPTION,'name is required');
+        throw new Error({
+          message: 'name is required',
+          statusCode: ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
+        });
       }
       this.name = params.name;
       if (!params.type) {
-        throw new Error(ERROR_STATUS_CODE.CONFLICT_EXCEPTION,'type is required');
+        throw new Error({
+          message: 'type is required',
+          statusCode: ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
+        });
       }
       this.type = params.type;
       this.active = params?.active ?? this.active;
