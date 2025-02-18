@@ -14,11 +14,13 @@ describe('FinanceService', () => {
     financeService = new FinanceService(nestMock);
   });
 
-  it('should be instantiated correctly', () => {
-    expect(financeService).toBeDefined();
-  });
+  describe('constructor', () => {
+    it('should be instantiated correctly', () => {
+      expect(financeService).toBeDefined();
+    });
 
-  it('should receive the Nest dependency in the constructor\n', () => {
-    expect(financeService['nest']).toBe(nestMock);
-  });
+    it('should receive the Nest dependency in the constructor\n', () => {
+      expect(financeService['nest']).toBe(nestMock);
+    });
+  })
 });
