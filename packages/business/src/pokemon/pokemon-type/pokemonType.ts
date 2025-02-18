@@ -37,9 +37,9 @@ export default class PokemonType implements PokemonTypeEntity {
   constructor(type?: TypeConstructorParams) {
     if (type) {
       this.id = type.id ?? this.id;
-      this.url = type.url ?? this.url;
-      this.name = type.name ?? this.name;
-      this.order = type.order ?? ensureOrder(this.order, type.url ?? this.url);
+      this.url = type.url;
+      this.name = type.name;
+      this.order = type.order ?? ensureOrder(this.order, type.url);
       this.created_at = type.created_at ?? this.created_at;
       this.updated_at = type.updated_at ?? this.updated_at;
       this.deleted_at = type.deleted_at ?? this.deleted_at;

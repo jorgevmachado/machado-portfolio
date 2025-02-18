@@ -27,11 +27,11 @@ export default class PokemonAbility implements PokemonAbilityEntity {
   constructor(ability?: AbilityConstructorParams) {
     if (ability) {
       this.id = ability.id ?? this.id;
-      this.url = ability.url ?? this.url;
+      this.url = ability.url;
       this.slot = ability.slot ?? this.slot;
-      this.name = ability.name ?? this.name;
+      this.name = ability.name;
       this.order =
-        ability.order ?? ensureOrder(this.order, ability.url ?? this.url);
+        ability.order ?? ensureOrder(this.order, ability.url);
       this.is_hidden = ability.is_hidden ?? this.is_hidden;
       this.created_at = ability.created_at ?? this.created_at;
       this.updated_at = ability.updated_at ?? this.updated_at;

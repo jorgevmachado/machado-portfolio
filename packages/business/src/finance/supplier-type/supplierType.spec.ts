@@ -1,8 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
 import SupplierType from './supplierType';
-import { Error, ERROR_STATUS_CODE } from '@repo/services/error/error';
-import type { SupplierTypeEntity } from './interface';
 
 describe('SupplierType', () => {
   describe('Constructor', () => {
@@ -36,22 +34,6 @@ describe('SupplierType', () => {
       expect(supplierType.created_at).toBeUndefined(); // Defaults to undefined
       expect(supplierType.updated_at).toBeUndefined();
       expect(supplierType.deleted_at).toBeUndefined();
-    });
-
-    it('should throw an error when name is missing', () => {
-      const params = {
-        id: '1',
-        created_at: new Date('2023-01-01'),
-        updated_at: new Date('2023-01-02'),
-        deleted_at: null,
-      };
-
-      expect(() => new SupplierType(params as SupplierTypeEntity)).toThrow(
-        new Error({
-          message: 'name is required',
-          statusCode: ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
-        }),
-      );
     });
 
     it('should allow instantiation with no parameters', () => {

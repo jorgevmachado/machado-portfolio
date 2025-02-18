@@ -99,6 +99,7 @@ npm run lint
 #### Funções utilitárias para construção de paginação.
 ```
     npm run test -- --findRelatedTests src/paginate/paginate.spec.ts                                 
+    npm run test -- --findRelatedTests src/paginate/config.spec.ts                                 
 ```
 
 ### pokemon:
@@ -108,6 +109,7 @@ npm run lint
     npm run test -- --findRelatedTests src/pokemon/pokemonService.spec.ts                                 
     npm run test -- --findRelatedTests src/pokemon/config.spec.ts                                 
     npm run test -- --findRelatedTests src/pokemon/pokemon-move/config.spec.ts                                 
+    npm run test -- --findRelatedTests src/pokemon/pokemon-ability/pokemonAbility.spec.ts                                 
 ```
 
 ### finance:

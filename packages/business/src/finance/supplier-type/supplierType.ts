@@ -1,4 +1,3 @@
-import { Error, ERROR_STATUS_CODE } from '@repo/services/error/error';
 import type { SupplierTypeEntity } from './interface';
 
 interface SupplierTypeConstructorParams
@@ -19,12 +18,6 @@ export default class SupplierType implements SupplierTypeEntity {
   constructor(params?: SupplierTypeConstructorParams) {
     if (params) {
       this.id = params?.id ?? this.id;
-      if (!params.name) {
-        throw new Error({
-          message: 'name is required',
-          statusCode: ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
-        });
-      }
       this.name = params?.name;
       this.created_at = params?.created_at ?? this.created_at;
       this.updated_at = params?.updated_at ?? this.updated_at;
