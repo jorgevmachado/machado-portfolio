@@ -119,6 +119,7 @@ npm run lint
     npm run test -- --findRelatedTests src/finance/expense-group/expenseGroup.spec.ts                                                                     
     npm run test -- --findRelatedTests src/finance/expense-category-type/expenseCategoryType.spec.ts                                                                     
     npm run test -- --findRelatedTests src/finance/expense-category-type/expenseCategoryTypeService.spec.ts                                                                     
+    npm run test -- --findRelatedTests src/finance/expense-category/expenseCategory.spec.ts                                                                     
 ```
 
 ### shared:

@@ -21,17 +21,17 @@ export default class ExpenseCategory implements ExpenseCategoryEntity {
     if (params) {
       this.id = params?.id ?? this.id;
       if (!params.name) {
-        throw new Error(
-          ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
-          'name is required',
-        );
+        throw new Error({
+          statusCode: ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
+          message: 'name is required',
+        });
       }
       this.name = params?.name;
       if (!params.type) {
-        throw new Error(
-          ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
-          'type is required',
-        );
+        throw new Error({
+          statusCode: ERROR_STATUS_CODE.CONFLICT_EXCEPTION,
+          message: 'type is required',
+        });
       }
       this.type = params?.type;
       this.created_at = params?.created_at ?? this.created_at;
