@@ -114,12 +114,20 @@ npm run lint
 #### Regras de negócios relacionadas a api de finanças.
 ```
     npm run test -- --findRelatedTests src/finance/financeService.spec.ts                                                                     
+    
     npm run test -- --findRelatedTests src/finance/supplier-type/supplierType.spec.ts                                                                     
     npm run test -- --findRelatedTests src/finance/supplier/supplier.spec.ts                                                                     
+    
     npm run test -- --findRelatedTests src/finance/expense-group/expenseGroup.spec.ts                                                                     
+    
     npm run test -- --findRelatedTests src/finance/expense-category-type/expenseCategoryType.spec.ts                                                                     
-    npm run test -- --findRelatedTests src/finance/expense-category-type/expenseCategoryTypeService.spec.ts                                                                     
+    npm run test -- --findRelatedTests src/finance/expense-category-type/expenseCategoryTypeService.spec.ts                                                                         
     npm run test -- --findRelatedTests src/finance/expense-category/expenseCategory.spec.ts                                                                     
+    
+    npm run test -- --findRelatedTests src/finance/expense/config.spec.ts
+    npm run test -- --findRelatedTests src/finance/expense/expense.spec.ts
+    npm run test -- --findRelatedTests src/finance/expense/expenseBusiness.spec.ts
+    npm run test -- --findRelatedTests src/finance/expense/expenseService.spec.ts
 ```
 
 ### shared:

@@ -72,7 +72,8 @@ export default class ExpenseBusiness {
     if (!withAllCalculations) {
       return expense;
     }
-    return this.processAllCalculate(expense);
+    const expenseToProcess = this.processValues(expense);
+    return this.processAllCalculate(expenseToProcess);
   }
 
   processValues(expense: Expense): Expense {
