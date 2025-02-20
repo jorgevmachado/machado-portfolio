@@ -1,7 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["ENV", "API"],
   "globalDependencies": [
     "**/.env.*local",
+    "**/.env.*mock",
     "ENV",
     "API"
   ],

@@ -40,21 +40,23 @@ export default function useResize(
   };
 
   const medias: Medias = {
-    mobile: window.matchMedia(DeviceBreakpoints.MAX_MOBILE),
-    tablet: window.matchMedia(
+    mobile: window?.matchMedia(DeviceBreakpoints.MAX_MOBILE),
+    tablet: window?.matchMedia(
       `${DeviceBreakpoints.MIN_TABLET} and ${DeviceBreakpoints.MAX_TABLET}`,
     ),
-    desktop: window.matchMedia(
+    desktop: window?.matchMedia(
       `${DeviceBreakpoints.MIN_DESKTOP} and ${DeviceBreakpoints.MAX_DESKTOP}`,
     ),
-    widescreen: window.matchMedia(
+    widescreen: window?.matchMedia(
       `${DeviceBreakpoints.MIN_WIDESCREEN} and ${DeviceBreakpoints.MAX_WIDESCREEN}`,
     ),
-    fullHD: window.matchMedia(DeviceBreakpoints.MIN_FULL_HD),
+    fullHD: window?.matchMedia(DeviceBreakpoints.MIN_FULL_HD),
   };
 
   useEffect(() => {
-    initialize(medias);
+    if (typeof window !== 'undefined') {
+      initialize(medias);
+    }
   }, []);
 
   const initialize = (medias: Medias) => {
@@ -65,19 +67,21 @@ export default function useResize(
   };
 
   useEffect(() => {
-    Object.keys(medias).forEach((key) => {
-      const mediaKey = key as keyof Medias;
-      medias[mediaKey].addEventListener('change', handleMediaChange(mediaKey));
-    });
-    return () => {
+    if (typeof window !== 'undefined'){
       Object.keys(medias).forEach((key) => {
         const mediaKey = key as keyof Medias;
-        medias[mediaKey].removeEventListener(
-          'change',
-          handleMediaChange(mediaKey),
-        );
+        medias[mediaKey].addEventListener('change', handleMediaChange(mediaKey));
       });
-    };
+      return () => {
+        Object.keys(medias).forEach((key) => {
+          const mediaKey = key as keyof Medias;
+          medias[mediaKey].removeEventListener(
+              'change',
+              handleMediaChange(mediaKey),
+          );
+        });
+      };
+    }
   }, [deps]);
 
   const handleMediaChange =

@@ -2,7 +2,7 @@ import process from 'process';
 
 import { Nest } from '@repo/business/api/nest/nest';
 
-import { Auth } from '@repo/business/auth/auth';
+import { AuthService } from '@repo/business/auth/authService';
 
 import { PokemonService } from '@repo/business/pokemon/pokemonService';
 
@@ -18,6 +18,6 @@ const nest = new Nest({
   baseUrl,
 });
 
-export const authService = new Auth(nest);
+export const authService = new AuthService(nest);
 
 export const pokemonService = new PokemonService(nest);

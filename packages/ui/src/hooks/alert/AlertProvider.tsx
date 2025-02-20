@@ -36,16 +36,18 @@ export default function AlertProvider({ elem, children }: AlertProviderProps) {
     [alerts, addAlert],
   );
 
-  useResize(
-    {
-      onMobile: () => setIsMobile(true),
-      onTablet: () => setIsMobile(true),
-      onDesktop: () => setIsMobile(false),
-      onWidescreen: () => setIsMobile(false),
-      onFullHD: () => setIsMobile(false),
-    },
-    [setIsMobile],
-  );
+  if (typeof window !== 'undefined') {
+    useResize(
+      {
+        onMobile: () => setIsMobile(true),
+        onTablet: () => setIsMobile(true),
+        onDesktop: () => setIsMobile(false),
+        onWidescreen: () => setIsMobile(false),
+        onFullHD: () => setIsMobile(false),
+      },
+      [setIsMobile],
+    );
+  }
 
   return (
     <AlertContext.Provider value={context}>

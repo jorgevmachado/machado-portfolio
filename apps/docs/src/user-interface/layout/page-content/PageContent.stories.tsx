@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
+
 import PageContent from '@repo/ui/layout/page-content/PageContent';
 
 const meta = {

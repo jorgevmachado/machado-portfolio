@@ -16,6 +16,8 @@
     "@repo/eslint-config": "*",
     "@repo/tokens": "*",
     "@repo/typescript": "*",
+    "@repo/business": "*",
+    "@repo/mock": "*",
     "@repo/ui": "*",
     "@turbo/gen": "^2.3.3",
     "@types/eslint": "^9.6.1",
