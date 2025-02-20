@@ -23,7 +23,7 @@ export function updateEntity({ param, name, type, entity }: UpdateEntityParams) 
         return newEntity;
     }
     if (Boolean(entity.type) && type && type !== '') {
-        const entityType = findOneEntity(type, entity.type.list);
+        const entityType = findOneEntity(type, entity.type.list as Array<Record<string, unknown>>);
         return {
             ...(newEntity as object),
             type: entityType,
@@ -32,8 +32,21 @@ export function updateEntity({ param, name, type, entity }: UpdateEntityParams) 
     return newEntity;
 }
 
+type RemoveEntityParams = Pick<UpdateEntityParams, 'param' | 'entity'>;
+
+export function removeEntity({ param, entity }: RemoveEntityParams) {
+    const currentEntity = findOneEntity(param, entity.list as Array<Record<string, unknown>>);
+    if(!currentEntity) {
+        return currentEntity;
+    }
+    return {
+        ...currentEntity,
+        deleted_at: new Date(),
+    }
+}
+
 function updateEntityByName({ param, name, entity }: UpdateEntityParams) {
-    const currentEntity = findOneEntity(param, entity.list);
+    const currentEntity = findOneEntity(param, entity.list as Array<Record<string, unknown>>);
     if(!currentEntity) {
         return currentEntity;
     }

@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../../shared';
 
-import { create, update } from '../shared';
+import { create, remove, update } from '../shared';
 import { expensePath } from '../finance';
 
 import { EXPENSE_GROUP_FINANCE_ENTITY } from './fixtures';
@@ -25,6 +25,10 @@ expenseGroupRouter.post(`${path}/group`, (req, res) =>
 
 expenseGroupRouter.put(`${path}/:param/group`, (req, res) =>
   update(req, res, EXPENSE_GROUP_FINANCE_ENTITY),
+);
+
+expenseGroupRouter.delete(`${path}/:param/group`, (req, res) =>
+  remove(req, res, EXPENSE_GROUP_FINANCE_ENTITY),
 );
 
 export default expenseGroupRouter;

@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../../shared';
 
-import { create, update } from '../shared';
+import { create, remove, update } from '../shared';
 import { expensePath } from '../finance';
 
 import { EXPENSE_CATEGORY_FINANCE_ENTITY } from './fixtures';
@@ -25,6 +25,10 @@ expenseCategoryRouter.post(`${path}/category`, (req, res) =>
 
 expenseCategoryRouter.put(`${path}/:param/category`, (req, res) =>
   update(req, res, EXPENSE_CATEGORY_FINANCE_ENTITY),
+);
+
+expenseCategoryRouter.delete(`${path}/:param/category`, (req, res) =>
+  remove(req, res, EXPENSE_CATEGORY_FINANCE_ENTITY),
 );
 
 export default expenseCategoryRouter;

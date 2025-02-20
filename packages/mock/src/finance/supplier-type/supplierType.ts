@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../../shared';
 
-import { create, update } from '../shared';
+import { create, remove, update } from '../shared';
 import { supplierPath } from '../finance';
 
 import { SUPPLIER_TYPE_FINANCE_ENTITY } from './fixtures';
@@ -25,6 +25,10 @@ supplierTypeRouter.post(`${path}/type`, (req, res) =>
 
 supplierTypeRouter.put(`${path}/:param/type`, (req, res) =>
   update(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
+);
+
+supplierTypeRouter.delete(`${path}/:param/type`, (req, res) =>
+  remove(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
 export default supplierTypeRouter;

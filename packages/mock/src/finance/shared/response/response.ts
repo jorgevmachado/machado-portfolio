@@ -65,3 +65,22 @@ export function updateEntityResponse({
     statusCode: 200,
   };
 }
+
+type RemoveEntityResponseParams = Omit<UpdateEntityResponseParams, 'type'>;
+
+export function removeEntityResponse({
+  entity,
+  financeEntity,
+}: RemoveEntityResponseParams) {
+  const resultResponseValidate = validateEntityNotFound(
+    Boolean(entity),
+    financeEntity.alias,
+  );
+  if (resultResponseValidate.statusCode !== 200) {
+    return resultResponseValidate;
+  }
+  return {
+    response: { message: 'Successfully removed' },
+    statusCode: 200,
+  };
+}
