@@ -1,8 +1,13 @@
 import { Router } from 'express';
 
-import { createByName, findAll, findOne } from '../../shared';
+import { findAll, findOne } from '../../shared';
 
-import { LIST_EXPENSE_GROUP_FIXTURE } from './fixtures';
+import { create } from '../shared';
+
+import {
+  EXPENSE_GROUP_FINANCE_ENTITY,
+  LIST_EXPENSE_GROUP_FIXTURE,
+} from './fixtures';
 
 const expenseGroupRouter = Router();
 
@@ -15,7 +20,7 @@ expenseGroupRouter.get('/finance/expense/:param/group', (req, res) =>
 );
 
 expenseGroupRouter.post('/finance/expense/group', (req, res) =>
-  createByName(req, res, LIST_EXPENSE_GROUP_FIXTURE),
+  create(req, res, EXPENSE_GROUP_FINANCE_ENTITY),
 );
 
 export default expenseGroupRouter;

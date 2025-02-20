@@ -1,9 +1,13 @@
 import ExpenseCategory from '@repo/business/finance/expense-category/expenseCategory';
 
+import { FinanceEntity } from '../../interface';
+
 import {
   ACCOUNT_DEBIT_EXPENSE_CATEGORY_TYPE_FIXTURE,
   CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
+  EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY,
 } from '../../expense-category-type';
+
 
 export const PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
   new ExpenseCategory({
@@ -73,3 +77,10 @@ export const LIST_EXPENSE_CATEGORY_FIXTURE: Array<ExpenseCategory> = [
   BANK_SLIP_EXPENSE_CATEGORY_FIXTURE,
   ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
 ];
+
+export const EXPENSE_CATEGORY_FINANCE_ENTITY: FinanceEntity = {
+  id: 'EXPENSE_CATEGORY',
+  label: 'Expense Category',
+  list: LIST_EXPENSE_CATEGORY_FIXTURE,
+  type: EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY,
+};

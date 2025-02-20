@@ -2,7 +2,12 @@ import Expense from '@repo/business/finance/expense/expense';
 
 import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 
+import { USER_FIXTURE } from '../../../auth';
+
+import type { FinanceEntity } from '../../interface';
+
 import {
+  EXPENSE_GROUP_FINANCE_ENTITY,
   MONTE_CARLO_RESIDENTIAL_EXPENSE_GROUP_FIXTURE,
   PERSONAL_EXPENSE_GROUP_FIXTURE,
 } from '../../expense-group';
@@ -15,13 +20,13 @@ import {
   IPTU_HOUSING_SUPPLIER_FIXTURE,
   NEOENERGIA_HOUSING_SUPPLIER_FIXTURE,
   OLD_BIKERS_TRANSPORT_SUPPLIER_FIXTURE,
+  SUPPLIER_FINANCE_ENTITY,
 } from '../../supplier';
 import {
   ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+  EXPENSE_CATEGORY_FINANCE_ENTITY,
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
 } from '../../expense-category';
-
-import { USER_FIXTURE } from '../../../auth';
 
 export const NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
   id: '6afbb81f-d2c7-4195-b23b-e47fefe4e743',
@@ -265,3 +270,12 @@ export const LIST_ALL_PAYMENT_EXPENSE_FIXTURE: Array<Expense> = [
   OLD_BIKERS_EXPENSE_FIXTURE,
   NEOENERGIA_ALL_PAYMENT_FIXTURE,
 ];
+
+export const EXPENSE_FINANCE_ENTITY: FinanceEntity = {
+  id: 'EXPENSE',
+  label: 'Expense',
+  list: LIST_MONTE_CARLO_EXPENSE_FIXTURE,
+  group: EXPENSE_GROUP_FINANCE_ENTITY,
+  category: EXPENSE_CATEGORY_FINANCE_ENTITY,
+  supplier: SUPPLIER_FINANCE_ENTITY,
+};

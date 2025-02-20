@@ -1,21 +1,18 @@
 import { Request, Response } from 'express';
 
+import { isUUID } from '@repo/services/string/string';
+
+import { notFoundException } from './exceptions';
+import { paginate } from './paginate';
+import { ResultResponse } from './interface';
+
 export function findAll(req: Request, res: Response, list: Array<unknown>) {
   const { page, limit } = req.query;
   if (!page || !limit) {
     return res.json(list);
   }
-
-  return res.json({
-    skip: 0,
-    next: 0,
-    prev: 0,
-    total: list.length,
-    pages: 1,
-    results: list,
-    per_page: limit,
-    current_page: page,
-  });
+  const result = paginate(Number(page), Number(limit), list);
+  return buildResponse(res, result);
 }
 
 export function findOne(
@@ -23,42 +20,18 @@ export function findOne(
   res: Response,
   list: Array<unknown>,
   alias: string,
-  onlyId?: boolean,
 ) {
   const { param } = req.params;
-  const paramNumber = Number(param);
-  const onlyIdFilter = {
-    key: 'id',
-    value: param,
-  };
-  const filter = !onlyId
-    ? {
-        key: isNaN(paramNumber) ? 'name' : 'id',
-        value: isNaN(paramNumber) ? param : paramNumber,
-      }
-    : onlyIdFilter;
-  const result = list.find((result) => result[filter.key] === filter.value);
+  const filterKey = isUUID(param) ? 'id' : 'name';
+  const result = list.find((result) => result[filterKey] === param);
   if (!result) {
-    return res.status(404).json({
-      message: `${alias} not found`,
-      error: 'Not Found',
-      statusCode: 404,
-    });
+    return buildResponse(res, notFoundException(`${alias} not found`));
   }
   return res.json(result);
 }
 
-
-export function createByName(req: Request, res: Response, list: Array<unknown>) {
-    const { body: { name } } = req;
-    const exist = list.find((item) => item['name'] === name);
-    if (exist) {
-        return res.json({ message: 'Registration Completed Successfully!'});
-    }
-
-    return res.status(409).json({
-        message: `Key (name)=(${name}) already exists.`,
-        error: 'Conflict',
-        statusCode: 400,
-    });
+export function buildResponse(res: Response, result: ResultResponse) {
+  const { statusCode, response, responseError } = result;
+  const content = statusCode === 200 ? response : responseError;
+  return res.status(statusCode).json(content);
 }

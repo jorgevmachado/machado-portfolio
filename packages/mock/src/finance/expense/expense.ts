@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { findAll, findOne } from '../../shared';
 
 import { LIST_MONTE_CARLO_EXPENSE_FIXTURE } from './fixtures';
+import { create } from './config';
 
 const expenseRouter = Router();
 
@@ -11,11 +12,9 @@ expenseRouter.get('/finance/expense', (req, res) =>
 );
 
 expenseRouter.get('/finance/expense/:param', (req, res) =>
-  findOne(req, res, LIST_MONTE_CARLO_EXPENSE_FIXTURE, 'expenses', true),
+  findOne(req, res, LIST_MONTE_CARLO_EXPENSE_FIXTURE, 'expenses'),
 );
 
-expenseRouter.post('/finance/expense', (req, res) => {
-    return res.json({ message: 'Registration Completed Successfully!'});
-})
+expenseRouter.post('/finance/expense', (req, res) => create(req, res));
 
 export default expenseRouter;

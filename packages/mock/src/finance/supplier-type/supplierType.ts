@@ -1,8 +1,13 @@
 import { Router } from 'express';
 
-import { createByName, findAll, findOne } from '../../shared';
+import { findAll, findOne } from '../../shared';
 
-import { LIST_SUPPLIER_TYPE_FIXTURE } from './fixtures';
+import { create } from '../shared';
+
+import {
+  LIST_SUPPLIER_TYPE_FIXTURE,
+  SUPPLIER_TYPE_FINANCE_ENTITY,
+} from './fixtures';
 
 const supplierTypeRouter = Router();
 
@@ -15,7 +20,7 @@ supplierTypeRouter.get('/finance/supplier/:param/type', (req, res) =>
 );
 
 supplierTypeRouter.post('/finance/supplier/type', (req, res) =>
-  createByName(req, res, LIST_SUPPLIER_TYPE_FIXTURE),
+  create(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
 export default supplierTypeRouter;

@@ -23,4 +23,4 @@ export interface MoveConstructorParams
   moveByOrder?: IMoveByOrderResponse;
 }
 
-export type EnsureAttributesParams = Omit<MoveConstructorParams, 'id' | 'url' | 'name' | 'created_at' | 'updated_at' | 'deleted_at'>;
+export type EnsurePokemonMoveAttributesParams = Omit<MoveConstructorParams, 'id' | 'url' | 'name' | 'created_at' | 'updated_at' | 'deleted_at'>;

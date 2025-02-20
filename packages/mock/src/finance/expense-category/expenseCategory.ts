@@ -1,6 +1,10 @@
 import { Router } from 'express';
-import { createByName, findAll, findOne } from '../../shared';
-import { LIST_EXPENSE_CATEGORY_FIXTURE } from './fixtures';
+import { findAll, findOne } from '../../shared';
+import {
+  EXPENSE_CATEGORY_FINANCE_ENTITY,
+  LIST_EXPENSE_CATEGORY_FIXTURE,
+} from './fixtures';
+import { create } from '../shared';
 
 const expenseCategoryRouter = Router();
 
@@ -13,7 +17,7 @@ expenseCategoryRouter.get('/finance/expense/:param/category', (req, res) =>
 );
 
 expenseCategoryRouter.post('/finance/expense/category', (req, res) =>
-  createByName(req, res, LIST_EXPENSE_CATEGORY_FIXTURE),
+  create(req, res, EXPENSE_CATEGORY_FINANCE_ENTITY),
 );
 
 export default expenseCategoryRouter;

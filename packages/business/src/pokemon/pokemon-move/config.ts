@@ -1,8 +1,8 @@
-import { EnsureAttributesParams } from './interface';
+import { EnsurePokemonMoveAttributesParams } from './interface';
 
 export function ensureAttributes(
-  params: EnsureAttributesParams,
-): Omit<EnsureAttributesParams, 'moveByOrder'> {
+  params: EnsurePokemonMoveAttributesParams,
+): Omit<EnsurePokemonMoveAttributesParams, 'moveByOrder'> {
   if (params?.moveByOrder) {
     const effect_entries = params.moveByOrder?.effect_entries[0];
     return {
