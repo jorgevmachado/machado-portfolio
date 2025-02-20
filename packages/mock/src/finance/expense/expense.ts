@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { findAll, findOne } from '../../shared';
 
 import { LIST_MONTE_CARLO_EXPENSE_FIXTURE } from './fixtures';
-import { create } from './config';
+import { create, update } from './config';
 
 const expenseRouter = Router();
 
@@ -16,5 +16,7 @@ expenseRouter.get('/finance/expense/:param', (req, res) =>
 );
 
 expenseRouter.post('/finance/expense', (req, res) => create(req, res));
+
+expenseRouter.put('/finance/expense/:id', (req, res) => update(req, res));
 
 export default expenseRouter;
