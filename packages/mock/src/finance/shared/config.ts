@@ -4,8 +4,8 @@ import { buildResponse } from '../../shared';
 
 import type { FinanceEntity } from '../interface';
 
-import { createEntity } from './entities';
-import { createEntityResponse } from './response';
+import { createEntity, updateEntity } from './entities';
+import { createEntityResponse, updateEntityResponse } from './response';
 
 export function create(
   req: Request,
@@ -26,4 +26,22 @@ export function create(
     financeEntity,
   });
   return buildResponse(res, entityResultResponse);
+}
+
+export function update(
+  req: Request,
+  res: Response,
+  financeEntity: FinanceEntity,
+) {
+  const { param } = req.params;
+  const { name, type } = req.body;
+
+  const newEntity = updateEntity({ param, name, type, entity: financeEntity });
+  const newEntityResultResponse = updateEntityResponse({
+    type,
+    entity: newEntity,
+    financeEntity,
+  });
+
+  return buildResponse(res, newEntityResultResponse);
 }

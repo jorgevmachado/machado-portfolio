@@ -81,6 +81,7 @@ export const LIST_EXPENSE_CATEGORY_FIXTURE: Array<ExpenseCategory> = [
 export const EXPENSE_CATEGORY_FINANCE_ENTITY: FinanceEntity = {
   id: 'EXPENSE_CATEGORY',
   label: 'Expense Category',
+  alias: 'expense_categories',
   list: LIST_EXPENSE_CATEGORY_FIXTURE,
   type: EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY,
 };

@@ -2,22 +2,29 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../../shared';
 
-import { create } from '../shared';
+import { create, update } from '../shared';
+import { supplierPath } from '../finance';
 
-import { LIST_SUPPLIER_FIXTURE, SUPPLIER_FINANCE_ENTITY } from './fixtures';
+import { SUPPLIER_FINANCE_ENTITY } from './fixtures';
+
+const path = supplierPath;
 
 const supplierRouter = Router();
 
-supplierRouter.get('/finance/supplier', (req, res) =>
-  findAll(req, res, LIST_SUPPLIER_FIXTURE),
+supplierRouter.get(`${path}`, (req, res) =>
+  findAll(req, res, SUPPLIER_FINANCE_ENTITY),
 );
 
-supplierRouter.get('/finance/supplier/:param', (req, res) =>
-  findOne(req, res, LIST_SUPPLIER_FIXTURE, 'suppliers'),
+supplierRouter.get(`${path}/:param`, (req, res) =>
+  findOne(req, res, SUPPLIER_FINANCE_ENTITY),
 );
 
-supplierRouter.post('/finance/supplier', (req, res) =>
+supplierRouter.post(`${path}`, (req, res) =>
   create(req, res, SUPPLIER_FINANCE_ENTITY),
+);
+
+supplierRouter.put(`${path}/:param`, (req, res) =>
+  update(req, res, SUPPLIER_FINANCE_ENTITY),
 );
 
 export default supplierRouter;

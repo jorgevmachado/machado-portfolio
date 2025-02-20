@@ -73,5 +73,6 @@ export const LIST_SUPPLIER_TYPE_FIXTURE: Array<SupplierType> = [
 export const SUPPLIER_TYPE_FINANCE_ENTITY: FinanceEntity = {
   id: 'SUPPLIER_TYPE',
   label: 'Supplier Type',
+  alias: 'supplier_types',
   list: LIST_SUPPLIER_TYPE_FIXTURE,
 };

@@ -167,6 +167,7 @@ export function update(req: Request, res: Response) {
     group: groupEntity,
     supplier: supplierEntity,
     category: categoryEntity,
+    created_at: new Date('1990-02-13T17:37:47.783Z'),
   };
 
   expense.year = year ?? expense.year;

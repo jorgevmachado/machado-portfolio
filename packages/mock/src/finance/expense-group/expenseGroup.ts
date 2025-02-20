@@ -2,25 +2,29 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../../shared';
 
-import { create } from '../shared';
+import { create, update } from '../shared';
+import { expensePath } from '../finance';
 
-import {
-  EXPENSE_GROUP_FINANCE_ENTITY,
-  LIST_EXPENSE_GROUP_FIXTURE,
-} from './fixtures';
+import { EXPENSE_GROUP_FINANCE_ENTITY } from './fixtures';
 
 const expenseGroupRouter = Router();
 
-expenseGroupRouter.get('/finance/expense/list/group', (req, res) =>
-  findAll(req, res, LIST_EXPENSE_GROUP_FIXTURE),
+const path = expensePath;
+
+expenseGroupRouter.get(`${path}/list/group`, (req, res) =>
+  findAll(req, res, EXPENSE_GROUP_FINANCE_ENTITY),
 );
 
-expenseGroupRouter.get('/finance/expense/:param/group', (req, res) =>
-  findOne(req, res, LIST_EXPENSE_GROUP_FIXTURE, 'expense_groups'),
+expenseGroupRouter.get(`${path}/:param/group`, (req, res) =>
+  findOne(req, res, EXPENSE_GROUP_FINANCE_ENTITY),
 );
 
-expenseGroupRouter.post('/finance/expense/group', (req, res) =>
+expenseGroupRouter.post(`${path}/group`, (req, res) =>
   create(req, res, EXPENSE_GROUP_FINANCE_ENTITY),
+);
+
+expenseGroupRouter.put(`${path}/:param/group`, (req, res) =>
+  update(req, res, EXPENSE_GROUP_FINANCE_ENTITY),
 );
 
 export default expenseGroupRouter;

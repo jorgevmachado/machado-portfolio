@@ -274,6 +274,7 @@ export const LIST_ALL_PAYMENT_EXPENSE_FIXTURE: Array<Expense> = [
 export const EXPENSE_FINANCE_ENTITY: FinanceEntity = {
   id: 'EXPENSE',
   label: 'Expense',
+  alias: 'expenses',
   list: LIST_MONTE_CARLO_EXPENSE_FIXTURE,
   group: EXPENSE_GROUP_FINANCE_ENTITY,
   category: EXPENSE_CATEGORY_FINANCE_ENTITY,

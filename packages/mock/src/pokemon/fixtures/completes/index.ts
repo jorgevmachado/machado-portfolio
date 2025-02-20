@@ -1,13 +1,15 @@
 import { EStatus } from '@repo/business/shared/enum';
 import Pokemon from '@repo/business/pokemon/pokemon';
 
+import { MockEntity } from '../../../shared/interface';
+
 import { LIST_MOVE_FIXTURE } from '../../pokemon-move';
 import { LIST_ABILITIES_FIXTURE } from '../../pokemon-ability';
 import { LIST_TYPES_FIXTURE } from '../../pokemon-type';
 
 import {
-    IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
-    VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+  IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+  VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
 } from '../incompletes';
 
 import BULBASAUR_COMPLETE_FIXTURE from './bulbasaur-complete.json';
@@ -29,7 +31,7 @@ export const BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE: Pokemon = new Pokemon({
   evolutions: [
     BULBASAUR_COMPLETE_POKEMON_FIXTURE,
     IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
-    VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE
+    VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
   ],
 });
 
@@ -68,3 +70,10 @@ export const LIST_ENTITY_COMPLETE_POKEMON_FIXTURE: Array<Pokemon> = [
   IVYSAUR_ENTITY_COMPLETE_POKEMON_FIXTURE,
   VENUSAUR_ENTITY_COMPLETE_POKEMON_FIXTURE,
 ];
+
+export const POKEMON_MOCK_ENTITY: MockEntity = {
+  id: 'POKEMON',
+  alias: 'pokemon',
+  label: 'Pokemon',
+  list: LIST_ENTITY_COMPLETE_POKEMON_FIXTURE
+};

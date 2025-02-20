@@ -2,25 +2,29 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../../shared';
 
-import { create } from '../shared';
+import { create, update } from '../shared';
+import { supplierPath } from '../finance';
 
-import {
-  LIST_SUPPLIER_TYPE_FIXTURE,
-  SUPPLIER_TYPE_FINANCE_ENTITY,
-} from './fixtures';
+import { SUPPLIER_TYPE_FINANCE_ENTITY } from './fixtures';
+
+const path = supplierPath;
 
 const supplierTypeRouter = Router();
 
-supplierTypeRouter.get('/finance/supplier/list/type', (req, res) =>
-  findAll(req, res, LIST_SUPPLIER_TYPE_FIXTURE),
+supplierTypeRouter.get(`${path}/list/type`, (req, res) =>
+  findAll(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
-supplierTypeRouter.get('/finance/supplier/:param/type', (req, res) =>
-  findOne(req, res, LIST_SUPPLIER_TYPE_FIXTURE, 'supplier_types'),
+supplierTypeRouter.get(`${path}/:param/type`, (req, res) =>
+  findOne(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
-supplierTypeRouter.post('/finance/supplier/type', (req, res) =>
+supplierTypeRouter.post(`${path}/type`, (req, res) =>
   create(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
+);
+
+supplierTypeRouter.put(`${path}/:param/type`, (req, res) =>
+  update(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
 export default supplierTypeRouter;

@@ -17,3 +17,10 @@ export interface ResultResponse {
     }
     statusCode: number;
 }
+
+export interface MockEntity {
+    id: string;
+    alias: string;
+    label: string;
+    list: Array<unknown>;
+}

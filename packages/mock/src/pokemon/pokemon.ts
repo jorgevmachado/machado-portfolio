@@ -2,16 +2,16 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../shared';
 
-import { LIST_ENTITY_COMPLETE_POKEMON_FIXTURE } from './fixtures';
+import { POKEMON_MOCK_ENTITY } from './fixtures';
 
 const pokemonRouter: Router = Router();
 
 pokemonRouter.get(`/pokemon`, (req, res) =>
-  findAll(req, res, LIST_ENTITY_COMPLETE_POKEMON_FIXTURE),
+  findAll(req, res, POKEMON_MOCK_ENTITY),
 );
 
 pokemonRouter.get(`/pokemon/:param`, (req, res) =>
-  findOne(req, res, LIST_ENTITY_COMPLETE_POKEMON_FIXTURE, 'pokemon'),
+  findOne(req, res, POKEMON_MOCK_ENTITY),
 );
 
 export default pokemonRouter;

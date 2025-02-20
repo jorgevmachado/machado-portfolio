@@ -1,37 +1,28 @@
 import { Request, Response } from 'express';
 
-import { isUUID } from '@repo/services/string/string';
-
 import { notFoundException } from './exceptions';
 import { paginate } from './paginate';
-import { ResultResponse } from './interface';
+import { MockEntity } from './interface';
+import { findOneEntity } from './entities';
+import { buildResponse } from './response';
 
-export function findAll(req: Request, res: Response, list: Array<unknown>) {
+export function findAll(req: Request, res: Response, mockEntity: MockEntity) {
   const { page, limit } = req.query;
   if (!page || !limit) {
-    return res.json(list);
+    return res.json(mockEntity.list);
   }
-  const result = paginate(Number(page), Number(limit), list);
+  const result = paginate(Number(page), Number(limit), mockEntity.list);
   return buildResponse(res, result);
 }
 
-export function findOne(
-  req: Request,
-  res: Response,
-  list: Array<unknown>,
-  alias: string,
-) {
+export function findOne(req: Request, res: Response, mockEntity: MockEntity) {
   const { param } = req.params;
-  const filterKey = isUUID(param) ? 'id' : 'name';
-  const result = list.find((result) => result[filterKey] === param);
+  const result = findOneEntity(param, mockEntity.list);
   if (!result) {
-    return buildResponse(res, notFoundException(`${alias} not found`));
+    return buildResponse(
+      res,
+      notFoundException(`${mockEntity.alias} not found`),
+    );
   }
   return res.json(result);
-}
-
-export function buildResponse(res: Response, result: ResultResponse) {
-  const { statusCode, response, responseError } = result;
-  const content = statusCode === 200 ? response : responseError;
-  return res.status(statusCode).json(content);
 }

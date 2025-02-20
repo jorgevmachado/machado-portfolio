@@ -46,5 +46,6 @@ export const LIST_EXPENSE_GROUP_FIXTURE: Array<ExpenseGroup> = [
 export const EXPENSE_GROUP_FINANCE_ENTITY: FinanceEntity = {
   id: 'EXPENSE_GROUP',
   label: 'Expense Group',
+  alias: 'expense_groups',
   list: LIST_EXPENSE_GROUP_FIXTURE,
 };

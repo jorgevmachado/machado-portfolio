@@ -2,33 +2,28 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../../shared';
 
-import { create } from '../shared';
+import {create, update} from '../shared';
+import { expensePath } from '../finance';
 
-import {
-  EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY,
-  LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-} from './fixtures';
+import { EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY } from './fixtures';
 
 const expenseCategoryTypeRouter = Router();
 
-expenseCategoryTypeRouter.get(
-  '/finance/expense/category/list/type',
-  (req, res) => findAll(req, res, LIST_EXPENSE_CATEGORY_TYPE_FIXTURE),
+const path = `${expensePath}/category`;
+
+expenseCategoryTypeRouter.get(`${path}/list/type`, (req, res) =>
+  findAll(req, res, EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY),
 );
 
-expenseCategoryTypeRouter.get(
-  '/finance/expense/category/:param/type',
-  (req, res) =>
-    findOne(
-      req,
-      res,
-      LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-      'expense_category_types',
-    ),
+expenseCategoryTypeRouter.get(`${path}/:param/type`, (req, res) =>
+  findOne(req, res, EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY),
 );
 
-expenseCategoryTypeRouter.post('/finance/expense/category/type', (req, res) =>
+expenseCategoryTypeRouter.post(`${path}/type`, (req, res) =>
   create(req, res, EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY),
+);
+expenseCategoryTypeRouter.put(`${path}/:param/type`, (req, res) =>
+    update(req, res, EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY),
 );
 
 export default expenseCategoryTypeRouter;
