@@ -1,12 +1,14 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+
+import { ENTITY_USER_FIXTURE } from '@repo/mock/auth/fixture';
+
 import UserProvider from '@repo/ui/hooks/user/UserProvider';
 import useUser from '@repo/ui/hooks/user/useUser';
-import { ENTITY_USER_COMPLETE_FIXTURE } from '@repo/business/auth/fixture/user';
 
 const meta = {
   args: {
-    user: ENTITY_USER_COMPLETE_FIXTURE,
+    user: ENTITY_USER_FIXTURE,
     children: 'Hello, World!',
   },
   title: 'User-Interface/Hooks/User',

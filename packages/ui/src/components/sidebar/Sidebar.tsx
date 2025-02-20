@@ -83,7 +83,7 @@ export default function Sidebar({
                   tag="h4"
                   color="neutral-90"
                   variant="medium"
-                  className="sidebar__container--list-grouop__title"
+                  className="sidebar__container--list-group__title"
                 >
                   {group?.label}
                 </Text>
