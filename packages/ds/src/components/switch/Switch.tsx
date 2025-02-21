@@ -4,7 +4,7 @@ import type { TContext } from '../../utils';
 import joinClass from '../../utils/join-class';
 import useGenerateComponentId from '../../hooks/use-generate-component-id';
 
-import Text from '../../elements/text';
+import { Text } from '../../elements/text';
 
 import './Switch.scss';
 

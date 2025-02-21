@@ -9,12 +9,14 @@ import type { LinkProps } from '../interface';
 interface LinkIconProps {
   icon: LinkProps['icon'];
   color?: LinkProps['iconColor'];
+  group?: LinkProps['iconGroup'];
   position?: LinkProps['iconPosition'];
   className?: LinkProps['iconClassName'];
 }
 export default function LinkIcon({
   icon,
   color,
+  group,
   position = 'left',
   className,
 }: LinkIconProps) {
@@ -24,5 +26,5 @@ export default function LinkIcon({
     className,
   ]);
 
-  return <Icon icon={icon} className={classNameList} />;
+  return <Icon icon={icon} group={group} className={classNameList} />;
 }

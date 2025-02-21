@@ -4,7 +4,7 @@ import type { TContext, TSimplySIze } from '../../utils';
 
 import joinClass from '../../utils/join-class';
 
-import Text from '../../elements/text';
+import { Text } from '../../elements/text';
 
 import './Avatar.scss';
 

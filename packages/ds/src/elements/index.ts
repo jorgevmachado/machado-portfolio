@@ -1,6 +1,6 @@
-export { default as Icon } from './icon';
-export { default as Skeleton } from './skeleton';
-export { default as Spinner } from './spinner';
-export { default as Tooltip } from './tooltip';
-export { default as Text } from './text';
-export { default as Image } from './image';
+export { Icon, type TIcon, type TIconGroup, type TIconPosition, OIcon, OIconPosition } from './icon';
+export { Skeleton } from './skeleton';
+export { Spinner } from './spinner';
+export { Tooltip } from './tooltip';
+export { Text } from './text';
+export { Image } from './image';

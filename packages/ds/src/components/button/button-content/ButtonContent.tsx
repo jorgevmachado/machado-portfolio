@@ -1,15 +1,21 @@
 import React from 'react';
 
-import type { TContext, TIcon, TIconPosition } from '../../../utils';
+import type { TContext } from '../../../utils';
 
-import { Icon, Spinner } from '../../../elements';
+import {
+  Icon,
+  Spinner,
+  type TIcon, TIconGroup,
+  type TIconPosition,
+} from '../../../elements';
 
 export interface ButtonContentProps {
   icon?: React.ReactNode | TIcon;
   context: TContext;
   loading: boolean;
-  children?: React.ReactNode;
   iconSize: string | number;
+  children?: React.ReactNode;
+  iconGroup?: TIconGroup;
   iconPosition: TIconPosition;
   loadingContext: TContext;
   iconClassNameList: string;
@@ -21,8 +27,9 @@ export default function ButtonContent({
   icon,
   context,
   loading,
-  children,
   iconSize,
+  children,
+  iconGroup,
   iconPosition,
   loadingContext,
   iconClassNameList,
@@ -32,7 +39,7 @@ export default function ButtonContent({
   return (
     <div className="button__content">
       {icon && iconPosition === 'left' && (
-        <Icon icon={icon} size={iconSize} className={iconClassNameList} />
+        <Icon icon={icon} size={iconSize} group={iconGroup} className={iconClassNameList} />
       )}
       <>
         <div>{children}</div>
@@ -45,7 +52,7 @@ export default function ButtonContent({
         )}
       </>
       {icon && iconPosition === 'right' && (
-        <Icon icon={icon} size={iconSize} className={iconClassNameList} />
+        <Icon icon={icon} size={iconSize} group={iconGroup} className={iconClassNameList} />
       )}
       {loading && (
         <Spinner

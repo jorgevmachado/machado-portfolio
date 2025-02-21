@@ -17,6 +17,7 @@ export default function Link({
   context = 'neutral',
   children,
   iconColor,
+  iconGroup,
   className,
   iconPosition = 'left',
   iconClassName,
@@ -46,6 +47,7 @@ export default function Link({
         {icon && iconPosition === 'left' && (
           <LinkIcon
             icon={icon}
+            group={iconGroup}
             color={iconColor}
             position="left"
             className={iconClassNameList}
@@ -64,6 +66,7 @@ export default function Link({
         {icon && iconPosition === 'right' && (
           <LinkIcon
             icon={icon}
+            group={iconGroup}
             color={iconColor}
             position="right"
             className={iconClassNameList}

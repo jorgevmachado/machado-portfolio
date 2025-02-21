@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { OColors, OContext } from '@repo/ds/utils/colors/options';
-import { OIcon, OIconPosition } from '@repo/ds/utils/icons/options';
+import { OIcon, OIconPosition } from '@repo/ds/elements/icon/options';
 import { OSimplySize } from '@repo/ds/utils/sizes/options';
 import { OWeight } from '@repo/ds/utils/fonts/options';
 

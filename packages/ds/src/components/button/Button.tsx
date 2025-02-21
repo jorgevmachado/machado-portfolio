@@ -23,6 +23,7 @@ export default function Button({
   disabled,
   iconSize = '1em',
   className = '',
+  iconGroup,
   appearance = 'standard',
   noIconBorder,
   iconPosition = 'left',
@@ -81,14 +82,15 @@ export default function Button({
       aria-disabled={disabled || loading ? 'true' : undefined}
     >
       {isAppearanceIconButton ? (
-        <Icon icon={icon || 'react'} className={iconClassNameList} />
+        <Icon icon={icon || 'react'} group={iconGroup} className={iconClassNameList} />
       ) : (
         <ButtonContent
           icon={icon}
           context={context}
           loading={loading}
-          children={children}
           iconSize={iconSize}
+          children={children}
+          iconGroup={iconGroup}
           iconPosition={iconPosition}
           loadingContext={loadingContext}
           iconClassNameList={iconClassNameList}

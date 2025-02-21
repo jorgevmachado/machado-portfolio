@@ -2,7 +2,7 @@ import React from 'react';
 
 import joinClass from '../../utils/join-class';
 
-import Text from '../../elements/text';
+import { Text } from '../../elements';
 
 import './Feedback.scss';
 

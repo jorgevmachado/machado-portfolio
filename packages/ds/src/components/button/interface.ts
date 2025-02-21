@@ -1,13 +1,7 @@
 import React from 'react';
 
-import type {
-  TColors,
-  TContext,
-  TIcon,
-  TIconPosition,
-  TSimplySIze,
-  TWeight,
-} from '../../utils';
+import type { TColors, TContext, TSimplySIze, TWeight } from '../../utils';
+import { TIcon, TIconGroup, TIconPosition } from '../../elements';
 
 export type TAppearance = 'icon' | 'outline' | 'standard' | 'borderless';
 
@@ -31,6 +25,7 @@ export interface ButtonProps
   children?: React.ReactNode;
   disabled?: boolean;
   iconSize?: string | number;
+  iconGroup?: TIconGroup;
   appearance?: TAppearance;
   noIconBorder?: boolean;
   iconPosition?: TIconPosition;

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { OContext } from '@repo/ds/utils/colors/options';
-import { OIcon } from '@repo/ds/utils/icons/options';
+import { OIcon } from '@repo/ds/elements/icon/options';
 
 import Tag from '@repo/ds/components/tag/Tag';
 

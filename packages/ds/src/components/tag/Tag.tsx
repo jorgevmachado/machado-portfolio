@@ -1,10 +1,10 @@
 import React from 'react';
 
-import type { TContext, TIcon } from '../../utils';
+import type { TContext } from '../../utils';
 
 import joinClass from '../../utils/join-class';
 
-import Icon from '../../elements/icon';
+import { Icon, type TIcon, type TIconGroup } from '../../elements/icon';
 
 import {
   InclinedLeftPositionLeft,
@@ -21,10 +21,11 @@ interface TagProps extends React.HTMLAttributes<HTMLDivElement> {
   icon?: React.ReactNode | TIcon;
   detail?: TDirection;
   context?: TContext;
+  children: React.ReactNode;
   iconSide?: TDirection;
   inclined?: TDirection;
   wideIcon?: boolean;
-  children: React.ReactNode;
+  iconGroup?: TIconGroup;
   fullWidth?: boolean;
 }
 
@@ -36,11 +37,11 @@ export default function Tag({
   inclined,
   wideIcon,
   children,
+  iconGroup,
   fullWidth,
   className,
   'aria-label': ariaLabel,
   'aria-hidden': ariaHidden,
-
   ...props
 }: TagProps) {
   const classList = joinClass([
@@ -90,7 +91,7 @@ export default function Tag({
       )}
 
       <div className="tag__content">
-        {icon && <Icon className="tag__icon" icon={icon} />}
+        {icon && <Icon className="tag__icon" icon={icon} group={iconGroup} />}
         {children}
       </div>
 

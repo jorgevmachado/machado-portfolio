@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import type { TColors, TContext } from '../../utils';
 import joinClass from '../../utils/join-class';
 
-import Icon from '../../elements/icon';
+import { Icon } from '../../elements/icon';
 
 import './Modal.scss';
 

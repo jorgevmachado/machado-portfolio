@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { TIcon } from '@repo/ds/utils/icons';
+import type { TIcon } from '@repo/ds/elements/icon';
 
 export interface MenuItem {
   key: string;

@@ -1,9 +1,7 @@
 import React from 'react';
 
-import type { TColors, TContext } from '../../utils/colors';
-import type { TIcon, TIconPosition } from '../../utils/icons';
-import type { TSimplySIze } from '../../utils/sizes';
-import type { TWeight } from '../../utils/fonts';
+import type { TColors, TContext, TSimplySIze, TWeight } from '../../utils';
+import type { TIcon, TIconGroup, TIconPosition } from '../../elements';
 
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -13,6 +11,7 @@ export interface LinkProps
   context?: TContext;
   children: React.ReactNode;
   iconColor?: TColors;
+  iconGroup?: TIconGroup;
   iconPosition?: TIconPosition;
   iconClassName?: string;
   notificationColor?: TColors;

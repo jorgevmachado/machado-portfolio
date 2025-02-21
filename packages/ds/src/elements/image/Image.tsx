@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import joinClass from '../../utils/join-class';
 
-import Icon from '../icon';
+import { Icon } from '../icon';
 
 import './Image.scss';
 

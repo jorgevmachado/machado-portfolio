@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import type { TContext, TIconPosition } from '../../utils';
+import type { TContext } from '../../utils';
 import joinClass from '../../utils/join-class';
 import useGenerateComponentId from '../../hooks/use-generate-component-id';
 
@@ -8,6 +8,7 @@ import Button from '../button';
 import Link from '../link';
 
 import './Collapse.scss';
+import { TIconPosition } from '../../elements';
 
 interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
   hasIcon?: boolean;
