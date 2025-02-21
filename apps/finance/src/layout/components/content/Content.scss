@@ -1,0 +1,16 @@
+.content {
+  margin-left: 250px; // Espaço reservado para a Sidebar aberta
+  margin-top: 60px;  // Espaço reservado para a Navbar
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+
+  h1,
+  p {
+    color: #1d3557;
+  }
+}
+
+// Ajusta o espaçamento para quando a sidebar está fechada
+.sidebar.closed + .content {
+  margin-left: 80px; // Espaço reservado para a Sidebar recolhida
+}

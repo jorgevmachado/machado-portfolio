@@ -10,6 +10,10 @@ export class SupplierType extends NestModuleAbstract<
   ISupplierTypeParams
 > {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('finance/supplier/type', nestModuleConfig);
+    super({
+      pathUrl: 'finance/supplier',
+      subPathUrl: 'type',
+      nestModuleConfig,
+    });
   }
 }

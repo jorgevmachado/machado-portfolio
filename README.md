@@ -203,3 +203,4 @@ Como utilizar o Docker para criar o banco de dados [clique aqui.](HOW-USING-DOCK
 Bibliotecas mais utilizadas no projeto [clique aqui.](MOST-USED-LIBRARY.md)
 
 Comandos mais utilizados [clique aqui.](MOST-USED-COMMAND-LIBRARY.md)
+

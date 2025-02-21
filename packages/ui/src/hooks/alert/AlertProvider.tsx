@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, {CSSProperties, useMemo, useState} from 'react';
 
 import { Slide } from '../../animations';
 
@@ -12,10 +12,11 @@ import useAlertState from './useAlertState';
 
 interface AlertProviderProps {
   elem: Elem;
+  style?: CSSProperties;
   children: React.ReactNode;
 }
 
-export default function AlertProvider({ elem, children }: AlertProviderProps) {
+export default function AlertProvider({ elem, style, children }: AlertProviderProps) {
   const [isMobile, setIsMobile] = useState(false);
   const { alerts, addAlert, removeAlert } = useAlertState();
 
@@ -51,7 +52,7 @@ export default function AlertProvider({ elem, children }: AlertProviderProps) {
 
   return (
     <AlertContext.Provider value={context}>
-      <div style={STYLE}>
+      <div style={ !style ? STYLE : {...STYLE, ...style}}>
         {alerts.map((alert) => (
           <div key={alert.id} style={{ marginBottom: 15 }}>
             <Slide direction={DIRECTION} enter={alert.visible}>

@@ -19,7 +19,10 @@ export class Expense extends NestModuleAbstract<
   private readonly expenseGroupModule: ExpenseGroup;
   private readonly expenseCategoryModule: ExpenseCategory;
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('finance/expense', nestModuleConfig);
+    super({
+      pathUrl: 'finance/expense',
+      nestModuleConfig,
+    });
     this.expenseGroupModule = new ExpenseGroup(nestModuleConfig);
     this.expenseCategoryModule = new ExpenseCategory(nestModuleConfig);
   }

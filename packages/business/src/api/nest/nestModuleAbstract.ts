@@ -4,35 +4,57 @@ import type { QueryParameters } from '../../shared';
 import { Paginate } from '../../paginate';
 
 import type { INestBaseResponse, INestModuleConfig } from './interface';
-
+interface NestModuleAbstractConstructorPrams {
+  pathUrl: string;
+  subPathUrl?: string;
+  nestModuleConfig: INestModuleConfig;
+}
 export abstract class NestModuleAbstract<T, CP, UP> extends Http {
-  protected constructor(
-    protected readonly pathUrl: string,
-    protected readonly nestModuleConfig: INestModuleConfig,
-  ) {
+  protected readonly pathUrl: string;
+  protected readonly subPathUrl?: string;
+  protected readonly nestModuleConfig: INestModuleConfig;
+  protected constructor({ pathUrl, subPathUrl, nestModuleConfig }: NestModuleAbstractConstructorPrams) {
     const { baseUrl, headers } = nestModuleConfig;
     super(baseUrl, { headers });
+    this.pathUrl = pathUrl;
+    this.subPathUrl = subPathUrl;
+    this.nestModuleConfig = nestModuleConfig;
   }
 
   public async getAll(
     parameters: QueryParameters,
   ): Promise<Paginate<T> | Array<T>> {
-    return this.get(this.pathUrl, { params: parameters });
+    const path = this.convertSubPathUrl(this.pathUrl, this.subPathUrl, 'list');
+    return this.get(path, { params: parameters });
   }
 
   public async getOne(param: string): Promise<T> {
-    return this.get(`${this.pathUrl}/${param}`);
+    const path = this.convertSubPathUrl(this.pathUrl, this.subPathUrl, param);
+    return this.get(`${path}`);
   }
 
   public async delete(param: string): Promise<INestBaseResponse> {
-    return this.remove(`${this.pathUrl}/${param}`);
+    const path = this.convertSubPathUrl(this.pathUrl, this.subPathUrl, param);
+    return this.remove(`${path}`);
   }
 
-  public async create(params: CP): Promise<INestBaseResponse> {
-    return this.post(this.pathUrl,  { body: params });
+  public async create(params: CP): Promise<T> {
+    const path = this.convertSubPathUrl(this.pathUrl, this.subPathUrl);
+    return this.post(path, { body: params });
   }
 
-  public async update(param: string, params: UP): Promise<INestBaseResponse> {
-    return this.path(`${this.pathUrl}/${param}`, { body: params })
+  public async update(param: string, params: UP): Promise<T> {
+    const path = this.convertSubPathUrl(this.pathUrl, this.subPathUrl, param);
+    return this.path(`${path}`, { body: params });
+  }
+
+  private convertSubPathUrl(pathUrl: string, subPathUrl?: string, conectorPath?: string): string {
+    if (!subPathUrl) {
+      return pathUrl;
+    }
+    if(!conectorPath) {
+      return `${pathUrl}/${subPathUrl}`;
+    }
+    return `${pathUrl}/${conectorPath}/${subPathUrl}`;
   }
 }

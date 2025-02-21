@@ -1,7 +1,9 @@
 import React from 'react';
 import { authRoutes } from 'geek/src/routes';
 import { usePathname } from 'next/navigation';
-import AuthLayout from './auth';
+
+import BaseLayout from '@repo/ui/layout/base-layout/BaseLayout';
+
 import AuthenticatedLayout from './authenticated';
 
 interface DefaultProps {
@@ -12,8 +14,8 @@ export default function Layout({ title, children }: DefaultProps) {
   const pathname = usePathname();
   const isAuthRoute = authRoutes.includes(pathname);
   return isAuthRoute ? (
-    <AuthLayout>{children}</AuthLayout>
+    <BaseLayout>{children}</BaseLayout>
   ) : (
-    <AuthenticatedLayout title={title}>{children}</AuthenticatedLayout>
+    <AuthenticatedLayout title={title}/>
   );
 }

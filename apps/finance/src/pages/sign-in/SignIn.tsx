@@ -27,7 +27,11 @@ export default function SignIn() {
         router.push(redirect);
       })
       .catch((error) => {
-        addAlert({ type: 'error', message: error.message });
+          const message = error?.statusCode !== 500 && error?.message
+              ? error.message
+              : 'Unable to authenticate at this time, please try again later';
+
+          addAlert({ type: 'error', message});
       });
   };
 

@@ -1,6 +1,8 @@
 import { Nest } from '@repo/business/api/nest/nest';
 import { getAccessToken } from '../cookies';
-import {AuthService} from "@repo/business";
+import { AuthService } from '@repo/business/auth/authService';
+import { FinanceService } from '@repo/business/finance/financeService';
+import { SupplierTypeService } from '@repo/business/finance/supplier-type/supplierTypeService';
 
 const baseUrl = process.env.NEXT_PUBLIC_API ?? 'http://localhost:3001';
 
@@ -12,3 +14,7 @@ const nest = new Nest({
 });
 
 export const authService = new AuthService(nest);
+
+export const financeService = new FinanceService(nest);
+
+export const supplierTypeService = new SupplierTypeService(nest);

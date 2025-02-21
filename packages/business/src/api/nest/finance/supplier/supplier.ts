@@ -13,7 +13,10 @@ export class Supplier extends NestModuleAbstract<
 > {
   private readonly supplierTypeModule: SupplierType;
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('finance/supplier', nestModuleConfig);
+    super({
+      pathUrl: 'finance/supplier',
+      nestModuleConfig,
+    });
     this.supplierTypeModule = new SupplierType(nestModuleConfig);
   }
 

@@ -5,6 +5,10 @@ import type { IMove } from './interface';
 
 export class PokemonMove extends NestModuleAbstract<IMove, unknown, unknown> {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('pokemon/move', nestModuleConfig);
+    super({
+      pathUrl: 'pokemon',
+      subPathUrl: 'move',
+      nestModuleConfig,
+    });
   }
 }

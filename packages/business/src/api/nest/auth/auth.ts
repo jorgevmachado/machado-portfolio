@@ -5,7 +5,10 @@ import type { ISignInParams, ISignUpParams, IUser } from './interface';
 
 export class Auth extends NestModuleAbstract<IUser, unknown, unknown> {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('auth', nestModuleConfig);
+    super({
+      pathUrl: 'auth',
+      nestModuleConfig,
+    });
   }
 
   public async signUp(params: ISignUpParams): Promise<{ message: string }> {

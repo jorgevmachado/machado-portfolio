@@ -9,6 +9,10 @@ export class PokemonAbility extends NestModuleAbstract<
   unknown
 > {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('pokemon/ability', nestModuleConfig);
+    super({
+      pathUrl: 'pokemon',
+      subPathUrl: 'ability',
+      nestModuleConfig,
+    });
   }
 }

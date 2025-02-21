@@ -10,6 +10,10 @@ export class ExpenseCategoryType extends NestModuleAbstract<
   IExpenseCategoryTypeParams
 > {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('finance/expense/category/type', nestModuleConfig);
+    super({
+      pathUrl: 'finance/expense/category',
+      subPathUrl: 'type',
+      nestModuleConfig,
+    });
   }
 }

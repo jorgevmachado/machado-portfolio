@@ -2,7 +2,7 @@ import type { INestModuleConfig } from '../../interface';
 
 import { NestModuleAbstract } from '../../nestModuleAbstract';
 
-import { IExpenseGroup, IExpenseGroupParams } from './interface';
+import type { IExpenseGroup, IExpenseGroupParams } from './interface';
 
 export class ExpenseGroup extends NestModuleAbstract<
   IExpenseGroup,
@@ -10,6 +10,10 @@ export class ExpenseGroup extends NestModuleAbstract<
   IExpenseGroupParams
 > {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('finance/expense/group', nestModuleConfig);
+    super({
+      pathUrl: 'finance/expense',
+      subPathUrl: 'group',
+      nestModuleConfig,
+    });
   }
 }

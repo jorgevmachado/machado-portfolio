@@ -9,7 +9,8 @@ export class Finance extends NestModuleAbstract<unknown, unknown, unknown> {
   private readonly supplierModule: Supplier;
   private readonly expenseModule: Expense;
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('finance', nestModuleConfig);
+    super({ pathUrl: 'finance', nestModuleConfig });
+
     this.supplierModule = new Supplier(nestModuleConfig);
     this.expenseModule = new Expense(nestModuleConfig);
   }

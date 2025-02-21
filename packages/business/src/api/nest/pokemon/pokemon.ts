@@ -11,7 +11,10 @@ export class Pokemon extends NestModuleAbstract<IPokemon, unknown, unknown> {
   private readonly pokemonMoveModule: PokemonMove;
   private readonly pokemonAbilityModule: PokemonAbility;
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('pokemon', nestModuleConfig);
+    super({
+      pathUrl: 'pokemon',
+      nestModuleConfig,
+    });
     this.pokemonAbilityModule = new PokemonAbility(nestModuleConfig);
     this.pokemonMoveModule = new PokemonMove(nestModuleConfig);
     this.pokemonTypeModule = new PokemonType(nestModuleConfig);
