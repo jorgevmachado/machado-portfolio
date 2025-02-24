@@ -13,6 +13,7 @@ interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   readonly size?: string | number;
   readonly color?: TColors;
   readonly group?: TIconGroup;
+  readonly withDefault?: boolean;
 }
 
 export default function Icon({
@@ -21,6 +22,7 @@ export default function Icon({
   color,
   group,
   className,
+  withDefault = true,
   ...props
 }: IconProps) {
   const classNameList = joinClass([
@@ -30,14 +32,17 @@ export default function Icon({
   ]);
   const ariaLabel = typeof icon === 'string' ? icon : undefined;
 
-  const currentIcon =
+  const currentData =
     typeof icon === 'string'
-      ? getIcon({ name: icon as TIcon, size, color, group })
-      : icon;
+      ? getIcon({ name: icon as TIcon, size, color, group, withDefault })
+      : {
+          icon,
+          group: group,
+        };
 
   return (
-    <span {...props} className={classNameList} aria-label={ariaLabel}>
-      {currentIcon}
+    <span {...props} className={classNameList} aria-label={ariaLabel} data-group={currentData.group}>
+      {currentData.icon}
     </span>
   );
 }

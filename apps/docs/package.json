@@ -12,12 +12,12 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@repo/business": "*",
     "@repo/ds": "*",
     "@repo/eslint-config": "*",
+    "@repo/mock": "*",
     "@repo/tokens": "*",
     "@repo/typescript": "*",
-    "@repo/business": "*",
-    "@repo/mock": "*",
     "@repo/ui": "*",
     "@turbo/gen": "^2.3.3",
     "@types/eslint": "^9.6.1",
@@ -46,6 +46,7 @@
     "@storybook/react": "^8.5.2",
     "@storybook/react-webpack5": "^8.5.2",
     "@storybook/test": "^8.5.2",
+    "@storybook/testing-library": "^0.2.1",
     "eslint-plugin-storybook": "^0.11.2",
     "storybook": "^8.5.2"
   }

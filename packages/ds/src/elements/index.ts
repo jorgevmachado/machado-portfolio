@@ -1,4 +1,4 @@
-export { Icon, type TIcon, type TIconGroup, type TIconPosition, OIcon, OIconPosition } from './icon';
+export { Icon, type TIcon, type TIconGroup, type TIconPosition, OIcon, OIconPosition, getIcon, ICON_GROUPS } from './icon';
 export { Skeleton } from './skeleton';
 export { Spinner } from './spinner';
 export { Tooltip } from './tooltip';
