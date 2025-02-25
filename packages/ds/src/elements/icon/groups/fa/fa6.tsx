@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   FaAnchor,
   FaAndroid,
@@ -95,10 +97,10 @@ import {
 } from 'react-icons/fa6';
 
 import type { TIconGroupIcons } from '../interface';
-import React from 'react';
 
 export const fa6Group: TIconGroupIcons = {
   tv: <FaTv />,
+  box: undefined,
   tag: <FaTag />,
   key: <FaKey />,
   map: <FaMap />,
@@ -120,6 +122,7 @@ export const fa6Group: TIconGroupIcons = {
   lock: <FaLock />,
   sort: <FaSort />,
   stop: <FaStop />,
+  home: undefined,
   brush: <FaBrush />,
   chair: <FaChair />,
   check: <FaCheck />,
@@ -139,6 +142,7 @@ export const fa6Group: TIconGroupIcons = {
   train: <FaTrain />,
   route: <FaRoute />,
   share: <FaShareFromSquare />,
+  config: undefined,
   church: <FaChurch />,
   google: <FaGoogle />,
   camera: <FaCamera />,
@@ -172,6 +176,7 @@ export const fa6Group: TIconGroupIcons = {
   download: <FaDownload />,
   keyboard: <FaKeyboard />,
   umbrella: <FaUmbrella />,
+  'sign-out': undefined,
   warehouse: <FaWarehouse />,
   lightbulb: <FaLightbulb />,
   'lock-open': <FaLockOpen />,
@@ -195,7 +200,9 @@ export const fa6Group: TIconGroupIcons = {
   'arrow-right': <FaArrowRight />,
   'battery-full': <FaBatteryFull />,
   'star-filled': <FaStar />,
+  'chevron-up': undefined,
   'chevron-left': <FaChevronLeft />,
+  'chevron-down': undefined,
   'chevron-right': <FaChevronRight />,
   'arrow-up-outline': undefined,
   'charging-station': <FaChargingStation />,

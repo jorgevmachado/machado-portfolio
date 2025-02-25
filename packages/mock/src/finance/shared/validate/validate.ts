@@ -3,27 +3,35 @@ import type { ResultResponse } from '../../../shared/interface';
 import type { FinanceEntity } from '../../interface';
 
 import { conflictException, notFoundException } from '../../../shared';
+import { isUUID } from '@repo/services/string/string';
 
 interface ValidateEntityParams {
-  name: string;
+  param: string;
   isType?: boolean;
   isNotFound?: boolean;
   financeEntity: FinanceEntity;
 }
 
 export function validateEntity({
-  name,
+  param,
   isType,
   isNotFound,
   financeEntity,
 }: ValidateEntityParams): ResultResponse {
-  const exists = financeEntity?.list?.some((item) => item['name'] === name);
+  const filter = {
+    key: isUUID(param) ? 'id' : 'name',
+    value: param,
+  };
+  const exists = financeEntity?.list?.find(
+    (item) => item[filter.key] === filter.value,
+  );
+
   if (isNotFound) {
-    return validateEntityNotFound(exists, financeEntity.alias);
+    return validateEntityNotFound(Boolean(exists), financeEntity.alias);
   }
   return isType
-    ? validateEntityType(exists, financeEntity.label)
-    : validateEntityName(exists, name);
+    ? validateEntityType(Boolean(exists), financeEntity.label)
+    : validateEntityName(Boolean(exists), exists?.['name'] ?? 'field');
 }
 
 export function validateEntityName(exists: boolean, name: string) {

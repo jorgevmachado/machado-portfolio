@@ -7,9 +7,11 @@ export interface ISupplier extends IFinanceBase {
   description?: string;
 }
 
-export type ISupplierParams = Omit<
+export interface ISupplierParams extends Omit<
   ISupplier,
-  'id' | 'created_at' | 'updated_at' | 'deleted_at'
->;
+  'id' | 'type' | 'created_at' | 'updated_at' | 'deleted_at'
+> {
+  type: string;
+}
 
 export type ISupplierResponse = IFinanceResponse;

@@ -17,13 +17,13 @@ export function createEntityResponse({
   entity,
   financeEntity,
 }: CreateEntityResponseParams): ResultResponse {
-  const resultResponseValidate = validateEntity({ name, financeEntity });
+  const resultResponseValidate = validateEntity({ param: name, financeEntity });
   if (resultResponseValidate.statusCode !== 200) {
     return resultResponseValidate;
   }
   if (financeEntity.type) {
     const resultTypeResponseValidate = validateEntity({
-      name: type,
+      param: type,
       financeEntity: financeEntity.type,
       isType: true,
     });
@@ -52,7 +52,7 @@ export function updateEntityResponse({
   }
   if (financeEntity.type) {
     const resultTypeResponseValidate = validateEntity({
-      name: type,
+      param: type,
       financeEntity: financeEntity.type,
       isType: true,
     });

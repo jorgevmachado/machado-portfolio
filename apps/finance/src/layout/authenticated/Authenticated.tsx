@@ -11,6 +11,7 @@ import Config from '../../pages/config';
 import Profile from '../../pages/profile';
 import Dashboard from '../../pages/dashboard';
 import Contact from '../../pages/contact';
+import SupplierType from '../../pages/supplier-type';
 import Supplier from '../../pages/supplier';
 
 interface AuthenticatedLayoutProps {
@@ -48,6 +49,7 @@ export default function AuthenticatedLayout({
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="profile" element={<Profile />} />
             <Route path="config" element={<Config />} />
+            <Route path="supplier-type" element={<SupplierType />} />
             <Route path="supplier" element={<Supplier />} />
             <Route path="logout" element={<Contact />} />
           </Routes>

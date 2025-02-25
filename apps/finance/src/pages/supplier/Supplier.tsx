@@ -1,31 +1,30 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Paginate } from '@repo/business/paginate';
-import SupplierType, {
-  SupplierTypeEntity,
-} from '@repo/business/finance/supplier-type';
+import SupplierType from '@repo/business/finance/supplier-type';
+import Supplier, { SupplierEntity } from '@repo/business/finance/supplier';
 
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
-import { supplierTypeService } from '../../shared';
+import { supplierService, supplierTypeService } from '../../shared';
 
 import './Supplier.scss';
 
 interface FetchSupplierTypesProps {
-  supplierType?: SupplierType;
+  supplier?: Supplier;
   updated?: boolean;
   deletedId?: string;
 }
 
-export default function Supplier() {
+export default function SupplierPage() {
   const { addAlert } = useAlert();
+  const [suppliers, setSuppliers] = useState<Array<Supplier>>([]);
   const [supplierTypes, setSupplierTypes] = useState<Array<SupplierType>>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [editingSupplier, setEditingSupplier] = useState<SupplierType | null>(
-    null,
-  );
+  const [editingSupplier, setEditingSupplier] = useState<Supplier | null>(null);
   const [newName, setNewName] = useState<string>('');
+  const [newType, setNewType] = useState<string | undefined>(undefined);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,13 +32,33 @@ export default function Supplier() {
 
   const ITEMS_PER_PAGE = 10;
 
+  const fetchSupplierTypes = async () => {
+    setLoading(true);
+    supplierTypeService
+      .getAll({})
+      .then((response) => {
+        const currentResponse = response as Array<SupplierType>;
+        setSupplierTypes(currentResponse);
+      })
+      .catch((error) => {
+        addAlert({
+          type: 'error',
+          message: error?.message ?? 'Unable to fetch supplier types',
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const openCreateModal = () => {
     setIsEditing(false);
     setNewName('');
+    setNewType(undefined);
     setIsModalVisible(true);
   };
 
-  const openEditModal = (supplier: SupplierType) => {
+  const openEditModal = (supplier: Supplier) => {
     setIsEditing(true);
     setEditingSupplier(supplier);
     setNewName(supplier.name);
@@ -49,14 +68,14 @@ export default function Supplier() {
   const handleSave = async () => {
     setLoading(true);
     if (isEditing && editingSupplier) {
-      supplierTypeService
-        .update(editingSupplier.id, newName)
+      supplierService
+        .update(editingSupplier.id, newName, newType)
         .then((response) => {
           addAlert({
             type: 'success',
             message: 'Tipo de fornecedor atualizado com sucesso!',
           });
-          fetchSupplierTypes({ supplierType: response, updated: true });
+          fetchSuppliers({ supplier: response, updated: true });
           setIsModalVisible(false);
         })
         .catch((error) => {
@@ -69,64 +88,69 @@ export default function Supplier() {
         })
         .finally(() => setLoading(false));
     } else {
-      supplierTypeService
-        .create(newName)
+      if (!newType) {
+        addAlert({
+          type: 'error',
+          message: 'Selecione um tipo de fornecedor.',
+        });
+        return;
+      }
+      supplierService
+        .create(newName, newType)
         .then((response) => {
           addAlert({
             type: 'success',
-            message: 'Tipo de fornecedor criado com sucesso!',
+            message: 'fornecedor criado com sucesso!',
           });
-          fetchSupplierTypes({ supplierType: response });
+          fetchSuppliers({ supplier: response });
           setIsModalVisible(false);
         })
         .catch((error) => {
           addAlert({
             type: 'error',
-            message:
-              error?.message ??
-              'Ocorreu um erro ao criar o tipo de fornecedor.',
+            message: error?.message ?? 'Ocorreu um erro ao criar o fornecedor.',
           });
         })
         .finally(() => setLoading(false));
     }
   };
 
-  const fetchSupplierTypes = async (
+  const fetchSuppliers = async (
     fetchSupplierTypesProps?: FetchSupplierTypesProps,
   ) => {
     setLoading(true);
-    supplierTypeService
+    supplierService
       .getAll({
         limit: ITEMS_PER_PAGE,
         page: currentPage,
       })
       .then((response) => {
-        const currentResponse = response as Paginate<SupplierTypeEntity>;
-        const results = currentResponse.results as Array<SupplierType>;
+        const currentResponse = response as Paginate<SupplierEntity>;
+        const results = currentResponse.results as Array<Supplier>;
 
         const { pages } = currentResponse;
         setTotalPages(pages);
 
-        const { supplierType, updated, deletedId } =
-          fetchSupplierTypesProps ?? {};
-        if (supplierType) {
+        const { supplier, updated, deletedId } = fetchSupplierTypesProps ?? {};
+        if (supplier) {
           if (!updated) {
-            results.push(supplierType);
-            setSupplierTypes(results);
+            results.push(supplier);
+            setSuppliers(results);
           }
           if (updated) {
-            results.map((type) => {
-              if (type.id === supplierType.id) {
-                type.name = supplierType.name;
+            results.map((item) => {
+              if (item.id === supplier.id) {
+                item.name = supplier.name;
+                item.type = supplier.type;
               }
             });
-            setSupplierTypes(results);
+            setSuppliers(results);
           }
-        } else if (!supplierType && deletedId) {
+        } else if (!supplier && deletedId) {
           const data = results.filter((type) => type.id !== deletedId);
-          setSupplierTypes(data);
+          setSuppliers(data);
         } else {
-          setSupplierTypes(results);
+          setSuppliers(results);
         }
       })
       .catch((error) => {
@@ -141,20 +165,17 @@ export default function Supplier() {
   };
 
   const deleteSupplierType = async (id: string) => {
-    if (
-      !window.confirm('Tem certeza que deseja remover este tipo de fornecedor?')
-    )
+    if (!window.confirm('Tem certeza que deseja remover este fornecedor?'))
       return;
     setLoading(true);
-    supplierTypeService
+    supplierService
       .remove(id)
       .then((response) => {
         addAlert({
           type: 'success',
-          message:
-            response?.message ?? 'Tipo de fornecedor removido com sucesso!',
+          message: response?.message ?? 'fornecedor removido com sucesso!',
         });
-        fetchSupplierTypes({ deletedId: id });
+        fetchSuppliers({ deletedId: id });
       })
       .catch((error) => {
         addAlert({
@@ -173,8 +194,16 @@ export default function Supplier() {
     setCurrentPage(newPage);
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedType = supplierTypes.find(
+      (type) => type.name === event.target.value,
+    );
+    setNewType(selectedType?.name);
+  };
+
   useEffect(() => {
     fetchSupplierTypes();
+    fetchSuppliers();
   }, [currentPage]);
 
   return (
@@ -187,9 +216,9 @@ export default function Supplier() {
           alignItems: 'center',
         }}
       >
-        <h1>Gerenciar Tipos de Fornecedores</h1>
+        <h1>Gerenciar Fornecedores</h1>
         <button className="btn btn-create" onClick={openCreateModal}>
-          Novo Tipo de Fornecedor
+          Novo Fornecedor
         </button>
       </div>
       {loading ? (
@@ -199,26 +228,28 @@ export default function Supplier() {
           <thead>
             <tr>
               <th>Nome</th>
+              <th>Tipo</th>
               <th>Criado em</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            {supplierTypes.length > 0 ? (
-              supplierTypes.map((type) => (
-                <tr key={type.id}>
-                  <td>{type.name}</td>
-                  <td>{new Date(type.created_at).toLocaleDateString()}</td>
+            {suppliers.length > 0 ? (
+              suppliers.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.type.name}</td>
+                  <td>{new Date(item.created_at).toLocaleDateString()}</td>
                   <td>
                     <button
                       className="btn btn-edit"
-                      onClick={() => openEditModal(type)}
+                      onClick={() => openEditModal(item)}
                     >
                       Editar
                     </button>
                     <button
                       className="btn btn-delete"
-                      onClick={() => deleteSupplierType(type.id)}
+                      onClick={() => deleteSupplierType(item.id)}
                     >
                       Remover
                     </button>
@@ -260,17 +291,27 @@ export default function Supplier() {
       {isModalVisible && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>
-              {isEditing
-                ? 'Editar Tipo de Fornecedor'
-                : 'Criar Tipo de Fornecedor'}
-            </h2>
+            <h2>{isEditing ? 'Editar Fornecedor' : 'Criar Fornecedor'}</h2>
             <input
               type="text"
               placeholder="Nome do fornecedor"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
             />
+            <div className="select-container">
+              <select
+                value={newType || ''}
+                className="select"
+                onChange={handleChange}
+              >
+                <option value="">Selecione um tipo de fornecedor</option>
+                {supplierTypes.map((type) => (
+                  <option key={type.id} value={type.name}>
+                    {type.name}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="modal-actions">
               <button
                 className="btn btn-save"
@@ -291,154 +332,4 @@ export default function Supplier() {
       )}
     </div>
   );
-
-  // return (
-  //   <div>
-  //     <div
-  //       style={{
-  //         marginBottom: '20px',
-  //         display: 'flex',
-  //         justifyContent: 'space-between',
-  //         alignItems: 'center',
-  //       }}
-  //     >
-  //       <h1>Gerenciar Tipos de Fornecedores</h1>
-  //       <button
-  //         onClick={() => {
-  //           setEditingSupplier(null);
-  //           setNewName('');
-  //           setIsModalVisible(true);
-  //         }}
-  //       >
-  //         Novo Tipo de Fornecedor
-  //       </button>
-  //     </div>
-  //     {loading ? (
-  //       <p>Carregando...</p>
-  //     ) : (
-  //       <table
-  //         style={{
-  //           width: '100%',
-  //           border: '1px solid #ddd',
-  //           borderCollapse: 'collapse',
-  //         }}
-  //       >
-  //         <thead>
-  //           <tr>
-  //             <th style={{ border: '1px solid #ddd', padding: '8px' }}>Nome</th>
-  //             <th style={{ border: '1px solid #ddd', padding: '8px' }}>
-  //               Criado em
-  //             </th>
-  //             <th
-  //               style={{
-  //                 border: '1px solid #ddd',
-  //                 padding: '8px',
-  //                 textAlign: 'center',
-  //               }}
-  //             >
-  //               Ações
-  //             </th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-  //           {supplierTypes.map((type) => (
-  //             <tr key={type.id}>
-  //               <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-  //                 {type.name}
-  //               </td>
-  //               <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-  //                 {new Date(type.created_at).toLocaleDateString()}
-  //               </td>
-  //               <td
-  //                 style={{
-  //                   border: '1px solid #ddd',
-  //                   padding: '8px',
-  //                   textAlign: 'center',
-  //                 }}
-  //               >
-  //                 <button
-  //                   onClick={() => {
-  //                     setEditingSupplier(type);
-  //                     setNewName(type.name);
-  //                     setIsModalVisible(true);
-  //                   }}
-  //                   style={{ marginRight: '10px' }}
-  //                 >
-  //                   Editar
-  //                 </button>
-  //                 <button
-  //                   onClick={() => deleteSupplierType(type.id)}
-  //                   style={{ color: 'red' }}
-  //                 >
-  //                   Remover
-  //                 </button>
-  //               </td>
-  //             </tr>
-  //           ))}
-  //         </tbody>
-  //       </table>
-  //     )}
-  //     {/* Formulário de Criação / Edição */}
-  //     {isModalVisible && (
-  //       <div
-  //         style={{
-  //           position: 'fixed',
-  //           top: 0,
-  //           left: 0,
-  //           width: '100%',
-  //           height: '100%',
-  //           backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  //           display: 'flex',
-  //           justifyContent: 'center',
-  //           alignItems: 'center',
-  //         }}
-  //       >
-  //         <div
-  //           style={{
-  //             backgroundColor: '#fff',
-  //             padding: '20px',
-  //             borderRadius: '4px',
-  //             width: '400px',
-  //             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-  //           }}
-  //         >
-  //           <h2>
-  //             {editingSupplier
-  //               ? 'Editar Tipo de Fornecedor'
-  //               : 'Novo Tipo de Fornecedor'}
-  //           </h2>
-  //           <input
-  //             type="text"
-  //             value={newName}
-  //             onChange={(e) => setNewName(e.target.value)}
-  //             placeholder="Digite o nome"
-  //             style={{
-  //               width: '100%',
-  //               padding: '8px',
-  //               marginBottom: '10px',
-  //               border: '1px solid #ddd',
-  //               borderRadius: '4px',
-  //             }}
-  //           />
-  //           <div
-  //             style={{
-  //               display: 'flex',
-  //               justifyContent: 'flex-end',
-  //               gap: '10px',
-  //             }}
-  //           >
-  //             <button onClick={() => setIsModalVisible(false)}>Cancelar</button>
-  //             <button
-  //               onClick={
-  //                 editingSupplier ? updateSupplierType : createSupplierType
-  //               }
-  //             >
-  //               {editingSupplier ? 'Atualizar' : 'Criar'}
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 }
