@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
 import { useRouter } from 'next/navigation';
-import { authService, getAccessToken, removeAccessToken } from '../../shared';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
+
 import UserProvider from '@repo/ui/hooks/user/UserProvider';
 import type { User } from '@repo/business/auth/interface';
-import { Content, Navbar, Sidebar } from '../components';
-import useAlert from '@repo/ui/hooks/alert/useAlert';
-import Config from '../../pages/config';
-import Profile from '../../pages/profile';
-import Dashboard from '../../pages/dashboard';
-import Contact from '../../pages/contact';
-import SupplierType from '../../pages/supplier-type';
-import Supplier from '../../pages/supplier';
-import ExpenseCategoryType from '../../pages/category-type';
 
-interface AuthenticatedLayoutProps {
-  title?: string;
-}
-export default function AuthenticatedLayout({
-  title,
-}: AuthenticatedLayoutProps) {
+import useAlert from '@repo/ui/hooks/alert/useAlert';
+
+import { authService, getAccessToken, removeAccessToken } from '../../shared';
+import { childPath, privateRoutes } from '../../routes';
+
+import { Content, Navbar, Sidebar } from '../components';
+
+export default function AuthenticatedLayout() {
   const { addAlert } = useAlert();
   const router = useRouter();
   const token = getAccessToken() || '';
@@ -45,15 +42,25 @@ export default function AuthenticatedLayout({
       <Router>
         <Navbar />
         <Sidebar />
-        <Content title={title}>
+        <Content>
           <Routes>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="config" element={<Config />} />
-            <Route path="supplier-type" element={<SupplierType />} />
-            <Route path="suppliers" element={<Supplier />} />
-            <Route path="category-type" element={<ExpenseCategoryType />} />
-            <Route path="logout" element={<Contact />} />
+            {privateRoutes.map((route) =>
+              route.children ? route.children.map((child) => (
+                  <Route
+                      key={child.key}
+                      path={childPath(route.path, child.path)}
+                      element={child.element}
+                  />
+              )) : (
+                <Route
+                  key={route.key}
+                  path={route.path}
+                  element={route.element}
+                />
+              ),
+            )}
+
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Content>
       </Router>

@@ -121,18 +121,26 @@ export const privateRoutes: Array<RouteProps> = [
         path: '/expenses',
         type: 'private',
         title: 'Expense',
-        element: (
-            <Suspense fallback={<h1>LOADING</h1>}>
-                <h1>Expense Construction</h1>
-            </Suspense>
-        ),
+        element: (<></>),
         children: [
+            {
+                key: 'expense-parent',
+                icon: 'expense',
+                path: '',
+                type: 'private',
+                title: 'Expense',
+                element: (
+                    <Suspense fallback={<h1>LOADING</h1>}>
+                        <h1>Expense Construction</h1>
+                    </Suspense>
+                ),
+            },
             {
                 key: 'expense-category',
                 icon: 'category',
-                path: 'categories',
+                path: '/categories',
                 type: 'private',
-                title: 'Expense Category',
+                title: 'Category',
                 element: (
                     <Suspense fallback={<h1>LOADING</h1>}>
                         <h1>Expense Category in Construction</h1>
@@ -142,9 +150,9 @@ export const privateRoutes: Array<RouteProps> = [
                     {
                         key: 'expense-category-type',
                         icon: 'filter',
-                        path: 'types',
+                        path: '/types',
                         type: 'private',
-                        title: 'Expense Category Type',
+                        title: 'Category Type',
                         element: (
                             <Suspense fallback={<h1>LOADING</h1>}>
                                 <h1>Expense Category Type in Construction</h1>
@@ -156,9 +164,9 @@ export const privateRoutes: Array<RouteProps> = [
             {
                 key: 'expense-group',
                 icon: 'group',
-                path: 'group',
+                path: '/group',
                 type: 'private',
-                title: 'Expense Group',
+                title: 'Group',
                 element: (
                     <Suspense fallback={<h1>LOADING</h1>}>
                         <h1>Expense Group in Construction</h1>
@@ -168,21 +176,27 @@ export const privateRoutes: Array<RouteProps> = [
         ],
     },
     {
-        key: 'supplier',
+        key: 'supplier-parent',
         icon: 'user-tie',
         path: '/suppliers',
         type: 'private',
         title: 'Supplier',
-        element: (
-            <Suspense fallback={<h1>LOADING</h1>}>
-                <Supplier />
-            </Suspense>
-        ),
+        element: (<></>),
         children: [
             {
+                key: 'supplier',
+                path: '',
+                type: 'private',
+                title: 'Supplier',
+                element: (
+                    <Suspense fallback={<h1>LOADING</h1>}>
+                        <Supplier />
+                    </Suspense>
+                ),
+            },
+            {
                 key: 'supplier-type',
-                icon: 'category',
-                path: 'types',
+                path: '/types',
                 type: 'private',
                 title: 'Supplier Type',
                 element: (
@@ -192,7 +206,11 @@ export const privateRoutes: Array<RouteProps> = [
                 ),
             },
         ],
-    },
+    }
 ];
 
 export const allRoutes: Array<RouteProps> = [...publicRoutes, ...privateRoutes];
+
+export const childPath = (parentPath: string, childPath: string) => {
+    return `${parentPath.replace(/\/$/, '')}/${childPath.replace(/^\//, '')}`;
+};
