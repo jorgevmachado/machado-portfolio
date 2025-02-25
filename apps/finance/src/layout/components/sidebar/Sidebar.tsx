@@ -44,16 +44,43 @@ export default function Sidebar() {
     },
     {
       title: 'Supplier',
-      icon: 'box',
+      icon: 'user-tie',
       children: [
         {
           title: 'Fornecedor',
           href: 'supplier',
-          icon: 'box',
+          icon: 'user-tie',
         },
         {
           title: 'Tipo de Fornecedor',
           href: 'supplier-type',
+          icon: 'category',
+        },
+      ],
+    },
+    {
+      title: 'Expense',
+      icon: 'expense',
+      children: [
+        {
+          title: 'Expense',
+          href: 'expense',
+          icon: 'expense',
+        },
+        {
+          title: 'Expense Group',
+          href: 'expense-group',
+          icon: 'group',
+        },
+        {
+          title: 'Expense Category',
+          href: 'expense-category',
+          icon: 'category',
+        },
+        {
+          title: 'Expense Category Type',
+          href: 'expense-category-type',
+          icon: 'filter',
         },
       ],
     },

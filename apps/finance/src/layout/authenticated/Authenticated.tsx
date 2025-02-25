@@ -13,6 +13,7 @@ import Dashboard from '../../pages/dashboard';
 import Contact from '../../pages/contact';
 import SupplierType from '../../pages/supplier-type';
 import Supplier from '../../pages/supplier';
+import ExpenseCategoryType from '../../pages/category-type';
 
 interface AuthenticatedLayoutProps {
   title?: string;
@@ -51,6 +52,7 @@ export default function AuthenticatedLayout({
             <Route path="config" element={<Config />} />
             <Route path="supplier-type" element={<SupplierType />} />
             <Route path="supplier" element={<Supplier />} />
+            <Route path="category-type" element={<ExpenseCategoryType />} />
             <Route path="logout" element={<Contact />} />
           </Routes>
         </Content>
