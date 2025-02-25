@@ -51,7 +51,7 @@ export default function AuthenticatedLayout({
             <Route path="profile" element={<Profile />} />
             <Route path="config" element={<Config />} />
             <Route path="supplier-type" element={<SupplierType />} />
-            <Route path="supplier" element={<Supplier />} />
+            <Route path="suppliers" element={<Supplier />} />
             <Route path="category-type" element={<ExpenseCategoryType />} />
             <Route path="logout" element={<Contact />} />
           </Routes>

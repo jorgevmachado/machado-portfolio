@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { allRoutes } from './shared';
-import { authRoutes } from 'geek/src/routes';
 import { cookies } from 'next/headers';
+
+import { allRoutes, publicRoutes } from './routes';
 
 export default async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const cookieStore = await cookies();
 
-  const isRoutePath = allRoutes.includes(path);
+  const isRoutePath = allRoutes.some((route) => route.path === path);
 
   const isLogout = path === '/logout';
 
@@ -19,7 +19,7 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const isAuthRoute = authRoutes.includes(path);
+  const isAuthRoute = publicRoutes.some((route) => route.path === path);
   const accessToken = cookieStore.get('financeAccessToken');
   const isAuthenticated = Boolean(accessToken);
 

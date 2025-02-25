@@ -1,0 +1,15 @@
+.dropdown {
+  cursor: pointer;
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  &__submenu {
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+    background: linear-gradient(to bottom, #1d3557, #457b9d);
+  }
+}
