@@ -152,7 +152,7 @@ export const privateRoutes: Array<RouteProps> = [
                         icon: 'filter',
                         path: '/types',
                         type: 'private',
-                        title: 'Category Type',
+                        title: 'Type',
                         element: (
                             <Suspense fallback={<h1>LOADING</h1>}>
                                 <h1>Expense Category Type in Construction</h1>
@@ -185,6 +185,7 @@ export const privateRoutes: Array<RouteProps> = [
         children: [
             {
                 key: 'supplier',
+                icon: 'user-tie',
                 path: '',
                 type: 'private',
                 title: 'Supplier',
@@ -198,6 +199,7 @@ export const privateRoutes: Array<RouteProps> = [
                 key: 'supplier-type',
                 path: '/types',
                 type: 'private',
+                icon: 'box',
                 title: 'Supplier Type',
                 element: (
                     <Suspense fallback={<h1>LOADING</h1>}>

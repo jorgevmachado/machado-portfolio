@@ -18,6 +18,16 @@ $transition-speed: 0.3s;
 
   &.closed {
     width: $sidebar-collapsed-width;
+    .dropdown  {
+      &__submenu {
+        padding-left: 20px;
+        .dropdown {
+          .dropdown__submenu {
+            padding-left: 20px;
+          }
+        }
+      }
+    }
   }
 }
 

@@ -8,8 +8,20 @@
   }
   &__submenu {
     display: flex;
+    gap: 10px;
     flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 10px;
     padding-left: 40px;
     background: linear-gradient(to bottom, #1d3557, #457b9d);
+  }
+  .dropdown {
+    margin-left: -20px;
+    .dropdown {
+      &__submenu {
+        padding-left: 50px;
+        background: none;
+      }
+    }
   }
 }
