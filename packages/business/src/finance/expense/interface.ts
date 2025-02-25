@@ -1,9 +1,16 @@
-import type { IExpense } from '../../api/nest/finance';
+import {
+  IExpense,
+  IExpenseCreateParams,
+  IExpenseUpdateParams,
+} from '../../api/nest/finance';
 
 export type ExpenseEntity = IExpense;
 
 export interface ExpenseConstructorParams
-    extends Omit<ExpenseEntity, 'id' | 'created_at' | 'updated_at' | 'deleted_at'> {
+  extends Omit<
+    ExpenseEntity,
+    'id' | 'created_at' | 'updated_at' | 'deleted_at'
+  > {
   id?: ExpenseEntity['id'];
   created_at?: ExpenseEntity['created_at'];
   updated_at?: ExpenseEntity['updated_at'];
@@ -15,3 +22,6 @@ export interface ExpenseMergeParams {
   expenseToMerge: ExpenseConstructorParams;
   withAllCalculations?: boolean;
 }
+export type ExpenseCreateParams = IExpenseCreateParams;
+
+export type ExpenseUpdateParams = IExpenseUpdateParams;

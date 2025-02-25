@@ -1,5 +1,7 @@
 import { type INestBaseResponse, Nest } from '../../api';
 
+import { isObject } from '@repo/services/object/object';
+
 import { QueryParameters } from '../../shared';
 import { Paginate } from '../../paginate';
 
@@ -27,10 +29,23 @@ export class ExpenseCategoryTypeService {
 
   public async getAll(
     parameters: QueryParameters,
-  ): Promise<
-    Array<ExpenseCategoryTypeEntity> | Paginate<ExpenseCategoryTypeEntity>
-  > {
-    return await this.nest.finance.expense.category.type.getAll(parameters);
+  ): Promise<Array<ExpenseCategoryType> | Paginate<ExpenseCategoryType>> {
+    return await this.nest.finance.expense.category.type
+      .getAll(parameters)
+      .then((response) => {
+        if (isObject(response)) {
+          const responsePaginate =
+            response as Paginate<ExpenseCategoryTypeEntity>;
+          return {
+            ...responsePaginate,
+            results: responsePaginate.results.map(
+              (result) => new ExpenseCategoryType(result),
+            ),
+          };
+        }
+        const responseArray = response as Array<ExpenseCategoryTypeEntity>;
+        return responseArray.map((result) => new ExpenseCategoryType(result));
+      });
   }
 
   public async get(param: string): Promise<ExpenseCategoryType> {

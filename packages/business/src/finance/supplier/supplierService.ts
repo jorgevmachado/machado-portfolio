@@ -1,5 +1,7 @@
 import { type INestBaseResponse, Nest } from '../../api';
 
+import { isObject } from '@repo/services/object/object';
+
 import { QueryParameters } from '@repo/business/shared/interface';
 
 import { Paginate } from '../../paginate';
@@ -28,8 +30,22 @@ export class SupplierService {
 
   public async getAll(
     parameters: QueryParameters,
-  ): Promise<Array<SupplierEntity> | Paginate<SupplierEntity>> {
-    return await this.nest.finance.supplier.getAll(parameters);
+  ): Promise<Array<Supplier> | Paginate<Supplier>> {
+    return await this.nest.finance.supplier
+      .getAll(parameters)
+      .then((response) => {
+        if (isObject(response)) {
+          const responsePaginate = response as Paginate<SupplierEntity>;
+          return {
+            ...responsePaginate,
+            results: responsePaginate.results.map(
+              (result) => new Supplier(result),
+            ),
+          };
+        }
+        const responseArray = response as Array<SupplierEntity>;
+        return responseArray.map((result) => new Supplier(result));
+      });
   }
 
   public async get(param: string): Promise<Supplier> {
