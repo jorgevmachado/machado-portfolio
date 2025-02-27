@@ -227,13 +227,26 @@ export const privateRoutes: Array<RouteProps> = [
 
 export const allRoutes: Array<RouteProps> = [...publicRoutes, ...privateRoutes];
 
-export const childPath = (
-  parentPath: string,
-  childPath: string,
-  grandChild?: string,
-) => {
-  if (!grandChild) {
-    return `${parentPath.replace(/\/$/, '')}/${childPath.replace(/^\//, '')}`;
+interface FormatPathParams {
+  childPath: string;
+  parentPath: string;
+  grandParentPath?: string;
+}
+
+export const formatPath = ({
+  childPath,
+  parentPath,
+  grandParentPath,
+}: FormatPathParams) => {
+  const formatParentPath = replacePath(parentPath);
+  const formatChildPath = replacePath(childPath);
+  if (!grandParentPath) {
+    return `/${formatParentPath}/${formatChildPath}`;
   }
-    return `${parentPath.replace(/\/$/, '')}/${childPath.replace(/^\//, '')}/${grandChild.replace(/^\//, '')}`;
+  const formatGrandParentPath = replacePath(grandParentPath);
+  return `/${formatGrandParentPath}/${formatParentPath}/${formatChildPath}`;
+};
+
+const replacePath = (path: string) => {
+  return path.replace(/^\//, '');
 };

@@ -8,7 +8,7 @@ import type { User } from '@repo/business/auth/interface';
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
 import { authService, getAccessToken, removeAccessToken } from '../../shared';
-import { childPath, privateRoutes } from '../../routes';
+import { formatPath, privateRoutes } from '../../routes';
 
 import { Content, Navbar, Sidebar } from '../components';
 
@@ -46,18 +46,21 @@ export default function AuthenticatedLayout() {
                     child.children.map((grandChild) => (
                       <Route
                         key={grandChild.key}
-                        path={childPath(
-                          route.path,
-                          child.path,
-                          grandChild.path,
-                        )}
+                        path={formatPath({
+                          parentPath: child.path,
+                          childPath: grandChild.path,
+                          grandParentPath: route.path,
+                        })}
                         element={grandChild.element}
                       />
                     ))
                   ) : (
                     <Route
                       key={child.key}
-                      path={childPath(route.path, child.path)}
+                      path={formatPath({
+                        parentPath: route.path,
+                        childPath: child.path,
+                      })}
                       element={child.element}
                     />
                   ),
