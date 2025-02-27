@@ -238,15 +238,19 @@ export const formatPath = ({
   parentPath,
   grandParentPath,
 }: FormatPathParams) => {
-  const formatParentPath = replacePath(parentPath);
-  const formatChildPath = replacePath(childPath);
+  const formatParentPath = validatePath(parentPath);
+  const formatChildPath = validatePath(childPath);
   if (!grandParentPath) {
-    return `/${formatParentPath}/${formatChildPath}`;
+    return `${formatParentPath}${formatChildPath}`;
   }
-  const formatGrandParentPath = replacePath(grandParentPath);
-  return `/${formatGrandParentPath}/${formatParentPath}/${formatChildPath}`;
+  const formatGrandParentPath = validatePath(grandParentPath);
+  return `${formatGrandParentPath}${formatParentPath}${formatChildPath}`;
 };
 
-const replacePath = (path: string) => {
-  return path.replace(/^\//, '');
+const validatePath = (path: string) => {
+  if (!path.startsWith('/')) {
+    return `/${path}`;
+  }
+  return path;
+
 };
