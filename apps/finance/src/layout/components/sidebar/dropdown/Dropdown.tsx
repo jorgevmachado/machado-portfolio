@@ -12,9 +12,10 @@ import './Dropdown.scss';
 interface LinkDropdownProps {
   menu: RouteProps;
   isOpen: boolean;
+  grandFatherPath?: string;
 }
 
-export default function Dropdown({ menu, isOpen }: LinkDropdownProps) {
+export default function Dropdown({ menu, isOpen, grandFatherPath }: LinkDropdownProps) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
   const toggleExpand = (item: string) => {
@@ -39,11 +40,11 @@ export default function Dropdown({ menu, isOpen }: LinkDropdownProps) {
           {menu.children.map((child) => (
             <div key={child.key}>
               {child.children ? (
-                <Dropdown menu={child} isOpen={isOpen} />
+                <Dropdown menu={child} isOpen={isOpen} grandFatherPath={menu.path} />
               ) : (
                 <LinkDropdown
                   title={child.title}
-                  path={childPath(menu.path, child.path)}
+                  path={childPath(menu.path, child.path, grandFatherPath)}
                   icon={child.icon}
                   isOpen={isOpen}
                 />

@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import UserProvider from '@repo/ui/hooks/user/UserProvider';
 import type { User } from '@repo/business/auth/interface';
@@ -45,13 +40,29 @@ export default function AuthenticatedLayout() {
         <Content>
           <Routes>
             {privateRoutes.map((route) =>
-              route.children ? route.children.map((child) => (
-                  <Route
+              route.children ? (
+                route.children.map((child) =>
+                  child.children ? (
+                    child.children.map((grandChild) => (
+                      <Route
+                        key={grandChild.key}
+                        path={childPath(
+                          route.path,
+                          child.path,
+                          grandChild.path,
+                        )}
+                        element={grandChild.element}
+                      />
+                    ))
+                  ) : (
+                    <Route
                       key={child.key}
                       path={childPath(route.path, child.path)}
                       element={child.element}
-                  />
-              )) : (
+                    />
+                  ),
+                )
+              ) : (
                 <Route
                   key={route.key}
                   path={route.path}
@@ -60,7 +71,7 @@ export default function AuthenticatedLayout() {
               ),
             )}
 
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            {/*<Route path="*" element={<Navigate to="/dashboard" replace />} />*/}
           </Routes>
         </Content>
       </Router>
