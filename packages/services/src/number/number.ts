@@ -8,3 +8,10 @@ export function extractLastNumberFromUrl(url?: string) {
   }
   return lastNumber;
 }
+
+export function isNumberEven(value: number) {
+  if (value % 1 !== 0) {
+    throw new Error('Please enter a integer number');
+  }
+  return value % 2 === 0;
+}
