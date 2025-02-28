@@ -1,0 +1,42 @@
+.table {
+  padding: var(--size-regular);
+  border-radius: var(--borders-regular);
+
+  table {
+    width: 100%;
+    th {
+      padding: var(--size-tiny);
+      border-bottom: 1px solid var(--color-neutral-60);
+      user-select: none;
+      span {
+        color: var(--color-neutral-90);
+      }
+    }
+    tr {
+      &:hover {
+        td {
+          background-color: var(--color-neutral-50);
+        }
+      }
+      &:last-child {
+        td {
+          border-bottom: none;
+        }
+      }
+    }
+    td {
+      color: var(--color-neutral-90);
+      font-size: var(--font-size-1-75);
+      border-bottom: 1px solid var(--color-neutral-60);
+      padding: var(--size-regular) var(--size-tiny);
+    }
+  }
+
+  &__action-row {
+    tbody {
+      tr {
+        cursor: pointer;
+      }
+    }
+  }
+}
