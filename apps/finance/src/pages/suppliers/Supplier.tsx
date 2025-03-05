@@ -96,10 +96,10 @@ export default function SupplierPage() {
             context="primary"
             validate={(name) => nameValidator(name)}
           />
-          <div className="select-container">
+          <div className="supplier__container">
             <label>Type:</label>
             <select
-              className="select"
+              className="supplier__container--select"
               value={item?.type?.name || ''}
               onChange={(e) =>
                 handleChange('type', { ...item.type, name: e.target.value })
