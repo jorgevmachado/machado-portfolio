@@ -5,9 +5,11 @@ export interface IExpenseCategory extends IFinanceBase {
   type: IExpenseCategoryType;
 }
 
-export type IExpenseCategoryParams = Omit<
-  IExpenseCategoryType,
-  'id' | 'created_at' | 'updated_at' | 'deleted_at'
->;
+export interface IExpenseCategoryParams extends Omit<
+    IExpenseCategory,
+  'id' | 'type' | 'created_at' | 'updated_at' | 'deleted_at'
+> {
+  type: string;
+}
 
 export type IExpenseCategoryResponse = IFinanceResponse;

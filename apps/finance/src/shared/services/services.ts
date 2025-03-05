@@ -5,6 +5,7 @@ import { FinanceService } from '@repo/business/finance/financeService';
 import { SupplierTypeService } from '@repo/business/finance/supplier-type/supplierTypeService';
 import { SupplierService } from '@repo/business/finance/supplier/supplierService';
 import { ExpenseCategoryTypeService } from '@repo/business/finance/expense-category-type/expenseCategoryTypeService';
+import { ExpenseCategoryService } from '@repo/business/finance/expense-category/expenseCategoryService';
 
 const baseUrl = process.env.NEXT_PUBLIC_API ?? 'http://localhost:3001';
 
@@ -24,3 +25,5 @@ export const supplierTypeService = new SupplierTypeService(nest);
 export const supplierService = new SupplierService(nest);
 
 export const expenseCategoryTypeService = new ExpenseCategoryTypeService(nest);
+
+export const expenseCategoryService = new ExpenseCategoryService(nest);

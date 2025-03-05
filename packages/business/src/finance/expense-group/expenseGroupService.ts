@@ -6,7 +6,6 @@ import { Paginate } from '../../paginate';
 import ExpenseGroup from './expenseGroup';
 
 import { ExpenseGroupEntity } from './interface';
-import { isObject } from '@repo/services/object/object';
 
 export class ExpenseGroupService {
   constructor(private nest: Nest) {}
@@ -29,17 +28,16 @@ export class ExpenseGroupService {
     return await this.nest.finance.expense.group
       .getAll(parameters)
       .then((response) => {
-        if (isObject(response)) {
-          const responsePaginate = response as Paginate<ExpenseGroupEntity>;
-          return {
-            ...responsePaginate,
-            results: responsePaginate.results.map(
-              (result) => new ExpenseGroup(result),
-            ),
-          };
+        if (Array.isArray(response)) {
+          return response.map((result) => new ExpenseGroup(result));
         }
-        const responseArray = response as Array<ExpenseGroupEntity>;
-        return responseArray.map((result) => new ExpenseGroup(result));
+        const responsePaginate = response as Paginate<ExpenseGroupEntity>;
+        return {
+          ...responsePaginate,
+          results: responsePaginate.results.map(
+            (result) => new ExpenseGroup(result),
+          ),
+        };
       });
   }
 
