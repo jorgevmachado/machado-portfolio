@@ -5,7 +5,6 @@ import { RouteProps } from './interface';
 const Dashboard = lazy(() => import('../pages/dashboard'));
 const Profile = lazy(() => import('../pages/profile'));
 const Config = lazy(() => import('../pages/config'));
-const Contact = lazy(() => import('../pages/contact'));
 const Suppliers = lazy(() => import('../pages/suppliers'));
 const SupplierTypes = lazy(() => import('../pages/suppliers/types'));
 const ExpenseCategoryTypes = lazy(
@@ -76,17 +75,6 @@ export const privateRoutes: Array<RouteProps> = [
     ),
   },
   {
-    key: 'about',
-    path: '/about',
-    type: 'private',
-    title: 'About',
-    element: (
-      <Suspense fallback={<h1>LOADING</h1>}>
-        <h1>About in construction</h1>
-      </Suspense>
-    ),
-  },
-  {
     key: 'profile',
     icon: 'user',
     path: '/profile',
@@ -107,17 +95,6 @@ export const privateRoutes: Array<RouteProps> = [
     element: (
       <Suspense fallback={<h1>LOADING</h1>}>
         <Config />
-      </Suspense>
-    ),
-  },
-  {
-    key: 'contact',
-    path: '/contact',
-    type: 'private',
-    title: 'Contact',
-    element: (
-      <Suspense fallback={<h1>LOADING</h1>}>
-        <Contact />
       </Suspense>
     ),
   },
