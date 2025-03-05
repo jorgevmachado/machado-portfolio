@@ -38,13 +38,21 @@ export default function Body({
     }
     return null;
   };
+
+  const handleRowClick = (
+    event: React.MouseEvent<HTMLTableRowElement>,
+    item: unknown,
+  ) => {
+    event.preventDefault();
+    onRowClick && onRowClick(item);
+  };
   return (
     <tbody>
       {sortedItems.map((item: any, itemIndex: number) => {
         return (
           <tr
             key={`table__row-${itemIndex}`}
-            onClick={() => onRowClick && onRowClick(item)}
+            onClick={(event) => handleRowClick(event, item)}
             className={getClassNameRow && getClassNameRow(item)}
             data-testid={`${tableTestId}-row-${itemIndex}`}
           >
