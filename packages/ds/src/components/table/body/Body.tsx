@@ -24,15 +24,24 @@ export default function Body({
   formattedDate,
   getClassNameRow,
 }: BodyProps) {
-  const renderValue = (
-    value: unknown,
-    type: TableProps['headers'][number]['type'],
+    const renderValue = (item: unknown, value: string) => {
+      return value.split('.').reduce((acc, key) => acc && (acc as Record<string, unknown>)[key], item);
+      // if (subValue) {
+      //   return (item as Record<string, any>)[value]?.[subValue];
+      // }
+      // return (item as Record<string, any>)[value];
+    }
+  const renderData = (
+      item: unknown,
+      header: TableProps['headers'][number]
   ): React.ReactNode => {
+    const value = renderValue(item, header.value)
+
     if (React.isValidElement(value)) {
       return value;
     }
     if (typeof value === 'string' || typeof value === 'number') {
-      return type === 'date' && formattedDate
+      return header.type === 'date' && formattedDate
         ? new Date(value).toLocaleDateString()
         : value;
     }
@@ -48,7 +57,7 @@ export default function Body({
   };
   return (
     <tbody>
-      {sortedItems.map((item: any, itemIndex: number) => {
+      {sortedItems.map((item: unknown, itemIndex: number) => {
         return (
           <tr
             key={`table__row-${itemIndex}`}
@@ -62,7 +71,7 @@ export default function Body({
                 align={header.align ?? 'left'}
                 data-testid={`${tableTestId}-column-${index}`}
               >
-                {renderValue(item[header.value], header.type)}
+                {renderData(item, header)}
               </td>
             ))}
             <Actions item={item} actions={actions} />

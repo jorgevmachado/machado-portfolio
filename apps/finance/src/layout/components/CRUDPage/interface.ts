@@ -6,11 +6,12 @@ import { Paginate } from '@repo/business/paginate';
 
 export interface CRUDPageProps<T extends { id: string }> {
   headers: TableProps['headers'];
+  loading?: boolean;
   saveItem?: (item: Partial<T>) => Promise<T>;
   fetchItems: (params: QueryParameters) => Promise<Paginate<T>>;
   deleteItem?: (param: string) => Promise<{ message: string }>;
   resourceName: string;
-  renderItemForm: (params: RenderItemFormParams<T>) => React.ReactNode;
+  renderItemForm?: (params: RenderItemFormParams<T>) => React.ReactNode;
   prepareItemForSave?: (item: unknown) => Partial<T>;
 }
 

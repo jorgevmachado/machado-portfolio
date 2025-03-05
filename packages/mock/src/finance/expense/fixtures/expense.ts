@@ -67,8 +67,8 @@ export const NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
   november_paid: false,
   december_paid: false,
   description: null,
-  created_at: new Date('2025-02-13T17:37:47.783Z'),
-  updated_at: new Date('2025-02-13T14:40:31.207Z'),
+  created_at: new Date('2025-02-01T17:37:47.783Z'),
+  updated_at: new Date('2025-02-01T14:40:31.207Z'),
   deleted_at: null,
   instalment_number: 1,
 });
@@ -164,8 +164,8 @@ export const GARAGE_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
   november_paid: false,
   december_paid: false,
   description: null,
-  created_at: new Date('2025-02-13T17:37:47.783Z'),
-  updated_at: new Date('2025-02-13T14:40:31.207Z'),
+  created_at: new Date('2025-02-02T17:37:47.783Z'),
+  updated_at: new Date('2025-02-02T14:40:31.207Z'),
   deleted_at: null,
   instalment_number: 1,
 });
@@ -218,8 +218,8 @@ export const OLD_BIKERS_EXPENSE_FIXTURE: Expense = new Expense({
   november_paid: false,
   december_paid: false,
   description: null,
-  created_at: new Date('2025-02-13T17:37:47.783Z'),
-  updated_at: new Date('2025-02-13T14:40:31.207Z'),
+  created_at: new Date('2025-02-03T17:37:47.783Z'),
+  updated_at: new Date('2025-02-03T14:40:31.207Z'),
   deleted_at: null,
   instalment_number: 2,
 });

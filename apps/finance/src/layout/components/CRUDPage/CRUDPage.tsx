@@ -18,6 +18,7 @@ import './CRUDPage.scss';
 
 export default function CRUDPage<T extends { id: string }>({
   headers,
+  loading: outLoading = false,
   saveItem,
   fetchItems,
   deleteItem,
@@ -37,7 +38,7 @@ export default function CRUDPage<T extends { id: string }>({
       getValidPage(Number(searchParams.get('page'))),
   );
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(outLoading);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [editingItem, setEditingItem] = useState<T | null>(null);
 
@@ -180,7 +181,7 @@ export default function CRUDPage<T extends { id: string }>({
             <h2>
               {editingItem ? `Edit ${resourceName}` : `Create ${resourceName}`}
             </h2>
-            {renderItemForm({
+            {renderItemForm && renderItemForm({
               item: editingItem || {},
               handleChange: (key, value) =>
                 setEditingItem((prev) =>

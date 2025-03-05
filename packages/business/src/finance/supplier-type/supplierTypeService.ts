@@ -1,7 +1,5 @@
 import { type INestBaseResponse, Nest } from '../../api';
 
-import { isObject } from '@repo/services/object/object';
-
 import { QueryParameters } from '../../shared';
 import { Paginate } from '../../paginate';
 
@@ -29,17 +27,16 @@ export class SupplierTypeService {
     return await this.nest.finance.supplier.type
       .getAll(parameters)
       .then((response) => {
-        if (isObject(response)) {
-          const responsePaginate = response as Paginate<SupplierTypeEntity>;
-          return {
-            ...responsePaginate,
-            results: responsePaginate.results.map(
-              (result) => new SupplierType(result),
-            ),
-          };
+        if (Array.isArray(response)) {
+          return response.map((result) => new SupplierType(result));
         }
-        const responseArray = response as Array<SupplierTypeEntity>;
-        return responseArray.map((result) => new SupplierType(result));
+        const responsePaginate = response as Paginate<SupplierTypeEntity>;
+        return {
+          ...responsePaginate,
+          results: responsePaginate.results.map(
+            (result) => new SupplierType(result),
+          ),
+        };
       });
   }
 
