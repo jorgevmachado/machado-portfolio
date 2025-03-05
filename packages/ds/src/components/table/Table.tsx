@@ -6,16 +6,11 @@ import { Spinner } from '../../elements';
 
 import type { SortedColumn, TableProps, TSort } from './interface';
 
-import { getNewSort, sortItems } from './sort';
+import { getNewSort, resetSortedColumn, sortItems } from './sort';
 import Header from './header';
 import Body from './body';
 
 import './Table.scss';
-
-const resetSortedColumn: SortedColumn = {
-  order: '',
-  value: '',
-};
 
 const Table = ({
   items,
@@ -25,14 +20,16 @@ const Table = ({
   loading,
   onRowClick,
   tableTestId,
-  onChangeOrder,
   formattedDate = true,
+  onChangeOrder,
+  onSortedColumn,
   getClassNameRow,
-                 ...props
+  currentSortedColumn = resetSortedColumn,
+  ...props
 }: TableProps): ReactElement => {
   const [sortedItems, setSortedItems] = useState([...items]);
   const [sortedColumn, setSortedColumn] =
-    useState<SortedColumn>(resetSortedColumn);
+    useState<SortedColumn>(currentSortedColumn);
 
   const classList = joinClass([
     'table',
@@ -41,27 +38,36 @@ const Table = ({
 
   const handleSort = (header: TableProps['headers'][number]) => {
     const newSort = getNewSort(header, sortedColumn);
-    if (sortedColumn.value === header.value && sortedColumn.order === 'desc') {
+    if (sortedColumn.sort === header.value && sortedColumn.order === 'desc') {
       setSortedItems([...items]);
     }
     setSortedColumn(newSort);
     onChangeOrder && onChangeOrder(newSort);
+    onSortedColumn && onSortedColumn(newSort);
   };
 
+  const updateTable = (sort: boolean) => {
+    if (sortedColumn.sort && !onChangeOrder) {
+      const currentItems = sortItems(
+          sortedColumn.order as TSort,
+          sortedColumn.sort,
+          items,
+      );
+      setSortedItems([...currentItems]);
+      return;
+    }
+    if(!sort) {
+      setSortedItems([...items]);
+    }
+  }
+
   useEffect(() => {
-    setSortedItems([...items]);
+    updateTable(false);
   }, [items]);
 
   useEffect(() => {
-    if (sortedColumn.value && !onChangeOrder) {
-      const currentItems = sortItems(
-        sortedColumn.order as TSort,
-        sortedColumn.value,
-        items,
-      );
-      setSortedItems([...currentItems]);
-    }
-  }, [sortedColumn.order, sortedColumn.value]);
+    updateTable(true);
+  }, [sortedColumn.order, sortedColumn.sort]);
 
   return loading ? (
     <Spinner />

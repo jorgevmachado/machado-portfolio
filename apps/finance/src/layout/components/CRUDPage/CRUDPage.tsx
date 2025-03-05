@@ -1,34 +1,20 @@
 import React, { useEffect, useState } from 'react';
-
-import { Paginate } from '@repo/business/paginate';
-import { QueryParameters } from '@repo/business/shared/interface';
+import { useSearchParams } from 'react-router-dom';
 
 import Text from '@repo/ds/elements/text/Text';
 import Button from '@repo/ds/components/button/Button';
 
-import type { TableProps } from '@repo/ds/components/table/interface';
+import type { SortedColumn, TSort } from '@repo/ds/components/table/interface';
 import Table from '@repo/ds/components/table/Table';
 
 import Pagination from '@repo/ds/components/pagination/Pagination';
 
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
+import {getValidPage, getUpdatedUrlParams} from './config';
+import type { CRUDPageProps, UpdateURLParams } from './interface';
+
 import './CRUDPage.scss';
-
-interface RenderItemFormParams<T> {
-  item: Partial<T>;
-  handleChange: (key: keyof T, value: unknown) => void;
-}
-
-interface CRUDPageProps<T extends { id: string }> {
-  headers: TableProps['headers'];
-  saveItem?: (item: Partial<T>) => Promise<T>;
-  fetchItems: (params: QueryParameters) => Promise<Paginate<T>>;
-  deleteItem?: (param: string) => Promise<{ message: string }>;
-  resourceName: string;
-  renderItemForm: (params: RenderItemFormParams<T>) => React.ReactNode;
-  prepareItemForSave?: (item: unknown) => Partial<T>;
-}
 
 export default function CRUDPage<T extends { id: string }>({
   headers,
@@ -40,13 +26,28 @@ export default function CRUDPage<T extends { id: string }>({
   prepareItemForSave,
 }: CRUDPageProps<T>) {
   const { addAlert } = useAlert();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [items, setItems] = useState<Array<T>>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [sortedColumn, setSortedColumn] = useState<SortedColumn>({
+    sort: searchParams.get('sort') ?? '',
+    order: (searchParams.get('order') as TSort) ?? '',
+  });
+  const [currentPage, setCurrentPage] = useState<number>(
+      getValidPage(Number(searchParams.get('page'))),
+  );
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [editingItem, setEditingItem] = useState<T | null>(null);
+
+  const updateURLParams = (params: UpdateURLParams) => {
+    const newParams = getUpdatedUrlParams({
+      ...params,
+      searchParams
+    });
+    setSearchParams(newParams);
+  };
 
   const ITEMS_PER_PAGE = 10;
 
@@ -67,6 +68,16 @@ export default function CRUDPage<T extends { id: string }>({
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSort = ({ sort, order }: SortedColumn) => {
+    updateURLParams({ sort, order });
+    setSortedColumn({ sort, order });
+  };
+
+  const handlePageChange = (page: number) => {
+    updateURLParams({ page: String(page) });
+    setCurrentPage(page);
   };
 
   const handleSave = async () => {
@@ -123,7 +134,7 @@ export default function CRUDPage<T extends { id: string }>({
   const openModal = (item?: T) => {
     setEditingItem(item ?? null);
     setIsModalVisible(true);
-  }
+  };
 
   useEffect(() => {
     fetchResources();
@@ -135,23 +146,33 @@ export default function CRUDPage<T extends { id: string }>({
         <Text tag="h1" variant="big" color="info-80">
           Management of {resourceName}
         </Text>
-        { saveItem && (
-            <Button onClick={() => openModal()} context="success">
-              Create new {resourceName}
-            </Button>
+        {saveItem && (
+          <Button onClick={() => openModal()} context="success">
+            Create new {resourceName}
+          </Button>
         )}
       </div>
       <Table
         items={items}
         headers={headers}
-        actions={ (saveItem || deleteItem)  ? {
-          text: 'Actions',
-          align: 'center',
-          edit: saveItem  ? { onClick: (item: T) => openModal(item) } : undefined,
-          delete: deleteItem ? { onClick: (item: T) => handleDelete(String(item.id)) } : undefined,
-        } : undefined}
+        actions={
+          saveItem || deleteItem
+            ? {
+                text: 'Actions',
+                align: 'center',
+                edit: saveItem
+                  ? { onClick: (item: T) => openModal(item) }
+                  : undefined,
+                delete: deleteItem
+                  ? { onClick: (item: T) => handleDelete(String(item.id)) }
+                  : undefined,
+              }
+            : undefined
+        }
         loading={loading}
         onRowClick={saveItem ? (item: T) => openModal(item) : undefined}
+        onSortedColumn={handleSort}
+        currentSortedColumn={sortedColumn}
       />
       {isModalVisible && (
         <div className="crud__modal">
@@ -181,16 +202,16 @@ export default function CRUDPage<T extends { id: string }>({
           </div>
         </div>
       )}
-      { totalPages > 1 && (
-          <Pagination
-              fluid
-              currentPage={currentPage}
-              pageRange={totalPages}
-              totalPages={totalPages}
-              handleNewPage={(newPage) => setCurrentPage(newPage)}
-              isNumberedPagination
-              disableButtonsFirstAndLastPage
-          />
+      {totalPages > 1 && (
+        <Pagination
+          fluid
+          currentPage={currentPage}
+          pageRange={totalPages}
+          totalPages={totalPages}
+          handleNewPage={handlePageChange}
+          isNumberedPagination
+          disableButtonsFirstAndLastPage
+        />
       )}
     </div>
   );

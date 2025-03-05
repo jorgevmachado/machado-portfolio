@@ -1,20 +1,20 @@
 import {type SortedColumn, SortItem, TableProps, TSort} from './interface';
 
-const resetSortedColumn: SortedColumn = {
+export const resetSortedColumn: SortedColumn = {
   order: '',
-  value: '',
+  sort: '',
 };
 
 export function getNewSort(
   header: TableProps['headers'][number],
   sortedColumn: SortedColumn,
 ): SortedColumn {
-  if (sortedColumn.value === header.value) {
+  if (sortedColumn.sort === header.value) {
     return sortedColumn.order !== 'desc'
       ? { ...sortedColumn, order: 'desc' }
       : resetSortedColumn;
   }
-  return { order: 'asc', value: header.value };
+  return { order: 'asc', sort: header.value };
 }
 
 export function sortItems(order: TSort, key: string, items: Array<unknown>) {

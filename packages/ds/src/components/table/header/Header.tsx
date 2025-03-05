@@ -20,7 +20,7 @@ export default function Header({
   sortedColumn,
 }: HeaderProps) {
   const sortIcon = (header: TableProps['headers'][number]) => {
-    if (header.value === sortedColumn.value) {
+    if (header.value === sortedColumn.sort) {
       return sortedColumn.order === 'asc' ? 'chevron-down' : 'chevron-up';
     }
     return 'sort';
@@ -55,8 +55,8 @@ export default function Header({
                   <Icon
                     icon={sortIcon(headerItem)}
                     className={
-                      sortedColumn.value &&
-                      sortedColumn.value === headerItem.value
+                      sortedColumn.sort &&
+                      sortedColumn.sort === headerItem.value
                         ? 'header__cell--content-icon header__cell--content-icon__active'
                         : 'header__cell--content-icon'
                     }

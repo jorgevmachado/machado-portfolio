@@ -13,7 +13,9 @@ export interface TableProps {
   tableTestId?: string;
   formattedDate?: boolean;
   onChangeOrder?(sortedColumn: SortedColumn): void;
+  onSortedColumn?(sortedColumn: SortedColumn): void;
   getClassNameRow?(item: unknown): string;
+  currentSortedColumn?: SortedColumn;
 }
 
 type TTableHeaderItem = 'string' | 'number' | 'date';
@@ -50,6 +52,6 @@ export interface TableActionsItem {
 }
 
 export interface SortedColumn {
+  sort: string;
   order: TSort;
-  value: string;
 }
