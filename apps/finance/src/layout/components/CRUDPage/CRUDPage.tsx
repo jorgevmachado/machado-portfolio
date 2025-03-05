@@ -95,14 +95,14 @@ export default function CRUDPage<T extends { id: string }>({
       await saveItem(itemToSave);
       addAlert({
         type: 'success',
-        message: `${resourceName} salvo com sucesso!`,
+        message: `${resourceName} saved successfully!`,
       });
       setIsModalVisible(false);
       await fetchResources();
     } catch (error) {
       addAlert({
         type: 'error',
-        message: (error as Error)?.message ?? `Erro ao salvar ${resourceName}.`,
+        message: (error as Error)?.message ?? `Error saving ${resourceName}.`,
       });
     } finally {
       setLoading(false);
@@ -118,14 +118,14 @@ export default function CRUDPage<T extends { id: string }>({
       await deleteItem(id);
       addAlert({
         type: 'success',
-        message: `${resourceName} removido com sucesso!`,
+        message: `${resourceName} successfully removed!`,
       });
       await fetchResources();
     } catch (error) {
       addAlert({
         type: 'error',
         message:
-          (error as Error)?.message || `Erro ao remover ${resourceName}.`,
+          (error as Error)?.message || `Error removing ${resourceName}.`,
       });
     } finally {
       setLoading(false);
