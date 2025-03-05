@@ -1,12 +1,12 @@
 'use client';
+
 import SupplierType from '@repo/business/finance/supplier-type';
+import { QueryParameters } from '@repo/business/shared/interface';
+import { Paginate } from '@repo/business/paginate';
 
 import { supplierTypeService } from '../../../shared';
 
-import './Type.scss';
 import { CRUDPage } from '../../../layout';
-import { QueryParameters } from '@repo/business/shared/interface';
-import { Paginate } from '@repo/business/paginate';
 
 export default function SupplierTypePage() {
   const fetchItems = async (params: QueryParameters) => {

@@ -22,9 +22,9 @@ interface RenderItemFormParams<T> {
 
 interface CRUDPageProps<T extends { id: string }> {
   headers: TableProps['headers'];
-  saveItem: (item: Partial<T>) => Promise<T>;
+  saveItem?: (item: Partial<T>) => Promise<T>;
   fetchItems: (params: QueryParameters) => Promise<Paginate<T>>;
-  deleteItem: (param: string) => Promise<{ message: string }>;
+  deleteItem?: (param: string) => Promise<{ message: string }>;
   resourceName: string;
   renderItemForm: (params: RenderItemFormParams<T>) => React.ReactNode;
   prepareItemForSave?: (item: unknown) => Partial<T>;
@@ -70,7 +70,9 @@ export default function CRUDPage<T extends { id: string }>({
   };
 
   const handleSave = async () => {
-    if (!editingItem) return;
+    if (!editingItem || !saveItem) {
+      return;
+    }
 
     setLoading(true);
     try {
@@ -96,7 +98,7 @@ export default function CRUDPage<T extends { id: string }>({
   };
 
   const handleDelete = async (id: string) => {
-    if (!id) {
+    if (!id || !deleteItem) {
       return;
     }
     setLoading(true);
@@ -133,22 +135,23 @@ export default function CRUDPage<T extends { id: string }>({
         <Text tag="h1" variant="big" color="info-80">
           Management of {resourceName}
         </Text>
-
-        <Button onClick={() => openModal()} context="success">
-          Create new {resourceName}
-        </Button>
+        { saveItem && (
+            <Button onClick={() => openModal()} context="success">
+              Create new {resourceName}
+            </Button>
+        )}
       </div>
       <Table
         items={items}
         headers={headers}
-        actions={{
+        actions={ (saveItem || deleteItem)  ? {
           text: 'Actions',
           align: 'center',
-          edit: { onClick: (item: T) => openModal(item) },
-          delete: { onClick: (item: T) => handleDelete(String(item.id)) },
-        }}
+          edit: saveItem  ? { onClick: (item: T) => openModal(item) } : undefined,
+          delete: deleteItem ? { onClick: (item: T) => handleDelete(String(item.id)) } : undefined,
+        } : undefined}
         loading={loading}
-        onRowClick={(item: T) => openModal(item)}
+        onRowClick={saveItem ? (item: T) => openModal(item) : undefined}
       />
       {isModalVisible && (
         <div className="crud__modal">
@@ -178,15 +181,17 @@ export default function CRUDPage<T extends { id: string }>({
           </div>
         </div>
       )}
-      <Pagination
-        fluid
-        currentPage={currentPage}
-        pageRange={totalPages}
-        totalPages={totalPages}
-        handleNewPage={(newPage) => setCurrentPage(newPage)}
-        isNumberedPagination
-        disableButtonsFirstAndLastPage
-      />
+      { totalPages > 1 && (
+          <Pagination
+              fluid
+              currentPage={currentPage}
+              pageRange={totalPages}
+              totalPages={totalPages}
+              handleNewPage={(newPage) => setCurrentPage(newPage)}
+              isNumberedPagination
+              disableButtonsFirstAndLastPage
+          />
+      )}
     </div>
   );
 }
