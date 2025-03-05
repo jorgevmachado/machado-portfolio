@@ -1,19 +1,26 @@
 import React from 'react';
-import type { TIcon } from '@repo/ds/elements/icon/interface';
-import type { TContext } from '@repo/ds/utils/colors/interface';
+
+import type { TIcon } from '../../elements';
+import type { TContext } from '../../utils';
 
 export interface TableProps {
   items: Array<unknown>;
   style?: React.CSSProperties;
   headers: Array<TableHeaderItem>;
   actions?: TableActions;
-  tableTestId?: string;
+  loading?: boolean;
   onRowClick?(item: unknown): void;
+  tableTestId?: string;
+  formattedDate?: boolean;
   onChangeOrder?(sortedColumn: SortedColumn): void;
   getClassNameRow?(item: unknown): string;
 }
+
+type TTableHeaderItem = 'string' | 'number' | 'date';
+
 type TableHeaderItem = {
   text: string;
+  type?: TTableHeaderItem;
   value: string;
   align?: TAlign;
   style?: React.CSSProperties;

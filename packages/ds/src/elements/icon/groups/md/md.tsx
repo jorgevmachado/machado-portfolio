@@ -119,6 +119,7 @@ export const mdGroup: TIconGroupIcons = {
   sort: <MdOutlineSortByAlpha />,
   stop: <MdOutlineStopCircle />,
   home: undefined,
+  trash: undefined,
   group: undefined,
   brush: <MdBrush />,
   chair: <MdChairAlt />,

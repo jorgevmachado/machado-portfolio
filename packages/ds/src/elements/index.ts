@@ -4,3 +4,4 @@ export { Spinner } from './spinner';
 export { Tooltip } from './tooltip';
 export { Text } from './text';
 export { Image } from './image';
+export { default as ProgressIndicator } from './progress-indicator';

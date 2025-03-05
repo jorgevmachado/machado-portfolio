@@ -22,6 +22,7 @@ export interface ButtonProps
   loading?: boolean;
   rounded?: boolean;
   context?: TContext;
+  selected?: boolean;
   children?: React.ReactNode;
   disabled?: boolean;
   iconSize?: string | number;

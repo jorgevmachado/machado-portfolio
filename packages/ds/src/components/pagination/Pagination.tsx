@@ -1,28 +1,14 @@
-import joinClass from '@repo/ds/utils/join-class/joinClass';
-
-import type { TContext } from '@repo/ds/utils/colors/interface';
-import Button from '@repo/ds/components/button/Button';
 import { useEffect, useRef, useState } from 'react';
-import { isNumberEven } from '@repo/services/number/number';
-import ProgressIndicator from '../progressIndicator';
+
+import { joinClass } from '../../utils';
+import { ProgressIndicator } from '../../elements';
+
+import Button from '../button';
+
+import { renderNumbersStartEnd } from './config';
+import { PaginationProps } from './interface';
 
 import './Pagination.scss';
-
-interface PaginationProps {
-  fluid?: boolean;
-  context?: TContext;
-  pageRange?: number;
-  limitDots?: boolean;
-  totalPages: number;
-  currentPage?: number;
-  handleNewPage?(newPage: number): void;
-  handleNextPage?(): void;
-  handlePrevPage?(): void;
-  hidePagination?: boolean;
-  isNumberedPagination?: boolean;
-  hidePaginationButtons?: boolean;
-  disableButtonsFirstAndLastPage?: boolean;
-}
 
 export default function Pagination({
   fluid,
@@ -40,13 +26,13 @@ export default function Pagination({
   disableButtonsFirstAndLastPage,
 }: PaginationProps) {
   const [selectedPage, setSelectedPage] = useState(currentPage ?? 1);
+
   const notInitialRender = useRef(false);
 
   const classNameList = joinClass([
     'pagination',
-    isNumberedPagination && 'pagination--numbered',
-    fluid && 'pagination--fluid',
-    `pagination--context-${context}`,
+    fluid && 'pagination__fluid',
+    `pagination__context-${context}`,
   ]);
 
   const paginationItemsClassNameList = joinClass([
@@ -68,7 +54,9 @@ export default function Pagination({
   };
 
   const renderNumbers = () => {
-    if (hidePagination) return;
+    if (hidePagination) {
+      return;
+    }
 
     const numberButtons = [];
 
@@ -77,23 +65,14 @@ export default function Pagination({
     const firstMiddlePoint = 1 + offset;
     const lastMiddlePoint = totalPages - offset;
 
-    let start = 1;
-    let end = pageRange ?? 1;
-
-    if (selectedPage > firstMiddlePoint && selectedPage <= lastMiddlePoint) {
-      start = selectedPage - offset;
-      end = selectedPage + offset;
-      if (isNumberEven(pageRange ?? 0)) end--;
-    }
-    if (selectedPage > lastMiddlePoint) {
-      start = totalPages - ((pageRange ?? 1) - 1);
-      end = totalPages;
-    }
-
-    if ((pageRange ?? 0) > totalPages) {
-      start = 1;
-      end = totalPages;
-    }
+    const { start, end } = renderNumbersStartEnd({
+      offset,
+      pageRange: pageRange ?? 0,
+      totalPages,
+      selectedPage,
+      lastMiddlePoint,
+      firstMiddlePoint,
+    });
 
     for (let i = start; i <= end; i++) {
       numberButtons.push(
@@ -101,6 +80,7 @@ export default function Pagination({
           type="button"
           key={`page-${i}`}
           context={context}
+          selected={selectedPage === i}
           appearance="outline"
           onClick={() => setSelectedPage(i)}
           data-testid={`button-page-${i}`}
@@ -129,8 +109,8 @@ export default function Pagination({
 
       return (
         <ProgressIndicator
-          totalDots={limitedTotalDots}
-          currentDot={currentDot}
+          total={limitedTotalDots}
+          current={currentDot}
           context={context}
         />
       );
@@ -138,8 +118,8 @@ export default function Pagination({
 
     return (
       <ProgressIndicator
-        totalDots={totalPages}
-        currentDot={selectedPage}
+        total={totalPages}
+        current={selectedPage}
         context={context}
       />
     );
@@ -159,14 +139,14 @@ export default function Pagination({
       {!hidePaginationButtons && (
         <Button
           type="button"
-          aria-label="Página anterior"
-          context={context}
-          appearance="icon"
-          disabled={disableButtonsFirstAndLastPage && currentPage === 1}
           icon="chevron-left"
           onClick={handlePreviousClick}
+          context={context}
+          disabled={disableButtonsFirstAndLastPage && selectedPage === 1}
+          appearance="icon"
+          aria-label="Previous page"
           data-testid="pagination-button-prev"
-        ></Button>
+        />
       )}
       <div className={paginationItemsClassNameList}>
         {isNumberedPagination && renderNumbers()}
@@ -175,14 +155,16 @@ export default function Pagination({
       {!hidePaginationButtons && (
         <Button
           type="button"
-          aria-label="Próxima página"
-          context={context}
-          appearance="icon"
-          disabled={disableButtonsFirstAndLastPage && currentPage === 1}
           icon="chevron-right"
           onClick={handleNextClick}
+          context={context}
+          disabled={
+            disableButtonsFirstAndLastPage && selectedPage === totalPages
+          }
+          appearance="icon"
+          aria-label="Next page"
           data-testid="pagination-button-next"
-        ></Button>
+        />
       )}
     </nav>
   );

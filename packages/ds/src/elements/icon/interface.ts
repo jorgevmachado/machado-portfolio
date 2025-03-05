@@ -23,6 +23,7 @@ export type TIcon =
     | 'sort'
     | 'stop'
     | 'home'
+    | 'trash'
     | 'group'
     | 'brush'
     | 'chair'

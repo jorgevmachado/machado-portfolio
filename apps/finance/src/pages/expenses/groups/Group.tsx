@@ -2,7 +2,7 @@
 import './Group.scss';
 import Tag from '@repo/ds/components/tag/Tag';
 import Table from '@repo/ds/components/table/Table';
-import Pagination from '../../../layout/components/pagination/Pagination';
+import Pagination from '@repo/ds/components/pagination/Pagination';
 
 export default function ExpenseGroupPage() {
   return (

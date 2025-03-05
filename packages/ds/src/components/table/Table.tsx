@@ -2,6 +2,8 @@ import React, { ReactElement, useEffect, useState } from 'react';
 
 import joinClass from '../../utils/join-class/joinClass';
 
+import { Spinner } from '../../elements';
+
 import type { SortedColumn, TableProps, TSort } from './interface';
 
 import { getNewSort, sortItems } from './sort';
@@ -20,11 +22,13 @@ const Table = ({
   style,
   headers,
   actions,
+  loading,
   onRowClick,
   tableTestId,
   onChangeOrder,
+  formattedDate = true,
   getClassNameRow,
-  ...props
+                 ...props
 }: TableProps): ReactElement => {
   const [sortedItems, setSortedItems] = useState([...items]);
   const [sortedColumn, setSortedColumn] =
@@ -59,7 +63,9 @@ const Table = ({
     }
   }, [sortedColumn.order, sortedColumn.value]);
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className={classList} data-testid={tableTestId} {...props}>
       <table cellSpacing="0" cellPadding="0" style={style}>
         <Header
@@ -74,6 +80,7 @@ const Table = ({
           onRowClick={onRowClick}
           tableTestId={tableTestId}
           sortedItems={sortedItems}
+          formattedDate={formattedDate}
           getClassNameRow={getClassNameRow}
         />
       </table>

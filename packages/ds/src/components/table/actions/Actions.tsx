@@ -15,6 +15,7 @@ function Action({ type, item, action }: ActionProps) {
   return (
     <Button
       icon={action?.icon}
+      appearance={action?.icon ? 'icon' : 'standard'}
       context={action.context ?? defaultContext}
       onClick={() => action?.onClick(item)}
     >

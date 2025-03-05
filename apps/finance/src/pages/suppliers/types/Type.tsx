@@ -16,7 +16,14 @@ export default function SupplierTypePage() {
   };
   return (
     <CRUDPage
-      renderTable={{ headers: ['Name', 'Created At'], bodies: ['name', 'created_at'], actionDelete: true, actionEdit: true }}
+      headers={[
+        {
+          text: 'Name',
+          value: 'name',
+          sortable: true,
+        },
+        { text: 'Created At', value: 'created_at', type: 'date', sortable: true },
+      ]}
       resourceName="Supplier Type"
       fetchItems={fetchItems}
       saveItem={(item) =>

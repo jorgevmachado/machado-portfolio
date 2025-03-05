@@ -18,7 +18,7 @@
       background-color: $StrongLightColor;
     }
 
-    &:active, &-selected {
+    &:active, &__selected {
       border-color: $WeakLightColor;
       background-color: $WeakLightColor;
     }
@@ -63,7 +63,7 @@
           &:hover:not(:focus) {
             background-color: $MediumLightColor;
           }
-          &:active {
+          &:active, &__selected {
             background-color: $MediumLightColor;
           }
         }

@@ -10,6 +10,7 @@ import {
 } from 'react-icons/ci';
 
 import type { TIconGroupIcons } from '../interface';
+import { GiTrashCan } from 'react-icons/gi';
 
 export const ciGroup: TIconGroupIcons = {
   tv: undefined,
@@ -36,6 +37,7 @@ export const ciGroup: TIconGroupIcons = {
   sort: undefined,
   stop: undefined,
   home: undefined,
+  trash: <GiTrashCan />,
   group: undefined,
   brush: undefined,
   chair: undefined,

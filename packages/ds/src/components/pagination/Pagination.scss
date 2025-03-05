@@ -1,10 +1,20 @@
 .pagination {
   display: flex;
-  &--fluid {
+
+  &__fluid {
     justify-content: space-between;
   }
 
-  &:not([class*="pagination--context-"]) {
+  &__items {
+    gap: var(--size-xx-tiny);
+    margin: 0 var(--size-regular);
+    display: flex;
+    &--hidden {
+      margin: 0 var(--size-x-tiny);
+    }
+  }
+
+  &:not([class*="pagination__context-"]) {
     .button {
       &:not(:disabled) {
         color: var(--color-secondary-100);
@@ -25,24 +35,8 @@
         color: var(--color-neutral-50);
       }
     }
-    [class*="progress-indicator--context-"] {
+    [class*="progress-indicator__context-"] {
       background-color: var(--color-secondary-100);
     }
   }
-
-  &.pagination--numbered {
-    .button--selected:not(:hover) {
-      color: var(--color-neutral-50);
-    }
-  }
-}
-
-.pagination__items {
-  display: flex;
-  margin: 0 var(--size-regular);
-  gap: var(--size-xx-tiny);
-}
-
-.pagination__items--hidden {
-  margin: 0 var(--size-x-tiny);
 }

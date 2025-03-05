@@ -27,6 +27,7 @@ export const OIcon: Array<TIcon> = [
      'sort',
      'stop',
      'home',
+     'trash',
      'group',
      'brush',
      'chair',

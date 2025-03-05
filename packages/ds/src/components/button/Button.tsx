@@ -19,6 +19,7 @@ export default function Button({
   loading = false,
   rounded,
   context = 'neutral',
+  selected,
   children,
   disabled,
   iconSize = '1em',
@@ -53,6 +54,7 @@ export default function Button({
     weight && `button__weight--${weight}`,
     rounded && 'button__rounded',
     context && `button__context--${context}`,
+    selected && 'button__selected',
     !hasLabel && 'button__no-label',
     isAppearanceIconButton && noIconBorder
       ? 'button__appearance--no-icon-border'

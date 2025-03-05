@@ -6,6 +6,11 @@ import { QueryParameters } from '@repo/business/shared/interface';
 import Text from '@repo/ds/elements/text/Text';
 import Button from '@repo/ds/components/button/Button';
 
+import type { TableProps } from '@repo/ds/components/table/interface';
+import Table from '@repo/ds/components/table/Table';
+
+import Pagination from '@repo/ds/components/pagination/Pagination';
+
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
 import './CRUDPage.scss';
@@ -16,25 +21,20 @@ interface RenderItemFormParams<T> {
 }
 
 interface CRUDPageProps<T extends { id: string }> {
+  headers: TableProps['headers'];
   saveItem: (item: Partial<T>) => Promise<T>;
   fetchItems: (params: QueryParameters) => Promise<Paginate<T>>;
   deleteItem: (param: string) => Promise<{ message: string }>;
-  renderTable: {
-    bodies: Array<string>;
-    headers: Array<string>;
-    actionEdit?: boolean;
-    actionDelete?: boolean;
-  };
   resourceName: string;
   renderItemForm: (params: RenderItemFormParams<T>) => React.ReactNode;
   prepareItemForSave?: (item: unknown) => Partial<T>;
 }
 
 export default function CRUDPage<T extends { id: string }>({
+  headers,
   saveItem,
   fetchItems,
   deleteItem,
-  renderTable,
   resourceName,
   renderItemForm,
   prepareItemForSave,
@@ -47,8 +47,6 @@ export default function CRUDPage<T extends { id: string }>({
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [editingItem, setEditingItem] = useState<T | null>(null);
-
-  const hasActions = renderTable.actionEdit || renderTable.actionDelete;
 
   const ITEMS_PER_PAGE = 10;
 
@@ -80,7 +78,7 @@ export default function CRUDPage<T extends { id: string }>({
         ? prepareItemForSave(editingItem)
         : editingItem;
 
-      const savedItem = await saveItem(itemToSave);
+      await saveItem(itemToSave);
       addAlert({
         type: 'success',
         message: `${resourceName} salvo com sucesso!`,
@@ -120,15 +118,10 @@ export default function CRUDPage<T extends { id: string }>({
     }
   };
 
-  const openCreateModal = () => {
-    setEditingItem(null);
+  const openModal = (item?: T) => {
+    setEditingItem(item ?? null);
     setIsModalVisible(true);
-  };
-
-  const openEditModal = (item: T) => {
-    setEditingItem(item);
-    setIsModalVisible(true);
-  };
+  }
 
   useEffect(() => {
     fetchResources();
@@ -141,101 +134,59 @@ export default function CRUDPage<T extends { id: string }>({
           Management of {resourceName}
         </Text>
 
-        <Button onClick={openCreateModal} context="success">
+        <Button onClick={() => openModal()} context="success">
           Create new {resourceName}
         </Button>
       </div>
-      {loading ? (
-        <>loading...</>
-      ) : (
-        <table className="crud__table">
-          <thead>
-            <tr>
-              {renderTable.headers.map((header, index) => (
-                <th key={index}>{header}</th>
-              ))}
-              {hasActions && <th>Actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr key={index}>
-                {renderTable.bodies.map((body, hIndex) => (
-                  <td key={hIndex}>
-                    {String((item as Record<string, unknown>)[body])}
-                  </td>
-                ))}
-                {hasActions && (
-                  <td className="crud__table--actions">
-                    {renderTable.actionEdit && (
-                      <Button
-                        context="attention"
-                        onClick={() => openEditModal(item)}
-                      >
-                        Edit
-                      </Button>
-                    )}
-                    {renderTable.actionDelete && (
-                      <Button
-                        context="error"
-                        onClick={() => handleDelete(String(item.id))}
-                      >
-                        Delete
-                      </Button>
-                    )}
-                  </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      {/* Modal para criar/editar */}
+      <Table
+        items={items}
+        headers={headers}
+        actions={{
+          text: 'Actions',
+          align: 'center',
+          edit: { onClick: (item: T) => openModal(item) },
+          delete: { onClick: (item: T) => handleDelete(String(item.id)) },
+        }}
+        loading={loading}
+        onRowClick={(item: T) => openModal(item)}
+      />
       {isModalVisible && (
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <h2>
-                {editingItem ? `Edit ${resourceName}` : `Create ${resourceName}`}
-              </h2>
+        <div className="crud__modal">
+          <div className="crud__modal--content">
+            <h2>
+              {editingItem ? `Edit ${resourceName}` : `Create ${resourceName}`}
+            </h2>
+            {renderItemForm({
+              item: editingItem || {},
+              handleChange: (key, value) =>
+                setEditingItem((prev) =>
+                  prev ? { ...prev, [key]: value } : ({ [key]: value } as T),
+                ),
+            })}
+            <div className="crud__modal--content-actions">
+              <Button context="success" onClick={handleSave}>
+                Save
+              </Button>
+              <Button
+                context="error"
+                appearance="outline"
+                onClick={() => setIsModalVisible(false)}
+              >
+                Cancel
+              </Button>
             </div>
           </div>
-        // <div className="crud__modal">
-        //   <h2>
-        //     {editingItem ? `Edit ${resourceName}` : `Create ${resourceName}`}
-        //   </h2>
-        //   {renderItemForm({
-        //     item: editingItem || {},
-        //     handleChange: (key, value) =>
-        //       setEditingItem((prev) =>
-        //         prev ? { ...prev, [key]: value } : ({ [key]: value } as T),
-        //       ),
-        //   })}
-        //   <button onClick={handleSave}>Salvar</button>
-        //   <button onClick={() => setIsModalVisible(false)}>Cancelar</button>
-        // </div>
-      )}
-
-      {totalPages >= 1 && (
-        <div className="crud__pagination">
-          <button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
-          >
-            Previous
-          </button>
-          <span>
-            {' '}
-            Page {currentPage} of {totalPages}{' '}
-          </span>
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-          >
-            Next
-          </button>
         </div>
       )}
+      <Pagination
+        fluid
+        currentPage={currentPage}
+        pageRange={totalPages}
+        totalPages={totalPages}
+        handleNewPage={(newPage) => setCurrentPage(newPage)}
+        isNumberedPagination
+        disableButtonsFirstAndLastPage
+      />
     </div>
   );
 }
