@@ -28,6 +28,11 @@ import {
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
 } from '../../expense-category';
 
+import { PERSONAL_LIST_FIXTURE } from './personall';
+import { INGRID_RESIDENTIAL_EXPENSE_LIST_FIXTURE } from './ingrid';
+import { MONTE_CARLO_RESIDENTIAL_EXPENSE_LIST_FIXTURE } from './monte-carlo';
+import { MOTHER_EXPENSE_LIST_FIXTURE } from './mother';
+
 export const NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE: Expense = new Expense({
   id: '6afbb81f-d2c7-4195-b23b-e47fefe4e743',
   year: 2025,
@@ -269,6 +274,13 @@ export const NEOENERGIA_ALL_PAYMENT_FIXTURE: Expense = new Expense({
 export const LIST_ALL_PAYMENT_EXPENSE_FIXTURE: Array<Expense> = [
   OLD_BIKERS_EXPENSE_FIXTURE,
   NEOENERGIA_ALL_PAYMENT_FIXTURE,
+];
+
+export const EXPENSE_LIST_FIXTURE: Array<Expense> = [
+  ...PERSONAL_LIST_FIXTURE,
+  ...INGRID_RESIDENTIAL_EXPENSE_LIST_FIXTURE,
+  ...MONTE_CARLO_RESIDENTIAL_EXPENSE_LIST_FIXTURE,
+  ...MOTHER_EXPENSE_LIST_FIXTURE,
 ];
 
 export const EXPENSE_FINANCE_ENTITY: FinanceEntity = {

@@ -5,9 +5,11 @@ import { FinanceEntity } from '../../interface';
 import {
   ACCOUNT_DEBIT_EXPENSE_CATEGORY_TYPE_FIXTURE,
   CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
+  DEBIT_EXPENSE_CATEGORY_TYPE_FIXTURE,
   EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY,
+  MONEY_EXPENSE_CATEGORY_TYPE_FIXTURE,
+  PIX_EXPENSE_CATEGORY_TYPE_FIXTURE,
 } from '../../expense-category-type';
-
 
 export const PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
   new ExpenseCategory({
@@ -69,6 +71,36 @@ export const ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
     deleted_at: null,
   });
 
+export const PIX_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
+  new ExpenseCategory({
+    id: 'b83823f1-b0d3-4a55-8861-8c85cf23619f',
+    type: PIX_EXPENSE_CATEGORY_TYPE_FIXTURE,
+    name: 'Pix',
+    created_at: new Date('2025-02-07T19:46:54.081Z'),
+    updated_at: new Date('2025-02-07T19:46:54.081Z'),
+    deleted_at: null,
+  });
+
+export const DEBIT_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
+  new ExpenseCategory({
+    id: 'e5b74df9-39c4-4c77-b450-40db3296ff7c',
+    type: DEBIT_EXPENSE_CATEGORY_TYPE_FIXTURE,
+    name: 'Debit',
+    created_at: new Date('2025-02-07T19:46:54.081Z'),
+    updated_at: new Date('2025-02-07T19:46:54.081Z'),
+    deleted_at: null,
+  });
+
+export const MONEY_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
+  new ExpenseCategory({
+    id: 'c6b5f54a-a2ae-47dd-94f0-9a48359ffca4',
+    type: MONEY_EXPENSE_CATEGORY_TYPE_FIXTURE,
+    name: 'Money',
+    created_at: new Date('2025-02-07T19:46:54.081Z'),
+    updated_at: new Date('2025-02-07T19:46:54.081Z'),
+    deleted_at: null,
+  });
+
 export const LIST_EXPENSE_CATEGORY_FIXTURE: Array<ExpenseCategory> = [
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
   DIGITAL_WALLET_EXPENSE_CATEGORY_FIXTURE,
@@ -76,6 +108,9 @@ export const LIST_EXPENSE_CATEGORY_FIXTURE: Array<ExpenseCategory> = [
   IFOOD_EXPENSE_CATEGORY_FIXTURE,
   BANK_SLIP_EXPENSE_CATEGORY_FIXTURE,
   ACCOUNT_DEBIT_EXPENSE_CATEGORY_FIXTURE,
+  PIX_EXPENSE_CATEGORY_FIXTURE,
+  DEBIT_EXPENSE_CATEGORY_FIXTURE,
+  MONEY_EXPENSE_CATEGORY_FIXTURE,
 ];
 
 export const EXPENSE_CATEGORY_FINANCE_ENTITY: FinanceEntity = {

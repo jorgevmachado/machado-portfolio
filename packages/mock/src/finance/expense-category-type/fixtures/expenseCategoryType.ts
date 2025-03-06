@@ -38,11 +38,31 @@ export const PIX_EXPENSE_CATEGORY_TYPE_FIXTURE: ExpenseCategoryType =
     deleted_at: null,
   });
 
+export const DEBIT_EXPENSE_CATEGORY_TYPE_FIXTURE: ExpenseCategoryType =
+  new ExpenseCategoryType({
+    id: 'd1985b0b-c013-4207-ab74-2a3850e461cb',
+    name: 'Debit',
+    created_at: new Date('2025-02-05T19:46:54.073Z'),
+    updated_at: new Date('2025-02-05T19:46:54.073Z'),
+    deleted_at: null,
+  });
+
+export const MONEY_EXPENSE_CATEGORY_TYPE_FIXTURE: ExpenseCategoryType =
+  new ExpenseCategoryType({
+    id: '03b91685-bf22-443f-99aa-61622cad0fbb',
+    name: 'Money',
+    created_at: new Date('2025-02-05T19:46:54.073Z'),
+    updated_at: new Date('2025-02-05T19:46:54.073Z'),
+    deleted_at: null,
+  });
+
 export const LIST_EXPENSE_CATEGORY_TYPE_FIXTURE: Array<ExpenseCategoryType> = [
   CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
   ACCOUNT_DEBIT_EXPENSE_CATEGORY_TYPE_FIXTURE,
   BANK_SLIP_EXPENSE_CATEGORY_TYPE_FIXTURE,
   PIX_EXPENSE_CATEGORY_TYPE_FIXTURE,
+  DEBIT_EXPENSE_CATEGORY_TYPE_FIXTURE,
+  MONEY_EXPENSE_CATEGORY_TYPE_FIXTURE,
 ];
 
 export const EXPENSE_CATEGORY_TYPE_FINANCE_ENTITY: FinanceEntity = {
