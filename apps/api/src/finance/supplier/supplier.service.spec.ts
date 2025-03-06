@@ -60,14 +60,7 @@ describe('SupplierService', () => {
         .spyOn(supplierTypeService, 'seed')
         .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
 
-      LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(supplier),
-        } as any);
-      });
+      jest.spyOn(repository, 'find').mockResolvedValueOnce(LIST_SUPPLIER_FIXTURE);
 
       expect(await service.seed()).toEqual({
         supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
@@ -79,14 +72,7 @@ describe('SupplierService', () => {
         .spyOn(supplierTypeService, 'seed')
         .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
 
-      LIST_SUPPLIER_FIXTURE.forEach(() => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(null),
-        } as any);
-      });
+      jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
       LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
         jest.spyOn(supplierTypeService, 'treatSupplierTypeParam').mockResolvedValueOnce(supplier.type);
@@ -106,14 +92,7 @@ describe('SupplierService', () => {
           ),
         );
 
-      LIST_SUPPLIER_FIXTURE.forEach(() => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(null),
-        } as any);
-      });
+      jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
       await expect(service.seed()).rejects.toThrowError(ConflictException);
     });

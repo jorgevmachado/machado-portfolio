@@ -54,19 +54,31 @@ export class SupplierTypeService extends Service<SupplierType> {
   }
 
   async seed(): Promise<Array<SupplierType>> {
-    return (await Promise.all(
-      LIST_SUPPLIER_TYPE_FIXTURE.map(async (type) => {
-        const result = await this.findOne({
-          value: type.name,
-          withThrow: false,
-          withDeleted: true,
-        });
-        if (!result) {
-          return await this.create(type);
-        }
-        return result;
-      }),
-    )) as Array<SupplierType>;
+    console.info('# => start supplier types seeding');
+    const existingSupplierTypes = await this.repository.find({
+      withDeleted: true,
+    });
+
+    const existingNames = new Set(
+      existingSupplierTypes.map((type) => type.name),
+    );
+
+    const supplierTypesToCreate = LIST_SUPPLIER_TYPE_FIXTURE.filter(
+      (type) => !existingNames.has(type.name),
+    );
+
+    if (supplierTypesToCreate.length === 0) {
+      console.info('# => No new supplier types to seed');
+      return existingSupplierTypes;
+    }
+
+    const createdSupplierTypes = (
+      await Promise.all(supplierTypesToCreate.map((type) => this.create(type)))
+    ).filter((type): type is SupplierType => !!type);
+    console.info(
+      `# => Seeded ${createdSupplierTypes.length} new supplier types`,
+    );
+    return [...existingSupplierTypes, ...createdSupplierTypes];
   }
 
   async treatSupplierTypeParam(supplierType: string | SupplierType) {

@@ -125,24 +125,12 @@ describe('ExpenseGroupService', () => {
 
   describe('seed', () => {
     it('should seed the database when exist in database', async () => {
-      LIST_EXPENSE_GROUP_FIXTURE.forEach((group) => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(group),
-        } as any);
-      });
+      jest.spyOn(repository, 'find').mockResolvedValueOnce(LIST_EXPENSE_GROUP_FIXTURE);
 
       expect(await service.seed()).toEqual(LIST_EXPENSE_GROUP_FIXTURE);
     });
     it('should seed the database when not exist in database', async () => {
-      LIST_EXPENSE_GROUP_FIXTURE.forEach(() => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(null),
-        } as any);
-      });
+      jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
       LIST_EXPENSE_GROUP_FIXTURE.forEach((group) => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(group);

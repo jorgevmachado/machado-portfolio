@@ -397,7 +397,7 @@ export const DROGARIA_BRASIL_SUPPLIER_FIXTURE: Supplier = new Supplier({
 });
 
 export const DROGARIA_PACHECO_SUPPLIER_FIXTURE: Supplier = new Supplier({
-  id: '1781d932-aaf8-4c8d-be3b-db23ffa602c7',
+  id: '27d449d1-e196-42ba-b661-3a58b9e2b438',
   name: 'Drogaria Pacheco',
   type: HEALTH_SUPPLIER_TYPE_FIXTURE,
   active: true,
@@ -762,7 +762,7 @@ export const IFOOD_CLUB_SUPPLIER_FIXTURE: Supplier = new Supplier({
 });
 
 export const ANJOS_RESTAURANTE_SUPPLIER_FIXTURE: Supplier = new Supplier({
-  id: '46c0cecf-e435-416c-b7c0-e54235809f97',
+  id: 'c775a615-665a-45e6-81a7-72177fb9d8d8',
   name: 'Anjos Restaurante',
   type: FOOD_SUPPLIER_TYPE_FIXTURE,
   active: true,
@@ -773,7 +773,7 @@ export const ANJOS_RESTAURANTE_SUPPLIER_FIXTURE: Supplier = new Supplier({
 
 export const ANDRE_VINICIOS_PEREIRA_SUPPLIER_FIXTURE: Supplier = new Supplier({
   id: '858836e2-5ada-4b2d-98e0-cadf6ef2ad3b',
-  name: 'Anjos Restaurante',
+  name: 'Andre Vinicios Pereira',
   type: FOOD_SUPPLIER_TYPE_FIXTURE,
   active: true,
   created_at: new Date('2025-04-17T19:00:18.713Z'),
@@ -913,7 +913,7 @@ export const CREDIT_CARD_PREVIOUS_INVOICE_BALANCE_SUPPLIER_FIXTURE: Supplier = n
 
 export const CREDIT_CARD_CHARGES_SUPPLIER_FIXTURE: Supplier = new Supplier({
   id: '91011d63-d763-4ce9-a050-978182a06166',
-  name: 'Credit Card Previous Invoice Balance',
+  name: 'Credit Card Charges',
   type: BILLS_SUPPLIER_TYPE_FIXTURE,
   active: true,
   created_at: new Date('2025-04-26T19:00:18.713Z'),

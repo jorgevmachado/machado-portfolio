@@ -68,46 +68,41 @@ export class ExpenseCategoryService extends Service<ExpenseCategory> {
 
   async seed() {
     const expenseCategoryTypes = await this.expenseCategoryTypeService.seed();
-    if (!expenseCategoryTypes) {
-      throw this.error(
-        new ConflictException('Error seeding expense category types'),
-      );
+    console.info('# => start expense categories seeding');
+    const existingExpenseCategories = await this.repository.find({ withDeleted: true });
+
+    const existingNames = new Set(existingExpenseCategories.map((category) => category.name));
+
+    const expenseCategoriesToCreate = LIST_EXPENSE_CATEGORY_FIXTURE.filter((category) => !existingNames.has(category.name));
+
+    if(expenseCategoriesToCreate.length === 0) {
+      console.info('# => No new Expense Categories to seed');
+      return {
+        expenseCategoryTypes,
+        expenseCategories: existingExpenseCategories
+      }
     }
-    const expenseCategories = (
-      await Promise.all(
-        LIST_EXPENSE_CATEGORY_FIXTURE.map(async (category) => {
-          const result = await this.findOne({
-            value: category.name,
-            withThrow: false,
-            withDeleted: true,
-          });
 
-          if (!result) {
-            const type = expenseCategoryTypes.find(
-              (type) => type.name === category.type.name,
-            );
-            if (!type) {
-              throw this.error(
-                new ConflictException(
-                  'The selected Expense Category Type does not exist, try another one or create one.',
-                ),
-              );
-            }
-            return this.create({
-              name: category.name,
-              type: type,
-            });
-          }
+    const createdExpenseCategories = await Promise.all(expenseCategoriesToCreate.map(async (category) => {
+      const type = expenseCategoryTypes?.find((type) => type.name === category?.type?.name);
+      if (!type) {
+        throw new ConflictException(
+            'The selected Expense Category Type does not exist, try another one or create one.',
+        );
+      }
 
-          return result;
-        }),
-      )
-    ).filter((category): category is ExpenseCategory => category !== undefined);
+      return this.create({
+        name: category.name,
+        type
+      })
+    }));
+
+    console.info(`# => Seeded ${createdExpenseCategories.length} new Expense Categories`);
 
     return {
       expenseCategoryTypes,
-      expenseCategories,
-    };
+      expenseCategories: [...existingExpenseCategories, ...createdExpenseCategories].filter((category): category is ExpenseCategory => category !== undefined),
+    }
   }
 
   async treatExpenseCategoryParam(category: string | ExpenseCategory) {

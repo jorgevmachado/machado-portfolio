@@ -51,19 +51,21 @@ export class ExpenseCategoryTypeService extends Service<ExpenseCategoryType> {
   }
 
   async seed(): Promise<Array<ExpenseCategoryType>> {
-    return await Promise.all(
-      LIST_EXPENSE_CATEGORY_TYPE_FIXTURE.map(async (type) => {
-        const result = await this.findOne({
-          value: type.name,
-          withThrow: false,
-          withDeleted: true,
-        });
-        if (!result) {
-          return (await this.create(type)) as ExpenseCategoryType;
-        }
-        return result;
-      }),
-    );
+    console.info('# => start expense category types seeding');
+    const existingExpenseCategoryTypes = await this.repository.find({ withDeleted: true });
+
+    const existingNames = new Set(existingExpenseCategoryTypes.map((category) => category.name));
+
+    const expenseCategoryTypesToCreate = LIST_EXPENSE_CATEGORY_TYPE_FIXTURE.filter((type) => !existingNames.has(type.name));
+
+    if (expenseCategoryTypesToCreate.length === 0) {
+      console.info('# => No new expense category types to seed');
+      return existingExpenseCategoryTypes;
+    }
+
+    const createdExpenseCategoryTypes = (await Promise.all(expenseCategoryTypesToCreate.map((type) => this.create(type)))).filter((type): type is ExpenseCategoryType => !!type);
+    console.info(`# => Seeded ${createdExpenseCategoryTypes.length} new expense category types`);
+    return [...existingExpenseCategoryTypes, ...createdExpenseCategoryTypes];
   }
 
   async treatExpenseCategoryTypeParam(type: string | ExpenseCategoryType) {

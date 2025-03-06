@@ -6,7 +6,11 @@ import { isUUID } from '@repo/services/string/string';
 
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
 
+import { EXPENSE_LIST_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
+
 import { Service } from '../../shared';
+
+import { User } from '../../auth/users/user.entity';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
 
@@ -15,6 +19,9 @@ import { ExpenseGroupService } from './expense-group/expense-group.service';
 import { ExpenseCategoryService } from './expense-category/expense-category.service';
 import { SupplierService } from '../supplier/supplier.service';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
+import { Supplier } from '../supplier/supplier.entity';
+import { ExpenseGroup } from './expense-group/expense-group.entity';
+import { ExpenseCategory } from './expense-category/expense-category.entity';
 
 @Injectable()
 export class ExpenseService extends Service<Expense> {
@@ -76,15 +83,21 @@ export class ExpenseService extends Service<Expense> {
 
   async update(id: string, updateExpenseDto: UpdateExpenseDto) {
     if (!isUUID(id)) {
-        throw this.error(new ConflictException('Invalid ID'));
+      throw this.error(new ConflictException('Invalid ID'));
     }
     const result = await this.findOne({ value: id });
 
     const { group, supplier, category, user } = updateExpenseDto;
 
-    const expenseGroupEntity = !group ? result.group : await this.expenseGroupService.treatExpenseGroupParam(group);
-    const expenseCategoryEntity = !category ? result.category : await this.expenseCategoryService.treatExpenseCategoryParam(category);
-    const supplierEntity = !supplier ? result.supplier : await this.supplierService.treatSupplierParam(supplier);
+    const expenseGroupEntity = !group
+      ? result.group
+      : await this.expenseGroupService.treatExpenseGroupParam(group);
+    const expenseCategoryEntity = !category
+      ? result.category
+      : await this.expenseCategoryService.treatExpenseCategoryParam(category);
+    const supplierEntity = !supplier
+      ? result.supplier
+      : await this.supplierService.treatSupplierParam(supplier);
     const userEntity = !user ? result.user : user;
 
     const newExpense = this.expenseBusiness.merge({
@@ -123,23 +136,82 @@ export class ExpenseService extends Service<Expense> {
     });
   }
 
-  async seed() {
-    const result = await this.expenseCategoryService.seed();
-    if (!result) {
-      throw this.error(
-        new ConflictException('Error seeding expense categories'),
-      );
-    }
+  async seed(user: User) {
+    const { suppliers } = (await this.supplierService.seed()) ?? {};
+    console.info('# => suppliers exist => ', Boolean(suppliers));
+
+    const { expenseCategories } =
+      (await this.expenseCategoryService.seed()) ?? {};
+    console.info(
+      '# => expenseCategories exist => ',
+      Boolean(expenseCategories),
+    );
 
     const expenseGroups = await this.expenseGroupService.seed();
-    if (!expenseGroups) {
-      throw this.error(new ConflictException('Error seeding expense groups'));
+    console.info('# => expenseGroups exist => ', Boolean(expenseGroups));
+
+    console.info('# => start expenses seeding');
+    const existingExpenses = await this.repository.find({ withDeleted: true });
+    const existingIds = new Set(existingExpenses?.map((expense) => expense.id));
+
+    const expensesToCreate = EXPENSE_LIST_FIXTURE.filter(
+      (expense) => !existingIds.has(expense.id),
+    );
+
+    if (expensesToCreate.length === 0) {
+      console.info('# => No new Expenses to seed');
+      return existingExpenses;
     }
 
-    return {
-      expenseCategoryTypes: result.expenseCategoryTypes,
-      expenseCategories: result.expenseCategories,
-      expenseGroups,
-    };
+    const createdExpenses = await Promise.all(
+      expensesToCreate.map(async (expense) => {
+        const supplier = this.getRelation<Supplier>(
+          suppliers,
+          'Supplier',
+          expense?.supplier?.name,
+        );
+
+        const group = this.getRelation<ExpenseGroup>(
+          expenseGroups,
+          'Expense Group',
+          expense?.group?.name,
+        );
+
+        const category = this.getRelation<ExpenseCategory>(
+          expenseCategories,
+          'Expense Category',
+          expense?.category?.name,
+        );
+
+        return await this.repository.save({
+          ...expense,
+          user,
+          group,
+          supplier,
+          category,
+        });
+      }),
+    );
+
+    console.info(`# => Seeded ${createdExpenses.length} new expenses`);
+    return [...existingExpenses, ...createdExpenses].filter(
+      (expense): expense is Expense => expense !== undefined,
+    );
+  }
+
+  private getRelation<T extends { name: string }>(
+    list: Array<T>,
+    relation: string,
+    name: string,
+  ) {
+    const item = list?.find((item) => item.name === name);
+    if (!item) {
+      throw this.error(
+        new ConflictException(
+          `The selected ${relation} does not exist, try another one or create one.`,
+        ),
+      );
+    }
+    return item;
   }
 }

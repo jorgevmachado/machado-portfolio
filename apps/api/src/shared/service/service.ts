@@ -134,4 +134,18 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
     this.validateParam<T>(entity as unknown as string | T, label);
     return entity;
   }
+
+  findRepeatedId<T extends { id: string; }>(list: Array<T>): string | null {
+    const idSet = new Set<string>();
+
+    for (const item of list) {
+      if (idSet.has(item.id)) {
+        return item.id;
+      }
+      idSet.add(item.id);
+    }
+
+    return null;
+
+  }
 }

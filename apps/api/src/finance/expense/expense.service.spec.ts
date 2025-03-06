@@ -6,15 +6,21 @@ import { Repository } from 'typeorm';
 
 import { EMonth } from '@repo/business/finance/enum';
 
+import { USER_FIXTURE } from '@repo/mock/auth/fixture';
+
 import { LIST_EXPENSE_CATEGORY_TYPE_FIXTURE } from '@repo/mock/finance/expense-category-type/fixtures/expenseCategoryType';
 import { LIST_EXPENSE_CATEGORY_FIXTURE } from '@repo/mock/finance/expense-category/fixtures/expenseCategory';
 import { LIST_EXPENSE_GROUP_FIXTURE } from '@repo/mock/finance/expense-group/fixtures/expenseGroup';
 import {
+  EXPENSE_LIST_FIXTURE,
   GARAGE_MONTE_CARLO_EXPENSE_FIXTURE,
   NEOENERGIA_ALL_PAYMENT_FIXTURE,
   NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE,
   OLD_BIKERS_EXPENSE_FIXTURE,
 } from '@repo/mock/finance/expense/fixtures/expense';
+
+import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
+import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/supplier-type/fixtures/supplierType';
 
 import { ExpenseCategoryService } from './expense-category/expense-category.service';
 import { ExpenseGroupService } from './expense-group/expense-group.service';
@@ -89,15 +95,19 @@ describe('ExpenseService', () => {
         expenseCategoryTypes: LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
         expenseCategories: LIST_EXPENSE_CATEGORY_FIXTURE,
       });
+
       jest
         .spyOn(expenseGroupService, 'seed')
         .mockResolvedValueOnce(LIST_EXPENSE_GROUP_FIXTURE);
 
-      expect(await service.seed()).toEqual({
-        expenseCategoryTypes: LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-        expenseCategories: LIST_EXPENSE_CATEGORY_FIXTURE,
-        expenseGroups: LIST_EXPENSE_GROUP_FIXTURE,
+      jest.spyOn(supplierService, 'seed').mockResolvedValueOnce({
+        suppliers: LIST_SUPPLIER_FIXTURE,
+        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
       });
+
+      jest.spyOn(repository, 'find').mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
+
+      expect(await service.seed(USER_FIXTURE)).toEqual(EXPENSE_LIST_FIXTURE);
     });
     it('should return conflict exception when seed expense category', async () => {
       jest.spyOn(expenseCategoryService, 'seed').mockResolvedValueOnce(null);
@@ -105,7 +115,11 @@ describe('ExpenseService', () => {
         .spyOn(expenseGroupService, 'seed')
         .mockResolvedValueOnce(LIST_EXPENSE_GROUP_FIXTURE);
 
-      await expect(service.seed()).rejects.toThrowError(ConflictException);
+      jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
+
+      await expect(service.seed(USER_FIXTURE)).rejects.toThrowError(
+        ConflictException,
+      );
     });
     it('should return conflict exception when seed expense group', async () => {
       jest.spyOn(expenseCategoryService, 'seed').mockResolvedValueOnce({
@@ -114,7 +128,11 @@ describe('ExpenseService', () => {
       });
       jest.spyOn(expenseGroupService, 'seed').mockResolvedValueOnce(null);
 
-      await expect(service.seed()).rejects.toThrowError(ConflictException);
+      jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
+
+      await expect(service.seed(USER_FIXTURE)).rejects.toThrowError(
+        ConflictException,
+      );
     });
   });
 

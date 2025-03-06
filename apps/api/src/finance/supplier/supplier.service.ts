@@ -64,38 +64,39 @@ export class SupplierService extends Service<Supplier> {
 
   async seed() {
     const supplierTypes = await this.supplierTypeService.seed();
-    const suppliers = (
-      await Promise.all(
-        LIST_SUPPLIER_FIXTURE.map(async (supplier) => {
-          const result = await this.findOne({
-            value: supplier.name,
-            withThrow: false,
-            withDeleted: true,
-          });
-          if (!result) {
-            const type = supplierTypes.find(
-              (type) => type.name === supplier?.type?.name,
-            );
-            if (!type) {
-              throw this.error(
-                new ConflictException(
-                  'The selected Supplier Type does not exist, try another one or create one.',
-                ),
-              );
-            }
-            return this.create({
-              name: supplier.name,
-              type: type,
-            });
-          }
-          return result;
-        }),
-      )
-    ).filter((supplier): supplier is Supplier => supplier !== undefined);
+    console.info('# => start suppliers seeding');
+    const existingSuppliers = await this.repository.find({ withDeleted: true });
+    const existingNames = new Set(existingSuppliers.map((supplier) => supplier.name));
+
+    const suppliersToCreate = LIST_SUPPLIER_FIXTURE.filter((supplier) => !existingNames.has(supplier.name));
+
+    if(suppliersToCreate.length === 0) {
+      console.info('# => No new Suppliers to seed');
+      return {
+        supplierTypes,
+        suppliers: existingSuppliers
+      }
+    }
+
+    const createdSuppliers = await Promise.all(suppliersToCreate.map(async (supplier) => {
+      const type = supplierTypes?.find((type) => type.name === supplier?.type?.name);
+      if (!type) {
+        throw new ConflictException(
+            'The selected Supplier Type does not exist, try another one or create one.',
+        );
+      }
+
+      return this.create({
+        name: supplier.name,
+        type,
+      });
+    }));
+
+    console.info(`# => Seeded ${createdSuppliers.length} new suppliers`);
 
     return {
       supplierTypes,
-      suppliers,
+      suppliers: [...existingSuppliers, ...createdSuppliers].filter((supplier): supplier is Supplier => supplier !== undefined),
     };
   }
 

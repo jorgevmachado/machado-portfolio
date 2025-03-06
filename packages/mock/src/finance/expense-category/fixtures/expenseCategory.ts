@@ -55,7 +55,7 @@ export const CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
   new ExpenseCategory({
     id: 'befb7ff6-938e-4cc1-aae5-85f7b1a5266a',
     type: CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
-    name: 'Physical',
+    name: 'Credit Card',
     created_at: new Date('2025-01-31T19:46:54.080Z'),
     updated_at: new Date('2025-01-31T19:46:54.080Z'),
     deleted_at: null,
@@ -152,6 +152,8 @@ export const MONEY_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
   });
 
 export const LIST_EXPENSE_CATEGORY_FIXTURE: Array<ExpenseCategory> = [
+  AMAZON_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
+  CHINA_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
   CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
   DIGITAL_WALLET_EXPENSE_CATEGORY_FIXTURE,

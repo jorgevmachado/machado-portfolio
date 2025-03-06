@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
 import { FinanceController } from './finance.controller';
 import { FinanceService } from './finance.service';
+import { USER_FIXTURE } from '@repo/mock/auth/fixture';
 
 describe('FinanceController', () => {
   let service: FinanceService;
@@ -41,7 +42,9 @@ describe('FinanceController', () => {
         message: 'Seeds executed successfully',
       });
 
-      expect(await controller.seeds()).toEqual({ message: 'Seeds executed successfully' });
+      expect(await controller.seeds(USER_FIXTURE)).toEqual({
+        message: 'Seeds executed successfully',
+      });
     });
   });
 });

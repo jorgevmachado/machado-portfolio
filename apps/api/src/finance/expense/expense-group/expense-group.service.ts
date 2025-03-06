@@ -51,19 +51,33 @@ export class ExpenseGroupService extends Service<ExpenseGroup> {
   }
 
   async seed() {
-    return await Promise.all(
-      LIST_EXPENSE_GROUP_FIXTURE.map(async (group) => {
-        const result = await this.findOne({
-          value: group.name,
-          withThrow: false,
-          withDeleted: true,
-        });
-        if (!result) {
-          return await this.create(group);
-        }
-        return result;
-      }),
+    console.info('# => start expense groups seeding');
+    const existingExpenseGroups = await this.repository.find({
+      withDeleted: true,
+    });
+
+    const existingNames = new Set(
+      existingExpenseGroups.map((group) => group.name),
     );
+
+    const expenseGroupsToCreate = LIST_EXPENSE_GROUP_FIXTURE.filter(
+      (group) => !existingNames.has(group.name),
+    );
+
+    if (expenseGroupsToCreate.length === 0) {
+      console.info('# => No new expense groups to seed');
+      return existingExpenseGroups;
+    }
+
+    const createdExpenseGroups = (
+      await Promise.all(
+        expenseGroupsToCreate.map((group) => this.create(group)),
+      )
+    ).filter((group): group is ExpenseGroup => !!group);
+    console.info(
+      `# => Seeded ${createdExpenseGroups.length} new expense groups`,
+    );
+    return [...existingExpenseGroups, ...createdExpenseGroups];
   }
 
   async treatExpenseGroupParam(group?: string | ExpenseGroup) {

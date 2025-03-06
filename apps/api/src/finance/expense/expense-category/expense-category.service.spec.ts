@@ -227,14 +227,9 @@ describe('ExpenseCategoryService', () => {
         .spyOn(expenseCategoryTypeService, 'seed')
         .mockResolvedValueOnce(LIST_EXPENSE_CATEGORY_TYPE_FIXTURE);
 
-      LIST_EXPENSE_CATEGORY_FIXTURE.forEach((category) => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(category),
-        } as any);
-      });
+      jest
+        .spyOn(repository, 'find')
+        .mockResolvedValueOnce(LIST_EXPENSE_CATEGORY_FIXTURE);
 
       expect(await service.seed()).toEqual({
         expenseCategoryTypes: LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
@@ -246,14 +241,9 @@ describe('ExpenseCategoryService', () => {
         .spyOn(expenseCategoryTypeService, 'seed')
         .mockResolvedValueOnce(LIST_EXPENSE_CATEGORY_TYPE_FIXTURE);
 
-      LIST_EXPENSE_CATEGORY_FIXTURE.forEach(() => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(null),
-        } as any);
-      });
+      jest
+          .spyOn(repository, 'find')
+          .mockResolvedValueOnce([]);
 
       LIST_EXPENSE_CATEGORY_FIXTURE.forEach((category) => {
         jest
@@ -275,14 +265,9 @@ describe('ExpenseCategoryService', () => {
           ),
         );
 
-      LIST_EXPENSE_CATEGORY_FIXTURE.forEach(() => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          leftJoinAndSelect: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(null),
-        } as any);
-      });
+      jest
+          .spyOn(repository, 'find')
+          .mockResolvedValueOnce([]);
 
       await expect(service.seed()).rejects.toThrowError(ConflictException);
     });
@@ -290,6 +275,10 @@ describe('ExpenseCategoryService', () => {
       jest
         .spyOn(expenseCategoryTypeService, 'seed')
         .mockResolvedValueOnce(null);
+
+      jest
+          .spyOn(repository, 'find')
+          .mockResolvedValueOnce([]);
 
       await expect(service.seed()).rejects.toThrowError(ConflictException);
     });

@@ -137,24 +137,11 @@ describe('ExpenseCategoryTypeService', () => {
 
   describe('seed', () => {
     it('should seed the database when exist in database', async () => {
-      LIST_EXPENSE_CATEGORY_TYPE_FIXTURE.forEach((type) => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(type),
-        } as any);
-      });
-
+      jest.spyOn(repository, 'find').mockResolvedValueOnce(LIST_EXPENSE_CATEGORY_TYPE_FIXTURE);
       expect(await service.seed()).toEqual(LIST_EXPENSE_CATEGORY_TYPE_FIXTURE);
     });
     it('should seed the database when not exist in database', async () => {
-      LIST_EXPENSE_CATEGORY_TYPE_FIXTURE.forEach(() => {
-        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-          andWhere: jest.fn(),
-          withDeleted: jest.fn(),
-          getOne: jest.fn().mockReturnValueOnce(null),
-        } as any);
-      });
+      jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
       LIST_EXPENSE_CATEGORY_TYPE_FIXTURE.forEach((type) => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(type);

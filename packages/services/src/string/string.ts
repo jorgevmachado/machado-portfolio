@@ -58,3 +58,16 @@ export function extractLastItemFromUrl(url?: string) {
   const segments = sanitizedUrl.split('/');
   return segments[segments.length - 1];
 }
+
+export function findRepeated<T extends {id: string; name: string; }>(list: Array<T>, key: 'id' | 'name') {
+  const fieldSet = new Set<string>();
+
+  for (const item of list) {
+    if(fieldSet.has(item[key])) {
+      return item[key];
+    }
+    fieldSet.add(item[key]);
+  }
+
+  return;
+}
