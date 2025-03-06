@@ -11,6 +11,56 @@ import {
   PIX_EXPENSE_CATEGORY_TYPE_FIXTURE,
 } from '../../expense-category-type';
 
+export const AMAZON_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
+  new ExpenseCategory({
+    id: 'a34315aa-c259-46db-a7db-d69179127918',
+    type: CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
+    name: 'Amazon Virtual Credit Card',
+    created_at: new Date('2025-01-31T19:46:54.080Z'),
+    updated_at: new Date('2025-01-31T19:46:54.080Z'),
+    deleted_at: null,
+  });
+
+export const CHINA_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
+  new ExpenseCategory({
+    id: '9f5831a9-6628-4c9e-acb2-2ed11b2381ed',
+    type: CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
+    name: 'China in Box Virtual Credit Card',
+    created_at: new Date('2025-01-31T19:46:54.080Z'),
+    updated_at: new Date('2025-01-31T19:46:54.080Z'),
+    deleted_at: null,
+  });
+
+export const MERCADO_LIVRE_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
+  new ExpenseCategory({
+    id: '36573a87-4729-46ef-af77-b6354d7c4112',
+    type: CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
+    name: 'Mercado Livre Virtual Credit Card',
+    created_at: new Date('2025-01-31T19:46:54.080Z'),
+    updated_at: new Date('2025-01-31T19:46:54.080Z'),
+    deleted_at: null,
+  });
+
+export const STREAMING_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
+  new ExpenseCategory({
+    id: 'fd82c5d6-8d44-41c5-82f5-7a346e03e8ba',
+    type: CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
+    name: 'Streaming Virtual Credit Card',
+    created_at: new Date('2025-01-31T19:46:54.080Z'),
+    updated_at: new Date('2025-01-31T19:46:54.080Z'),
+    deleted_at: null,
+  });
+
+export const CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
+  new ExpenseCategory({
+    id: 'befb7ff6-938e-4cc1-aae5-85f7b1a5266a',
+    type: CREDIT_CARD_EXPENSE_CATEGORY_TYPE_FIXTURE,
+    name: 'Physical',
+    created_at: new Date('2025-01-31T19:46:54.080Z'),
+    updated_at: new Date('2025-01-31T19:46:54.080Z'),
+    deleted_at: null,
+  });
+
 export const PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
   new ExpenseCategory({
     id: '843be2db-1ecc-4774-a6ae-65fdc707a728',
@@ -102,6 +152,7 @@ export const MONEY_EXPENSE_CATEGORY_FIXTURE: ExpenseCategory =
   });
 
 export const LIST_EXPENSE_CATEGORY_FIXTURE: Array<ExpenseCategory> = [
+  CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
   PHYSICAL_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
   DIGITAL_WALLET_EXPENSE_CATEGORY_FIXTURE,
   VIRTUAL_24H_EXPENSE_CATEGORY_FIXTURE,
@@ -111,6 +162,8 @@ export const LIST_EXPENSE_CATEGORY_FIXTURE: Array<ExpenseCategory> = [
   PIX_EXPENSE_CATEGORY_FIXTURE,
   DEBIT_EXPENSE_CATEGORY_FIXTURE,
   MONEY_EXPENSE_CATEGORY_FIXTURE,
+  MERCADO_LIVRE_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
+  STREAMING_CREDIT_CARD_EXPENSE_CATEGORY_FIXTURE,
 ];
 
 export const EXPENSE_CATEGORY_FINANCE_ENTITY: FinanceEntity = {

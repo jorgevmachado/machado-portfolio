@@ -871,6 +871,56 @@ export const AMAZON_SUPPLIER_FIXTURE: Supplier = new Supplier({
   deleted_at: null,
 });
 
+export const CREDIT_CARD_ANNUAL_FEE_SUPPLIER_FIXTURE: Supplier = new Supplier({
+  id: 'ee745ff6-a158-4120-a4a3-e33e4c8c592a',
+  name: 'Credit Card Annual Fee',
+  type: BILLS_SUPPLIER_TYPE_FIXTURE,
+  active: true,
+  created_at: new Date('2025-04-26T19:00:18.713Z'),
+  updated_at: new Date('2025-04-26T19:00:18.713Z'),
+  deleted_at: null,
+});
+
+export const CREDIT_CARD_LOSS_AND_THEFT_PROTECTION_SERVICE_SUPPLIER_FIXTURE: Supplier = new Supplier({
+  id: '09594813-016a-4138-b2bc-8ec674ec1ba6',
+  name: 'Credit Card Loss And Theft Protection Service',
+  type: BILLS_SUPPLIER_TYPE_FIXTURE,
+  active: true,
+  created_at: new Date('2025-04-26T19:00:18.713Z'),
+  updated_at: new Date('2025-04-26T19:00:18.713Z'),
+  deleted_at: null,
+});
+
+export const CREDIT_CARD_ADDITIONAL_IOF_ON_FINANCED_BALANCE_SUPPLIER_FIXTURE: Supplier = new Supplier({
+  id: 'b6b33b0c-0066-44ec-9493-487a376a7e46',
+  name: 'Credit Card IOF On Financed Balance',
+  type: BILLS_SUPPLIER_TYPE_FIXTURE,
+  active: true,
+  created_at: new Date('2025-04-26T19:00:18.713Z'),
+  updated_at: new Date('2025-04-26T19:00:18.713Z'),
+  deleted_at: null,
+});
+
+export const CREDIT_CARD_PREVIOUS_INVOICE_BALANCE_SUPPLIER_FIXTURE: Supplier = new Supplier({
+  id: '327a0d12-4e12-4b0d-b7a2-1a60bbdf7070',
+  name: 'Credit Card Previous Invoice Balance',
+  type: BILLS_SUPPLIER_TYPE_FIXTURE,
+  active: true,
+  created_at: new Date('2025-04-26T19:00:18.713Z'),
+  updated_at: new Date('2025-04-26T19:00:18.713Z'),
+  deleted_at: null,
+});
+
+export const CREDIT_CARD_CHARGES_SUPPLIER_FIXTURE: Supplier = new Supplier({
+  id: '91011d63-d763-4ce9-a050-978182a06166',
+  name: 'Credit Card Previous Invoice Balance',
+  type: BILLS_SUPPLIER_TYPE_FIXTURE,
+  active: true,
+  created_at: new Date('2025-04-26T19:00:18.713Z'),
+  updated_at: new Date('2025-04-26T19:00:18.713Z'),
+  deleted_at: null,
+});
+
 export const LIST_SUPPLIER_FIXTURE: Array<Supplier> = [
   VIVO_HOUSING_SUPPLIER_FIXTURE,
   CLARO_HOUSING_SUPPLIER_FIXTURE,
@@ -955,6 +1005,11 @@ export const LIST_SUPPLIER_FIXTURE: Array<Supplier> = [
   NETFLIX_SUPPLIER_FIXTURE,
   HBO_MAX_SUPPLIER_FIXTURE,
   AMAZON_SUPPLIER_FIXTURE,
+  CREDIT_CARD_ANNUAL_FEE_SUPPLIER_FIXTURE,
+  CREDIT_CARD_LOSS_AND_THEFT_PROTECTION_SERVICE_SUPPLIER_FIXTURE,
+  CREDIT_CARD_ADDITIONAL_IOF_ON_FINANCED_BALANCE_SUPPLIER_FIXTURE,
+  CREDIT_CARD_PREVIOUS_INVOICE_BALANCE_SUPPLIER_FIXTURE,
+  CREDIT_CARD_CHARGES_SUPPLIER_FIXTURE,
 ];
 
 export const SUPPLIER_FINANCE_ENTITY: FinanceEntity = {
