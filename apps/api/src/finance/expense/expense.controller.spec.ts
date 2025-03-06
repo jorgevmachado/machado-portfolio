@@ -18,7 +18,7 @@ describe('ExpenseController', () => {
         {
           provide: ExpenseService,
           useValue: {
-            list: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
@@ -40,7 +40,7 @@ describe('ExpenseController', () => {
   describe('findAll', () => {
     it('Should return an list of expense', async () => {
       jest
-        .spyOn(service, 'list')
+        .spyOn(service, 'findAll')
         .mockResolvedValue([NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE]);
       expect(await controller.findAll({})).toEqual([
         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE,

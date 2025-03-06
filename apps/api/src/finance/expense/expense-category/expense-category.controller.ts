@@ -32,7 +32,7 @@ export class ExpenseCategoryController {
 
   @Get('list/category')
   findAll(@Query() parameters: QueryParameters) {
-    return this.service.list(parameters);
+    return this.service.list({ parameters });
   }
 
   @Get(':param/category')

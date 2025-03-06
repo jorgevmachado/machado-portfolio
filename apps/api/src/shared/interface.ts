@@ -11,21 +11,40 @@ export interface ListParams {
 export interface FilterParams {
   value: string;
   param: string;
-  condition: string;
+  condition: TQueryCondition;
 }
 
-export interface FindByParams {
+export interface FindByParams
+  extends Pick<ListParams, 'filters' | 'withDeleted' | 'withRelations'> {
   withThrow?: boolean;
   relations?: Array<string>;
   searchParams: SearchParams;
-  withDeleted?: boolean;
-  withRelations?: boolean;
 }
 
 export interface SearchParams {
   by: TBy;
   value: string | number;
+  condition?: TQueryCondition;
 }
+
+export interface WhereParams extends Omit<SearchParams, 'by'> {
+  by: string;
+}
+
+export type TQueryCondition =
+  | '='
+  | '>'
+  | '<'
+  | '>='
+  | '<='
+  | 'LIKE'
+  | 'IN'
+  | 'NOT IN'
+  | 'IS NULL'
+  | 'IS NOT NULL'
+  | 'AND'
+  | 'OR'
+  | 'NOT';
 
 export type TBy =
   | 'id'

@@ -27,7 +27,7 @@ export class SupplierController {
 
   @Get()
   findAll(@Query() parameters: QueryParameters) {
-    return this.service.list(parameters);
+    return this.service.list({ parameters });
   }
 
   @Post()

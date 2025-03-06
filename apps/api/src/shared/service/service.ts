@@ -104,10 +104,12 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
     withDeleted = false,
     withRelations = true,
   }: FindOneByParams) {
+    const valueIsUUID = isUUID(value);
     return await this.findBy({
       searchParams: {
-        by: isUUID(value) ? 'id' : 'name',
-        value,
+        by: valueIsUUID ? 'id' : 'name',
+        value: value.toLowerCase(),
+        condition: valueIsUUID ? '=': 'LIKE',
       },
       relations,
       withThrow,

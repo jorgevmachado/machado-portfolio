@@ -3,7 +3,7 @@ import { ConflictException } from '@nestjs/common';
 
 import { QueryParameters } from '@repo/business/shared/interface';
 
-import type { FilterParams, SearchParams } from '../interface';
+import { FilterParams, SearchParams, WhereParams } from '../interface';
 
 export interface QueryParams<T> {
   readonly alias: string;
@@ -105,12 +105,12 @@ export class Query<T extends ObjectLiteral> {
 
     if (filters.length) {
       filters.forEach((filter) => {
-        this.query.andWhere(
-          `${this.alias}.${filter.param} ${filter.condition} :${filter.param}`,
-          {
-            [filter.param]: filter.value,
-          },
-        );
+        const { column, searchValue } = this.setWhereParam({
+          by: filter.param,
+          condition: filter.condition,
+          value: filter.value,
+        });
+        this.query.andWhere(column, searchValue);
       });
     }
   }
@@ -125,7 +125,7 @@ export class Query<T extends ObjectLiteral> {
     if (this.parameters?.role) {
       filters.push({
         param: 'role',
-        value: this.parameters.role.toUpperCase(),
+        value: this.parameters.role.toLowerCase(),
         condition: '=',
       });
     }
@@ -133,7 +133,7 @@ export class Query<T extends ObjectLiteral> {
     if (this.parameters?.name) {
       filters.push({
         param: 'name',
-        value: `%${this.parameters.name}%`,
+        value: this.parameters.name.toLowerCase(),
         condition: 'LIKE',
       });
     }
@@ -141,7 +141,15 @@ export class Query<T extends ObjectLiteral> {
     if (this.parameters?.status) {
       filters.push({
         param: 'status',
-        value: this.parameters.status.toUpperCase(),
+        value: this.parameters.status.toLowerCase(),
+        condition: '=',
+      });
+    }
+
+    if (this.parameters?.year) {
+      filters.push({
+        param: 'year',
+        value: this.parameters.year,
         condition: '=',
       });
     }
@@ -155,7 +163,25 @@ export class Query<T extends ObjectLiteral> {
     if (this.searchParams) {
       const by = this.searchParams.by;
       const value = this.searchParams.value;
-      this.query.andWhere(`${this.alias}.${by} = :${by}`, { [by]: value });
+      const condition = this.searchParams?.condition ?? '=';
+      const { column, searchValue } = this.setWhereParam({
+        by,
+        condition,
+        value,
+      });
+      this.query.andWhere(column, searchValue);
     }
+  }
+
+  private setWhereParam({ by, condition, value }: WhereParams) {
+    const result = {
+      column: `${this.alias}.${by} ${condition} :${by}`,
+      searchValue: { [by]: value },
+    };
+    if (condition === 'LIKE') {
+      result.column = `LOWER(${this.alias}.${by}) ${condition} :${by}`;
+      result.searchValue[by] = `%${value}%`;
+    }
+    return result;
   }
 }

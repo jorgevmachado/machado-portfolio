@@ -4,7 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { ConflictException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
-import { EMonth } from '@repo/business/finance/enum';
+import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 
 import { USER_FIXTURE } from '@repo/mock/auth/fixture';
 
@@ -105,7 +105,9 @@ describe('ExpenseService', () => {
         supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
       });
 
-      jest.spyOn(repository, 'find').mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
+      jest
+        .spyOn(repository, 'find')
+        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
 
       expect(await service.seed(USER_FIXTURE)).toEqual(EXPENSE_LIST_FIXTURE);
     });
@@ -411,6 +413,53 @@ describe('ExpenseService', () => {
       await expect(
         service.remove(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group.name),
       ).rejects.toThrow(ConflictException);
+    });
+  });
+
+  describe('findAll', () => {
+    it('should return all expenses', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getMany: jest.fn().mockReturnValueOnce(EXPENSE_LIST_FIXTURE),
+      } as any);
+
+      expect(await service.findAll({})).toEqual(EXPENSE_LIST_FIXTURE);
+    });
+
+    it('should return expenses list with filter', async () => {
+      const listFiltered = EXPENSE_LIST_FIXTURE.filter((expense) => {
+        return (
+          expense.year === 2025 &&
+          expense.paid === false &&
+          expense.type === EExpenseType.VARIABLE &&
+          expense.group.name === 'Ingrid Residential' &&
+          expense.active === true &&
+          expense.supplier.id === 'f6955c58-9e02-42b0-a70a-4467470098d7' &&
+          expense.category.name === 'Bank Slip'
+        );
+      });
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getMany: jest.fn().mockReturnValueOnce(listFiltered),
+      } as any);
+
+      expect(
+        await service.findAll({
+          parameters: {
+            year: '2025',
+            paid: false,
+            type: EExpenseType.VARIABLE,
+            group: 'Ingrid Residential',
+            active: true,
+            supplier: 'f6955c58-9e02-42b0-a70a-4467470098d7',
+            category: 'Bank Slip',
+          },
+        }),
+      ).toEqual(listFiltered);
     });
   });
 });

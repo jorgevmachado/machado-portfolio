@@ -22,6 +22,8 @@ import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { Supplier } from '../supplier/supplier.entity';
 import { ExpenseGroup } from './expense-group/expense-group.entity';
 import { ExpenseCategory } from './expense-category/expense-category.entity';
+import { ExpenseListParams } from './expense.interface';
+import {TQueryCondition} from "../../shared/interface";
 
 @Injectable()
 export class ExpenseService extends Service<Expense> {
@@ -34,6 +36,62 @@ export class ExpenseService extends Service<Expense> {
     protected expenseBusiness: ExpenseBusiness,
   ) {
     super('expenses', ['group', 'supplier', 'category'], repository);
+  }
+
+  async findAll(params: ExpenseListParams) {
+    const treatedParams = await this.treatsParams(params);
+    return this.list(treatedParams);
+  }
+
+  private async treatsParams(params: ExpenseListParams) {
+    params.filters = params.filters ?? [];
+
+    const parameterMappings: Array<[string, () => Promise<string | undefined>]> = [
+      ['group', () => this.resolveEntityId(this.expenseGroupService, params?.parameters?.group)],
+      ['supplier', () => this.resolveEntityId(this.supplierService, params?.parameters?.supplier)],
+      ['category', () => this.resolveEntityId(this.expenseCategoryService, params?.parameters?.category)],
+    ];
+
+    for (const [filterKey, resolver] of parameterMappings) {
+      const value = await resolver();
+      if (value) {
+        params.filters.push({ value, param: filterKey, condition: '=' });
+      }
+    }
+
+    this.applySimpleFilters(params, ['paid', 'active'], '=');
+    this.applyTypeFilter(params);
+
+    return params;
+  }
+  
+  private async resolveEntityId(service: { findOne: Function }, value?: string) {
+    if(!value) {
+      return value;
+    }
+
+    if (isUUID(value)) {
+      return value;
+    }
+    
+    const entity = await service.findOne({ value: value, withThrow: false });
+    return entity?.id;
+  }
+  
+  private applySimpleFilters(params: ExpenseListParams, keys: Array<string>, condition: TQueryCondition) {
+    const parameters = params.parameters || {};
+    keys.forEach((key) => {
+      if (parameters[key]) {
+        params.filters.push({ value: `${parameters[key]}`, param: key, condition });
+      }
+    });
+  }
+  
+  private applyTypeFilter(params: ExpenseListParams) {
+    const type = params.parameters?.type;
+    if (type === 'FIXED' || type === 'VARIABLE') {
+      params.filters.push({ value: type, param: 'type', condition: '=' });
+    }
   }
 
   async create({

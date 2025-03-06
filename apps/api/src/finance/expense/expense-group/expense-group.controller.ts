@@ -28,7 +28,7 @@ export class ExpenseGroupController {
 
   @Get('list/group')
   findAll(@Query() parameters: QueryParameters) {
-    return this.service.list(parameters);
+    return this.service.list({ parameters });
   }
 
   @Post('group')
