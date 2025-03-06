@@ -13,6 +13,8 @@ import { ERole, EStatus } from '@repo/business/shared/enum';
 
 import UserBusiness from '@repo/business/auth/user';
 
+import { USER_FIXTURE, USER_PASSWORD } from '@repo/mock/auth/fixture';
+
 import { Service } from '../../shared';
 
 import type { TBy } from '../../shared/interface';
@@ -98,5 +100,49 @@ export class UserService extends Service<User> {
     }
 
     throw new UnprocessableEntityException('Invalid credentials');
+  }
+
+  async promoteUser(user: User) {
+
+    if (user.role === ERole.ADMIN) {
+      return {
+        user,
+        valid: false,
+        message: 'The User is already admin.',
+      };
+    }
+    user.role = ERole.ADMIN;
+    const newUser = await this.save(user);
+    return {
+      user: newUser,
+      valid: true,
+      message: 'User promoted successfully!',
+    };
+  }
+
+  async seed() {
+    const userSeed = USER_FIXTURE;
+    const currentSeed = await this.findOne({
+      value: userSeed.name,
+      withThrow: false,
+    });
+
+    if (currentSeed) {
+      return currentSeed;
+    }
+
+    const createdUser = await this.create({
+      cpf: userSeed.cpf,
+      name: userSeed.name,
+      email: userSeed.email,
+      gender: userSeed.gender,
+      whatsapp: userSeed.whatsapp,
+      password: USER_PASSWORD,
+      date_of_birth: userSeed.date_of_birth,
+      password_confirmation: userSeed.password,
+    });
+
+    const promotedUser = await this.promoteUser(createdUser as User);
+    return promotedUser?.user;
   }
 }

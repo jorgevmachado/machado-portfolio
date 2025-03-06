@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ForbiddenException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { JwtService } from '@nestjs/jwt';
 
@@ -9,6 +10,7 @@ import { ENTITY_USER_FIXTURE, USER_PASSWORD } from '@repo/mock/auth/fixture';
 import { UserService } from './users/users.service';
 
 import { AuthService } from './auth.service';
+import { ERole } from '@repo/business/shared/enum';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -23,8 +25,10 @@ describe('AuthService', () => {
         {
           provide: UserService,
           useValue: {
+            seed: jest.fn(),
             create: jest.fn(),
             findOne: jest.fn(),
+            promoteUser: jest.fn(),
             checkCredentials: jest.fn(),
           },
         },
@@ -119,6 +123,66 @@ describe('AuthService', () => {
         created_at: ENTITY_USER_FIXTURE.created_at,
         updated_at: ENTITY_USER_FIXTURE.updated_at,
       });
+    });
+  });
+
+  describe('seed', () => {
+    it('should be seed data', async () => {
+      jest
+        .spyOn(userService, 'findOne')
+        .mockResolvedValueOnce(ENTITY_USER_FIXTURE);
+
+      jest
+        .spyOn(userService, 'seed')
+        .mockResolvedValueOnce({ ...ENTITY_USER_FIXTURE, role: ERole.ADMIN });
+
+      expect(await service.seed()).toEqual({
+        id: ENTITY_USER_FIXTURE.id,
+        cpf: ENTITY_USER_FIXTURE.cpf,
+        role: ERole.ADMIN,
+        name: ENTITY_USER_FIXTURE.name,
+        email: ENTITY_USER_FIXTURE.email,
+        status: ENTITY_USER_FIXTURE.status,
+        gender: ENTITY_USER_FIXTURE.gender,
+        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
+        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
+        created_at: ENTITY_USER_FIXTURE.created_at,
+        updated_at: ENTITY_USER_FIXTURE.updated_at,
+      });
+    });
+  });
+
+  describe('promoteUser', () => {
+    it('should promote user with success', async () => {
+      jest
+        .spyOn(userService, 'findOne')
+        .mockResolvedValueOnce({ ...ENTITY_USER_FIXTURE, role: ERole.USER });
+
+      jest.spyOn(userService, 'promoteUser').mockResolvedValueOnce({
+        user: { ...ENTITY_USER_FIXTURE, role: ERole.ADMIN },
+        valid: true,
+        message: 'User promoted successfully!',
+      });
+
+      expect(
+        await service.promoteUser(ENTITY_USER_FIXTURE.id, {
+          ...ENTITY_USER_FIXTURE,
+          role: ERole.ADMIN,
+        }),
+      ).toEqual({
+        user: { ...ENTITY_USER_FIXTURE, role: ERole.ADMIN },
+        valid: true,
+        message: 'User promoted successfully!',
+      });
+    });
+
+    it('should return error the auth user is not admin', async () => {
+      await expect(
+        service.promoteUser(ENTITY_USER_FIXTURE.id, {
+          ...ENTITY_USER_FIXTURE,
+          role: ERole.USER,
+        }),
+      ).rejects.toThrow(ForbiddenException);
     });
   });
 });

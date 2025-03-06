@@ -1,7 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import {
+  BadRequestException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
+
+import { ERole, EStatus } from '@repo/business/shared/enum';
 
 import {
   ENTITY_USER_FIXTURE,
@@ -71,6 +77,41 @@ describe('UsersService', () => {
         }),
       ).toEqual(USER_FIXTURE);
     });
+
+    it('should return error a user already exist ', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(null),
+      } as any);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(null),
+      } as any);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(USER_FIXTURE),
+      } as any);
+
+      await expect(
+        service.create({
+          cpf: ENTITY_USER_FIXTURE.cpf,
+          name: ENTITY_USER_FIXTURE.name,
+          email: ENTITY_USER_FIXTURE.email,
+          whatsapp: ENTITY_USER_FIXTURE.whatsapp,
+          password: USER_PASSWORD,
+          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
+          password_confirmation: USER_PASSWORD,
+        }),
+      ).rejects.toThrow(BadRequestException);
+    });
   });
 
   describe('checkCredentials', () => {
@@ -89,6 +130,41 @@ describe('UsersService', () => {
         }),
       ).toEqual(ENTITY_USER_FIXTURE);
     });
+
+    it('should return false because the user is inactive', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce({
+          ...ENTITY_USER_FIXTURE,
+          status: EStatus.INACTIVE,
+        }),
+      } as any);
+
+      await expect(
+        service.checkCredentials({
+          email: USER_FIXTURE.email,
+          password: USER_PASSWORD,
+        }),
+      ).rejects.toThrow(UnprocessableEntityException);
+    });
+
+    it('should return false because the credentials is incorrectly', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
+      } as any);
+
+      await expect(
+        service.checkCredentials({
+          email: USER_FIXTURE.email,
+          password: '@Password2',
+        }),
+      ).rejects.toThrow(UnprocessableEntityException);
+    });
   });
 
   describe('findOne', () => {
@@ -103,6 +179,110 @@ describe('UsersService', () => {
       expect(await service.findOne({ value: ENTITY_USER_FIXTURE.id })).toEqual(
         ENTITY_USER_FIXTURE,
       );
+    });
+  });
+
+  describe('seed', () => {
+    const seedEntityUser = ENTITY_USER_FIXTURE;
+    it('should seed the database when exist in database', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(seedEntityUser),
+      } as any);
+
+      expect(await service.seed()).toEqual(seedEntityUser);
+    });
+
+    it('should seed the database when not exist in database', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(null),
+      } as any);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(null),
+      } as any);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(null),
+      } as any);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(null),
+      } as any);
+
+      jest.spyOn(repository, 'save').mockResolvedValueOnce(seedEntityUser);
+
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(seedEntityUser),
+      } as any);
+
+      jest
+        .spyOn(repository, 'save')
+        .mockResolvedValueOnce({ ...seedEntityUser, role: ERole.ADMIN });
+
+      expect(await service.seed()).toEqual({
+        ...seedEntityUser,
+        role: ERole.ADMIN,
+      });
+    });
+  });
+
+  describe('promoteUser', () => {
+    const promoteEntityUser = ENTITY_USER_FIXTURE;
+    it('should promote user', async () => {
+      jest
+        .spyOn(repository, 'save')
+        .mockResolvedValueOnce({ ...promoteEntityUser, role: ERole.ADMIN });
+
+      expect(await service.promoteUser({
+        ...promoteEntityUser,
+        role: ERole.USER,
+      })).toEqual({
+        user: {
+          ...promoteEntityUser,
+          role: ERole.ADMIN,
+        },
+        valid: true,
+        message: 'User promoted successfully!',
+      });
+    });
+
+    it('should return the message that the user is already an admin', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce({
+          ...promoteEntityUser,
+          role: ERole.ADMIN,
+        }),
+      } as any);
+
+      expect(await service.promoteUser(promoteEntityUser)).toEqual({
+        user: {
+          ...promoteEntityUser,
+          role: ERole.ADMIN,
+        },
+        valid: false,
+        message: 'The User is already admin.',
+      });
     });
   });
 });
