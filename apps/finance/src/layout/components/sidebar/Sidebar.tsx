@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import joinClass from '@repo/ds/utils/join-class/joinClass';
 
@@ -11,8 +10,17 @@ import type { SidebarProps } from './interface';
 
 import './Sidebar.scss';
 
-export default function Sidebar({ menu, theme = 'finance' }: SidebarProps) {
+export default function Sidebar({
+  menu,
+  theme = 'finance',
+  onLinkClick,
+}: SidebarProps) {
   const [isOpen, setIsOpen] = useState(true);
+
+  const handleOnClick = (path: string) => {
+      onLinkClick ? onLinkClick(path) : (window !== undefined ? window.location.href = path : null);
+  }
+
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -33,16 +41,19 @@ export default function Sidebar({ menu, theme = 'finance' }: SidebarProps) {
         {menu?.map((item, index) => (
           <div key={index} className="sidebar__menu--item">
             {!item.children ? (
-              <Link to={item.path} className="sidebar__menu--item-link">
+              <div
+                className="sidebar__menu--item-link"
+                onClick={() => handleOnClick(item.path)}
+              >
                 <Icon icon={item.icon} />
                 {isOpen && (
                   <span className="sidebar__menu--item-link__title">
                     {item.title}
                   </span>
                 )}
-              </Link>
+              </div>
             ) : (
-              <Dropdown menu={item} isOpen={isOpen} theme={theme} />
+              <Dropdown menu={item} isOpen={isOpen} theme={theme} onLinkClick={handleOnClick} />
             )}
           </div>
         ))}

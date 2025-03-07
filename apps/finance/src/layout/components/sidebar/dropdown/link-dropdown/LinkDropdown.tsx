@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
-
 import type { TIcon } from '@repo/ds/elements/icon/interface';
 import Icon from '@repo/ds/elements/icon/Icon';
 
@@ -12,12 +10,14 @@ interface LinkDropdownProps {
   path: string;
   icon?: TIcon;
   isOpen: boolean;
+  onLinkClick: (path: string) => void;
 }
 export default function LinkDropdown({
   title,
   path,
   icon,
   isOpen,
+  onLinkClick,
 }: LinkDropdownProps) {
   const abbrTitle = (title: string) =>
     title
@@ -26,7 +26,11 @@ export default function LinkDropdown({
       .join('');
 
   return (
-    <Link to={path} key={title} className="link-dropdown">
+    <div
+      key={title}
+      className="link-dropdown"
+      onClick={() => onLinkClick && onLinkClick(path)}
+    >
       {isOpen && (
         <>
           <Icon icon={icon} />
@@ -38,6 +42,6 @@ export default function LinkDropdown({
           {icon ? <Icon icon={icon} /> : abbrTitle(title)}
         </span>
       )}
-    </Link>
+    </div>
   );
 }

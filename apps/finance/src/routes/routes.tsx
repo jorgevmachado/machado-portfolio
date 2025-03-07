@@ -155,7 +155,7 @@ export const privateRoutes: Array<RouteProps> = [
       {
         key: 'expense-group',
         icon: 'group',
-        path: '/group',
+        path: '/groups',
         type: 'private',
         title: 'Group',
         element: (

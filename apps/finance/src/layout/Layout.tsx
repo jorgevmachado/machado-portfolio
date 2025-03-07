@@ -15,6 +15,6 @@ export default function Layout({ children }: DefaultProps) {
   return isAuthRoute ? (
     <BaseLayout>{children}</BaseLayout>
   ) : (
-    <AuthenticatedLayout/>
+    <AuthenticatedLayout>{children}</AuthenticatedLayout>
   );
 }

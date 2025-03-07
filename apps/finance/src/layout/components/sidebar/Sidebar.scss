@@ -73,6 +73,7 @@ $transition-speed: 0.3s;
       display: flex;
       flex-direction: column;
       &-link {
+        cursor: pointer;
         color: inherit;
         display: flex;
         padding: 10px 20px;

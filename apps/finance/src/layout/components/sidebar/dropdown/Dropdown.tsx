@@ -17,6 +17,7 @@ interface LinkDropdownProps {
   menu: RouteProps;
   theme: TTheme;
   isOpen: boolean;
+  onLinkClick: (path: string) => void;
   grandParentPath?: string;
 }
 
@@ -24,6 +25,7 @@ export default function Dropdown({
   menu,
   theme,
   isOpen,
+  onLinkClick,
   grandParentPath,
 }: LinkDropdownProps) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
@@ -61,6 +63,7 @@ export default function Dropdown({
                   menu={child}
                   theme={theme}
                   isOpen={isOpen}
+                  onLinkClick={onLinkClick}
                   grandParentPath={menu.path}
                 />
               ) : (
@@ -73,6 +76,7 @@ export default function Dropdown({
                   })}
                   icon={child.icon}
                   isOpen={isOpen}
+                  onLinkClick={onLinkClick}
                 />
               )}
             </div>
