@@ -10,11 +10,11 @@ import BaseLayout from '../base-layout';
 
 interface PageLayoutProps {
   user?: User;
-  menu: Array<Route>;
+  menu?: Array<Route>;
   title?: string;
   children: React.ReactNode;
   navbarTitle?: string;
-  onLinkClick: (path: string) => void;
+  onLinkClick?: (path: string) => void;
   withAnimation?: boolean;
 }
 
@@ -30,7 +30,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   return user ? (
     <>
       <Navbar user={user} title={navbarTitle ?? 'My App'} />
-      <Sidebar menu={menu} onLinkClick={onLinkClick} />
+      { menu && ( <Sidebar menu={menu} onLinkClick={onLinkClick} /> )}
       <Content title={title} withAnimation={withAnimation}>
         {children}
       </Content>

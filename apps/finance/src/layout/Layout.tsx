@@ -1,20 +1,66 @@
-import React from 'react';
-import { authRoutes } from 'geek/src/routes';
-import { usePathname } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
-import BaseLayout from '@repo/ui/layout/base-layout/BaseLayout';
+import type { User } from '@repo/business/auth/interface';
+import UserProvider from '@repo/ui/hooks/user/UserProvider';
 
-import AuthenticatedLayout from './authenticated';
+import useAlert from '@repo/ui/hooks/alert/useAlert';
+
+import PageLayout from '@repo/ui/layout/page-layout/PageLayout';
+
+import { authService, getAccessToken, removeAccessToken } from '../shared';
+
+import { privateRoutes } from '../routes';
 
 interface DefaultProps {
   children: React.ReactNode;
 }
+
 export default function Layout({ children }: DefaultProps) {
   const pathname = usePathname();
-  const isAuthRoute = authRoutes.includes(pathname);
-  return isAuthRoute ? (
-    <BaseLayout>{children}</BaseLayout>
+  const router = useRouter();
+
+  const { addAlert } = useAlert();
+
+  const [user, setUser] = useState<User>();
+
+  const isAuthenticationRoute = privateRoutes.some(
+    (route) => route.path === pathname,
+  );
+
+  const token = getAccessToken() || '';
+
+  const handleLinkClick = (path: string) => {
+    router.push(path);
+  };
+
+  useEffect(() => {
+    if (token && !isAuthenticationRoute) {
+      authService
+        .me()
+        .then((response) => {
+          setUser(response);
+        })
+        .catch(() => {
+          addAlert({ type: 'error', message: 'Your token has expired!' });
+          removeAccessToken();
+          router.push('/');
+        });
+    }
+  }, [token]);
+
+  return isAuthenticationRoute || !user ? (
+    <PageLayout>{children}</PageLayout>
   ) : (
-    <AuthenticatedLayout>{children}</AuthenticatedLayout>
+    <UserProvider user={user}>
+      <PageLayout
+        user={user}
+        menu={privateRoutes}
+        navbarTitle="Finance"
+        onLinkClick={handleLinkClick}
+      >
+        {children}
+      </PageLayout>
+    </UserProvider>
   );
 }
