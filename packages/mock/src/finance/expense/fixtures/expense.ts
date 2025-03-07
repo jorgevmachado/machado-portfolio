@@ -287,7 +287,7 @@ export const EXPENSE_FINANCE_ENTITY: FinanceEntity = {
   id: 'EXPENSE',
   label: 'Expense',
   alias: 'expenses',
-  list: LIST_MONTE_CARLO_EXPENSE_FIXTURE,
+  list: EXPENSE_LIST_FIXTURE,
   group: EXPENSE_GROUP_FINANCE_ENTITY,
   category: EXPENSE_CATEGORY_FINANCE_ENTITY,
   supplier: SUPPLIER_FINANCE_ENTITY,

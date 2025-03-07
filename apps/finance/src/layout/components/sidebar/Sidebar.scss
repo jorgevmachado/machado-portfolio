@@ -1,22 +1,53 @@
-//// Sidebar.scss
 $sidebar-width: 250px;
 $sidebar-collapsed-width: 80px;
 $transition-speed: 0.3s;
+
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  top: 60px;
+  left: 0;
   width: $sidebar-width;
   height: calc(100vh - 60px);
-  top: 60px;
+  display: flex;
+  overflow: hidden;
   position: fixed;
-  left: 0;
-  background: linear-gradient(to bottom, #1d3557, #457b9d);
-  color: #f1faee;
   transition: width $transition-speed ease;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-
-  &.closed {
+  flex-direction: column;
+  &__theme {
+    &--finance {
+      color: #f1faee;
+      background: linear-gradient(to bottom, #1d3557, #457b9d);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+      .sidebar__toggle-button {
+        color: white;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+    &--geek {
+      color: #f0eff4;
+      background: linear-gradient(to bottom, #232946, #009688);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+      .sidebar__toggle-button {
+        color: #f0eff4;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+    &--law {
+      color: #ede9fe;
+      background: linear-gradient(to bottom, #312e81, #4c1c64);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+      .sidebar__toggle-button {
+        color: #ede9fe;
+        &:hover {
+          background-color: rgba(237, 233, 254, 0.3);
+        }
+      }
+    }
+  }
+  &__closed {
     width: $sidebar-collapsed-width;
     .dropdown  {
       &__submenu {
@@ -29,86 +60,42 @@ $transition-speed: 0.3s;
       }
     }
   }
-}
-
-.toggleButton {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-left: auto;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-}
-
-.menu {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 0;
-  flex: 1;
-  svg {
-    font-size: 1.5rem;
-  }
-  .menu__item {
+  &__menu {
+    flex: 1;
+    margin: 0;
     display: flex;
+    padding: 0;
     flex-direction: column;
-    .menu__item--link {
+    svg {
+      font-size: 1.5rem;
+    }
+    &--item {
       display: flex;
-      align-items: center;
-      padding: 10px 20px;
-      text-decoration: none;
-      color: inherit;
-      font-size: 1rem;
-      transition: background-color 0.2s ease;
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
-
-      .menu__item--title {
-        margin-left: 10px;
-      }
-    }
-
-    .menu__item-parent {
-      cursor: pointer;
-
-      .menu__item-parent-title {
+      flex-direction: column;
+      &-link {
+        color: inherit;
         display: flex;
-        justify-content: space-between;
+        padding: 10px 20px;
+        font-size: 1rem;
+        transition: background-color 0.2s ease;
         align-items: center;
-        width: 100%;
+        text-decoration: none;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+        &__title {
+          margin-left: 10px;
+        }
       }
     }
   }
-
-  .submenu {
-    display: flex;
-    flex-direction: column;
-    padding-left: 40px;
-    background: linear-gradient(to bottom, #1d3557, #457b9d);
-    .submenu__item {
-      padding: 8px 0;
-      text-decoration: none;
-      color: inherit;
-      font-size: 14px;
-
-      .submenu__item--title {
-        margin-left: 10px;
-      }
-      .submenu__item--abbr {
-        font-size: 1rem;
-      }
-
-        &:hover {
-        color: rgba(255, 255, 255, 0.2);
-      }
-    }
+  &__toggle-button {
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 18px;
+    background: none;
+    transition: background-color 0.2s ease;
+    margin-left: auto;
   }
 }

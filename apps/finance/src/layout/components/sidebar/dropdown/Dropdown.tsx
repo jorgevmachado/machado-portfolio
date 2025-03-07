@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
+import joinClass from '@repo/ds/utils/join-class/joinClass';
+
 import Icon from '@repo/ds/elements/icon/Icon';
 
 import { RouteProps } from '../../../../routes/interface';
 import { formatPath } from '../../../../routes';
+
+import type { TTheme } from '../interface';
 
 import LinkDropdown from './link-dropdown/LinkDropdown';
 
@@ -11,12 +15,14 @@ import './Dropdown.scss';
 
 interface LinkDropdownProps {
   menu: RouteProps;
+  theme: TTheme;
   isOpen: boolean;
   grandParentPath?: string;
 }
 
 export default function Dropdown({
   menu,
+  theme,
   isOpen,
   grandParentPath,
 }: LinkDropdownProps) {
@@ -26,16 +32,20 @@ export default function Dropdown({
     setExpandedItem(expandedItem === item ? null : item);
   };
 
+  const classNameList = joinClass(['dropdown', `dropdown__theme--${theme}`]);
+
   return (
-    <div className="dropdown">
+    <div className={classNameList}>
       <div
-        className="menu__item--link"
+        className="sidebar__menu--item-link"
         onClick={() => toggleExpand(menu.title)}
       >
         <Icon icon={menu.icon} />
         {isOpen && (
           <div className="dropdown__title">
-            <span className="menu__item--title">{menu.title}</span>
+            <span className="sidebar__menu--item-link__title">
+              {menu.title}
+            </span>
             <Icon
               icon={expandedItem === menu.title ? 'chevron-up' : 'chevron-down'}
             />
@@ -49,6 +59,7 @@ export default function Dropdown({
               {child.children ? (
                 <Dropdown
                   menu={child}
+                  theme={theme}
                   isOpen={isOpen}
                   grandParentPath={menu.path}
                 />

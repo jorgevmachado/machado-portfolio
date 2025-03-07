@@ -1,37 +1,63 @@
-// Navbar.scss
 $navbar-height: 60px;
 $background-color: #1d3557; // Azul da sidebar para consistência
 $text-color: #f1faee;
 
 .navbar {
-  height: $navbar-height;
-  width: 100%;
-  background-color: $background-color;
-  color: $text-color;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  position: fixed;
   top: 0;
   left: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: $navbar-height;
+  display: flex;
   z-index: 1000;
+  padding: 0 20px;
+  position: fixed;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: space-between;
 
-  .navbar-left {
-    .logo {
+  &__theme {
+    &--finance {
+      color: #f1faee;
+      background-color: #1d3557;
+      .navbar__profile {
+        strong {
+          color: #a8dadc;
+        }
+      }
+    }
+    &--geek {
+      color: #f0eff4;
+      background-color: #232946;
+      .navbar__profile {
+        strong {
+          color: #009688;
+        }
+      }
+    }
+    &--law {
+      color: #ede9fe;
+      background-color: #312e81;
+      .navbar__profile {
+        strong {
+          color: #c41cd6;
+        }
+      }
+    }
+  }
+
+  &__left {
+    .navbar__logo {
       font-size: 1.5rem;
       font-weight: bold;
     }
   }
 
-  .navbar-right {
-    .profile {
+  &__right {
+    .navbar__profile {
       font-size: 1rem;
 
       strong {
         font-weight: bold;
-        color: #a8dadc; // Tom mais claro para destacar o nome do usuário
       }
     }
   }

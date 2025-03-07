@@ -1,22 +1,31 @@
 import React from 'react';
 
-import useUser from "@repo/ui/hooks/user/useUser";
+import joinClass from "@repo/ds/utils/join-class/joinClass";
+
+import useUser from '@repo/ui/hooks/user/useUser';
+
+import type { NavbarProps } from './interface';
 
 import './Navbar.scss';
 
-
-const Navbar: React.FC = () => {
-    const { user } = useUser();
-    return (
-        <nav className="navbar">
-            <div className="navbar-left">
-                <span className="logo">MeuApp</span>
-            </div>
-            <div className="navbar-right">
-                <div className="profile">Bem-vindo, <strong>{user.name}</strong></div>
-            </div>
-        </nav>
-    );
+const Navbar: React.FC<NavbarProps> = ({ title, theme = 'finance'}: NavbarProps) => {
+  const { user } = useUser();
+  const classNameList = joinClass([
+      'navbar',
+      `navbar__theme--${theme}`
+  ])
+  return (
+    <nav className={classNameList}>
+      <div className="navbar__left">
+        <span className="navbar__logo">{title}</span>
+      </div>
+      <div className="navbar__right">
+        <div className="navbar__profile">
+          Bem-vindo, <strong>{user.name}</strong>
+        </div>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;

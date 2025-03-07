@@ -32,11 +32,12 @@ export default function AuthenticatedLayout() {
         });
     }
   }, [token]);
+  const theme = 'finance';
   return user ? (
     <UserProvider user={user}>
       <Router>
-        <Navbar />
-        <Sidebar />
+        <Navbar title="Finance" theme={theme}/>
+        <Sidebar menu={privateRoutes} theme={theme}/>
         <Content>
           <Routes>
             {privateRoutes.map((route) =>
