@@ -10,7 +10,7 @@ import type { Logo, Menu } from '../../utils';
 import Fade from '../../animations/fade';
 
 import Header from '../../components/header';
-import Sidebar from '../../components/sidebar';
+import Sidebar from '../../components/v1/sidebar';
 
 import './Page.scss';
 

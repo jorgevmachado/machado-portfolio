@@ -1,7 +1,7 @@
-import type { RouteProps } from '../../../routes/interface';
+import type { Route } from '../../../utils';
 
 export interface SidebarProps {
-  menu: Array<RouteProps>;
+  menu: Array<Route>;
   theme?: TTheme;
   onLinkClick?: (path: string) => void;
 }

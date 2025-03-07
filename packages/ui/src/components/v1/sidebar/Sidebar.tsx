@@ -8,9 +8,9 @@ import type { TContext } from '@repo/ds/utils/colors/interface';
 import Text from '@repo/ds/elements/text/Text';
 import joinClass from '@repo/ds/utils/join-class/joinClass';
 
-import type { Menu } from '../../utils';
+import type { Menu } from '../../../utils';
 
-import Profile from '../profile';
+import Profile from '../../profile';
 
 import SidebarAction from './SidebarAction';
 

@@ -7,10 +7,13 @@ import type { User } from '@repo/business/auth/interface';
 
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
+import Sidebar from '@repo/ui/components/v2/sidebar/Sidebar';
+import Navbar from '@repo/ui/components/v2/navbar/Navbar';
+
 import { authService, getAccessToken, removeAccessToken } from '../../shared';
 import { privateRoutes } from '../../routes';
 
-import { Content, Navbar, Sidebar } from '../components';
+import { Content,  } from '../components';
 
 interface AuthenticatedLayoutProps {
   children: React.ReactNode;
@@ -47,7 +50,7 @@ export default function AuthenticatedLayout({
   return user ? (
     <UserProvider user={user}>
       <Router>
-        <Navbar title="Finance" theme={theme} />
+        <Navbar user={user} title="Finance" theme={theme} />
         <Sidebar
           menu={privateRoutes}
           theme={theme}

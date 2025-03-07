@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { Menu } from '../../../utils';
+import type { Menu } from '../../../../utils';
 
 import Button from '@repo/ds/components/button/Button';
 import Dropdown from '@repo/ds/components/dropdown/Dropdown';

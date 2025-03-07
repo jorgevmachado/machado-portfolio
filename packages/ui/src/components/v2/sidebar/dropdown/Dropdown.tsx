@@ -4,8 +4,7 @@ import joinClass from '@repo/ds/utils/join-class/joinClass';
 
 import Icon from '@repo/ds/elements/icon/Icon';
 
-import { RouteProps } from '../../../../routes/interface';
-import { formatPath } from '../../../../routes';
+import { formatPath, type Route } from '../../../../utils';
 
 import type { TTheme } from '../interface';
 
@@ -14,7 +13,7 @@ import LinkDropdown from './link-dropdown/LinkDropdown';
 import './Dropdown.scss';
 
 interface LinkDropdownProps {
-  menu: RouteProps;
+  menu: Route;
   theme: TTheme;
   isOpen: boolean;
   onLinkClick: (path: string) => void;
