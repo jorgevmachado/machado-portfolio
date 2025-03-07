@@ -7,7 +7,7 @@ import { OContext } from '@repo/ds/utils/colors/options';
 
 import { LOGOUT_MENU, MENU } from '@repo/ui/utils/menu/menu';
 
-import Sidebar from '@repo/ui/components/sidebar/Sidebar';
+import Sidebar from '@repo/ui/components/v1/sidebar/Sidebar';
 
 const meta = {
   args: {
@@ -18,7 +18,7 @@ const meta = {
     showMobileMenu: false,
     handleToggleMenu: () => alert('Toggle Menu'),
   },
-  title: 'User-Interface/Components/Sidebar',
+  title: 'User-Interface/Components/v1/Sidebar',
   argTypes: {
     user: {
       table: {
