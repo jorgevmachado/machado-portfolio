@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import type { User } from '@repo/business/auth/interface';
@@ -17,41 +17,48 @@ interface DefaultProps {
 }
 
 export default function Layout({ children }: DefaultProps) {
-  const pathname = usePathname();
   const router = useRouter();
-
+  const pathname = usePathname();
   const { addAlert } = useAlert();
 
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>(null);
 
-  const isAuthenticationRoute = privateRoutes.some(
-    (route) => route.path === pathname,
+  const isAuthenticationRoute = useMemo(
+    () => privateRoutes.some((route) => route.path === pathname),
+    [pathname],
   );
 
-  const token = getAccessToken() || '';
+  const token = useMemo(() => getAccessToken() || '', []);
 
-  const handleLinkClick = (path: string) => {
-    router.push(path);
-  };
+  const fetchUser = useCallback(async () => {
+    try {
+      const fetchedUser = await authService.me();
+      setUser(fetchedUser);
+    } catch (error) {
+      addAlert({ type: 'error', message: 'Your token has expired!' });
+      removeAccessToken();
+      router.push('/');
+    }
+  }, [addAlert, router]);
+
+  const handleLinkClick = useCallback(
+    (path: string) => {
+      router.push(path);
+    },
+    [router],
+  );
 
   useEffect(() => {
     if (token && !isAuthenticationRoute) {
-      authService
-        .me()
-        .then((response) => {
-          setUser(response);
-        })
-        .catch(() => {
-          addAlert({ type: 'error', message: 'Your token has expired!' });
-          removeAccessToken();
-          router.push('/');
-        });
+      fetchUser().then();
     }
-  }, [token]);
+  }, [token, isAuthenticationRoute, fetchUser]);
 
-  return isAuthenticationRoute || !user ? (
-    <PageLayout>{children}</PageLayout>
-  ) : (
+  if (isAuthenticationRoute || !user) {
+    return <PageLayout>{children}</PageLayout>;
+  }
+
+  return (
     <UserProvider user={user}>
       <PageLayout
         user={user}
