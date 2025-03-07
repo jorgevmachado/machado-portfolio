@@ -5,48 +5,16 @@ $transition-speed: 0.3s;
 .sidebar {
   top: 60px;
   left: 0;
+  color: var(--color-sidebar-color);
   width: $sidebar-width;
   height: calc(100vh - 60px);
   display: flex;
   overflow: hidden;
   position: fixed;
+  background: var(--color-sidebar-background);
   transition: width $transition-speed ease;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
   flex-direction: column;
-  &__theme {
-    &--finance {
-      color: #f1faee;
-      background: linear-gradient(to bottom, #1d3557, #457b9d);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-      .sidebar__toggle-button {
-        color: white;
-        &:hover {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-      }
-    }
-    &--geek {
-      color: #f0eff4;
-      background: linear-gradient(to bottom, #232946, #009688);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-      .sidebar__toggle-button {
-        color: #f0eff4;
-        &:hover {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-      }
-    }
-    &--law {
-      color: #ede9fe;
-      background: linear-gradient(to bottom, #312e81, #4c1c64);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-      .sidebar__toggle-button {
-        color: #ede9fe;
-        &:hover {
-          background-color: rgba(237, 233, 254, 0.3);
-        }
-      }
-    }
-  }
   &__closed {
     width: $sidebar-collapsed-width;
     .dropdown  {
@@ -91,6 +59,7 @@ $transition-speed: 0.3s;
     }
   }
   &__toggle-button {
+    color: var(--color-sidebar-button);
     border: none;
     cursor: pointer;
     padding: 10px;
@@ -98,5 +67,8 @@ $transition-speed: 0.3s;
     background: none;
     transition: background-color 0.2s ease;
     margin-left: auto;
+    &:hover {
+      background-color: var(--color-sidebar-button-hover-background);
+    }
   }
 }

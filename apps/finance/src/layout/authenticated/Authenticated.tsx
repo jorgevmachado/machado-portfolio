@@ -45,15 +45,13 @@ export default function AuthenticatedLayout({
   const handleLinkClick = (path: string) => {
     router.push(path);
   };
-
-  const theme = 'finance';
+  
   return user ? (
     <UserProvider user={user}>
       <Router>
-        <Navbar user={user} title="Finance" theme={theme} />
+        <Navbar user={user} title="Finance"/>
         <Sidebar
           menu={privateRoutes}
-          theme={theme}
           onLinkClick={handleLinkClick}
         />
         <Content>{children}</Content>

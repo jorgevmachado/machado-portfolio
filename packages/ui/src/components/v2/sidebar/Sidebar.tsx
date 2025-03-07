@@ -12,7 +12,6 @@ import './Sidebar.scss';
 
 export default function Sidebar({
   menu,
-  theme = 'finance',
   onLinkClick,
 }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(true);
@@ -28,7 +27,6 @@ export default function Sidebar({
 
   const classNameList = joinClass([
     'sidebar',
-    `sidebar__theme--${theme}`,
     isOpen ? 'sidebar__open' : 'sidebar__closed',
   ]);
 
@@ -53,7 +51,7 @@ export default function Sidebar({
                 )}
               </div>
             ) : (
-              <Dropdown menu={item} isOpen={isOpen} theme={theme} onLinkClick={handleOnClick} />
+              <Dropdown menu={item} isOpen={isOpen} onLinkClick={handleOnClick} />
             )}
           </div>
         ))}

@@ -46,6 +46,31 @@
       "100": {
         "$value": "#34344e"
       }
+    },
+    "sidebar": {
+      "color": {
+        "$value": "#f1faee"
+      },
+      "background": {
+        "$value": "linear-gradient(to bottom, #1d3557, #457b9d)"
+      },
+      "button": {
+        "$value": "white"
+      },
+      "buttonHoverBackground": {
+        "$value": "rgba(255, 255, 255, 0.1)"
+      }
+    },
+    "navbar": {
+      "color": {
+        "$value": "#f1faee"
+      },
+      "strong": {
+        "$value": "#a8dadc"
+      },
+      "background": {
+        "$value": "#1d3557"
+      }
     }
   }
 }

@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 
-import joinClass from '@repo/ds/utils/join-class/joinClass';
-
 import Icon from '@repo/ds/elements/icon/Icon';
 
 import { formatPath, type Route } from '../../../../utils';
-
-import type { TTheme } from '../interface';
 
 import LinkDropdown from './link-dropdown/LinkDropdown';
 
@@ -14,7 +10,6 @@ import './Dropdown.scss';
 
 interface LinkDropdownProps {
   menu: Route;
-  theme: TTheme;
   isOpen: boolean;
   onLinkClick: (path: string) => void;
   grandParentPath?: string;
@@ -22,7 +17,6 @@ interface LinkDropdownProps {
 
 export default function Dropdown({
   menu,
-  theme,
   isOpen,
   onLinkClick,
   grandParentPath,
@@ -33,10 +27,8 @@ export default function Dropdown({
     setExpandedItem(expandedItem === item ? null : item);
   };
 
-  const classNameList = joinClass(['dropdown', `dropdown__theme--${theme}`]);
-
   return (
-    <div className={classNameList}>
+    <div className="dropdown">
       <div
         className="sidebar__menu--item-link"
         onClick={() => toggleExpand(menu.title)}
@@ -60,7 +52,6 @@ export default function Dropdown({
               {child.children ? (
                 <Dropdown
                   menu={child}
-                  theme={theme}
                   isOpen={isOpen}
                   onLinkClick={onLinkClick}
                   grandParentPath={menu.path}

@@ -1,10 +1,9 @@
 $navbar-height: 60px;
-$background-color: #1d3557; // Azul da sidebar para consistência
-$text-color: #f1faee;
 
 .navbar {
   top: 0;
   left: 0;
+  color: var(--color-navbar-color);
   width: 100%;
   height: $navbar-height;
   display: flex;
@@ -13,37 +12,38 @@ $text-color: #f1faee;
   position: fixed;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   align-items: center;
+  background-color: var(--color-navbar-background);
   justify-content: space-between;
 
-  &__theme {
-    &--finance {
-      color: #f1faee;
-      background-color: #1d3557;
-      .navbar__profile {
-        strong {
-          color: #a8dadc;
-        }
-      }
-    }
-    &--geek {
-      color: #f0eff4;
-      background-color: #232946;
-      .navbar__profile {
-        strong {
-          color: #009688;
-        }
-      }
-    }
-    &--law {
-      color: #ede9fe;
-      background-color: #312e81;
-      .navbar__profile {
-        strong {
-          color: #c41cd6;
-        }
-      }
-    }
-  }
+  //&__theme {
+  //  &--finance {
+  //    //color: #f1faee;
+  //    //background-color: #1d3557;
+  //    .navbar__profile {
+  //      strong {
+  //        color: #a8dadc;
+  //      }
+  //    }
+  //  }
+  //  &--geek {
+  //    color: #f0eff4;
+  //    background-color: #232946;
+  //    .navbar__profile {
+  //      strong {
+  //        color: #009688;
+  //      }
+  //    }
+  //  }
+  //  &--law {
+  //    color: #ede9fe;
+  //    background-color: #312e81;
+  //    .navbar__profile {
+  //      strong {
+  //        color: #c41cd6;
+  //      }
+  //    }
+  //  }
+  //}
 
   &__left {
     .navbar__logo {
@@ -57,6 +57,7 @@ $text-color: #f1faee;
       font-size: 1rem;
 
       strong {
+        color: var(--color-navbar-strong);
         font-weight: bold;
       }
     }
