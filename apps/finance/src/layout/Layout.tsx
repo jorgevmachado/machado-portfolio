@@ -10,7 +10,7 @@ import PageLayout from '@repo/ui/layout/page-layout/PageLayout';
 
 import { authService, getAccessToken, removeAccessToken } from '../shared';
 
-import { privateRoutes } from '../routes';
+import {privateRoutes, publicRoutes} from '../routes';
 
 interface DefaultProps {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ export default function Layout({ children }: DefaultProps) {
   const [user, setUser] = useState<User | null>(null);
 
   const isAuthenticationRoute = useMemo(
-    () => privateRoutes.some((route) => route.path === pathname),
+    () => publicRoutes.some((route) => route.path === pathname),
     [pathname],
   );
 

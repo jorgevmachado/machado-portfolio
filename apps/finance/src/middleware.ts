@@ -15,9 +15,16 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/sign-in', request.nextUrl));
   }
 
+  const isEmptyPath = path === '/';
+
+  if (isEmptyPath) {
+    return NextResponse.redirect(new URL('/dashboard', request.nextUrl));
+  }
+
   if (!isRoutePath) {
     return NextResponse.next();
   }
+
 
   const isAuthRoute = publicRoutes.some((route) => route.path === path);
   const accessToken = cookieStore.get('financeAccessToken');
@@ -29,12 +36,6 @@ export default async function middleware(request: NextRequest) {
 
   if (!isAuthRoute && !isAuthenticated) {
     return NextResponse.redirect(new URL('/sign-in', request.nextUrl));
-  }
-
-  const isEmptyPath = path === '/';
-
-  if (isEmptyPath) {
-    return NextResponse.redirect(new URL('/dashboard', request.nextUrl));
   }
 
   return NextResponse.next();

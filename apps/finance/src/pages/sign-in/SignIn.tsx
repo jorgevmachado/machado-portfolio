@@ -1,5 +1,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { isBrowser } from '@repo/services/window/window';
+
 import Auth from '@repo/ui/layout/auth/Auth';
 import type { AuthForm } from '@repo/ui/components/form/interface';
 
@@ -8,6 +10,7 @@ import useAlert from '@repo/ui/hooks/alert/useAlert';
 import { authService, setAccessToken } from '../../shared';
 
 import './SignIn.scss';
+
 
 export default function SignIn() {
   const router = useRouter();
@@ -24,14 +27,15 @@ export default function SignIn() {
       .then((response) => {
         setAccessToken(response);
         addAlert({ type: 'success', message: 'Authenticated successfully!' });
-        router.push(redirect);
+        isBrowser() ? window.open('/', '_self') : router.push(redirect);
       })
       .catch((error) => {
-          const message = error?.statusCode !== 500 && error?.message
-              ? error.message
-              : 'Unable to authenticate at this time, please try again later';
+        const message =
+          error?.statusCode !== 500 && error?.message
+            ? error.message
+            : 'Unable to authenticate at this time, please try again later';
 
-          addAlert({ type: 'error', message});
+        addAlert({ type: 'error', message });
       });
   };
 
