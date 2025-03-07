@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 import Text from '@repo/ds/elements/text/Text';
 import Button from '@repo/ds/components/button/Button';
@@ -11,7 +11,7 @@ import Pagination from '@repo/ds/components/pagination/Pagination';
 
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
-import {getValidPage, getUpdatedUrlParams} from './config';
+// import {getValidPage, getUpdatedUrlParams} from './config';
 import type { CRUDPageProps, UpdateURLParams } from './interface';
 
 import './CRUDPage.scss';
@@ -27,28 +27,33 @@ export default function CRUDPage<T extends { id: string }>({
   prepareItemForSave,
 }: CRUDPageProps<T>) {
   const { addAlert } = useAlert();
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   const [items, setItems] = useState<Array<T>>([]);
+  // const [sortedColumn, setSortedColumn] = useState<SortedColumn>({
+  //   sort: searchParams.get('sort') ?? '',
+  //   order: (searchParams.get('order') as TSort) ?? '',
+  // });
   const [sortedColumn, setSortedColumn] = useState<SortedColumn>({
-    sort: searchParams.get('sort') ?? '',
-    order: (searchParams.get('order') as TSort) ?? '',
+    sort: '',
+    order: '',
   });
-  const [currentPage, setCurrentPage] = useState<number>(
-      getValidPage(Number(searchParams.get('page'))),
-  );
+  // const [currentPage, setCurrentPage] = useState<number>(
+  //     getValidPage(Number(searchParams.get('page'))),
+  // );
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(outLoading);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [editingItem, setEditingItem] = useState<T | null>(null);
 
-  const updateURLParams = (params: UpdateURLParams) => {
-    const newParams = getUpdatedUrlParams({
-      ...params,
-      searchParams
-    });
-    setSearchParams(newParams);
-  };
+  // const updateURLParams = (params: UpdateURLParams) => {
+  //   const newParams = getUpdatedUrlParams({
+  //     ...params,
+  //     searchParams
+  //   });
+  //   setSearchParams(newParams);
+  // };
 
   const ITEMS_PER_PAGE = 10;
 
@@ -72,12 +77,12 @@ export default function CRUDPage<T extends { id: string }>({
   };
 
   const handleSort = ({ sort, order }: SortedColumn) => {
-    updateURLParams({ sort, order });
+    // updateURLParams({ sort, order });
     setSortedColumn({ sort, order });
   };
 
   const handlePageChange = (page: number) => {
-    updateURLParams({ page: String(page) });
+    // updateURLParams({ page: String(page) });
     setCurrentPage(page);
   };
 

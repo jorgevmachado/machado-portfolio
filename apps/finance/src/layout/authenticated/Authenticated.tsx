@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import UserProvider from '@repo/ui/hooks/user/UserProvider';
 import type { User } from '@repo/business/auth/interface';
 
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
-import Sidebar from '@repo/ui/components/v2/sidebar/Sidebar';
-import Navbar from '@repo/ui/components/v2/navbar/Navbar';
+import PageLayout from '@repo/ui/layout/page-layout/PageLayout';
 
 import { authService, getAccessToken, removeAccessToken } from '../../shared';
 import { privateRoutes } from '../../routes';
-
-import { Content,  } from '../components';
 
 interface AuthenticatedLayoutProps {
   children: React.ReactNode;
@@ -45,17 +41,17 @@ export default function AuthenticatedLayout({
   const handleLinkClick = (path: string) => {
     router.push(path);
   };
-  
+
   return user ? (
     <UserProvider user={user}>
-      <Router>
-        <Navbar user={user} title="Finance"/>
-        <Sidebar
-          menu={privateRoutes}
-          onLinkClick={handleLinkClick}
-        />
-        <Content>{children}</Content>
-      </Router>
+      <PageLayout
+        user={user}
+        menu={privateRoutes}
+        navbarTitle="Finance"
+        onLinkClick={handleLinkClick}
+      >
+        {children}
+      </PageLayout>
     </UserProvider>
   ) : null;
 }
