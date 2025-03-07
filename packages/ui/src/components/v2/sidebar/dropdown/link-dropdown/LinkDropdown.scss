@@ -1,13 +1,13 @@
 .link-dropdown {
-  padding: 8px 0;
+  padding: var(--dimensions-fixed-8) 0;
   text-decoration: none;
   color: inherit;
-  font-size: 14px;
+  font-size: var(--font-size-small);
   &__title {
-    margin-left: 10px;
+    margin-left: var(--dimensions-fixed-10);
   }
   &__abbr {
-    font-size: 1rem;
+    font-size: var(--font-size-regular);
   }
   &:hover {
     color: rgba(255, 255, 255, 0.2);

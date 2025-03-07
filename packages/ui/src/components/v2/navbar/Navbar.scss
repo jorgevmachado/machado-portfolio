@@ -1,60 +1,28 @@
-$navbar-height: 60px;
-
 .navbar {
   top: 0;
   left: 0;
   color: var(--color-navbar-color);
   width: 100%;
-  height: $navbar-height;
+  height: var(--dimensions-fixed-60);
   display: flex;
   z-index: 1000;
-  padding: 0 20px;
+  padding: 0 var(--dimensions-fixed-20);
   position: fixed;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 var(--dimensions-fixed-2) var(--dimensions-fixed-4) rgba(0, 0, 0, 0.2);
   align-items: center;
   background-color: var(--color-navbar-background);
   justify-content: space-between;
 
-  //&__theme {
-  //  &--finance {
-  //    //color: #f1faee;
-  //    //background-color: #1d3557;
-  //    .navbar__profile {
-  //      strong {
-  //        color: #a8dadc;
-  //      }
-  //    }
-  //  }
-  //  &--geek {
-  //    color: #f0eff4;
-  //    background-color: #232946;
-  //    .navbar__profile {
-  //      strong {
-  //        color: #009688;
-  //      }
-  //    }
-  //  }
-  //  &--law {
-  //    color: #ede9fe;
-  //    background-color: #312e81;
-  //    .navbar__profile {
-  //      strong {
-  //        color: #c41cd6;
-  //      }
-  //    }
-  //  }
-  //}
-
   &__left {
     .navbar__logo {
-      font-size: 1.5rem;
+      font-size: var(--font-size-x-large);
       font-weight: bold;
     }
   }
 
   &__right {
     .navbar__profile {
-      font-size: 1rem;
+      font-size: var(--font-size-regular);
 
       strong {
         color: var(--color-navbar-strong);

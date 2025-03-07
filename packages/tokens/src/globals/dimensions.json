@@ -128,6 +128,9 @@
       "80": {
         "$value": "80px"
       },
+      "250": {
+        "$value": "250px"
+      },
       "360": {
         "$value": "360px"
       },
@@ -305,6 +308,10 @@
       "80": {
         "$value": "5rem",
         "comment": "80px if 16px = 1rem"
+      },
+      "250": {
+        "$value": "15.625rem",
+        "comment": "250px if 16px = 1rem"
       },
       "360": {
         "$value": "22.5rem",
