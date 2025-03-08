@@ -79,28 +79,67 @@ describe('AuthBusiness', () => {
   describe('validateCurrentUser', () => {
     it('should not throw an error if the IDs match', () => {
       expect(() =>
-        authBusiness.validateCurrentUser(mockUser.id, mockUser),
+        authBusiness.validateCurrentUser({
+          id: mockUser.id,
+          authUser: mockUser,
+        }),
       ).not.toThrow();
     });
 
     it('should not throw an error if the auth user has the ADMIN role', () => {
       expect(() =>
-        authBusiness.validateCurrentUser(mockUser.id, {
-          ...mockAuthUser,
-          role: ERole.ADMIN,
+        authBusiness.validateCurrentUser({
+          id: mockUser.id,
+          authUser: {
+            ...mockAuthUser,
+            role: ERole.ADMIN,
+          },
         }),
       ).not.toThrow();
     });
 
     it('should throw an error if the IDs do not match and the auth user is not an ADMIN', () => {
       expect(() =>
-        authBusiness.validateCurrentUser(mockUser.id, mockAuthUser),
+        authBusiness.validateCurrentUser({
+          id: mockUser.id,
+          authUser: mockAuthUser,
+        }),
+      ).toThrowError('You are not authorized to access this feature');
+    });
+
+    it('should throw an error if has role in param and the auth user is not an ADMIN', () => {
+      expect(() =>
+        authBusiness.validateCurrentUser({
+          role: ERole.ADMIN,
+          authUser: mockAuthUser,
+        }),
+      ).toThrowError('You are not authorized to access this feature');
+    });
+
+    it('should throw an error if has status in param and the auth user is not an ADMIN', () => {
+      expect(() =>
+        authBusiness.validateCurrentUser({
+          status: EStatus.ACTIVE,
+          authUser: mockAuthUser,
+        }),
+      ).toThrowError('You are not authorized to access this feature');
+    });
+
+    it('should throw an error if param validateAdmin is true and the auth user is not an ADMIN', () => {
+      expect(() =>
+          authBusiness.validateCurrentUser({
+            authUser: mockAuthUser,
+            validateAdmin: true,
+          }),
       ).toThrowError('You are not authorized to access this feature');
     });
 
     it('should throw an error with the correct status code', () => {
       try {
-        authBusiness.validateCurrentUser(mockUser.id, mockAuthUser);
+        authBusiness.validateCurrentUser({
+          id: mockUser.id,
+          authUser: mockAuthUser,
+        });
       } catch (err) {
         expect(err).toBeInstanceOf(Error);
       }

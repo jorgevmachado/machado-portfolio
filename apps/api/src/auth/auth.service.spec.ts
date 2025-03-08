@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ForbiddenException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { JwtService } from '@nestjs/jwt';
 
@@ -10,7 +9,8 @@ import { ENTITY_USER_FIXTURE, USER_PASSWORD } from '@repo/mock/auth/fixture';
 import { UserService } from './users/users.service';
 
 import { AuthService } from './auth.service';
-import { ERole } from '@repo/business/shared/enum';
+import { EGender, ERole } from '@repo/business/shared/enum';
+import {UpdateAuthDto} from "./dto/update-auth.dto";
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -27,6 +27,7 @@ describe('AuthService', () => {
           useValue: {
             seed: jest.fn(),
             create: jest.fn(),
+            update: jest.fn(),
             findOne: jest.fn(),
             promoteUser: jest.fn(),
             checkCredentials: jest.fn(),
@@ -175,14 +176,29 @@ describe('AuthService', () => {
         message: 'User promoted successfully!',
       });
     });
+  });
 
-    it('should return error the auth user is not admin', async () => {
-      await expect(
-        service.promoteUser(ENTITY_USER_FIXTURE.id, {
-          ...ENTITY_USER_FIXTURE,
-          role: ERole.USER,
-        }),
-      ).rejects.toThrow(ForbiddenException);
+  describe('update', () => {
+    it('should update only name and gender user with success', async () => {
+      const updateAuthDto: UpdateAuthDto = {
+        name: 'Demi Moore',
+        role: undefined,
+        status: undefined,
+        gender: EGender.FEMALE,
+      }
+      jest
+        .spyOn(userService, 'findOne')
+        .mockResolvedValueOnce(ENTITY_USER_FIXTURE);
+
+      jest.spyOn(userService, 'update').mockResolvedValueOnce({
+        ...ENTITY_USER_FIXTURE,
+        name: updateAuthDto.name,
+        gender: updateAuthDto.gender,
+      });
+
+      expect(
+        await service.update(ENTITY_USER_FIXTURE.id, updateAuthDto, ENTITY_USER_FIXTURE),
+      ).toEqual({ message: 'Update Successfully!' });
     });
   });
 });

@@ -24,3 +24,11 @@ export interface UserConstructorParams
   deleted_at?: UserEntity['deleted_at'];
   cleanAllFormatter?: boolean;
 }
+
+export interface ValidateCurrentUserParams {
+  id?: UserEntity['id'];
+  role?: UserEntity['role'];
+  status?: UserEntity['status'];
+  authUser: UserEntity;
+  validateAdmin?: boolean;
+}

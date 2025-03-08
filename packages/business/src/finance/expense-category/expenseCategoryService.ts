@@ -52,6 +52,6 @@ export class ExpenseCategoryService {
   }
 
   public async remove(param: string): Promise<INestBaseResponse> {
-    return await this.nest.finance.expense.category.type.delete(param);
+    return await this.nest.finance.expense.category.delete(param);
   }
 }

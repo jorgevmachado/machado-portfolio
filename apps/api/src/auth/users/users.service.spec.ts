@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { ERole, EStatus } from '@repo/business/shared/enum';
+import { EGender, ERole, EStatus } from '@repo/business/shared/enum';
 
 import {
   ENTITY_USER_FIXTURE,
@@ -18,6 +18,7 @@ import {
 import { User } from './user.entity';
 
 import { UserService } from './users.service';
+import { UpdateAuthDto } from '../dto/update-auth.dto';
 
 describe('UsersService', () => {
   let service: UserService;
@@ -182,6 +183,55 @@ describe('UsersService', () => {
     });
   });
 
+  describe('update', () => {
+    it('should update user with all fields', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(USER_FIXTURE),
+      } as any);
+
+      const updateAuthDto: UpdateAuthDto = {
+        name: 'Demi Moore',
+        role: ERole.ADMIN,
+        gender: EGender.FEMALE,
+        status: EStatus.COMPLETE,
+        date_of_birth: new Date('2000-01-01'),
+      };
+
+      const expected = {
+        ...USER_FIXTURE,
+        ...updateAuthDto,
+      }
+
+      jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
+
+      expect(await service.update(USER_FIXTURE.id, updateAuthDto)).toEqual(expected);
+    });
+
+    it('It should return the user without changes.', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(USER_FIXTURE),
+      } as any);
+
+      jest.spyOn(repository, 'save').mockResolvedValueOnce(USER_FIXTURE);
+
+      expect(
+        await service.update(USER_FIXTURE.id, {
+          name: ENTITY_USER_FIXTURE.name,
+          role: ENTITY_USER_FIXTURE.role,
+          gender: ENTITY_USER_FIXTURE.gender,
+          status: ENTITY_USER_FIXTURE.status,
+          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
+        }),
+      ).toEqual(USER_FIXTURE);
+    });
+  });
+
   describe('seed', () => {
     const seedEntityUser = ENTITY_USER_FIXTURE;
     it('should seed the database when exist in database', async () => {
@@ -251,10 +301,12 @@ describe('UsersService', () => {
         .spyOn(repository, 'save')
         .mockResolvedValueOnce({ ...promoteEntityUser, role: ERole.ADMIN });
 
-      expect(await service.promoteUser({
-        ...promoteEntityUser,
-        role: ERole.USER,
-      })).toEqual({
+      expect(
+        await service.promoteUser({
+          ...promoteEntityUser,
+          role: ERole.USER,
+        }),
+      ).toEqual({
         user: {
           ...promoteEntityUser,
           role: ERole.ADMIN,

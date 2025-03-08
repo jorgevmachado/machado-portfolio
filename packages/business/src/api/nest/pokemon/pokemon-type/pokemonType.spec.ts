@@ -23,10 +23,11 @@ describe('PokemonType', () => {
     describe('constructor', () => {
         it('should initialize with the correct path and config pokemonType', () => {
             expect(NestModuleAbstract).toHaveBeenCalledTimes(1);
-            expect(NestModuleAbstract).toHaveBeenCalledWith(
-                'pokemon/type',
-                mockConfig,
-            );
+            expect(NestModuleAbstract).toHaveBeenCalledWith({
+                pathUrl: 'pokemon',
+                subPathUrl: 'type',
+                nestModuleConfig: mockConfig,
+            });
         });
 
         it('should call inherited methods from NestModuleAbstract about pokemonType', async () => {

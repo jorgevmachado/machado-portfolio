@@ -22,6 +22,7 @@ To learn more about NestJs, take a look at the following resources:
 - [Official NestJS Courses](https://courses.nestjs.com) - Learn everything you need to master NestJS and tackle modern backend applications at any scale.
 - [GitHub Repo](https://github.com/nestjs/nest)
 
+npm run test -- --findRelatedTests src/shared/base/base.spec.ts
 
 npm run test -- --findRelatedTests src/auth/users/users.service.spec.ts
 npm run test -- --findRelatedTests src/auth/auth.service.spec.ts

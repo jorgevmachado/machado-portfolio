@@ -1,4 +1,12 @@
-import {Body, Controller, Get, Param, Post, Put, UseGuards} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -11,6 +19,7 @@ import { GetUserAuth } from './decorators/auth-user.decorator';
 import { AuthService } from './auth.service';
 
 import { User } from './users/user.entity';
+import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -45,7 +54,17 @@ export class AuthController {
 
   @Put(':id')
   @UseGuards(AuthGuard(), AuthRoleGuards)
-  promoteUser(@GetUserAuth() user: User, @Param('id') id: string) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAuthDto: UpdateAuthDto,
+    @GetUserAuth() user: User,
+  ) {
+    return this.authService.update(id, updateAuthDto, user);
+  }
+
+  @Put(':id/promote')
+  @UseGuards(AuthGuard(), AuthRoleGuards)
+  promoteUser(@Param('id') id: string, @GetUserAuth() user: User) {
     return this.authService.promoteUser(id, user);
   }
 }

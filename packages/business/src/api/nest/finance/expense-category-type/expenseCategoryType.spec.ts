@@ -22,10 +22,11 @@ describe('ExpenseCategoryType', () => {
   describe('constructor', () => {
     it('should initialize with the correct path and config expenseCategoryType', () => {
       expect(NestModuleAbstract).toHaveBeenCalledTimes(1);
-      expect(NestModuleAbstract).toHaveBeenCalledWith(
-        'finance/expense/category/type',
-        mockConfig,
-      );
+      expect(NestModuleAbstract).toHaveBeenCalledWith({
+        pathUrl: 'finance/expense/category',
+        subPathUrl: 'type',
+        nestModuleConfig: mockConfig,
+      });
     });
 
     it('should call inherited methods from NestModuleAbstract about expenseCategoryType', async () => {

@@ -19,7 +19,17 @@ class MockModule extends NestModuleAbstract<
   MockEntityParams
 > {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super('/mock-path', nestModuleConfig);
+    super({ pathUrl: 'mock-path', nestModuleConfig});
+  }
+}
+
+class MockModuleSubPath extends NestModuleAbstract<
+    MockEntity,
+    MockEntityParams,
+    MockEntityParams
+> {
+  constructor(nestModuleConfig: INestModuleConfig) {
+    super({ pathUrl: 'mock-path', subPathUrl: 'mock-sub-path', nestModuleConfig});
   }
 }
 
@@ -32,9 +42,11 @@ describe('NestModuleAbstract', () => {
   };
 
   let mockModule: MockModule;
+  let mockModuleSubPath: MockModuleSubPath;
 
   beforeEach(() => {
     mockModule = new MockModule(mockConfig);
+    mockModuleSubPath = new MockModuleSubPath(mockConfig);
     jest.clearAllMocks();
   });
 
@@ -52,7 +64,7 @@ describe('NestModuleAbstract', () => {
     const result = await mockModule.getAll(queryParams);
 
     expect(mockedGet).toHaveBeenCalledTimes(1);
-    expect(mockedGet).toHaveBeenCalledWith('/mock-path', {
+    expect(mockedGet).toHaveBeenCalledWith('mock-path', {
       params: queryParams,
     });
     expect(result).toBeInstanceOf(Paginate);
@@ -67,7 +79,20 @@ describe('NestModuleAbstract', () => {
     const result = await mockModule.getOne(mockId);
 
     expect(mockedGet).toHaveBeenCalledTimes(1);
-    expect(mockedGet).toHaveBeenCalledWith('/mock-path/1');
+    expect(mockedGet).toHaveBeenCalledWith('mock-path/1');
+    expect(result).toEqual({ id: '1', name: 'Example' });
+  });
+
+  it('should call get with correct URL for getOne with subPath', async () => {
+    const mockedGet = jest
+      .spyOn(mockModuleSubPath, 'get')
+      .mockResolvedValue({ id: '1', name: 'Example' });
+
+    const mockId = '1';
+    const result = await mockModuleSubPath.getOne(mockId);
+
+    expect(mockedGet).toHaveBeenCalledTimes(1);
+    expect(mockedGet).toHaveBeenCalledWith('mock-path/1/mock-sub-path');
     expect(result).toEqual({ id: '1', name: 'Example' });
   });
 
@@ -80,7 +105,7 @@ describe('NestModuleAbstract', () => {
     const result = await mockModule.delete(mockId);
 
     expect(mockedRemove).toHaveBeenCalledTimes(1);
-    expect(mockedRemove).toHaveBeenCalledWith('/mock-path/1');
+    expect(mockedRemove).toHaveBeenCalledWith('mock-path/1');
     expect(result).toEqual({ success: true });
   });
 
@@ -93,7 +118,20 @@ describe('NestModuleAbstract', () => {
     const result = await mockModule.create(mockBody);
 
     expect(mockedPost).toHaveBeenCalledTimes(1);
-    expect(mockedPost).toHaveBeenCalledWith('/mock-path', { body: mockBody });
+    expect(mockedPost).toHaveBeenCalledWith('mock-path', { body: mockBody });
+    expect(result).toEqual({ success: true });
+  });
+
+  it('should call post with correct URL and body for create with subPath', async () => {
+    const mockedPost = jest
+      .spyOn(mockModuleSubPath, 'post')
+      .mockResolvedValue({ success: true });
+
+    const mockBody = { id: '1', name: 'New Entity' };
+    const result = await mockModuleSubPath.create(mockBody);
+
+    expect(mockedPost).toHaveBeenCalledTimes(1);
+    expect(mockedPost).toHaveBeenCalledWith('mock-path/mock-sub-path', { body: mockBody });
     expect(result).toEqual({ success: true });
   });
 
@@ -107,7 +145,7 @@ describe('NestModuleAbstract', () => {
     const result = await mockModule.update(mockId, mockBody);
 
     expect(mockedPath).toHaveBeenCalledTimes(1);
-    expect(mockedPath).toHaveBeenCalledWith('/mock-path/1', { body: mockBody });
+    expect(mockedPath).toHaveBeenCalledWith('mock-path/1', { body: mockBody });
     expect(result).toEqual({ success: true });
   });
 });

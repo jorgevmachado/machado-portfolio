@@ -36,7 +36,7 @@ export interface ISignInParams extends Pick<IUser, 'email'> {
   password: string;
 }
 
-export type IUpdateUserParams = Omit<
+export type IUpdateUserParams = Pick<
   IUser,
-  'id' | 'status' | 'createdAt' | 'updatedAt' | 'deletedAt'
+  'name' | 'role' | 'gender' | 'status' | 'date_of_birth' | 'password' | 'picture'
 >;

@@ -25,10 +25,10 @@ describe('Expense', () => {
   describe('constructor', () => {
     it('should initialize with the correct path and config expense', () => {
       expect(NestModuleAbstract).toHaveBeenCalledTimes(1);
-      expect(NestModuleAbstract).toHaveBeenCalledWith(
-        'finance/expense',
-        mockConfig,
-      );
+      expect(NestModuleAbstract).toHaveBeenCalledWith({
+        pathUrl: 'finance/expense',
+        nestModuleConfig: mockConfig,
+      });
     });
   });
 

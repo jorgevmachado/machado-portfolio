@@ -24,6 +24,7 @@ describe('AuthController', () => {
             seed: jest.fn(),
             signUp: jest.fn(),
             signIn: jest.fn(),
+            update: jest.fn(),
             findOne: jest.fn(),
             promoteUser: jest.fn(),
           },
@@ -195,10 +196,15 @@ describe('AuthController', () => {
           deleted_at: ENTITY_USER_FIXTURE.deleted_at,
         },
         valid: true,
-        message: 'User promoted successfully!'
+        message: 'User promoted successfully!',
       });
 
-      expect(await controller.promoteUser({...ENTITY_USER_FIXTURE, role: ERole.ADMIN }, ENTITY_USER_FIXTURE.id)).toEqual({
+      expect(
+        await controller.promoteUser(ENTITY_USER_FIXTURE.id, {
+          ...ENTITY_USER_FIXTURE,
+          role: ERole.ADMIN,
+        }),
+      ).toEqual({
         user: {
           id: ENTITY_USER_FIXTURE.id,
           cpf: ENTITY_USER_FIXTURE.cpf,
@@ -214,8 +220,27 @@ describe('AuthController', () => {
           deleted_at: ENTITY_USER_FIXTURE.deleted_at,
         },
         valid: true,
-        message: 'User promoted successfully!'
+        message: 'User promoted successfully!',
       });
+    });
+  });
+
+  describe('update', () => {
+    it('should be able to update user', async () => {
+      jest.spyOn(service, 'update').mockResolvedValueOnce({
+        message: 'Update Successfully!',
+      });
+
+      expect(
+        await controller.update(
+          ENTITY_USER_FIXTURE.id,
+          {
+            name: 'Demi Moore',
+            date_of_birth: new Date('2000-01-01'),
+          },
+          ENTITY_USER_FIXTURE,
+        ),
+      ).toEqual({ message: 'Update Successfully!' });
     });
   });
 });

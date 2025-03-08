@@ -23,6 +23,7 @@ import { CreateAuthDto } from '../dto/create-auth.dto';
 import { CredentialsAuthDto } from '../dto/credentials-auth.dto';
 
 import { User } from './user.entity';
+import {UpdateAuthDto} from "../dto/update-auth.dto";
 
 @Injectable()
 export class UserService extends Service<User> {
@@ -63,6 +64,22 @@ export class UserService extends Service<User> {
     await this.hasInactiveUser('email', user.email);
     await this.hasInactiveUser('whatsapp', user.whatsapp);
     return await this.save(user);
+  }
+
+  async update(id: string, { role, name, gender, status, date_of_birth}: UpdateAuthDto) {
+    const currentUser = await this.findOne({ value: id });
+
+    if(!role && !name && !gender && !status && !date_of_birth) {
+      return currentUser;
+    }
+
+    currentUser.role = !role ? currentUser.role : role;
+    currentUser.name = !name ? currentUser.name : name;
+    currentUser.gender = !gender ? currentUser.gender : gender;
+    currentUser.status = !status ? currentUser.status : status;
+    currentUser.date_of_birth = !date_of_birth ? currentUser.date_of_birth : date_of_birth;
+
+    return await this.save(currentUser);
   }
 
   private async hasInactiveUser(by: TBy, value: string) {

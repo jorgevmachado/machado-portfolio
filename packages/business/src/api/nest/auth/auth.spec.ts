@@ -21,7 +21,10 @@ describe('Auth', () => {
 
   it('should initialize with the correct path and config', () => {
     expect(NestModuleAbstract).toHaveBeenCalledTimes(1);
-    expect(NestModuleAbstract).toHaveBeenCalledWith('auth', mockConfig);
+    expect(NestModuleAbstract).toHaveBeenCalledWith({
+      pathUrl: 'auth',
+      nestModuleConfig: mockConfig,
+    });
   });
 
   it('should call post with correct URL and body for signUp', async () => {

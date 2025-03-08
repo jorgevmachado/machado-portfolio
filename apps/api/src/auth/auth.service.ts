@@ -1,18 +1,19 @@
-import {ForbiddenException, Injectable} from '@nestjs/common';
-import {JwtService} from '@nestjs/jwt';
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
-import {ERole} from '@repo/business/shared/enum';
+import { ERole } from '@repo/business/shared/enum';
 
 import AuthBusiness from '@repo/business/auth/authBusiness';
 import UserBusiness from '@repo/business/auth/user';
-import {Base} from '../shared';
+import { Base } from '../shared';
 
-import {CreateAuthDto} from './dto/create-auth.dto';
-import {CredentialsAuthDto} from './dto/credentials-auth.dto';
+import { CreateAuthDto } from './dto/create-auth.dto';
+import { CredentialsAuthDto } from './dto/credentials-auth.dto';
 
-import {User} from './users/user.entity';
+import { User } from './users/user.entity';
 
-import {UserService} from './users/users.service';
+import { UserService } from './users/users.service';
+import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @Injectable()
 export class AuthService extends Base {
@@ -50,22 +51,25 @@ export class AuthService extends Base {
     return this.authBusiness.currentUser(currentUser, user);
   }
 
+  async update(id: string, updateAuthDto: UpdateAuthDto, authUser: User) {
+    const { role, status } = updateAuthDto;
+    this.authBusiness.validateCurrentUser({ role, status, authUser });
+    await this.userService.update(id, updateAuthDto);
+    return { message: 'Update Successfully!' };
+  }
+
   async me(user: User) {
     return new UserBusiness({ ...user, clean: true });
   }
 
   async seed() {
-    const currentUser = await this.userService.seed() as User;
+    const currentUser = (await this.userService.seed()) as User;
     return new UserBusiness({ ...currentUser, clean: true });
   }
 
-  async promoteUser(id: string, user: User) {
-    if(user.role !== ERole.ADMIN) {
-      throw new ForbiddenException(
-          'You do not have permission to access this resource',
-      );
-    }
-    const currentUser = await this.findOne(id, user);
+  async promoteUser(id: string, authUser: User) {
+    this.authBusiness.validateCurrentUser({ authUser });
+    const currentUser = await this.findOne(id, authUser);
     return this.userService.promoteUser(currentUser);
   }
 }

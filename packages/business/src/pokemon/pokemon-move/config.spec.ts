@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
 import { ensureAttributes } from './config';
-import { EnsureAttributesParams } from './interface';
+import { EnsurePokemonMoveAttributesParams } from './interface';
 
 describe('ensureAttributes', () => {
   it('should return the expected attributes when moveByOrder is present', () => {
@@ -50,7 +50,7 @@ describe('ensureAttributes', () => {
   });
 
   it('should return the expected attributes when moveByOrder is absent', () => {
-    const params: EnsureAttributesParams = {
+    const params: EnsurePokemonMoveAttributesParams = {
       pp: 15,
       type: 'water',
       power: 40,
@@ -78,7 +78,7 @@ describe('ensureAttributes', () => {
   });
 
   it('should return undefined values for missing attributes', () => {
-    const params: EnsureAttributesParams = {};
+    const params: EnsurePokemonMoveAttributesParams = {};
 
     const result = ensureAttributes(params);
 
