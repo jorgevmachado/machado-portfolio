@@ -21,9 +21,9 @@ import type { TBy } from '../../shared/interface';
 
 import { CreateAuthDto } from '../dto/create-auth.dto';
 import { CredentialsAuthDto } from '../dto/credentials-auth.dto';
+import { UpdateAuthDto } from '../dto/update-auth.dto';
 
 import { User } from './user.entity';
-import {UpdateAuthDto} from "../dto/update-auth.dto";
 
 @Injectable()
 export class UserService extends Service<User> {
@@ -66,10 +66,13 @@ export class UserService extends Service<User> {
     return await this.save(user);
   }
 
-  async update(id: string, { role, name, gender, status, date_of_birth}: UpdateAuthDto) {
+  async update(
+    id: string,
+    { role, name, gender, status, date_of_birth }: UpdateAuthDto,
+  ) {
     const currentUser = await this.findOne({ value: id });
 
-    if(!role && !name && !gender && !status && !date_of_birth) {
+    if (!role && !name && !gender && !status && !date_of_birth) {
       return currentUser;
     }
 
@@ -77,7 +80,9 @@ export class UserService extends Service<User> {
     currentUser.name = !name ? currentUser.name : name;
     currentUser.gender = !gender ? currentUser.gender : gender;
     currentUser.status = !status ? currentUser.status : status;
-    currentUser.date_of_birth = !date_of_birth ? currentUser.date_of_birth : date_of_birth;
+    currentUser.date_of_birth = !date_of_birth
+      ? currentUser.date_of_birth
+      : date_of_birth;
 
     return await this.save(currentUser);
   }
@@ -120,7 +125,6 @@ export class UserService extends Service<User> {
   }
 
   async promoteUser(user: User) {
-
     if (user.role === ERole.ADMIN) {
       return {
         user,
@@ -161,5 +165,12 @@ export class UserService extends Service<User> {
 
     const promotedUser = await this.promoteUser(createdUser as User);
     return promotedUser?.user;
+  }
+
+  async upload(id: string, file: Express.Multer.File) {
+    const currentUser = await this.findOne({ value: id });
+    const path = await this.uploadFile(file, currentUser.email);
+    currentUser.picture = `http://localhost:3001/uploads/${path.split('/').pop()}`;
+    return await this.save(currentUser);
   }
 }

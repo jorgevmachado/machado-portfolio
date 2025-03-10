@@ -28,6 +28,7 @@ describe('AuthService', () => {
             seed: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
+            upload: jest.fn(),
             findOne: jest.fn(),
             promoteUser: jest.fn(),
             checkCredentials: jest.fn(),
@@ -199,6 +200,35 @@ describe('AuthService', () => {
       expect(
         await service.update(ENTITY_USER_FIXTURE.id, updateAuthDto, ENTITY_USER_FIXTURE),
       ).toEqual({ message: 'Update Successfully!' });
+    });
+  });
+
+  describe('upload', () => {
+    const mockFile: Express.Multer.File = {
+      fieldname: 'file',
+      originalname: 'test-image.jpeg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      size: 1024,
+      buffer: Buffer.from('mock file content'),
+      destination: 'uploads/',
+      filename: 'test-image.jpeg',
+      path: 'uploads/test-image.jpeg',
+      stream: undefined,
+    };
+    it('should upload file with success', async () => {
+      jest
+        .spyOn(userService, 'findOne')
+        .mockResolvedValueOnce(ENTITY_USER_FIXTURE);
+
+      jest.spyOn(userService, 'upload').mockResolvedValueOnce({
+        ...ENTITY_USER_FIXTURE,
+        picture: `http://localhost:3001/uploads/${ENTITY_USER_FIXTURE.email}.jpeg`
+      });
+
+      expect(
+        await service.upload(ENTITY_USER_FIXTURE.id, mockFile, ENTITY_USER_FIXTURE),
+      ).toEqual({ message: 'File uploaded successfully!' });
     });
   });
 });

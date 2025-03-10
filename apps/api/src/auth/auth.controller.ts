@@ -5,9 +5,12 @@ import {
   Param,
   Post,
   Put,
+  UploadedFile,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+
+import { UseFileUpload } from '../decorators/use-file-upload.decorator';
 
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { CredentialsAuthDto } from './dto/credentials-auth.dto';
@@ -18,8 +21,8 @@ import { GetUserAuth } from './decorators/auth-user.decorator';
 
 import { AuthService } from './auth.service';
 
-import { User } from './users/user.entity';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { User } from './users/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -66,5 +69,16 @@ export class AuthController {
   @UseGuards(AuthGuard(), AuthRoleGuards)
   promoteUser(@Param('id') id: string, @GetUserAuth() user: User) {
     return this.authService.promoteUser(id, user);
+  }
+
+  @Put(':id/upload')
+  @UseGuards(AuthGuard(), AuthRoleGuards)
+  @UseFileUpload(['image/jpeg', 'image/png', 'image/jpg'])
+  async upload(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+    @GetUserAuth() user: User,
+  ) {
+    return await this.authService.upload(id, file, user);
   }
 }

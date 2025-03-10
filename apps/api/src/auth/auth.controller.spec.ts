@@ -25,6 +25,7 @@ describe('AuthController', () => {
             signUp: jest.fn(),
             signIn: jest.fn(),
             update: jest.fn(),
+            upload: jest.fn(),
             findOne: jest.fn(),
             promoteUser: jest.fn(),
           },
@@ -243,4 +244,31 @@ describe('AuthController', () => {
       ).toEqual({ message: 'Update Successfully!' });
     });
   });
+
+  describe('upload', () => {
+    const mockFile: Express.Multer.File = {
+      fieldname: 'file',
+      originalname: 'test-image.jpeg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      size: 1024,
+      buffer: Buffer.from('mock file content'),
+      destination: 'uploads/',
+      filename: 'test-image.jpeg',
+      path: 'uploads/test-image.jpeg',
+      stream: undefined,
+    };
+    it('should be able to upload file', async () => {
+      jest.spyOn(service, 'upload').mockResolvedValueOnce({
+        message: 'File uploaded successfully!',
+      });
+      expect(
+          await controller.upload(
+              ENTITY_USER_FIXTURE.id,
+              mockFile,
+              ENTITY_USER_FIXTURE,
+          ),
+      ).toEqual({ message: 'File uploaded successfully!' });
+    });
+  })
 });

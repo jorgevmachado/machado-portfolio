@@ -3,7 +3,9 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 
-export abstract class Base {
+import { File } from '../file';
+
+export abstract class Base extends File {
   error(error: any) {
     if (error?.code === '23505') {
       throw new ConflictException(error?.detail ?? 'User already exists');
@@ -28,7 +30,11 @@ export abstract class Base {
 
   validateParam<T>(value: string | T, label?: string) {
     if (!value) {
-      throw this.error(new ConflictException(`The selected ${label ?? 'field'} does not exist, try another one or create one.`));
+      throw this.error(
+        new ConflictException(
+          `The selected ${label ?? 'field'} does not exist, try another one or create one.`,
+        ),
+      );
     }
   }
 }

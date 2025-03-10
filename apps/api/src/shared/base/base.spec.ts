@@ -10,7 +10,7 @@ describe('Base Class', () => {
   let base: Base;
 
   beforeEach(() => {
-    base = new (class extends Base {})(); // Cria uma instância concreta da classe abstrata Base
+    base = new (class extends Base {})();
   });
 
   describe('error()', () => {

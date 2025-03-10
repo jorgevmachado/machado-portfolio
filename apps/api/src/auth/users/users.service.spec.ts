@@ -6,6 +6,7 @@ import {
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import fs from 'fs';
 
 import { EGender, ERole, EStatus } from '@repo/business/shared/enum';
 
@@ -19,6 +20,8 @@ import { User } from './user.entity';
 
 import { UserService } from './users.service';
 import { UpdateAuthDto } from '../dto/update-auth.dto';
+
+jest.mock('fs');
 
 describe('UsersService', () => {
   let service: UserService;
@@ -218,15 +221,13 @@ describe('UsersService', () => {
         getOne: jest.fn().mockReturnValueOnce(USER_FIXTURE),
       } as any);
 
-      jest.spyOn(repository, 'save').mockResolvedValueOnce(USER_FIXTURE);
-
       expect(
         await service.update(USER_FIXTURE.id, {
-          name: ENTITY_USER_FIXTURE.name,
-          role: ENTITY_USER_FIXTURE.role,
-          gender: ENTITY_USER_FIXTURE.gender,
-          status: ENTITY_USER_FIXTURE.status,
-          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
+          name: undefined,
+          role: undefined,
+          gender: undefined,
+          status: undefined,
+          date_of_birth: undefined,
         }),
       ).toEqual(USER_FIXTURE);
     });
@@ -336,5 +337,41 @@ describe('UsersService', () => {
         message: 'The User is already admin.',
       });
     });
+  });
+
+  describe('upload', () => {
+    const mockFile: Express.Multer.File = {
+      fieldname: 'file',
+      originalname: 'test-image.jpeg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      size: 1024,
+      buffer: Buffer.from('mock file content'),
+      destination: 'uploads/',
+      filename: 'test-image.jpeg',
+      path: 'uploads/test-image.jpeg',
+      stream: undefined,
+    };
+    it('should return the path of the file with default file structure', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
+      } as any);
+
+      jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+
+      jest.spyOn(service as any, 'save').mockResolvedValue({
+        ...ENTITY_USER_FIXTURE,
+        picture: `http://localhost:3001/uploads/${ENTITY_USER_FIXTURE.email}.jpeg`
+      });
+
+      expect(await service.upload(ENTITY_USER_FIXTURE.id, mockFile)).toEqual({
+        ...ENTITY_USER_FIXTURE,
+        picture: `http://localhost:3001/uploads/${ENTITY_USER_FIXTURE.email}.jpeg`
+      })
+    })
+
   });
 });

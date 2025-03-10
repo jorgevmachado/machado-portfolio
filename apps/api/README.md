@@ -23,6 +23,7 @@ To learn more about NestJs, take a look at the following resources:
 - [GitHub Repo](https://github.com/nestjs/nest)
 
 npm run test -- --findRelatedTests src/shared/base/base.spec.ts
+npm run test -- --findRelatedTests src/shared/file/file.spec.ts
 
 npm run test -- --findRelatedTests src/auth/users/users.service.spec.ts
 npm run test -- --findRelatedTests src/auth/auth.service.spec.ts
