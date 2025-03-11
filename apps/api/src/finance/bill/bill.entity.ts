@@ -1,0 +1,84 @@
+import type { BillEntity } from '@repo/business/finance/bill/interface';
+import { Bank } from '../bank/bank.entity';
+import { Expense } from '../expense/expense.entity';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinTable,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { DecimalTransformer } from '../../shared';
+import { EBillType } from '@repo/business/finance/enum';
+import { User } from '../../auth/users/user.entity';
+
+@Entity({ name: 'bills' })
+export class Bill implements BillEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: BillEntity['id'];
+
+  @ManyToOne(() => User, (user) => user.bills, {
+    nullable: false,
+  })
+  @JoinTable()
+  user: User;
+
+  @Column({ nullable: false })
+  year?: number;
+
+  @ManyToOne(() => Bank, (bank) => bank.bills, {
+    nullable: false,
+  })
+  @JoinTable()
+  bank: Bank;
+
+  @Column({
+    nullable: false,
+    type: 'enum',
+    enum: EBillType,
+  })
+  type: EBillType;
+
+  @Column({ nullable: false, unique: true, length: 200 })
+  name: string;
+
+  @Column({
+    nullable: false,
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    default: 0.0,
+    transformer: new DecimalTransformer(),
+  })
+  total?: number;
+
+  @Column({ nullable: false })
+  all_paid?: boolean;
+
+  @Column({
+    nullable: false,
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    default: 0.0,
+    transformer: new DecimalTransformer(),
+  })
+  total_paid?: number;
+
+  @OneToMany(() => Expense, (expense) => expense.bill)
+  @JoinTable()
+  expenses: Array<Expense>;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at?: Date;
+}

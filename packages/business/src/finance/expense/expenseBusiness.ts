@@ -25,17 +25,14 @@ export default class ExpenseBusiness {
   }: ExpenseMergeParams): Expense {
     const mergedExpense = {
       id: expenseToMerge?.id ?? entity.id,
-      user: expenseToMerge?.user ?? entity.user,
       year: expenseToMerge?.year ?? entity.year,
       type: expenseToMerge?.type ?? entity.type,
       paid: expenseToMerge?.paid ?? entity.paid,
       value: expenseToMerge?.value ?? entity.value,
       total: expenseToMerge?.total ?? entity.total,
       month: expenseToMerge?.month ?? entity.month,
-      group: expenseToMerge?.group ?? entity.group,
       active: expenseToMerge?.active ?? entity.active,
       supplier: expenseToMerge?.supplier ?? entity.supplier,
-      category: expenseToMerge?.category ?? entity.category,
       total_paid: expenseToMerge?.total_paid ?? entity.total_paid,
       january: expenseToMerge?.january ?? entity.january,
       february: expenseToMerge?.february ?? entity.february,

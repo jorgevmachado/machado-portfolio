@@ -30,7 +30,7 @@ export class Supplier implements SupplierEntity {
   @JoinTable()
   type: SupplierType;
 
-  @OneToMany(() => Expense, (expense) => expense.group)
+  @OneToMany(() => Expense, (expense) => expense.supplier)
   @JoinTable()
   expenses?: Array<Expense>;
 

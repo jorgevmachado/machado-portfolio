@@ -2,14 +2,16 @@ import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
-  Entity, JoinTable, OneToMany,
+  Entity,
+  JoinTable,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-import { ERole, EStatus , EGender} from '@repo/business/shared/enum';
+import { EGender, ERole, EStatus } from '@repo/business/shared/enum';
 import type { UserEntity } from '@repo/business/auth/interface';
-import {Expense} from "../../finance/expense/expense.entity";
+import { Bill } from '../../finance/bill/bill.entity';
 
 @Entity({ name: 'users' })
 export class User implements UserEntity {
@@ -69,9 +71,9 @@ export class User implements UserEntity {
   @Column({ nullable: true, length: 64 })
   confirmation_token?: string;
 
-  @OneToMany(() => Expense, (expense) => expense.group)
+  @OneToMany(() => Bill, (bill) => bill.user)
   @JoinTable()
-  expenses?: Expense;
+  bills?: Bill;
 
   constructor(user?: User) {
     if (user) {

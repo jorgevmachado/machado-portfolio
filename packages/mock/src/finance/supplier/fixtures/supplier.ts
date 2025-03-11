@@ -3,11 +3,15 @@ import Supplier from '@repo/business/finance/supplier/supplier';
 import { FinanceEntity } from '../../interface';
 
 import {
-  BILLS_SUPPLIER_TYPE_FIXTURE, FOOD_SUPPLIER_TYPE_FIXTURE,
+  BILLS_SUPPLIER_TYPE_FIXTURE,
+  EDUCATION_SUPPLIER_TYPE_FIXTURE,
+  FOOD_SUPPLIER_TYPE_FIXTURE,
   HEALTH_SUPPLIER_TYPE_FIXTURE,
-  HOUSING_SUPPLIER_TYPE_FIXTURE, LEISURE_SUPPLIER_TYPE_FIXTURE,
+  HOUSING_SUPPLIER_TYPE_FIXTURE,
+  LEISURE_SUPPLIER_TYPE_FIXTURE,
   SUPPLIER_TYPE_FINANCE_ENTITY,
-  TRANSPORT_SUPPLIER_TYPE_FIXTURE, UNKNOWN_SUPPLIER_TYPE_FIXTURE,
+  TRANSPORT_SUPPLIER_TYPE_FIXTURE,
+  UNKNOWN_SUPPLIER_TYPE_FIXTURE,
 } from '../../supplier-type';
 
 export const VIVO_HOUSING_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -260,7 +264,7 @@ export const BG_NORTE_PETROLEO_SUPPLIER_FIXTURE: Supplier = new Supplier({
   created_at: new Date('2025-02-23T19:00:18.713Z'),
   updated_at: new Date('2025-02-23T19:00:18.713Z'),
   deleted_at: null,
-  description: 'São Paulo'
+  description: 'São Paulo',
 });
 
 export const BRASCANSTHRP_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -271,7 +275,7 @@ export const BRASCANSTHRP_SUPPLIER_FIXTURE: Supplier = new Supplier({
   created_at: new Date('2025-02-24T19:00:18.713Z'),
   updated_at: new Date('2025-02-24T19:00:18.713Z'),
   deleted_at: null,
-  description: 'São Paulo'
+  description: 'São Paulo',
 });
 
 export const BROSSMAN_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -314,16 +318,18 @@ export const CASCOL_COMBUSTIVEIS_SUPPLIER_FIXTURE: Supplier = new Supplier({
   deleted_at: null,
 });
 
-export const CASTELO_CAMPOS_DO_JORDAO_SUPPLIER_FIXTURE: Supplier = new Supplier({
-  id: '615567b9-4352-4cb3-92e0-5b889492283c',
-  name: 'Castelo Campos do jordão',
-  type: LEISURE_SUPPLIER_TYPE_FIXTURE,
-  active: true,
-  created_at: new Date('2025-03-01T19:00:18.713Z'),
-  updated_at: new Date('2025-03-01T19:00:18.713Z'),
-  deleted_at: null,
-  description: 'Campos do Jordão - SP'
-});
+export const CASTELO_CAMPOS_DO_JORDAO_SUPPLIER_FIXTURE: Supplier = new Supplier(
+  {
+    id: '615567b9-4352-4cb3-92e0-5b889492283c',
+    name: 'Castelo Campos do jordão',
+    type: LEISURE_SUPPLIER_TYPE_FIXTURE,
+    active: true,
+    created_at: new Date('2025-03-01T19:00:18.713Z'),
+    updated_at: new Date('2025-03-01T19:00:18.713Z'),
+    deleted_at: null,
+    description: 'Campos do Jordão - SP',
+  },
+);
 
 export const CONDOMINIO_CIVIL_BRASIL_SUPPLIER_FIXTURE: Supplier = new Supplier({
   id: '85d834b5-4256-45fc-894a-c96071852a1c',
@@ -333,7 +339,7 @@ export const CONDOMINIO_CIVIL_BRASIL_SUPPLIER_FIXTURE: Supplier = new Supplier({
   created_at: new Date('2025-03-02T19:00:18.713Z'),
   updated_at: new Date('2025-03-02T19:00:18.713Z'),
   deleted_at: null,
-  description: 'São Paulo'
+  description: 'São Paulo',
 });
 
 export const CONFIANCE_GESTAO_CONDO_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -424,7 +430,7 @@ export const ECOPISTA_FPAY_SUPPLIER_FIXTURE: Supplier = new Supplier({
   created_at: new Date('2025-03-12T19:00:18.713Z'),
   updated_at: new Date('2025-03-12T19:00:18.713Z'),
   deleted_at: null,
-  description: 'São Paulo'
+  description: 'São Paulo',
 });
 
 export const ESPETINHO_ELENA_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -475,7 +481,7 @@ export const GUARAREMA_SUPPLIER_FIXTURE: Supplier = new Supplier({
   created_at: new Date('2025-03-17T19:00:18.713Z'),
   updated_at: new Date('2025-03-17T19:00:18.713Z'),
   deleted_at: null,
-  description: 'São Paulo'
+  description: 'São Paulo',
 });
 
 export const ITAQUACETUBA_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -486,7 +492,7 @@ export const ITAQUACETUBA_SUPPLIER_FIXTURE: Supplier = new Supplier({
   created_at: new Date('2025-03-18T19:00:18.713Z'),
   updated_at: new Date('2025-03-18T19:00:18.713Z'),
   deleted_at: null,
-  description: 'São Paulo'
+  description: 'São Paulo',
 });
 
 export const KINOPLEX_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -547,7 +553,7 @@ export const MOTIVA_IMOVEIS_SUPPLIER_FIXTURE: Supplier = new Supplier({
   created_at: new Date('2025-03-24T19:00:18.713Z'),
   updated_at: new Date('2025-03-24T19:00:18.713Z'),
   deleted_at: null,
-  description: 'São Paulo'
+  description: 'São Paulo',
 });
 
 export const NETSHOP_INFORMATICA_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -678,7 +684,7 @@ export const SAO_JOSE_SUPPLIER_FIXTURE: Supplier = new Supplier({
   created_at: new Date('2025-04-07T19:00:18.713Z'),
   updated_at: new Date('2025-04-07T19:00:18.713Z'),
   deleted_at: null,
-  description: 'São Paulo'
+  description: 'São Paulo',
 });
 
 export const SENHORA_BAFORADA_SUPPLIER_FIXTURE: Supplier = new Supplier({
@@ -881,35 +887,38 @@ export const CREDIT_CARD_ANNUAL_FEE_SUPPLIER_FIXTURE: Supplier = new Supplier({
   deleted_at: null,
 });
 
-export const CREDIT_CARD_LOSS_AND_THEFT_PROTECTION_SERVICE_SUPPLIER_FIXTURE: Supplier = new Supplier({
-  id: '09594813-016a-4138-b2bc-8ec674ec1ba6',
-  name: 'Credit Card Loss And Theft Protection Service',
-  type: BILLS_SUPPLIER_TYPE_FIXTURE,
-  active: true,
-  created_at: new Date('2025-04-26T19:00:18.713Z'),
-  updated_at: new Date('2025-04-26T19:00:18.713Z'),
-  deleted_at: null,
-});
+export const CREDIT_CARD_LOSS_AND_THEFT_PROTECTION_SERVICE_SUPPLIER_FIXTURE: Supplier =
+  new Supplier({
+    id: '09594813-016a-4138-b2bc-8ec674ec1ba6',
+    name: 'Credit Card Loss And Theft Protection Service',
+    type: BILLS_SUPPLIER_TYPE_FIXTURE,
+    active: true,
+    created_at: new Date('2025-04-26T19:00:18.713Z'),
+    updated_at: new Date('2025-04-26T19:00:18.713Z'),
+    deleted_at: null,
+  });
 
-export const CREDIT_CARD_ADDITIONAL_IOF_ON_FINANCED_BALANCE_SUPPLIER_FIXTURE: Supplier = new Supplier({
-  id: 'b6b33b0c-0066-44ec-9493-487a376a7e46',
-  name: 'Credit Card IOF On Financed Balance',
-  type: BILLS_SUPPLIER_TYPE_FIXTURE,
-  active: true,
-  created_at: new Date('2025-04-26T19:00:18.713Z'),
-  updated_at: new Date('2025-04-26T19:00:18.713Z'),
-  deleted_at: null,
-});
+export const CREDIT_CARD_ADDITIONAL_IOF_ON_FINANCED_BALANCE_SUPPLIER_FIXTURE: Supplier =
+  new Supplier({
+    id: 'b6b33b0c-0066-44ec-9493-487a376a7e46',
+    name: 'Credit Card IOF On Financed Balance',
+    type: BILLS_SUPPLIER_TYPE_FIXTURE,
+    active: true,
+    created_at: new Date('2025-04-26T19:00:18.713Z'),
+    updated_at: new Date('2025-04-26T19:00:18.713Z'),
+    deleted_at: null,
+  });
 
-export const CREDIT_CARD_PREVIOUS_INVOICE_BALANCE_SUPPLIER_FIXTURE: Supplier = new Supplier({
-  id: '327a0d12-4e12-4b0d-b7a2-1a60bbdf7070',
-  name: 'Credit Card Previous Invoice Balance',
-  type: BILLS_SUPPLIER_TYPE_FIXTURE,
-  active: true,
-  created_at: new Date('2025-04-26T19:00:18.713Z'),
-  updated_at: new Date('2025-04-26T19:00:18.713Z'),
-  deleted_at: null,
-});
+export const CREDIT_CARD_PREVIOUS_INVOICE_BALANCE_SUPPLIER_FIXTURE: Supplier =
+  new Supplier({
+    id: '327a0d12-4e12-4b0d-b7a2-1a60bbdf7070',
+    name: 'Credit Card Previous Invoice Balance',
+    type: BILLS_SUPPLIER_TYPE_FIXTURE,
+    active: true,
+    created_at: new Date('2025-04-26T19:00:18.713Z'),
+    updated_at: new Date('2025-04-26T19:00:18.713Z'),
+    deleted_at: null,
+  });
 
 export const CREDIT_CARD_CHARGES_SUPPLIER_FIXTURE: Supplier = new Supplier({
   id: '91011d63-d763-4ce9-a050-978182a06166',
@@ -920,6 +929,37 @@ export const CREDIT_CARD_CHARGES_SUPPLIER_FIXTURE: Supplier = new Supplier({
   updated_at: new Date('2025-04-26T19:00:18.713Z'),
   deleted_at: null,
 });
+
+export const MASONIC_LODGE_SUPPLIER_FIXTURE: Supplier = new Supplier({
+  id: '25c250e2-2edb-4511-92b4-f139fde4388c',
+  name: 'Masonic Lodge',
+  type: EDUCATION_SUPPLIER_TYPE_FIXTURE,
+  active: true,
+  created_at: new Date('2025-04-26T19:00:18.713Z'),
+  updated_at: new Date('2025-04-26T19:00:18.713Z'),
+  deleted_at: null,
+});
+
+export const MOTORCYCLE_CLUB_SUPPLIER_FIXTURE: Supplier = new Supplier({
+  id: '3a24d4d6-ba50-4123-bd98-b15ad90cddf6',
+  name: 'Motorcycle Club',
+  type: LEISURE_SUPPLIER_TYPE_FIXTURE,
+  active: true,
+  created_at: new Date('2025-04-26T19:00:18.713Z'),
+  updated_at: new Date('2025-04-26T19:00:18.713Z'),
+  deleted_at: null,
+});
+
+export const PHILOSOPHICAL_MASONIC_LODGE_SUPPLIER_FIXTURE: Supplier =
+  new Supplier({
+    id: 'ddcb63c5-6539-4e21-a9f5-87596c11a3df',
+    name: 'Philosophical Masonic Lodge',
+    type: EDUCATION_SUPPLIER_TYPE_FIXTURE,
+    active: true,
+    created_at: new Date('2025-04-26T19:00:18.713Z'),
+    updated_at: new Date('2025-04-26T19:00:18.713Z'),
+    deleted_at: null,
+  });
 
 export const LIST_SUPPLIER_FIXTURE: Array<Supplier> = [
   VIVO_HOUSING_SUPPLIER_FIXTURE,
@@ -1010,6 +1050,9 @@ export const LIST_SUPPLIER_FIXTURE: Array<Supplier> = [
   CREDIT_CARD_ADDITIONAL_IOF_ON_FINANCED_BALANCE_SUPPLIER_FIXTURE,
   CREDIT_CARD_PREVIOUS_INVOICE_BALANCE_SUPPLIER_FIXTURE,
   CREDIT_CARD_CHARGES_SUPPLIER_FIXTURE,
+  MASONIC_LODGE_SUPPLIER_FIXTURE,
+  MOTORCYCLE_CLUB_SUPPLIER_FIXTURE,
+  PHILOSOPHICAL_MASONIC_LODGE_SUPPLIER_FIXTURE,
 ];
 
 export const SUPPLIER_FINANCE_ENTITY: FinanceEntity = {

@@ -1,7 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
 
-import { EGender, ERole, EStatus } from '../../shared';
-
 import { EExpenseType, EMonth } from '../enum';
 
 import ExpenseBusiness from './expenseBusiness';
@@ -32,32 +30,12 @@ describe('ExpenseBusiness', () => {
   const business = new ExpenseBusiness();
   const mockExpenseConstructorParams = {
     id: '123',
-    user: {
-      id: 'user_id',
-      name: 'User Name',
-      cpf: '123.456.789-00',
-      role: ERole.USER,
-      email: 'user@example.com',
-      gender: EGender.MALE,
-      status: EStatus.ACTIVE,
-      whatsapp: '123456789',
-      date_of_birth: new Date('1990-01-01'),
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
-    },
     year: 2022,
     type: EExpenseType.VARIABLE,
     paid: true,
     value: 100,
     total: 100,
     month: EMonth.MARCH,
-    group: {
-      id: '1',
-      name: 'Travel Expenses',
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
-      deleted_at: undefined,
-    },
     active: true,
     supplier: {
       id: '1',
@@ -74,20 +52,6 @@ describe('ExpenseBusiness', () => {
       updated_at: new Date('2023-01-02'),
       deleted_at: undefined,
       description: 'This supplier delivers raw materials.',
-    },
-    category: {
-      id: '123',
-      name: 'Travel',
-      type: {
-        id: '1',
-        name: 'Office Supplies',
-        created_at: new Date('2023-01-01'),
-        updated_at: new Date('2023-01-02'),
-        deleted_at: undefined,
-      },
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
-      deleted_at: undefined,
     },
     total_paid: 100,
     description: 'Test expense',
@@ -119,7 +83,6 @@ describe('ExpenseBusiness', () => {
       const entity = new Expense(mockExpenseConstructorParams);
       const expenseToMerge = {
         ...mockExpenseConstructorParams,
-        user: mockExpenseConstructorParams.user,
         value: 200,
         month: EMonth.FEBRUARY,
         total_paid: 50,
@@ -127,7 +90,6 @@ describe('ExpenseBusiness', () => {
 
       const mergedExpense = business.merge({ entity, expenseToMerge });
 
-      expect(mergedExpense.user).toBe(mockExpenseConstructorParams.user);
       expect(mergedExpense.value).toBe(200);
       expect(mergedExpense.month).toBe(EMonth.FEBRUARY);
       expect(mergedExpense.total_paid).toBe(50);

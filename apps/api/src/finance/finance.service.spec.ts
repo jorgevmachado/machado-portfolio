@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FinanceService } from './finance.service';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
 import { EXPENSE_LIST_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
 import { USER_FIXTURE } from '@repo/mock/auth/fixture';
+
+import { FinanceService } from './finance.service';
 import { ExpenseService } from './expense/expense.service';
 
 describe('FinanceService', () => {

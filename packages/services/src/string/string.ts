@@ -59,7 +59,7 @@ export function extractLastItemFromUrl(url?: string) {
   return segments[segments.length - 1];
 }
 
-export function findRepeated<T extends {id: string; name: string; }>(list: Array<T>, key: 'id' | 'name') {
+export function findRepeated<T extends {id: string; name?: string; }>(list: Array<T>, key: 'id' | 'name') {
   const fieldSet = new Set<string>();
 
   for (const item of list) {

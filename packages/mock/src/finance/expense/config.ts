@@ -64,34 +64,24 @@ export function create(req: Request, res: Response) {
     paid,
     value,
     month,
-    group,
     supplier,
-    category,
     description,
     instalment_number,
   } = req.body;
 
-  const entityRelations = expenseRelations(group, supplier, category);
+  const entityRelations = expenseRelations(supplier);
 
   if (entityRelations.statusCode !== 200) {
     return entityRelations;
   }
 
-  const groupEntity = entityRelations.response[
-    'group'
-  ] as ExpenseEntity['group'];
   const supplierEntity = entityRelations.response[
     'supplier'
   ] as ExpenseEntity['supplier'];
-  const categoryEntity = entityRelations.response[
-    'category'
-  ] as ExpenseEntity['category'];
 
   const expense = {
     ...EXPENSE,
-    group: groupEntity,
     supplier: supplierEntity,
-    category: categoryEntity,
   };
   expense.year = year ?? expense.year;
   expense.type = type ?? expense.type;
@@ -114,9 +104,7 @@ export function update(req: Request, res: Response) {
   const {
     year,
     type,
-    group,
     supplier,
-    category,
     january,
     february,
     march,
@@ -145,28 +133,20 @@ export function update(req: Request, res: Response) {
     instalment_number,
   } = req.body;
 
-  const entityRelations = expenseRelations(group, supplier, category);
+  const entityRelations = expenseRelations(supplier);
 
   if (entityRelations.statusCode !== 200) {
     return entityRelations;
   }
 
-  const groupEntity = entityRelations.response[
-    'group'
-  ] as ExpenseEntity['group'];
   const supplierEntity = entityRelations.response[
     'supplier'
   ] as ExpenseEntity['supplier'];
-  const categoryEntity = entityRelations.response[
-    'category'
-  ] as ExpenseEntity['category'];
 
   const expense = {
     ...EXPENSE,
     id,
-    group: groupEntity,
     supplier: supplierEntity,
-    category: categoryEntity,
     created_at: new Date('1990-02-13T17:37:47.783Z'),
   };
 
@@ -207,28 +187,19 @@ export function update(req: Request, res: Response) {
   });
 }
 
-function expenseRelations(group: string, supplier: string, category: string) {
-  const financeEntity = EXPENSE_FINANCE_ENTITY;
-
-  const groupEntity = expenseRelation(group, financeEntity.group);
-  if (groupEntity.statusCode !== 200) {
-    return groupEntity;
-  }
-  const supplierEntity = expenseRelation(supplier, financeEntity.supplier);
+function expenseRelations(supplier: string) {
+  const supplierEntity = expenseRelation(
+    supplier,
+    EXPENSE_FINANCE_ENTITY.supplier,
+  );
   if (supplierEntity.statusCode !== 200) {
     return supplierEntity;
   }
 
-  const categoryEntity = expenseRelation(category, financeEntity.category);
-  if (categoryEntity.statusCode !== 200) {
-    return categoryEntity;
-  }
   return {
     statusCode: 200,
     response: {
-      group: groupEntity.response,
       supplier: supplierEntity.response as ExpenseEntity['supplier'],
-      category: categoryEntity.response as ExpenseEntity['category'],
     },
   };
 }

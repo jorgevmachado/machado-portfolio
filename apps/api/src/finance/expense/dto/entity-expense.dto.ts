@@ -9,18 +9,11 @@ import {
 } from 'class-validator';
 
 import { EExpenseType } from '@repo/business/finance/enum';
-
-import { ExpenseGroup } from '../expense-group/expense-group.entity';
 import { Supplier } from '../../supplier/supplier.entity';
-import { ExpenseCategory } from '../expense-category/expense-category.entity';
-import { User } from '../../../auth/users/user.entity';
 
 export class EntityExpenseDto {
   @IsNumber({ maxDecimalPlaces: 0 })
   year?: number;
-
-  @IsEmpty()
-  user: User;
 
   @IsNotEmpty()
   @IsEnum(EExpenseType)
@@ -28,15 +21,7 @@ export class EntityExpenseDto {
 
   @IsNotEmpty()
   @MaxLength(200)
-  group: string | ExpenseGroup;
-
-  @IsNotEmpty()
-  @MaxLength(200)
   supplier: string | Supplier;
-
-  @IsNotEmpty()
-  @MaxLength(200)
-  category: string | ExpenseCategory;
 
   @IsPositive()
   @IsEmpty()

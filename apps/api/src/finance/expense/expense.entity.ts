@@ -14,12 +14,8 @@ import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 
 import { DecimalTransformer } from '../../shared';
 
-import { User } from '../../auth/users/user.entity';
-
 import { Supplier } from '../supplier/supplier.entity';
-
-import { ExpenseGroup } from './expense-group/expense-group.entity';
-import { ExpenseCategory } from './expense-category/expense-category.entity';
+import { Bill } from '../bill/bill.entity';
 
 @Entity({ name: 'expenses' })
 export class Expense implements ExpenseEntity {
@@ -28,12 +24,6 @@ export class Expense implements ExpenseEntity {
 
   @Column({ nullable: false })
   year?: number;
-
-  @ManyToOne(() => User, (user) => user.expenses, {
-    nullable: false,
-  })
-  @JoinTable()
-  user: User;
 
   @Column({
     nullable: false,
@@ -59,12 +49,6 @@ export class Expense implements ExpenseEntity {
 
   month?: EMonth;
 
-  @ManyToOne(() => ExpenseGroup, (expenseGroup) => expenseGroup.expenses, {
-    nullable: false,
-  })
-  @JoinTable()
-  group: ExpenseGroup;
-
   @Column({ nullable: false })
   active?: boolean;
 
@@ -73,16 +57,6 @@ export class Expense implements ExpenseEntity {
   })
   @JoinTable()
   supplier: Supplier;
-
-  @ManyToOne(
-    () => ExpenseCategory,
-    (expenseCategory) => expenseCategory.expenses,
-    {
-      nullable: false,
-    },
-  )
-  @JoinTable()
-  category: ExpenseCategory;
 
   @Column({
     nullable: false,
@@ -255,6 +229,12 @@ export class Expense implements ExpenseEntity {
 
   @Column({ nullable: false })
   instalment_number?: number;
+
+  @ManyToOne(() => Bill, (bill) => bill.expenses, {
+    nullable: true,
+  })
+  @JoinTable()
+  bill?: Bill;
 
   @CreateDateColumn()
   created_at: Date;

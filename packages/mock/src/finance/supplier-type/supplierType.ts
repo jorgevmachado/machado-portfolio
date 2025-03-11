@@ -3,31 +3,28 @@ import { Router } from 'express';
 import { findAll, findOne } from '../../shared';
 
 import { create, remove, update } from '../shared';
-import { supplierPath } from '../finance';
 
 import { SUPPLIER_TYPE_FINANCE_ENTITY } from './fixtures';
 
-const path = supplierPath;
-
 const supplierTypeRouter = Router();
 
-supplierTypeRouter.get(`${path}/list/type`, (req, res) =>
+supplierTypeRouter.get(`/list/type`, (req, res) =>
   findAll(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
-supplierTypeRouter.get(`${path}/:param/type`, (req, res) =>
+supplierTypeRouter.get(`/:param/type`, (req, res) =>
   findOne(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
-supplierTypeRouter.post(`${path}/type`, (req, res) =>
+supplierTypeRouter.post(`/type`, (req, res) =>
   create(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
-supplierTypeRouter.put(`${path}/:param/type`, (req, res) =>
+supplierTypeRouter.put(`/:param/type`, (req, res) =>
   update(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 
-supplierTypeRouter.delete(`${path}/:param/type`, (req, res) =>
+supplierTypeRouter.delete(`/:param/type`, (req, res) =>
   remove(req, res, SUPPLIER_TYPE_FINANCE_ENTITY),
 );
 

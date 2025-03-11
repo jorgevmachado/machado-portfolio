@@ -9,10 +9,7 @@ import {
 } from 'class-validator';
 
 import { EExpenseType, EMonth } from '@repo/business/finance/enum';
-import { ExpenseGroup } from '../expense-group/expense-group.entity';
 import { Supplier } from '../../supplier/supplier.entity';
-import { ExpenseCategory } from '../expense-category/expense-category.entity';
-import { User } from '../../../auth/users/user.entity';
 
 export class CreateExpenseDto {
   @IsNumber({ maxDecimalPlaces: 0 })
@@ -31,23 +28,12 @@ export class CreateExpenseDto {
   @IsNumber({ maxDecimalPlaces: 0 })
   value: number;
 
-  @IsEmpty()
-  user: User;
-
   @IsEnum(EMonth)
   month?: EMonth;
 
   @IsNotEmpty()
   @MaxLength(200)
-  group: string | ExpenseGroup;
-
-  @IsNotEmpty()
-  @MaxLength(200)
   supplier: string | Supplier;
-
-  @IsNotEmpty()
-  @MaxLength(200)
-  category: string | ExpenseCategory;
 
   @IsNotEmpty()
   @MaxLength(200)

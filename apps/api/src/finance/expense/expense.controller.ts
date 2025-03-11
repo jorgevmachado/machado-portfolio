@@ -13,8 +13,6 @@ import { AuthRoleGuards } from '../../auth/guards/auth-role.guards';
 import { AuthStatusGuards } from '../../auth/guards/auth-status.guards';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
-import { GetUserAuth } from '../../auth/decorators/auth-user.decorator';
-import { User } from '../../auth/users/user.entity';
 
 import { ExpenseQueryParameters } from './expense.interface';
 import { ExpenseService } from './expense.service';
@@ -30,11 +28,8 @@ export class ExpenseController {
   }
 
   @Post()
-  async create(
-    @GetUserAuth() user: User,
-    @Body() createExpenseDto: CreateExpenseDto,
-  ) {
-    return await this.service.create({ ...createExpenseDto, user });
+  async create(@Body() createExpenseDto: CreateExpenseDto) {
+    return await this.service.create(createExpenseDto);
   }
 
   @Get(':param')
