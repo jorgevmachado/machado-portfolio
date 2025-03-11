@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
+import { USER_FIXTURE } from '@repo/mock/auth/fixture';
+
 import { FinanceController } from './finance.controller';
 import { FinanceService } from './finance.service';
-import { USER_FIXTURE } from '@repo/mock/auth/fixture';
 
 describe('FinanceController', () => {
   let service: FinanceService;
