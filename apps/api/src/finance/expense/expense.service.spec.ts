@@ -1,12 +1,29 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import { Repository } from 'typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { ConflictException } from '@nestjs/common';
 
-import { ExpenseService } from './expense.service';
-import { Expense } from './expense.entity';
-import { SupplierService } from '../supplier/supplier.service';
+import { EMonth } from '@repo/business/finance/enum';
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
+
+import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
+
+import { EXPENSE_LIST_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
+
+import { CreateExpenseDto } from './dto/create-expense.dto';
+import { UpdateExpenseDto } from './dto/update-expense.dto';
+
+import { Expense } from './expense.entity';
+import { ExpenseService } from './expense.service';
+import { SupplierService } from '../supplier/supplier.service';
 
 describe('ExpenseService', () => {
   let repository: Repository<Expense>;
@@ -14,6 +31,7 @@ describe('ExpenseService', () => {
   let service: ExpenseService;
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ExpenseService,
@@ -35,383 +53,184 @@ describe('ExpenseService', () => {
     service = module.get<ExpenseService>(ExpenseService);
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should be defined', () => {
     expect(repository).toBeDefined();
     expect(supplierService).toBeDefined();
     expect(service).toBeDefined();
   });
 
-  // describe('seed', () => {
-  //   it('should seed the database when exist in database', async () => {
-  //     jest.spyOn(expenseCategoryService, 'seed').mockResolvedValueOnce({
-  //       expenseCategoryTypes: LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-  //       expenseCategories: LIST_EXPENSE_CATEGORY_FIXTURE,
-  //     });
-  //
-  //     jest
-  //       .spyOn(expenseGroupService, 'seed')
-  //       .mockResolvedValueOnce(LIST_EXPENSE_GROUP_FIXTURE);
-  //
-  //     jest.spyOn(supplierService, 'seed').mockResolvedValueOnce({
-  //       suppliers: LIST_SUPPLIER_FIXTURE,
-  //       supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
-  //     });
-  //
-  //     jest
-  //       .spyOn(repository, 'find')
-  //       .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
-  //
-  //     expect(await service.seed(USER_FIXTURE)).toEqual(EXPENSE_LIST_FIXTURE);
-  //   });
-  //   it('should return conflict exception when seed expense category', async () => {
-  //     jest.spyOn(expenseCategoryService, 'seed').mockResolvedValueOnce(null);
-  //     jest
-  //       .spyOn(expenseGroupService, 'seed')
-  //       .mockResolvedValueOnce(LIST_EXPENSE_GROUP_FIXTURE);
-  //
-  //     jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
-  //
-  //     await expect(service.seed(USER_FIXTURE)).rejects.toThrowError(
-  //       ConflictException,
-  //     );
-  //   });
-  //   it('should return conflict exception when seed expense group', async () => {
-  //     jest.spyOn(expenseCategoryService, 'seed').mockResolvedValueOnce({
-  //       expenseCategoryTypes: LIST_EXPENSE_CATEGORY_TYPE_FIXTURE,
-  //       expenseCategories: LIST_EXPENSE_CATEGORY_FIXTURE,
-  //     });
-  //     jest.spyOn(expenseGroupService, 'seed').mockResolvedValueOnce(null);
-  //
-  //     jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
-  //
-  //     await expect(service.seed(USER_FIXTURE)).rejects.toThrowError(
-  //       ConflictException,
-  //     );
-  //   });
-  // });
-  //
-  // describe('create', () => {
-  //   it('should create a new expense with type equal variable and save it', async () => {
-  //     const createDto: CreateExpenseDto = {
-  //       type: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.type,
-  //       value: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.value,
-  //       month: EMonth.FEBRUARY,
-  //       group: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group.name,
-  //       supplier: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.supplier.name,
-  //       category: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.category.name,
-  //       user: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.user,
-  //       instalment_number:
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.instalment_number,
-  //     };
-  //
-  //     jest
-  //       .spyOn(expenseGroupService, 'treatExpenseGroupParam')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group);
-  //
-  //     jest
-  //       .spyOn(supplierService, 'treatSupplierParam')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.supplier);
-  //
-  //     jest.spyOn(repository, 'findOne').mockReturnValueOnce(null);
-  //
-  //     jest
-  //       .spyOn(expenseCategoryService, 'treatExpenseCategoryParam')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.category);
-  //
-  //     jest
-  //       .spyOn(repository, 'save')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE);
-  //
-  //     expect(await service.create(createDto)).toEqual(
-  //       NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE,
-  //     );
-  //   });
-  //   it('should create a new expense with type equal fixed and save it', async () => {
-  //     const createDto: CreateExpenseDto = {
-  //       type: GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.type,
-  //       value: GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.value,
-  //       group: GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.group.name,
-  //       supplier: GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.supplier.name,
-  //       category: GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.category.name,
-  //       user: GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.user,
-  //       instalment_number: GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.instalment_number,
-  //     };
-  //
-  //     jest
-  //       .spyOn(expenseGroupService, 'treatExpenseGroupParam')
-  //       .mockResolvedValueOnce(GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.group);
-  //
-  //     jest
-  //       .spyOn(supplierService, 'treatSupplierParam')
-  //       .mockResolvedValueOnce(GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.supplier);
-  //
-  //     jest.spyOn(repository, 'findOne').mockReturnValueOnce(null);
-  //
-  //     jest
-  //       .spyOn(expenseCategoryService, 'treatExpenseCategoryParam')
-  //       .mockResolvedValueOnce(GARAGE_MONTE_CARLO_EXPENSE_FIXTURE.category);
-  //
-  //     jest
-  //       .spyOn(repository, 'save')
-  //       .mockResolvedValueOnce(GARAGE_MONTE_CARLO_EXPENSE_FIXTURE);
-  //
-  //     expect(await service.create(createDto)).toEqual(
-  //       GARAGE_MONTE_CARLO_EXPENSE_FIXTURE,
-  //     );
-  //   });
-  //   it('should create a new expense with instalment number', async () => {
-  //     const createDto: CreateExpenseDto = {
-  //       type: OLD_BIKERS_EXPENSE_FIXTURE.type,
-  //       value: OLD_BIKERS_EXPENSE_FIXTURE.value,
-  //       month: EMonth.JANUARY,
-  //       group: OLD_BIKERS_EXPENSE_FIXTURE.group.name,
-  //       supplier: OLD_BIKERS_EXPENSE_FIXTURE.supplier.name,
-  //       category: OLD_BIKERS_EXPENSE_FIXTURE.category.name,
-  //       user: OLD_BIKERS_EXPENSE_FIXTURE.user,
-  //       instalment_number: OLD_BIKERS_EXPENSE_FIXTURE.instalment_number,
-  //     };
-  //
-  //     jest
-  //       .spyOn(expenseGroupService, 'treatExpenseGroupParam')
-  //       .mockResolvedValueOnce(OLD_BIKERS_EXPENSE_FIXTURE.group);
-  //
-  //     jest
-  //       .spyOn(supplierService, 'treatSupplierParam')
-  //       .mockResolvedValueOnce(OLD_BIKERS_EXPENSE_FIXTURE.supplier);
-  //
-  //     jest.spyOn(repository, 'findOne').mockReturnValueOnce(null);
-  //
-  //     jest
-  //       .spyOn(expenseCategoryService, 'treatExpenseCategoryParam')
-  //       .mockResolvedValueOnce(OLD_BIKERS_EXPENSE_FIXTURE.category);
-  //
-  //     jest
-  //       .spyOn(repository, 'save')
-  //       .mockResolvedValueOnce(OLD_BIKERS_EXPENSE_FIXTURE);
-  //
-  //     expect(await service.create(createDto)).toEqual(
-  //       OLD_BIKERS_EXPENSE_FIXTURE,
-  //     );
-  //   });
-  //   it('must update expense values if expense exists in database', async () => {
-  //     const createDto: CreateExpenseDto = {
-  //       type: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.type,
-  //       value: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.value,
-  //       month: EMonth.FEBRUARY,
-  //       group: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group.name,
-  //       supplier: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.supplier.name,
-  //       category: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.category.name,
-  //       user: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.user,
-  //       instalment_number:
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.instalment_number,
-  //     };
-  //
-  //     jest
-  //       .spyOn(expenseGroupService, 'treatExpenseGroupParam')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group);
-  //
-  //     jest
-  //       .spyOn(supplierService, 'treatSupplierParam')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.supplier);
-  //
-  //     jest
-  //       .spyOn(repository, 'findOne')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE);
-  //
-  //     const expected: Expense = {
-  //       ...NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE,
-  //       february:
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.february +
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.february,
-  //       total:
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.total +
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.february,
-  //     };
-  //     jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
-  //
-  //     expect(await service.create(createDto)).toEqual(expected);
-  //   });
-  // });
-  //
-  // describe('update', () => {
-  //   const updateDto: UpdateExpenseDto = {
-  //     year: NEOENERGIA_ALL_PAYMENT_FIXTURE.year,
-  //     type: NEOENERGIA_ALL_PAYMENT_FIXTURE.type,
-  //     january: NEOENERGIA_ALL_PAYMENT_FIXTURE.january,
-  //     january_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.january_paid,
-  //     february: NEOENERGIA_ALL_PAYMENT_FIXTURE.february,
-  //     february_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.february_paid,
-  //     march: NEOENERGIA_ALL_PAYMENT_FIXTURE.march,
-  //     march_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.march_paid,
-  //     april: NEOENERGIA_ALL_PAYMENT_FIXTURE.april,
-  //     april_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.april_paid,
-  //     may: NEOENERGIA_ALL_PAYMENT_FIXTURE.may,
-  //     may_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.may_paid,
-  //     june: NEOENERGIA_ALL_PAYMENT_FIXTURE.june,
-  //     june_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.june_paid,
-  //     july: NEOENERGIA_ALL_PAYMENT_FIXTURE.july,
-  //     july_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.july_paid,
-  //     august: NEOENERGIA_ALL_PAYMENT_FIXTURE.august,
-  //     august_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.august_paid,
-  //     september: NEOENERGIA_ALL_PAYMENT_FIXTURE.september,
-  //     september_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.september_paid,
-  //     october: NEOENERGIA_ALL_PAYMENT_FIXTURE.october,
-  //     october_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.october_paid,
-  //     november: NEOENERGIA_ALL_PAYMENT_FIXTURE.november,
-  //     november_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.november_paid,
-  //     december: NEOENERGIA_ALL_PAYMENT_FIXTURE.december,
-  //     december_paid: NEOENERGIA_ALL_PAYMENT_FIXTURE.december_paid,
-  //     description: NEOENERGIA_ALL_PAYMENT_FIXTURE.description,
-  //     instalment_number: NEOENERGIA_ALL_PAYMENT_FIXTURE.instalment_number,
-  //   };
-  //   it('should update a expense with all fields and save it', async () => {
-  //     jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-  //       andWhere: jest.fn(),
-  //       withDeleted: jest.fn(),
-  //       leftJoinAndSelect: jest.fn(),
-  //       getOne: jest
-  //         .fn()
-  //         .mockReturnValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE),
-  //     } as any);
-  //
-  //     jest
-  //       .spyOn(expenseGroupService, 'treatExpenseGroupParam')
-  //       .mockResolvedValueOnce(OLD_BIKERS_EXPENSE_FIXTURE.group);
-  //
-  //     jest
-  //       .spyOn(supplierService, 'treatSupplierParam')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.supplier);
-  //
-  //     jest
-  //       .spyOn(expenseCategoryService, 'treatExpenseCategoryParam')
-  //       .mockResolvedValueOnce(OLD_BIKERS_EXPENSE_FIXTURE.category);
-  //
-  //     jest
-  //       .spyOn(repository, 'save')
-  //       .mockResolvedValueOnce(NEOENERGIA_ALL_PAYMENT_FIXTURE);
-  //
-  //     expect(
-  //       await service.update(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.id, {
-  //         ...updateDto,
-  //         user: NEOENERGIA_ALL_PAYMENT_FIXTURE.user,
-  //         group: NEOENERGIA_ALL_PAYMENT_FIXTURE.group.name,
-  //         supplier: NEOENERGIA_ALL_PAYMENT_FIXTURE.supplier.name,
-  //         category: NEOENERGIA_ALL_PAYMENT_FIXTURE.category.name,
-  //       }),
-  //     ).toEqual(NEOENERGIA_ALL_PAYMENT_FIXTURE);
-  //   });
-  //
-  //   it('should update a expense without relations fields and save it', async () => {
-  //     jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-  //       andWhere: jest.fn(),
-  //       withDeleted: jest.fn(),
-  //       leftJoinAndSelect: jest.fn(),
-  //       getOne: jest
-  //         .fn()
-  //         .mockReturnValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE),
-  //     } as any);
-  //
-  //     const expected = {
-  //       ...NEOENERGIA_ALL_PAYMENT_FIXTURE,
-  //       group: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group,
-  //       category: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.category,
-  //       supplier: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.supplier,
-  //       user: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.user,
-  //     };
-  //
-  //     jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
-  //
-  //     expect(
-  //       await service.update(
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.id,
-  //         updateDto,
-  //       ),
-  //     ).toEqual(expected);
-  //   });
-  //
-  //   it('should return conflict exception because the id is not uuid', async () => {
-  //     await expect(
-  //       service.update(
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group.name,
-  //         updateDto,
-  //       ),
-  //     ).rejects.toThrow(ConflictException);
-  //   });
-  // });
-  //
-  // describe('remove', () => {
-  //   it('should remove expense', async () => {
-  //     jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-  //       andWhere: jest.fn(),
-  //       withDeleted: jest.fn(),
-  //       leftJoinAndSelect: jest.fn(),
-  //       getOne: jest
-  //         .fn()
-  //         .mockReturnValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE),
-  //     } as any);
-  //
-  //     jest.spyOn(repository, 'softRemove').mockResolvedValueOnce({
-  //       ...NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE,
-  //       deleted_at: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.created_at,
-  //     });
-  //
-  //     expect(
-  //       await service.remove(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.id),
-  //     ).toEqual({
-  //       message: 'Successfully removed',
-  //     });
-  //   });
-  //   it('should return conflict exception because the id is not uuid', async () => {
-  //     await expect(
-  //       service.remove(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group.name),
-  //     ).rejects.toThrow(ConflictException);
-  //   });
-  // });
-  //
-  // describe('findAll', () => {
-  //   it('should return all expenses', async () => {
-  //     jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-  //       andWhere: jest.fn(),
-  //       withDeleted: jest.fn(),
-  //       leftJoinAndSelect: jest.fn(),
-  //       getMany: jest.fn().mockReturnValueOnce(EXPENSE_LIST_FIXTURE),
-  //     } as any);
-  //
-  //     expect(await service.findAll({})).toEqual(EXPENSE_LIST_FIXTURE);
-  //   });
-  //
-  //   it('should return expenses list with filter', async () => {
-  //     const listFiltered = EXPENSE_LIST_FIXTURE.filter((expense) => {
-  //       return (
-  //         expense.year === 2025 &&
-  //         expense.paid === false &&
-  //         expense.type === EExpenseType.VARIABLE &&
-  //         expense.group.name === 'Ingrid Residential' &&
-  //         expense.active === true &&
-  //         expense.supplier.id === 'f6955c58-9e02-42b0-a70a-4467470098d7' &&
-  //         expense.category.name === 'Bank Slip'
-  //       );
-  //     });
-  //     jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-  //       andWhere: jest.fn(),
-  //       withDeleted: jest.fn(),
-  //       leftJoinAndSelect: jest.fn(),
-  //       getMany: jest.fn().mockReturnValueOnce(listFiltered),
-  //     } as any);
-  //
-  //     expect(
-  //       await service.findAll({
-  //         parameters: {
-  //           year: '2025',
-  //           paid: false,
-  //           type: EExpenseType.VARIABLE,
-  //           group: 'Ingrid Residential',
-  //           active: true,
-  //           supplier: 'f6955c58-9e02-42b0-a70a-4467470098d7',
-  //           category: 'Bank Slip',
-  //         },
-  //       }),
-  //     ).toEqual(listFiltered);
-  //   });
-  // });
+  describe('seed', () => {
+    it('should seed the database when exist in database', async () => {
+      jest
+        .spyOn(repository, 'find')
+        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
+
+      expect(await service.seed(LIST_SUPPLIER_FIXTURE)).toEqual(
+        EXPENSE_LIST_FIXTURE,
+      );
+    });
+
+    it('should seed the database when not exist in database', async () => {
+      jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
+
+      EXPENSE_LIST_FIXTURE.forEach((expense) => {
+        jest.spyOn(repository, 'save').mockResolvedValueOnce(expense);
+      });
+
+      expect(await service.seed(LIST_SUPPLIER_FIXTURE)).toEqual(
+        EXPENSE_LIST_FIXTURE,
+      );
+    });
+  });
+
+  describe('getRelation', () => {
+    const relation = 'Supplier';
+    it('should throw ConflictException when the relation is not found', () => {
+      const list = [{ name: 'Supplier1' }, { name: 'Supplier2' }];
+      const name = 'Supplier3';
+
+      expect(() => {
+        service['getRelation'](list, relation, name);
+      }).toThrow(
+        new ConflictException(
+          `The selected ${relation} does not exist, try another one or create one.`,
+        ),
+      );
+    });
+  });
+
+  describe('create', () => {
+    it('should create a new expense with type equal variable and save it', async () => {
+      const createDto: CreateExpenseDto = {
+        type: EXPENSE_LIST_FIXTURE[0].type,
+        value: 100,
+        month: EMonth.FEBRUARY,
+        supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
+        instalment_number: EXPENSE_LIST_FIXTURE[0].instalment_number,
+      };
+
+      jest
+        .spyOn(supplierService, 'treatSupplierParam')
+        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
+
+      jest.spyOn(repository, 'findOne').mockReturnValueOnce(null);
+
+      jest
+        .spyOn(repository, 'save')
+        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
+
+      expect(await service.create(createDto)).toEqual(EXPENSE_LIST_FIXTURE[0]);
+    });
+  });
+
+  describe('update', () => {
+    const updateDto: UpdateExpenseDto = {
+      year: EXPENSE_LIST_FIXTURE[0].year,
+      type: EXPENSE_LIST_FIXTURE[0].type,
+      january: EXPENSE_LIST_FIXTURE[0].january,
+      january_paid: EXPENSE_LIST_FIXTURE[0].january_paid,
+      february: EXPENSE_LIST_FIXTURE[0].february,
+      february_paid: EXPENSE_LIST_FIXTURE[0].february_paid,
+      march: EXPENSE_LIST_FIXTURE[0].march,
+      march_paid: EXPENSE_LIST_FIXTURE[0].march_paid,
+      april: EXPENSE_LIST_FIXTURE[0].april,
+      april_paid: EXPENSE_LIST_FIXTURE[0].april_paid,
+      may: EXPENSE_LIST_FIXTURE[0].may,
+      may_paid: EXPENSE_LIST_FIXTURE[0].may_paid,
+      june: EXPENSE_LIST_FIXTURE[0].june,
+      june_paid: EXPENSE_LIST_FIXTURE[0].june_paid,
+      july: EXPENSE_LIST_FIXTURE[0].july,
+      july_paid: EXPENSE_LIST_FIXTURE[0].july_paid,
+      august: EXPENSE_LIST_FIXTURE[0].august,
+      august_paid: EXPENSE_LIST_FIXTURE[0].august_paid,
+      september: EXPENSE_LIST_FIXTURE[0].september,
+      september_paid: EXPENSE_LIST_FIXTURE[0].september_paid,
+      october: EXPENSE_LIST_FIXTURE[0].october,
+      october_paid: EXPENSE_LIST_FIXTURE[0].october_paid,
+      november: EXPENSE_LIST_FIXTURE[0].november,
+      november_paid: EXPENSE_LIST_FIXTURE[0].november_paid,
+      december: EXPENSE_LIST_FIXTURE[0].december,
+      december_paid: EXPENSE_LIST_FIXTURE[0].december_paid,
+      description: EXPENSE_LIST_FIXTURE[0].description,
+      instalment_number: EXPENSE_LIST_FIXTURE[0].instalment_number,
+    };
+    it('should update a expense with all fields and save it', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(EXPENSE_LIST_FIXTURE[0]),
+      } as any);
+
+      jest
+        .spyOn(supplierService, 'treatSupplierParam')
+        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
+
+      jest
+        .spyOn(repository, 'save')
+        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
+
+      expect(
+        await service.update(EXPENSE_LIST_FIXTURE[0].id, {
+          ...updateDto,
+          supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
+        }),
+      ).toEqual(EXPENSE_LIST_FIXTURE[0]);
+    });
+
+    it('should update a expense without relations fields and save it', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(EXPENSE_LIST_FIXTURE[0]),
+      } as any);
+
+      const expected = {
+        ...EXPENSE_LIST_FIXTURE[0],
+        supplier: EXPENSE_LIST_FIXTURE[0].supplier,
+      };
+
+      jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
+
+      expect(
+        await service.update(EXPENSE_LIST_FIXTURE[0].id, updateDto),
+      ).toEqual(expected);
+    });
+
+    it('should return conflict exception because the id is not uuid', async () => {
+      await expect(
+        service.update(EXPENSE_LIST_FIXTURE[0].supplier.name, updateDto),
+      ).rejects.toThrow(ConflictException);
+    });
+  });
+
+  describe('remove', () => {
+    it('should remove expense', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(EXPENSE_LIST_FIXTURE[0]),
+      } as any);
+
+      jest.spyOn(repository, 'softRemove').mockResolvedValueOnce({
+        ...EXPENSE_LIST_FIXTURE[0],
+        deleted_at: EXPENSE_LIST_FIXTURE[0].created_at,
+      });
+
+      expect(await service.remove(EXPENSE_LIST_FIXTURE[0].id)).toEqual({
+        message: 'Successfully removed',
+      });
+    });
+    it('should return conflict exception because the id is not uuid', async () => {
+      await expect(
+        service.remove(EXPENSE_LIST_FIXTURE[0].supplier.name),
+      ).rejects.toThrow(ConflictException);
+    });
+  });
 });

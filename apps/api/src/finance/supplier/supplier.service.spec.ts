@@ -12,7 +12,7 @@ import {
   LIST_SUPPLIER_FIXTURE,
   VIVO_HOUSING_SUPPLIER_FIXTURE,
 } from '@repo/mock/finance/supplier/fixtures/supplier';
-import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
+import { ELECTRICITY_BILL_MONTE_CARLO_RESIDENTIAL_EXPENSE_FIXTURE } from '@repo/mock/finance/expense/fixtures/monte-carlo/monteCarlo';
 
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
 
@@ -227,7 +227,7 @@ describe('SupplierService', () => {
     it('should throw a ConflictException when Supplier is in use', async () => {
       const expected: Supplier = {
         ...VIVO_HOUSING_SUPPLIER_FIXTURE,
-        expenses: [NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE],
+        expenses: [ELECTRICITY_BILL_MONTE_CARLO_RESIDENTIAL_EXPENSE_FIXTURE],
       };
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
         andWhere: jest.fn(),

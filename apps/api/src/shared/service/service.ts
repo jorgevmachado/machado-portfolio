@@ -109,7 +109,7 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
       searchParams: {
         by: valueIsUUID ? 'id' : 'name',
         value: value.toLowerCase(),
-        condition: valueIsUUID ? '=': 'LIKE',
+        condition: valueIsUUID ? '=' : 'LIKE',
       },
       relations,
       withThrow,
@@ -127,27 +127,23 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
       });
   }
 
+  async remove(param: string) {
+    const result = await this.findOne({
+      value: param,
+      relations: this.relations,
+      withDeleted: true,
+    });
+    await this.repository.softRemove(result);
+    return { message: 'Successfully removed' };
+  }
+
   async treatEntityParam<T>(value?: string | T, label?: string) {
     this.validateParam<T>(value, label);
-    if(this.paramIsEntity<T>(value)) {
+    if (this.paramIsEntity<T>(value)) {
       return value;
     }
     const entity = await this.findOne({ value, withThrow: false });
     this.validateParam<T>(entity as unknown as string | T, label);
     return entity;
-  }
-
-  findRepeatedId<T extends { id: string; }>(list: Array<T>): string | null {
-    const idSet = new Set<string>();
-
-    for (const item of list) {
-      if (idSet.has(item.id)) {
-        return item.id;
-      }
-      idSet.add(item.id);
-    }
-
-    return null;
-
   }
 }

@@ -63,6 +63,7 @@ export class SupplierService extends Service<Supplier> {
   }
 
   async seed() {
+    this.validateListMock<Supplier>({ list: LIST_SUPPLIER_FIXTURE, key: 'all', label: 'Supplier' })
     const supplierTypes = await this.supplierTypeService.seed();
     console.info('# => start suppliers seeding');
     const existingSuppliers = await this.repository.find({ withDeleted: true });

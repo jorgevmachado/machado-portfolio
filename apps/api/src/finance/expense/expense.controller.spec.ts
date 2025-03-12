@@ -1,8 +1,11 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { EXPENSE_LIST_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
+
 import { ExpenseController } from './expense.controller';
 import { ExpenseService } from './expense.service';
+import {CreateExpenseDto} from "./dto/create-expense.dto";
 
 describe('ExpenseController', () => {
   let service: ExpenseService;
@@ -15,7 +18,7 @@ describe('ExpenseController', () => {
         {
           provide: ExpenseService,
           useValue: {
-            findAll: jest.fn(),
+            list: jest.fn(),
             findOne: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
@@ -34,52 +37,40 @@ describe('ExpenseController', () => {
     expect(controller).toBeDefined();
   });
 
-  // describe('findAll', () => {
-  //   it('Should return an list of expense', async () => {
-  //     jest
-  //       .spyOn(service, 'findAll')
-  //       .mockResolvedValue([NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE]);
-  //     expect(await controller.findAll({})).toEqual([
-  //       NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE,
-  //     ]);
-  //   });
-  // });
+  describe('findAll', () => {
+    it('Should return an list of expense', async () => {
+      jest.spyOn(service, 'list').mockResolvedValue(EXPENSE_LIST_FIXTURE);
+      expect(await controller.findAll({})).toEqual(EXPENSE_LIST_FIXTURE);
+    });
+  });
+
+  describe('findOne', () => {
+    it('Should return an expense', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue(EXPENSE_LIST_FIXTURE[0]);
+      expect(await controller.findOne(EXPENSE_LIST_FIXTURE[0].id)).toEqual(
+        EXPENSE_LIST_FIXTURE[0],
+      );
+    });
+  });
   //
-  // describe('findOne', () => {
-  //   it('Should return an expense', async () => {
-  //     jest
-  //       .spyOn(service, 'findOne')
-  //       .mockResolvedValue(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE);
-  //     expect(
-  //       await controller.findOne(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.id),
-  //     ).toEqual(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE);
-  //   });
-  // });
-  //
-  // describe('create', () => {
-  //   it('should create a new expense with type equal variable and save it', async () => {
-  //     const createDto: CreateExpenseDto = {
-  //       type: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.type,
-  //       value: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.value,
-  //       month: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.month,
-  //       group: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.group.name,
-  //       supplier: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.supplier.name,
-  //       category: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.category.name,
-  //       user: NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.user,
-  //       instalment_number:
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.instalment_number,
-  //     };
-  //
-  //     jest
-  //       .spyOn(service, 'create')
-  //       .mockResolvedValueOnce(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE);
-  //
-  //     expect(
-  //       await controller.create(
-  //         NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE.user,
-  //         createDto,
-  //       ),
-  //     ).toEqual(NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE);
-  //   });
-  // });
+  describe('create', () => {
+    it('should create a new expense with type equal variable and save it', async () => {
+      const createDto: CreateExpenseDto = {
+        type: EXPENSE_LIST_FIXTURE[0].type,
+        value: EXPENSE_LIST_FIXTURE[0].value,
+        month: EXPENSE_LIST_FIXTURE[0].month,
+        supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
+        instalment_number:
+        EXPENSE_LIST_FIXTURE[0].instalment_number,
+      };
+
+      jest
+        .spyOn(service, 'create')
+        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
+
+      expect(
+        await controller.create(createDto),
+      ).toEqual(EXPENSE_LIST_FIXTURE[0]);
+    });
+  });
 });

@@ -31,6 +31,11 @@ export class BillService extends Service<Bill> {
     bankList: Array<Bank>;
     expenseList: Array<Expense>;
   }) {
+    this.validateListMock<Bill>({
+      list: BILL_LIST_FIXTURE,
+      key: 'id',
+      label: 'Expense',
+    });
     console.info('# => start bank seeding');
     const existingBills = await this.repository.find({ withDeleted: true });
     const existingIds = new Set(existingBills?.map((bill) => bill.id));

@@ -4,6 +4,8 @@ import {
 } from '@nestjs/common';
 
 import { File } from '../file';
+import {ValidateListMockParams} from "./base.interface";
+import {findRepeated} from "@repo/services/string/string";
 
 export abstract class Base extends File {
   error(error: any) {
@@ -36,5 +38,32 @@ export abstract class Base extends File {
         ),
       );
     }
+  }
+
+  validateListMock<T extends { id: string; name?: string; }>({ key, list, label }: ValidateListMockParams<T>) {
+    console.info(`# => start validate list mock ${label}`)
+    const findRepeatedEntityById = key === 'id' || key === 'all'
+        ? findRepeated<T>(list, 'id')
+        : undefined;
+    this.validateMock(findRepeatedEntityById, 'id', label);
+
+    console.info(`# => validate list mock ${label} by id is passed!!`)
+    const findRepeatedEntityByName = key === 'name' || key === 'all'
+        ? findRepeated<T>(list, 'name')
+        : undefined;
+    this.validateMock(findRepeatedEntityByName, 'name', label);
+    console.info(`# => validate list mock ${label} by name is passed!!`)
+  }
+
+  validateMock(param: string, key: 'id' | 'name', label: string) {
+    if (!param) {
+      return;
+    }
+    console.error(`# => validate  list mock ${label}  failed!!`)
+    throw this.error(
+        new ConflictException(
+            `The selected ${key} ${param} is repeated in ${label}, try another one or update this.`,
+        ),
+    );
   }
 }

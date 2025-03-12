@@ -9,9 +9,9 @@ import { BANK_LIST_FIXTURE } from '@repo/mock/finance/bank/fixtures/bank';
 import { Service } from '../../shared';
 
 import { CreateBankDto } from './dto/create-bank.dto';
+import { UpdateBankDto } from './dto/update-bank.dto';
 
 import { Bank } from './bank.entity';
-
 
 @Injectable()
 export class BankService extends Service<Bank> {
@@ -27,7 +27,18 @@ export class BankService extends Service<Bank> {
     return await this.save(bank);
   }
 
+  async update(param: string, { name }: UpdateBankDto) {
+    const result = await this.findOne({ value: param, withDeleted: true });
+    const bank = new BankBusiness({ ...result, name });
+    return this.save(bank);
+  }
+
   async seed(): Promise<Array<Bank>> {
+    this.validateListMock<Bank>({
+      list: BANK_LIST_FIXTURE,
+      key: 'all',
+      label: 'Bank',
+    });
     console.info('# => start bank seeding');
     const existingBanks = await this.repository.find({
       withDeleted: true,
@@ -45,12 +56,10 @@ export class BankService extends Service<Bank> {
     }
 
     const createdBanks = (
-        await Promise.all(banksToCreate.map(async (bank) => this.create(bank)))
+      await Promise.all(banksToCreate.map(async (bank) => this.create(bank)))
     ).filter((bank): bank is Bank => !!bank);
 
-    console.info(
-        `# => Seeded ${createdBanks.length} new banks`,
-    );
+    console.info(`# => Seeded ${createdBanks.length} new banks`);
     return [...existingBanks, ...createdBanks];
   }
 }

@@ -1,55 +1,169 @@
+<div style="text-align: center;">
+    <h1>NEST API</h1>
+    <br/>
+<p>
+    <strong>Powered by</strong>
+
+![Nest](https://img.shields.io/badge/-NestJs-ea2845?style=for-the-badge&logo=nestjs&logoColor=white)
+
+![Npm](https://shields.io/badge/npm-gray?logo=npm&style=falt)
+![Typescript](https://img.shields.io/badge/typescript-%23323330.svg?style=falt&logo=typescript&logoColor=%233178C6)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=falt&logo=node.js&logoColor=white)
+![Jest](https://img.shields.io/badge/jest-C53d15.svg?style=falt&logo=jest&logoColor=white)
+</p>
+</div>
 # With-NestJs | API
 
-## Getting Started
+## Para que serve ?
+Este projeto é uma API desenvolvida com o framework **NestJS**,
+que é uma solução progressiva para construir aplicações server-side eficientes,
+escaláveis e confiáveis em **Node.js**. A API utiliza **TypeScript**
+seguindo testes automatizados com **Jest**.
 
-First, run the development server:
+## Instalação do Ambiente
+### Seguir as instruções do Readme Principal no ‘item’ Instalação do Ambiente [clique aqui](../../README.md).
 
+## 🏠  Comandos
+#### Todos os comandos aqui listados, devem ser executados na raiz do módulo (./apps/api).
+
+### Build
 ```bash
-pnpm run dev
+# Irá executar o build do módulo.
+npm run build
 ```
 
-By default, your server will run at [http://localhost:3001](http://localhost:3001). You can use your favorite API platform like [Insomnia](https://insomnia.rest/) or [Postman](https://www.postman.com/) to test your APIs
+### Develop
 
-### ⚠️ Note about build
+```bash
+# Irá executar o módulo em modo de desenvolvimento. http://localhost:3001
+npm run dev
+```
 
-If you plan to only build this app. Please make sure you've built the packages first.
+### Lint
+```bash
+# Irá executar o lint no módulo.
+# Veja `@repo/eslint-config` para personalizar o comportamento.
+npm run lint
+```
+### test
+```bash
+# Irá executar todos os testes do módulo.
+npm run test
+```
+#### base:
+```bash
+  npm run test -- --findRelatedTests src/shared/base/base.spec.ts                                 
+```
+#### query:
+```bash
+  npm run test -- --findRelatedTests src/shared/query/query.spec.ts                                 
+```
+#### file:
+```bash
+  npm run test -- --findRelatedTests src/shared/file/file.spec.ts                                 
+```
 
-## Learn More
-
-To learn more about NestJs, take a look at the following resources:
-
-- [Official Documentation](https://docs.nestjs.com) - A progressive Node.js framework for building efficient, reliable and scalable server-side applications.
-- [Official NestJS Courses](https://courses.nestjs.com) - Learn everything you need to master NestJS and tackle modern backend applications at any scale.
-- [GitHub Repo](https://github.com/nestjs/nest)
-
-npm run test -- --findRelatedTests src/shared/base/base.spec.ts
-npm run test -- --findRelatedTests src/shared/file/file.spec.ts
-
-npm run test -- --findRelatedTests src/auth/users/users.service.spec.ts
-npm run test -- --findRelatedTests src/auth/auth.service.spec.ts
-npm run test -- --findRelatedTests src/auth/auth.controller.spec.ts
-
-npm run test -- --findRelatedTests src/pokemons/pokemon.service.spec.ts
-npm run test -- --findRelatedTests src/pokemons/move/move.service.spec.ts
-npm run test -- --findRelatedTests src/pokemons/type/type.service.spec.ts
-npm run test -- --findRelatedTests src/pokemons/ability/ability.service.spec.ts
-
-npm run test -- --findRelatedTests src/finance/supplier/supplier-type/supplier-type.service.spec.ts
-npm run test -- --findRelatedTests src/finance/supplier/supplier-type/supplier-type.controller.spec.ts
-
-npm run test -- --findRelatedTests src/finance/supplier/supplier.service.spec.ts
-npm run test -- --findRelatedTests src/finance/supplier/supplier.controller.spec.ts
-
-
-npm run test -- --findRelatedTests src/finance/expense/expense-category/expense-category-type/expense-category-type.service.spec.ts
-npm run test -- --findRelatedTests src/finance/expense/expense-category/expense-category-type/expense-category-type.controller.spec.ts
-
-npm run test -- --findRelatedTests src/finance/expense/expense-category/expense-category.service.spec.ts
-npm run test -- --findRelatedTests src/finance/expense/expense-category/expense-category.controller.spec.ts
-
-npm run test -- --findRelatedTests src/finance/expense/expense-group/expense-group.service.spec.ts
-npm run test -- --findRelatedTests src/finance/expense/expense-group/expense-group.controller.spec.ts
-
-npm run test -- --findRelatedTests src/finance/expense/expense.service.spec.ts
-npm run test -- --findRelatedTests src/finance/expense/expense.controller.spec.ts
-
+#### auth:
+##### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/auth/auth.service.spec.ts                                 
+```
+##### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/auth/auth.controller.spec.ts                                 
+```
+##### - user
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/auth/users/users.service.spec.ts                                 
+```
+#### pokemon:
+##### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/pokemons/pokemon.service.spec.ts                                 
+```
+##### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/pokemons/pokemon.controller.spec.ts                                 
+```
+##### - ABILITY
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/pokemons/ability/ability.service.spec.ts                                 
+```
+###### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/pokemons/ability/ability.controller.spec.ts                                 
+```
+##### - MOVE
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/pokemons/move/move.service.spec.ts                                 
+```
+###### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/pokemons/move/move.controller.spec.ts                                 
+```
+##### - TYPE
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/pokemons/type/type.service.spec.ts                                 
+```
+###### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/pokemons/type/type.controller.spec.ts                                 
+```
+#### finance:
+##### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/finance/finance.service.spec.ts                                 
+```
+##### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/finance/finance.controller.spec.ts                                 
+```
+##### - SUPPLIER-TYPE
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/finance/supplier/supplier-type/supplier-type.service.spec.ts                                 
+```
+###### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/finance/supplier/supplier-type/supplier-type.controller.spec.ts                                 
+```
+##### - SUPPLIER
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/finance/supplier/supplier.service.spec.ts                                 
+```
+###### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/finance/supplier/supplier.controller.spec.ts                                 
+```
+##### - BANK
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/finance/bank/bank.service.spec.ts                                 
+```
+###### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/finance/bank/bank.controller.spec.ts                                 
+```
+##### - EXPENSE
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/finance/expense/expense.service.spec.ts                                 
+```
+###### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/finance/expense/expense.controller.spec.ts                                 
+```
+##### - BILL
+###### - SERVICE
+```bash
+  npm run test -- --findRelatedTests src/finance/bill/bill.service.spec.ts                                 
+```
+###### - CONTROLLER
+```bash
+  npm run test -- --findRelatedTests src/finance/bill/bill.controller.spec.ts                                 
+```

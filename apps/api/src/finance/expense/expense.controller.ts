@@ -24,7 +24,7 @@ export class ExpenseController {
 
   @Get()
   findAll(@Query() parameters: ExpenseQueryParameters) {
-    return this.service.findAll({ parameters });
+    return this.service.list({ parameters });
   }
 
   @Post()
