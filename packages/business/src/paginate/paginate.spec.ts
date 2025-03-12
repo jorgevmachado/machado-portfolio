@@ -1,8 +1,21 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Paginate } from './paginate';
 
 describe('paginate', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   it('You must build the pagination', () => {
     expect(new Paginate(0, 1302, 1302, [])).toEqual({
       skip: 0,

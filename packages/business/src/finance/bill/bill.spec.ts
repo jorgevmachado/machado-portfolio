@@ -1,4 +1,13 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
+
+import { USER_FIXTURE } from '@repo/mock/auth/fixture';
 
 import Bill from './bill';
 import type { BillEntity } from './interface';
@@ -7,6 +16,7 @@ import { EBillType } from '../../api/nest/finance';
 describe('Bill', () => {
   const billEntity: BillEntity = {
     id: '1',
+    user: USER_FIXTURE,
     name: 'Bill',
     year: 2025,
     type: EBillType.CREDIT_CARD,
@@ -23,6 +33,12 @@ describe('Bill', () => {
     updated_at: new Date('2023-01-02'),
     deleted_at: undefined,
   };
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   describe('Constructor', () => {
     it('should create an instance with all parameters when valid data is provided', () => {
       const bill = new Bill(billEntity);
@@ -38,6 +54,7 @@ describe('Bill', () => {
 
     it('should create an instance with minimal valid data', () => {
       const params = {
+        user: billEntity.user,
         bank: billEntity.bank,
         year: billEntity.year,
         name: billEntity.name,

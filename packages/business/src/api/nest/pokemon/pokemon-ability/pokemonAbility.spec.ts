@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { QueryParameters } from '@repo/business/shared/interface';
 
@@ -20,6 +27,10 @@ describe('PokemonAbility', () => {
     pokemonAbility = new PokemonAbility(mockConfig);
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   describe('constructor', () => {
     it('should initialize with the correct path and config pokemonAbility', () => {
       expect(NestModuleAbstract).toHaveBeenCalledTimes(1);
@@ -32,8 +43,8 @@ describe('PokemonAbility', () => {
 
     it('should call inherited methods from NestModuleAbstract about pokemonAbility', async () => {
       const mockGetAll = jest
-          .spyOn(NestModuleAbstract.prototype, 'getAll')
-          .mockResolvedValue([]);
+        .spyOn(NestModuleAbstract.prototype, 'getAll')
+        .mockResolvedValue([]);
 
       const queryParams: QueryParameters = { name: 'test' };
       const result = await pokemonAbility.getAll(queryParams);
@@ -43,5 +54,4 @@ describe('PokemonAbility', () => {
       expect(result).toEqual([]);
     });
   });
-
 });

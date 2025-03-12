@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { NestModuleAbstract } from './nestModuleAbstract';
 import { Paginate } from '../../paginate';
@@ -19,17 +26,21 @@ class MockModule extends NestModuleAbstract<
   MockEntityParams
 > {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super({ pathUrl: 'mock-path', nestModuleConfig});
+    super({ pathUrl: 'mock-path', nestModuleConfig });
   }
 }
 
 class MockModuleSubPath extends NestModuleAbstract<
-    MockEntity,
-    MockEntityParams,
-    MockEntityParams
+  MockEntity,
+  MockEntityParams,
+  MockEntityParams
 > {
   constructor(nestModuleConfig: INestModuleConfig) {
-    super({ pathUrl: 'mock-path', subPathUrl: 'mock-sub-path', nestModuleConfig});
+    super({
+      pathUrl: 'mock-path',
+      subPathUrl: 'mock-sub-path',
+      nestModuleConfig,
+    });
   }
 }
 
@@ -48,6 +59,10 @@ describe('NestModuleAbstract', () => {
     mockModule = new MockModule(mockConfig);
     mockModuleSubPath = new MockModuleSubPath(mockConfig);
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('should call get with correct URL and parameters for getAll', async () => {
@@ -131,7 +146,9 @@ describe('NestModuleAbstract', () => {
     const result = await mockModuleSubPath.create(mockBody);
 
     expect(mockedPost).toHaveBeenCalledTimes(1);
-    expect(mockedPost).toHaveBeenCalledWith('mock-path/mock-sub-path', { body: mockBody });
+    expect(mockedPost).toHaveBeenCalledWith('mock-path/mock-sub-path', {
+      body: mockBody,
+    });
     expect(result).toEqual({ success: true });
   });
 

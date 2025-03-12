@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Nest } from '../api';
 
@@ -9,9 +16,14 @@ describe('FinanceService', () => {
   let nestMock: jest.Mocked<Nest>;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     nestMock = {} as jest.Mocked<Nest>;
 
     financeService = new FinanceService(nestMock);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('constructor', () => {
@@ -22,5 +34,5 @@ describe('FinanceService', () => {
     it('should receive the Nest dependency in the constructor\n', () => {
       expect(financeService['nest']).toBe(nestMock);
     });
-  })
+  });
 });

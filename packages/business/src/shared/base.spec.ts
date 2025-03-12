@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { extractLastNumberFromUrl } from '@repo/services/number/number';
 
@@ -14,7 +21,12 @@ describe('Base', () => {
   let base: ConcreteBase;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     base = new ConcreteBase();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('should return undefined when both order and url are missing', () => {

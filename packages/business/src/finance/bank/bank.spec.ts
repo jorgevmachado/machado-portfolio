@@ -1,8 +1,21 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import Bank from './bank';
 
 describe('Bank', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   describe('Constructor', () => {
     it('should create an instance with all parameters when valid data is provided', () => {
       const params = {

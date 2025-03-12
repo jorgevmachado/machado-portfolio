@@ -74,7 +74,7 @@ export default class ExpenseBusiness {
   }
 
   processValues(expense: Expense): Expense {
-    if (expense.instalment_number > 1) {
+    if (expense?.instalment_number > 1) {
       return this.processValuesMonthsInstallment(expense);
     }
 

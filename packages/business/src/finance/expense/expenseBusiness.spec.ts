@@ -1,4 +1,11 @@
-import { describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { EExpenseType, EMonth } from '../enum';
 
@@ -60,6 +67,14 @@ describe('ExpenseBusiness', () => {
     updated_at: new Date('2023-01-02'),
     deleted_at: undefined,
   };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   describe('initializeExpense', () => {
     it('should initialize an expense and process it', () => {

@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Nest } from '../api';
 
@@ -11,6 +18,14 @@ import { SignInParams, SignUpParams, UserEntity } from './interface';
 describe('AuthService', () => {
   let authService: AuthService;
   let mockNest: jest.Mocked<Nest>;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   const mockUser: UserEntity = {
     id: 'eaca4c08-e62d-495a-ae1c-918199da8d52',

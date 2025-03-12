@@ -1,8 +1,15 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Auth } from './auth';
 import { NestModuleAbstract } from '../nestModuleAbstract';
-import {ISignInParams, ISignUpParams} from './interface';
+import { ISignInParams, ISignUpParams } from './interface';
 import { EGender } from '../../../shared';
 
 jest.mock('../nestModuleAbstract'); // Mock da classe base
@@ -17,6 +24,10 @@ describe('Auth', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     auth = new Auth(mockConfig);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('should initialize with the correct path and config', () => {
@@ -58,7 +69,10 @@ describe('Auth', () => {
       .spyOn(NestModuleAbstract.prototype, 'post')
       .mockResolvedValue({ token: 'mock-jwt-token' });
 
-    const mockSignInParams: ISignInParams = { email: 'testUser', password: 'testPassword' };
+    const mockSignInParams: ISignInParams = {
+      email: 'testUser',
+      password: 'testPassword',
+    };
     const result = await auth.signIn(mockSignInParams);
 
     expect(mockPost).toHaveBeenCalledTimes(1);

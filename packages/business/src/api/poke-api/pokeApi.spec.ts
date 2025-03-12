@@ -17,11 +17,12 @@ describe('PokeApi', () => {
   let pokeApi: PokeApi;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     pokeApi = new PokeApi();
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {
@@ -100,6 +101,4 @@ describe('PokeApi', () => {
     expect(mockedGet).toHaveBeenCalledTimes(1);
     expect(mockedGet).toHaveBeenCalledWith(`move/${order}`);
   });
-
-
 });

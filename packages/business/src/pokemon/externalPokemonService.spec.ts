@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { ExternalPokemonService } from './externalPokemonService';
 import { ISpecieByPokemonNameResponse, PokeApi } from '../api';
@@ -98,6 +105,10 @@ describe('ExternalPokemonService', () => {
     (service as any).pokeApi = mockPokeApi;
 
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('buildList', () => {

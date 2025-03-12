@@ -1,4 +1,11 @@
-import { afterEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { extractLastNumberFromUrl } from '@repo/services/number/number';
 
@@ -17,8 +24,12 @@ import PokemonAbility from './pokemon-ability';
 jest.mock('@repo/services/number/number');
 
 describe('Config Utilities', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('ensureImage', () => {

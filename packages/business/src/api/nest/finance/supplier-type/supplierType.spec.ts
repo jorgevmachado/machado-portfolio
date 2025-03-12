@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { QueryParameters } from '@repo/business/shared/interface';
 
@@ -18,6 +25,10 @@ describe('SupplierType', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     supplierType = new SupplierType(mockConfig);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('constructor', () => {

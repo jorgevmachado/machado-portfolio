@@ -1,4 +1,11 @@
-import { describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import {
   getCurrentMonth,
   getMonthByIndex,
@@ -9,12 +16,17 @@ import {
 import { EMonth } from '../../api/nest/finance';
 
 describe('Month Utils', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   describe('getCurrentMonth', () => {
     it('should return the current month in uppercase format', () => {
       const mockDate = new Date(2023, 0);
-      jest
-        .spyOn(global, 'Date')
-        .mockImplementation(() => mockDate);
+      jest.spyOn(global, 'Date').mockImplementation(() => mockDate);
 
       const currentMonth = getCurrentMonth();
       expect(currentMonth).toBe('JANUARY');

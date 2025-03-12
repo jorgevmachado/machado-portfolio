@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { SupplierTypeService } from './supplierTypeService';
 import { Nest } from '../../api';
@@ -29,6 +36,7 @@ describe('SupplierTypeService', () => {
   };
 
   beforeEach(() => {
+    jest.clearAllMocks();
     mockNest = {
       finance: {
         supplier: {
@@ -46,17 +54,17 @@ describe('SupplierTypeService', () => {
     service = new SupplierTypeService(mockNest);
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   describe('create', () => {
     it('should successfully create an supplier type', async () => {
-      mockNest.finance.supplier.type.create.mockResolvedValue(
-        mockEntity,
-      );
+      mockNest.finance.supplier.type.create.mockResolvedValue(mockEntity);
 
       const result = await service.create(mockEntity.name);
 
-      expect(
-        mockNest.finance.supplier.type.create,
-      ).toHaveBeenCalledWith({
+      expect(mockNest.finance.supplier.type.create).toHaveBeenCalledWith({
         name: mockEntity.name,
       });
       expect(result).toEqual(mockEntity);
@@ -65,25 +73,22 @@ describe('SupplierTypeService', () => {
 
   describe('update', () => {
     it('should successfully update an supplier type', async () => {
-      mockNest.finance.supplier.type.update.mockResolvedValue(
-        mockEntity,
-      );
+      mockNest.finance.supplier.type.update.mockResolvedValue(mockEntity);
 
       const result = await service.update(mockEntity.id, mockEntity.name);
 
-      expect(
-        mockNest.finance.supplier.type.update,
-      ).toHaveBeenCalledWith(mockEntity.id, {
-        name: mockEntity.name,
-      });
+      expect(mockNest.finance.supplier.type.update).toHaveBeenCalledWith(
+        mockEntity.id,
+        {
+          name: mockEntity.name,
+        },
+      );
       expect(result).toEqual(mockEntity);
     });
 
     it('should throw an error if the update fails', async () => {
       const mockError = new Error('Failed to update supplier type');
-      mockNest.finance.supplier.type.update.mockRejectedValue(
-        mockError,
-      );
+      mockNest.finance.supplier.type.update.mockRejectedValue(mockError);
 
       await expect(
         service.update(mockEntity.id, mockEntity.name),
@@ -91,62 +96,51 @@ describe('SupplierTypeService', () => {
     });
 
     it('should call the update method with correct arguments', async () => {
-      mockNest.finance.supplier.type.update.mockResolvedValue(
-        mockEntity,
-      );
+      mockNest.finance.supplier.type.update.mockResolvedValue(mockEntity);
 
       await service.update(mockEntity.id, mockEntity.name);
 
-      expect(
-        mockNest.finance.supplier.type.update,
-      ).toHaveBeenCalledWith(mockEntity.id, {
-        name: mockEntity.name,
-      });
-      expect(
-        mockNest.finance.supplier.type.update,
-      ).toHaveBeenCalledTimes(1);
+      expect(mockNest.finance.supplier.type.update).toHaveBeenCalledWith(
+        mockEntity.id,
+        {
+          name: mockEntity.name,
+        },
+      );
+      expect(mockNest.finance.supplier.type.update).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('delete', () => {
     it('should successfully delete an supplier type', async () => {
       const mockResponse = { message: 'Successfully removed' };
-      mockNest.finance.supplier.type.delete.mockResolvedValue(
-        mockResponse,
-      );
+      mockNest.finance.supplier.type.delete.mockResolvedValue(mockResponse);
       const result = await service.remove(mockEntity.id);
 
-      expect(
-        mockNest.finance.supplier.type.delete,
-      ).toHaveBeenCalledWith(mockEntity.id);
+      expect(mockNest.finance.supplier.type.delete).toHaveBeenCalledWith(
+        mockEntity.id,
+      );
       expect(result).toEqual(mockResponse);
     });
   });
 
   describe('get', () => {
     it('should successfully get an supplier type', async () => {
-      mockNest.finance.supplier.type.getOne.mockResolvedValue(
-        mockEntity,
-      );
+      mockNest.finance.supplier.type.getOne.mockResolvedValue(mockEntity);
       const result = await service.get(mockEntity.id);
 
-      expect(
-        mockNest.finance.supplier.type.getOne,
-      ).toHaveBeenCalledWith(mockEntity.id);
+      expect(mockNest.finance.supplier.type.getOne).toHaveBeenCalledWith(
+        mockEntity.id,
+      );
       expect(result).toEqual(mockEntity);
     });
   });
 
   describe('getAll', () => {
     it('should successfully getAll supplier type list', async () => {
-      mockNest.finance.supplier.type.getAll.mockResolvedValue(
-        mockEntityList,
-      );
+      mockNest.finance.supplier.type.getAll.mockResolvedValue(mockEntityList);
       const result = await service.getAll({});
 
-      expect(
-        mockNest.finance.supplier.type.getAll,
-      ).toHaveBeenCalledWith({});
+      expect(mockNest.finance.supplier.type.getAll).toHaveBeenCalledWith({});
       expect(result).toEqual(mockEntityList);
     });
 
@@ -156,9 +150,9 @@ describe('SupplierTypeService', () => {
       );
       const result = await service.getAll(mockPaginateParams);
 
-      expect(
-        mockNest.finance.supplier.type.getAll,
-      ).toHaveBeenCalledWith(mockPaginateParams);
+      expect(mockNest.finance.supplier.type.getAll).toHaveBeenCalledWith(
+        mockPaginateParams,
+      );
       expect(result).toEqual(mockEntityPaginate);
     });
   });

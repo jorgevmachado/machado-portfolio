@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { NestModuleAbstract } from '../../nestModuleAbstract';
 import { Bill } from './bill';
@@ -15,6 +22,10 @@ describe('Bill', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     bill = new Bill(mockConfig);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('constructor', () => {

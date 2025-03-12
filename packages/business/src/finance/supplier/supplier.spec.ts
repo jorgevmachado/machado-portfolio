@@ -1,4 +1,11 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Error, ERROR_STATUS_CODE } from '@repo/services/error/error';
 
@@ -6,6 +13,12 @@ import Supplier from './supplier';
 import type { SupplierEntity } from './interface';
 
 describe('Supplier', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   describe('Constructor', () => {
     it('should create an instance with all parameters when valid data is provided', () => {
       const params = {
