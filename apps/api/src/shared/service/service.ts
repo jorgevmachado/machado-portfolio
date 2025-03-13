@@ -119,6 +119,10 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
   }
 
   async save(data: T): Promise<void | T> {
+    // TODO MUST BE REMOVED BEFORE COMMIT
+    console.log('# => data => ', data);
+
+
     return this.repository
       .save(data)
       .then()

@@ -1,6 +1,3 @@
-import type { BillEntity } from '@repo/business/finance/bill/interface';
-import { Bank } from '../bank/bank.entity';
-import { Expense } from '../expense/expense.entity';
 import {
   Column,
   CreateDateColumn,
@@ -12,20 +9,22 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { DecimalTransformer } from '../../shared';
+
+import type { BillEntity } from '@repo/business/finance/bill/interface';
+
 import { EBillType } from '@repo/business/finance/enum';
-import { User } from '../../auth/users/user.entity';
+
+import { DecimalTransformer } from '../../shared';
+
+import { Bank } from '../bank/bank.entity';
+import { Expense } from '../expense/expense.entity';
+
+import { Finance } from '../finance.entity';
 
 @Entity({ name: 'bills' })
 export class Bill implements BillEntity {
   @PrimaryGeneratedColumn('uuid')
   id: BillEntity['id'];
-
-  @ManyToOne(() => User, (user) => user.bills, {
-    nullable: false,
-  })
-  @JoinTable()
-  user: User;
 
   @Column({ nullable: false })
   year?: number;
@@ -56,6 +55,12 @@ export class Bill implements BillEntity {
   })
   total?: number;
 
+  @ManyToOne(() => Finance, (finance) => finance.bills, {
+    nullable: false,
+  })
+  @JoinTable()
+  finance: Finance;
+
   @Column({ nullable: false })
   all_paid?: boolean;
 
@@ -69,9 +74,9 @@ export class Bill implements BillEntity {
   })
   total_paid?: number;
 
-  @OneToMany(() => Expense, (expense) => expense.bill)
+  @OneToMany(() => Expense, (expense) => expense.bill, { nullable: true })
   @JoinTable()
-  expenses: Array<Expense>;
+  expenses?: Array<Expense>;
 
   @CreateDateColumn()
   created_at: Date;

@@ -1,9 +1,11 @@
-import type { IFinanceBase, IFinanceResponse } from '../interface';
+import type { IFinanceBase } from '../interface';
 import { EExpenseType, EMonth } from '../enum';
 import type { ISupplier } from '../supplier';
+import type { IBill } from '../bill';
 
 export interface IExpense extends Omit<IFinanceBase, 'name'> {
   year?: number;
+  bill?: IBill;
   type: EExpenseType;
   paid?: boolean;
   value?: number;
@@ -40,26 +42,23 @@ export interface IExpense extends Omit<IFinanceBase, 'name'> {
   instalment_number?: number;
 }
 
-export interface IExpenseCreateParams
-  extends Pick<
-    IExpense,
-    | 'year'
-    | 'type'
-    | 'paid'
-    | 'value'
-    | 'month'
-    | 'description'
-    | 'instalment_number'
-  > {
+export interface IExpenseCreateParams {
+  year?: number;
+  type: EExpenseType;
+  bill: string | IExpense['bill'];
+  paid?: boolean;
+  value?: number;
+  month?: EMonth;
   supplier: string | IExpense['supplier'];
+  description?: string;
+  instalment_number?: number;
 }
 
 export interface IExpenseUpdateParams
   extends Omit<
     IExpense,
-    'id' | 'created_at' | 'updated_at' | 'deleted_at' | 'supplier'
+    'id' | 'bill' | 'supplier' | 'created_at' | 'updated_at' | 'deleted_at'
   > {
+  bill: string | IExpense['bill'];
   supplier: string | IExpense['supplier'];
 }
-
-export type IExpenseResponse = IFinanceResponse;

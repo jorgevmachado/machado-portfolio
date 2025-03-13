@@ -102,5 +102,13 @@ function createEntityByName({ name, entity }: CreateEntityParams) {
 }
 
 export function findEntityByName(name: string, list: Array<unknown>) {
-  return list?.find((item) => item['name'] === name);
+  return findEntityByKey(name, list, 'name');
+}
+
+export function findEntityById(id: string, list: Array<unknown>) {
+  return findEntityByKey(id, list, 'id');
+}
+
+export function findEntityByKey(param: string, list: Array<unknown>, key: 'id' | 'name') {
+  return list?.find((item) => item[key] === param);
 }

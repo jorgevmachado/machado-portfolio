@@ -1,9 +1,12 @@
 import Expense from '@repo/business/finance/expense/expense';
 
+import { SUPPLIER_FINANCE_ENTITY } from '../../supplier';
+
 import { INGRID_RESIDENTIAL_EXPENSE_LIST_FIXTURE } from './ingrid';
 import { MONTE_CARLO_RESIDENTIAL_EXPENSE_LIST_FIXTURE } from './monte-carlo';
 import { MOTHER_EXPENSE_LIST_FIXTURE } from './mother';
 import { PERSONAL_EXPENSE_LIST_FIXTURE } from './personal';
+
 import { FinanceEntity } from '../../interface';
 
 export const EXPENSE_LIST_FIXTURE: Array<Expense> = [
@@ -17,5 +20,6 @@ export const EXPENSE_FINANCE_ENTITY: FinanceEntity = {
   id: 'EXPENSE',
   label: 'Expense',
   alias: 'expenses',
+  supplier: SUPPLIER_FINANCE_ENTITY,
   list: EXPENSE_LIST_FIXTURE,
 };

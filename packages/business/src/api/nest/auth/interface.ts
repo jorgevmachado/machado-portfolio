@@ -1,5 +1,6 @@
 import { EGender, ERole, EStatus } from '../../../shared';
-import { INestBaseEntity } from '../interface';
+import type { INestBaseEntity } from '../interface';
+import type { IFinance } from '../finance';
 
 export interface IUser extends INestBaseEntity {
   cpf: string;
@@ -10,6 +11,7 @@ export interface IUser extends INestBaseEntity {
   gender: EGender;
   status: EStatus;
   picture?: string;
+  finance?: IFinance;
   whatsapp: string;
   password?: string;
   date_of_birth: Date;
@@ -38,5 +40,11 @@ export interface ISignInParams extends Pick<IUser, 'email'> {
 
 export type IUpdateUserParams = Pick<
   IUser,
-  'name' | 'role' | 'gender' | 'status' | 'date_of_birth' | 'password' | 'picture'
+  | 'name'
+  | 'role'
+  | 'gender'
+  | 'status'
+  | 'date_of_birth'
+  | 'password'
+  | 'picture'
 >;

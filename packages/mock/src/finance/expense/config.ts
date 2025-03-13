@@ -7,7 +7,7 @@ import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
 import { buildResponse } from '../../shared';
 import { USER_FIXTURE } from '../../auth';
 
-import { findEntityByName, validateEntityType } from '../shared';
+import { findEntityByKey, validateEntityType } from '../shared';
 
 import { EXPENSE_FINANCE_ENTITY } from './fixtures';
 import { FinanceEntity } from '../interface';
@@ -59,6 +59,7 @@ const EXPENSE = {
 
 export function create(req: Request, res: Response) {
   const {
+    bill,
     year,
     type,
     paid,
@@ -69,7 +70,7 @@ export function create(req: Request, res: Response) {
     instalment_number,
   } = req.body;
 
-  const entityRelations = expenseRelations(supplier);
+  const entityRelations = expenseRelations(supplier, bill);
 
   if (entityRelations.statusCode !== 200) {
     return entityRelations;
@@ -79,8 +80,11 @@ export function create(req: Request, res: Response) {
     'supplier'
   ] as ExpenseEntity['supplier'];
 
+  const billEntity = entityRelations.response[':bill'] as ExpenseEntity['bill'];
+
   const expense = {
     ...EXPENSE,
+    bill: billEntity,
     supplier: supplierEntity,
   };
   expense.year = year ?? expense.year;
@@ -103,6 +107,7 @@ export function update(req: Request, res: Response) {
   const { id } = req.params;
   const {
     year,
+    bill,
     type,
     supplier,
     january,
@@ -133,7 +138,7 @@ export function update(req: Request, res: Response) {
     instalment_number,
   } = req.body;
 
-  const entityRelations = expenseRelations(supplier);
+  const entityRelations = expenseRelations(supplier, bill);
 
   if (entityRelations.statusCode !== 200) {
     return entityRelations;
@@ -143,15 +148,19 @@ export function update(req: Request, res: Response) {
     'supplier'
   ] as ExpenseEntity['supplier'];
 
+  const billEntity = entityRelations.response[':bill'] as ExpenseEntity['bill'];
+
   const expense = {
     ...EXPENSE,
     id,
+    bill: billEntity,
     supplier: supplierEntity,
     created_at: new Date('1990-02-13T17:37:47.783Z'),
   };
 
   expense.year = year ?? expense.year;
   expense.type = type ?? expense.type;
+  expense.bill = bill ?? expense.bill;
   expense.description = description ?? expense.description;
   expense.instalment_number = instalment_number ?? expense.instalment_number;
   expense.january = january ?? expense.january;
@@ -187,26 +196,38 @@ export function update(req: Request, res: Response) {
   });
 }
 
-function expenseRelations(supplier: string) {
+function expenseRelations(supplier: string, bill: string) {
   const supplierEntity = expenseRelation(
     supplier,
     EXPENSE_FINANCE_ENTITY.supplier,
+    'name',
   );
   if (supplierEntity.statusCode !== 200) {
     return supplierEntity;
   }
 
+  const billEntity = expenseRelation(bill, EXPENSE_FINANCE_ENTITY.bill, 'id');
+
+  if (billEntity.statusCode !== 200) {
+    return billEntity;
+  }
+
   return {
     statusCode: 200,
     response: {
+      bill: billEntity.response as ExpenseEntity['bill'],
       supplier: supplierEntity.response as ExpenseEntity['supplier'],
     },
   };
 }
 
-function expenseRelation(name: string, financeEntity: FinanceEntity) {
+function expenseRelation(
+  param: string,
+  financeEntity: FinanceEntity,
+  key: 'id' | 'name',
+) {
   const { list, label } = financeEntity;
-  const entity = findEntityByName(name, list);
+  const entity = findEntityByKey(param, list, key);
 
   if (!entity) {
     return validateEntityType(false, label);

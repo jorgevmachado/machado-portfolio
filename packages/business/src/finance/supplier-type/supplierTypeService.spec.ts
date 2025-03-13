@@ -7,8 +7,11 @@ import {
   jest,
 } from '@jest/globals';
 
-import { SupplierTypeService } from './supplierTypeService';
+import { USER_FIXTURE } from '@repo/mock/auth/fixture';
+
 import { Nest } from '../../api';
+
+import { SupplierTypeService } from './supplierTypeService';
 
 jest.mock('../../api');
 
@@ -17,9 +20,9 @@ describe('SupplierTypeService', () => {
   let mockNest: jest.Mocked<Nest>;
   const mockEntity = {
     id: '1',
-    name: 'Supplier Type',
-    created_at: new Date(),
-    updated_at: new Date(),
+    name: 'Supplier Type A',
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
     deleted_at: undefined,
   };
   const mockPaginateParams = { page: 1, limit: 10 };
@@ -62,7 +65,7 @@ describe('SupplierTypeService', () => {
     it('should successfully create an supplier type', async () => {
       mockNest.finance.supplier.type.create.mockResolvedValue(mockEntity);
 
-      const result = await service.create(mockEntity.name);
+      const result = await service.create({ name: mockEntity.name });
 
       expect(mockNest.finance.supplier.type.create).toHaveBeenCalledWith({
         name: mockEntity.name,
@@ -75,7 +78,7 @@ describe('SupplierTypeService', () => {
     it('should successfully update an supplier type', async () => {
       mockNest.finance.supplier.type.update.mockResolvedValue(mockEntity);
 
-      const result = await service.update(mockEntity.id, mockEntity.name);
+      const result = await service.update(mockEntity.id, { name: mockEntity.name });
 
       expect(mockNest.finance.supplier.type.update).toHaveBeenCalledWith(
         mockEntity.id,
@@ -91,14 +94,14 @@ describe('SupplierTypeService', () => {
       mockNest.finance.supplier.type.update.mockRejectedValue(mockError);
 
       await expect(
-        service.update(mockEntity.id, mockEntity.name),
+        service.update(mockEntity.id, { name: mockEntity.name }),
       ).rejects.toThrow('Failed to update supplier type');
     });
 
     it('should call the update method with correct arguments', async () => {
       mockNest.finance.supplier.type.update.mockResolvedValue(mockEntity);
 
-      await service.update(mockEntity.id, mockEntity.name);
+      await service.update(mockEntity.id, { name: mockEntity.name });
 
       expect(mockNest.finance.supplier.type.update).toHaveBeenCalledWith(
         mockEntity.id,

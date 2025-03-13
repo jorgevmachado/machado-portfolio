@@ -28,6 +28,7 @@ export default class ExpenseBusiness {
       year: expenseToMerge?.year ?? entity.year,
       type: expenseToMerge?.type ?? entity.type,
       paid: expenseToMerge?.paid ?? entity.paid,
+      bill: expenseToMerge?.bill ?? entity.bill,
       value: expenseToMerge?.value ?? entity.value,
       total: expenseToMerge?.total ?? entity.total,
       month: expenseToMerge?.month ?? entity.month,

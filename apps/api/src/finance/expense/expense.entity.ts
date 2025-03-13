@@ -25,6 +25,12 @@ export class Expense implements ExpenseEntity {
   @Column({ nullable: false })
   year?: number;
 
+  @ManyToOne(() => Bill, (bill) => bill.expenses, {
+    nullable: false,
+  })
+  @JoinTable()
+  bill?: Bill;
+
   @Column({
     nullable: false,
     type: 'enum',
@@ -229,12 +235,6 @@ export class Expense implements ExpenseEntity {
 
   @Column({ nullable: false })
   instalment_number?: number;
-
-  @ManyToOne(() => Bill, (bill) => bill.expenses, {
-    nullable: true,
-  })
-  @JoinTable()
-  bill?: Bill;
 
   @CreateDateColumn()
   created_at: Date;

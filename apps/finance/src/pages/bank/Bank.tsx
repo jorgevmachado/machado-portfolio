@@ -1,21 +1,18 @@
 'use client';
-import type { QueryParameters } from '@repo/business/shared/interface';
 
+import Bank from '@repo/business/finance/supplier-type';
+import { QueryParameters } from '@repo/business/shared/interface';
 import { Paginate } from '@repo/business/paginate';
 
-import ExpenseCategoryType from '@repo/business/finance/expense-category-type';
+import { bankService } from '../../shared';
+import { CRUDPage } from '../../layout';
 
-import { expenseCategoryTypeService } from '../../../../shared';
-
-import { CRUDPage } from '../../../../layout';
-
-export default function ExpenseCategoryTypePage() {
+export default function BankPage() {
   const fetchItems = async (params: QueryParameters) => {
-    return await expenseCategoryTypeService
+    return await bankService
       .getAll(params)
-      .then((response) => response as Paginate<ExpenseCategoryType>);
+      .then((response) => response as Paginate<Bank>);
   };
-
   return (
     <CRUDPage
       headers={[
@@ -31,14 +28,14 @@ export default function ExpenseCategoryTypePage() {
           sortable: true,
         },
       ]}
-      resourceName="Expense Category Type"
+      resourceName="Bank"
       fetchItems={fetchItems}
       saveItem={(item) =>
         item.id
-          ? expenseCategoryTypeService.update(item.id, item.name ?? '')
-          : expenseCategoryTypeService.create(item.name ?? '')
+          ? bankService.update(item.id, item.name ?? '')
+          : bankService.create(item.name ?? '')
       }
-      deleteItem={(id) => expenseCategoryTypeService.remove(id)}
+      deleteItem={(id) => bankService.remove(id)}
       renderItemForm={({ item, handleChange }) => (
         <div>
           <label>Name:</label>

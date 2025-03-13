@@ -2,4 +2,6 @@ import type { IFinanceBase } from '../interface';
 
 export type IBank = IFinanceBase;
 
-export type IBankParams = Pick<IFinanceBase, 'name'>;
+export type ICreateBankParams = Pick<IBank, 'name'>;
+
+export type IUpdateBankParams = ICreateBankParams;

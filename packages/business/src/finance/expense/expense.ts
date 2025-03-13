@@ -3,6 +3,7 @@ import { getCurrentMonth } from './config';
 
 export default class Expense implements ExpenseEntity {
   id: ExpenseEntity['id'];
+  bill: ExpenseEntity['bill'];
   year?: ExpenseEntity['year'] = new Date().getFullYear();
   type: ExpenseEntity['type'];
   paid: ExpenseEntity['paid'] = false;
@@ -43,6 +44,7 @@ export default class Expense implements ExpenseEntity {
   instalment_number?: ExpenseEntity['instalment_number'] = 1;
   constructor(params?: ExpenseConstructorParams) {
     this.id = params?.id ?? this.id;
+    this.bill = params?.bill ?? this.bill;
     this.year = params?.year ?? this.year;
     this.type = params?.type ?? this.type;
     this.paid = params?.paid ?? this.paid;

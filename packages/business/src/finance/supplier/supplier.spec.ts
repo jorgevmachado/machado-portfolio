@@ -20,24 +20,24 @@ describe('Supplier', () => {
     jest.restoreAllMocks();
   });
   describe('Constructor', () => {
+    const supplierTypeMock = {
+      id: '1',
+      name: 'Supplier Type A',
+      created_at: new Date('2023-01-01'),
+      updated_at: new Date('2023-01-02'),
+      deleted_at: undefined,
+    };
+    const params = {
+      id: '1',
+      name: 'Supplier A',
+      type: supplierTypeMock,
+      active: true,
+      created_at: new Date('2023-01-01'),
+      updated_at: new Date('2023-01-02'),
+      deleted_at: undefined,
+      description: 'This supplier delivers raw materials.',
+    };
     it('should create an instance with all parameters when valid data is provided', () => {
-      const params = {
-        id: '1',
-        name: 'Supplier A',
-        type: {
-          id: '1',
-          name: 'Supplier A',
-          created_at: new Date('2023-01-01'),
-          updated_at: new Date('2023-01-02'),
-          deleted_at: undefined,
-        },
-        active: true,
-        created_at: new Date('2023-01-01'),
-        updated_at: new Date('2023-01-02'),
-        deleted_at: undefined,
-        description: 'This supplier delivers raw materials.',
-      };
-
       const supplier = new Supplier(params);
 
       expect(supplier.id).toBe(params.id);
@@ -53,13 +53,7 @@ describe('Supplier', () => {
     it('should create an instance with minimal valid data', () => {
       const params = {
         name: 'Supplier B',
-        type: {
-          id: '1',
-          name: 'Supplier A',
-          created_at: new Date('2023-01-01'),
-          updated_at: new Date('2023-01-02'),
-          deleted_at: undefined,
-        },
+        type: supplierTypeMock,
       };
 
       const supplier = new Supplier(params);
@@ -125,13 +119,7 @@ describe('Supplier', () => {
     it('should fill default values for optional fields if they are undefined', () => {
       const params = {
         name: 'Supplier D',
-        type: {
-          id: '1',
-          name: 'Supplier A',
-          created_at: new Date('2023-01-01'),
-          updated_at: new Date('2023-01-02'),
-          deleted_at: undefined,
-        },
+        type: supplierTypeMock,
       };
 
       const supplier = new Supplier(params);

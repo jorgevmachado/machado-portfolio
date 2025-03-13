@@ -2,12 +2,16 @@ import type { INestModuleConfig } from '../../interface';
 
 import { NestModuleAbstract } from '../../nestModuleAbstract';
 
-import type { ISupplierType, ISupplierTypeParams } from './interface';
+import {
+  ICreateSupplierTypeParams,
+  ISupplierType,
+  IUpdateSupplierTypeParams,
+} from './interface';
 
 export class SupplierType extends NestModuleAbstract<
   ISupplierType,
-  ISupplierTypeParams,
-  ISupplierTypeParams
+  ICreateSupplierTypeParams,
+  IUpdateSupplierTypeParams
 > {
   constructor(nestModuleConfig: INestModuleConfig) {
     super({

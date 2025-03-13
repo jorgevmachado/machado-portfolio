@@ -7,8 +7,9 @@ import {
   jest,
 } from '@jest/globals';
 
-import { BankService } from './bankService';
 import { Nest } from '../../api';
+
+import { BankService } from './bankService';
 
 jest.mock('../../api');
 
@@ -60,7 +61,7 @@ describe('BankService', () => {
     it('should successfully create an bank', async () => {
       mockNest.finance.bank.create.mockResolvedValue(mockEntity);
 
-      const result = await service.create(mockEntity.name);
+      const result = await service.create({ name: mockEntity.name });
 
       expect(mockNest.finance.bank.create).toHaveBeenCalledWith({
         name: mockEntity.name,
@@ -73,7 +74,9 @@ describe('BankService', () => {
     it('should successfully update an bank', async () => {
       mockNest.finance.bank.update.mockResolvedValue(mockEntity);
 
-      const result = await service.update(mockEntity.id, mockEntity.name);
+      const result = await service.update(mockEntity.id, {
+        name: mockEntity.name,
+      });
 
       expect(mockNest.finance.bank.update).toHaveBeenCalledWith(mockEntity.id, {
         name: mockEntity.name,
@@ -86,14 +89,14 @@ describe('BankService', () => {
       mockNest.finance.bank.update.mockRejectedValue(mockError);
 
       await expect(
-        service.update(mockEntity.id, mockEntity.name),
+        service.update(mockEntity.id, { name: mockEntity.name }),
       ).rejects.toThrow('Failed to update bank');
     });
 
     it('should call the update method with correct arguments', async () => {
       mockNest.finance.bank.update.mockResolvedValue(mockEntity);
 
-      await service.update(mockEntity.id, mockEntity.name);
+      await service.update(mockEntity.id, { name: mockEntity.name });
 
       expect(mockNest.finance.bank.update).toHaveBeenCalledWith(mockEntity.id, {
         name: mockEntity.name,

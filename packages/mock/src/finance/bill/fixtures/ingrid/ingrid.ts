@@ -1,7 +1,7 @@
 import { EBillType } from '@repo/business/finance/enum';
 import Bill from '@repo/business/finance/bill/bill';
 
-import { USER_FIXTURE } from '../../../../auth';
+import { FINANCE_FIXTURE } from '../../../fixtures';
 
 import { NUBANK_BANK_FIXTURE } from '../../../bank';
 import {
@@ -16,12 +16,12 @@ import {
 
 export const INGRID_RESIDENTIAL_BANK_SLIP_NUBANK_BILL_FIXTURE: Bill = new Bill({
   id: '4245135e-0e58-48fc-8fd2-9353d0f56c34',
-  user: USER_FIXTURE,
   year: 2025,
   type: EBillType.BANK_SLIP,
   bank: NUBANK_BANK_FIXTURE,
   name: 'Ingrid Residential Bank Slip',
   total: 0,
+  finance: FINANCE_FIXTURE,
   expenses: [
     ELECTRICITY_BILL_INGRID_RESIDENTIAL_EXPENSE_FIXTURE,
     URBAN_PROPERTY_LAND_TAX_INGRID_RESIDENTIAL_EXPENSE_FIXTURE,
@@ -32,12 +32,12 @@ export const INGRID_RESIDENTIAL_BANK_SLIP_NUBANK_BILL_FIXTURE: Bill = new Bill({
 
 export const INGRID_RESIDENTIAL_PIX_NUBANK_BILL_FIXTURE: Bill = new Bill({
   id: '89a19ea6-13e2-44c6-ba8f-cb93729b0ed7',
-  user: USER_FIXTURE,
   year: 2025,
   type: EBillType.PIX,
   bank: NUBANK_BANK_FIXTURE,
   name: 'Ingrid Residential Pix',
   total: 0,
+  finance: FINANCE_FIXTURE,
   expenses: [
     DAY_LABORER_INGRID_RESIDENTIAL_EXPENSE_FIXTURE,
     GARAGE_HOUSING_INGRID_RESIDENTIAL_EXPENSE_FIXTURE,

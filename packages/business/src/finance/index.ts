@@ -5,3 +5,4 @@ export * from './bank';
 export * from './bill';
 export * from './expense';
 export * from './enum';
+export * from './interface';

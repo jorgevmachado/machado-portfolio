@@ -1,3 +1,4 @@
+export * from './bill';
 export * from './ingrid';
 export * from './monte-carlo';
 export * from './mother';

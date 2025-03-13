@@ -42,9 +42,9 @@ describe('SupplierType', () => {
 
       const supplierType = new SupplierType(params);
 
+      expect(supplierType.id).toBeUndefined();
       expect(supplierType.name).toBe(params.name);
-      expect(supplierType.id).toBeUndefined(); // ID was not provided
-      expect(supplierType.created_at).toBeUndefined(); // Defaults to undefined
+      expect(supplierType.created_at).toBeUndefined();
       expect(supplierType.updated_at).toBeUndefined();
       expect(supplierType.deleted_at).toBeUndefined();
     });

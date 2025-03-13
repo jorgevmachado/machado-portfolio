@@ -1,4 +1,4 @@
-import type { IFinanceBase, IFinanceResponse } from '../interface';
+import type { IFinanceBase } from '../interface';
 import type { ISupplierType } from '../supplier-type';
 
 export interface ISupplier extends IFinanceBase {
@@ -7,11 +7,12 @@ export interface ISupplier extends IFinanceBase {
   description?: string;
 }
 
-export interface ISupplierParams extends Omit<
-  ISupplier,
-  'id' | 'type' | 'created_at' | 'updated_at' | 'deleted_at'
-> {
-  type: string;
+export interface ICreateSupplierParams
+  extends Omit<
+    ISupplier,
+    'id' | 'type' | 'created_at' | 'updated_at' | 'deleted_at'
+  > {
+  type: string | ISupplier['type'];
 }
 
-export type ISupplierResponse = IFinanceResponse;
+export type IUpdateSupplierParams = ICreateSupplierParams;

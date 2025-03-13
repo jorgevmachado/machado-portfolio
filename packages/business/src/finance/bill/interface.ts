@@ -1,4 +1,8 @@
-import type { IBill } from '../../api/nest/finance/bill';
+import type {
+  IBill,
+  ICreateBillParams,
+  IUpdateBillParams,
+} from '../../api/nest/finance/bill';
 
 export type BillEntity = IBill;
 
@@ -9,3 +13,7 @@ export interface BillConstructorParams
   updated_at?: BillEntity['updated_at'];
   deleted_at?: BillEntity['deleted_at'];
 }
+
+export type CreateBillParams = ICreateBillParams;
+
+export type UpdateBillParams = IUpdateBillParams;

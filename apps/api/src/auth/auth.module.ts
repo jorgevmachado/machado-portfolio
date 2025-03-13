@@ -42,6 +42,6 @@ import { extname } from 'path';
       signOptions: { expiresIn: '1d' },
     }),
   ],
-  exports: [AuthJwtStrategy, PassportModule],
+  exports: [AuthJwtStrategy, PassportModule, AuthService],
 })
 export class AuthModule {}

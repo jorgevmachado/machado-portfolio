@@ -1,6 +1,4 @@
-import type { IFinanceBase } from '../interface';
-
-import { IUser } from '../../auth';
+import type { IFinance, IFinanceBase } from '../interface';
 
 import type { IBank } from '../bank';
 import type { IExpense } from '../expense';
@@ -10,18 +8,27 @@ export interface IBill extends IFinanceBase {
   year?: number;
   type: EBillType;
   bank: IBank;
-  user: IUser;
   total?: number;
+  finance: IFinance;
+  expenses?: Array<IExpense>;
   all_paid?: boolean;
   total_paid?: number;
-  expenses: Array<IExpense>;
 }
 
-export interface IBillParams
+export interface ICreateBillParams
   extends Omit<
     IBill,
-    'id' | 'bank' | 'expenses' | 'created_at' | 'updated_at' | 'deleted_at'
+    | 'id'
+    | 'bank'
+    | 'finance'
+    | 'expenses'
+    | 'created_at'
+    | 'updated_at'
+    | 'deleted_at'
   > {
   bank: string | IBank;
-  expenses: Array<string | IExpense>;
+  finance: string | IFinance;
+  expenses?: Array<string | IExpense>;
 }
+
+export type IUpdateBillParams = ICreateBillParams;

@@ -5,24 +5,27 @@ import { QueryParameters } from '@repo/business/shared/interface';
 import { Paginate } from '../../paginate';
 
 import Supplier from './supplier';
-import type { SupplierEntity } from './interface';
+import {
+  CreateSupplierParams,
+  SupplierEntity,
+  UpdateSupplierParams,
+} from './interface';
 
 export class SupplierService {
   constructor(private nest: Nest) {}
 
-  public async create(name: string, type: string): Promise<Supplier> {
+  public async create(params: CreateSupplierParams): Promise<Supplier> {
     return await this.nest.finance.supplier
-      .create({ name, type })
+      .create(params)
       .then((response) => new Supplier(response));
   }
 
   public async update(
     param: string,
-    name: string,
-    type?: string,
+    params: UpdateSupplierParams,
   ): Promise<Supplier> {
     return this.nest.finance.supplier
-      .update(param, { name, type })
+      .update(param, params)
       .then((response) => new Supplier(response));
   }
 

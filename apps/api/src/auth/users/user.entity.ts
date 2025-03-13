@@ -3,8 +3,8 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinTable,
-  OneToMany,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -12,6 +12,7 @@ import {
 import { EGender, ERole, EStatus } from '@repo/business/shared/enum';
 import type { UserEntity } from '@repo/business/auth/interface';
 import { Bill } from '../../finance/bill/bill.entity';
+import {Finance} from "../../finance/finance.entity";
 
 @Entity({ name: 'users' })
 export class User implements UserEntity {
@@ -71,9 +72,9 @@ export class User implements UserEntity {
   @Column({ nullable: true, length: 64 })
   confirmation_token?: string;
 
-  @OneToMany(() => Bill, (bill) => bill.user)
-  @JoinTable()
-  bills?: Bill;
+  @OneToOne(() => Finance, (finance) => finance.user, { nullable: true })
+  @JoinColumn()
+  finance?: Finance;
 
   constructor(user?: User) {
     if (user) {

@@ -7,24 +7,26 @@ import {
   jest,
 } from '@jest/globals';
 
-import { SupplierService } from './supplierService';
 import { Nest } from '../../api';
+
+import { SupplierService } from './supplierService';
 
 jest.mock('../../api');
 
 describe('SupplierService', () => {
   let service: SupplierService;
   let mockNest: jest.Mocked<Nest>;
+  const supplierTypeMock = {
+    id: '1',
+    name: 'Supplier Type A',
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
   const mockEntity = {
     id: '1',
     name: 'Expenses Category',
-    type: {
-      id: '1',
-      name: 'Expenses Category Type',
-      created_at: new Date(),
-      updated_at: new Date(),
-      deleted_at: undefined,
-    },
+    type: supplierTypeMock,
     created_at: new Date(),
     updated_at: new Date(),
     deleted_at: undefined,
@@ -67,10 +69,10 @@ describe('SupplierService', () => {
     it('should successfully create an supplier', async () => {
       mockNest.finance.supplier.create.mockResolvedValue(mockEntity);
 
-      const result = await service.create(
-        mockEntity.name,
-        mockEntity.type.name,
-      );
+      const result = await service.create({
+        name: mockEntity.name,
+        type: mockEntity.type.name,
+      });
 
       expect(mockNest.finance.supplier.create).toHaveBeenCalledWith({
         name: mockEntity.name,
@@ -84,11 +86,10 @@ describe('SupplierService', () => {
     it('should successfully update an supplier', async () => {
       mockNest.finance.supplier.update.mockResolvedValue(mockEntity);
 
-      const result = await service.update(
-        mockEntity.id,
-        mockEntity.name,
-        mockEntity.type.name,
-      );
+      const result = await service.update(mockEntity.id, {
+        name: mockEntity.name,
+        type: mockEntity.type.name,
+      });
 
       expect(mockNest.finance.supplier.update).toHaveBeenCalledWith(
         mockEntity.id,

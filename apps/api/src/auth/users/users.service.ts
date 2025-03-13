@@ -142,6 +142,7 @@ export class UserService extends Service<User> {
   }
 
   async seed() {
+    console.info('# => start user seeding');
     const userSeed = USER_FIXTURE;
     const currentSeed = await this.findOne({
       value: userSeed.name,
@@ -149,6 +150,7 @@ export class UserService extends Service<User> {
     });
 
     if (currentSeed) {
+      console.info('# => No new User to seed');
       return currentSeed;
     }
 
@@ -164,6 +166,7 @@ export class UserService extends Service<User> {
     });
 
     const promotedUser = await this.promoteUser(createdUser as User);
+    console.info(`# => Seeded 1 new user`);
     return promotedUser?.user;
   }
 

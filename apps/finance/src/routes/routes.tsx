@@ -1,63 +1,31 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 
 import { RouteProps } from './interface';
 
-const Dashboard = lazy(() => import('../pages/dashboard'));
-const Profile = lazy(() => import('../pages/profile'));
-const Config = lazy(() => import('../pages/config'));
-const Suppliers = lazy(() => import('../pages/suppliers'));
-const SupplierTypes = lazy(() => import('../pages/suppliers/types'));
-const ExpenseCategoryTypes = lazy(
-  () => import('../pages/expenses/categories/types'),
-);
-const ExpenseCategories = lazy(() => import('../pages/expenses/categories'));
-const ExpenseGroups = lazy(() => import('../pages/expenses/groups'));
-const Expenses = lazy(() => import('../pages/expenses'));
 export const publicRoutes: Array<RouteProps> = [
   {
     key: 'sign-in',
     path: '/sign-in',
     type: 'public',
     title: 'Sign In',
-    element: (
-      <>
-        <h1>Sign In in construction</h1>
-      </>
-    ),
   },
   {
     key: 'sign-up',
     path: '/sign-up',
     type: 'public',
     title: 'Sign Up',
-
-    element: (
-      <>
-        <h1>Sign Up in construction</h1>
-      </>
-    ),
   },
   {
     key: 'forgot-password',
     path: '/forgot-password',
     type: 'public',
     title: 'Forgot Password',
-    element: (
-      <>
-        <h1>Forgot Password in construction</h1>
-      </>
-    ),
   },
   {
     key: 'reset-password',
     path: '/reset-password',
     type: 'public',
     title: 'Reset Password',
-    element: (
-      <>
-        <h1>Reset Password in construction</h1>
-      </>
-    ),
   },
 ];
 
@@ -68,11 +36,6 @@ export const privateRoutes: Array<RouteProps> = [
     path: '/dashboard',
     type: 'private',
     title: 'Dashboard',
-    element: (
-      <Suspense fallback={<h1>LOADING</h1>}>
-        <Dashboard />,
-      </Suspense>
-    ),
   },
   {
     key: 'profile',
@@ -80,11 +43,6 @@ export const privateRoutes: Array<RouteProps> = [
     path: '/profile',
     type: 'private',
     title: 'Profile',
-    element: (
-      <Suspense fallback={<h1>LOADING</h1>}>
-        <Profile />
-      </Suspense>
-    ),
   },
   {
     key: 'config',
@@ -92,11 +50,13 @@ export const privateRoutes: Array<RouteProps> = [
     path: '/config',
     type: 'private',
     title: 'Configuration',
-    element: (
-      <Suspense fallback={<h1>LOADING</h1>}>
-        <Config />
-      </Suspense>
-    ),
+  },
+  {
+    key: 'bank',
+    icon: 'school',
+    path: '/bank',
+    type: 'private',
+    title: 'Bank',
   },
   {
     key: 'expense',
@@ -104,67 +64,6 @@ export const privateRoutes: Array<RouteProps> = [
     path: '/expenses',
     type: 'private',
     title: 'Expense',
-    element: <></>,
-    children: [
-      {
-        key: 'expense-parent',
-        icon: 'expense',
-        path: '',
-        type: 'private',
-        title: 'Expense',
-        element: (
-          <Suspense fallback={<h1>LOADING</h1>}>
-            <Expenses />
-          </Suspense>
-        ),
-      },
-      {
-        key: 'expense-category-parent',
-        icon: 'category',
-        path: '/categories',
-        type: 'private',
-        title: 'Category',
-        element: <></>,
-        children: [
-          {
-            key: 'expense-category',
-            icon: 'category',
-            path: '',
-            type: 'private',
-            title: 'Category',
-            element: (
-              <Suspense fallback={<h1>LOADING</h1>}>
-                <ExpenseCategories />
-              </Suspense>
-            ),
-          },
-          {
-            key: 'expense-category-type',
-            icon: 'filter',
-            path: '/types',
-            type: 'private',
-            title: 'Type',
-            element: (
-              <Suspense fallback={<h1>LOADING</h1>}>
-                <ExpenseCategoryTypes />
-              </Suspense>
-            ),
-          },
-        ],
-      },
-      {
-        key: 'expense-group',
-        icon: 'group',
-        path: '/groups',
-        type: 'private',
-        title: 'Group',
-        element: (
-          <Suspense fallback={<h1>LOADING</h1>}>
-            <ExpenseGroups />
-          </Suspense>
-        ),
-      },
-    ],
   },
   {
     key: 'supplier-parent',
@@ -172,7 +71,6 @@ export const privateRoutes: Array<RouteProps> = [
     path: '/suppliers',
     type: 'private',
     title: 'Supplier',
-    element: <></>,
     children: [
       {
         key: 'supplier',
@@ -180,11 +78,6 @@ export const privateRoutes: Array<RouteProps> = [
         path: '',
         type: 'private',
         title: 'Supplier',
-        element: (
-          <Suspense fallback={<h1>LOADING</h1>}>
-            <Suppliers />
-          </Suspense>
-        ),
       },
       {
         key: 'supplier-type',
@@ -192,11 +85,6 @@ export const privateRoutes: Array<RouteProps> = [
         type: 'private',
         icon: 'box',
         title: 'Supplier Type',
-        element: (
-          <Suspense fallback={<h1>LOADING</h1>}>
-            <SupplierTypes />
-          </Suspense>
-        ),
       },
     ],
   },
@@ -229,5 +117,4 @@ const validatePath = (path: string) => {
     return `/${path}`;
   }
   return path;
-
 };

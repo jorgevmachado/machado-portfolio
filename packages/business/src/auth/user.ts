@@ -11,6 +11,7 @@ export default class User implements UserEntity {
   email: UserEntity['email'];
   gender: UserEntity['gender'];
   status: UserEntity['status'] = EStatus.ACTIVE;
+  finance?: UserEntity['finance'];
   picture?: UserEntity['picture'];
   whatsapp: UserEntity['whatsapp'];
   password?: UserEntity['password'];
@@ -31,6 +32,7 @@ export default class User implements UserEntity {
       this.email = params.email;
       this.gender = params.gender;
       this.status = params.status;
+      this.finance = params.finance ?? this.finance;
       this.picture = params.picture ?? this.picture;
       this.whatsapp = validateMobile(params.whatsapp, cleanAllFormatter);
       this.created_at = params.created_at ?? this.created_at;

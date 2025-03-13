@@ -7,7 +7,7 @@ import {
   jest,
 } from '@jest/globals';
 
-import { EGender, ERole, EStatus } from '../../shared';
+import { USER_FIXTURE } from '@repo/mock/auth/fixture';
 
 import { EBillType, EExpenseType, EMonth } from '../../api/nest/finance';
 
@@ -17,101 +17,97 @@ import Bill from './bill';
 
 describe('billBusiness', () => {
   const business = new BillBusiness();
-  const mockBillConstructorParams: BillConstructorParams = {
+
+  const bankMock = {
     id: '1',
-    name: 'Bill A',
-    total: 100,
-    expenses: [
-      {
-        id: '123',
-        year: 2022,
-        type: EExpenseType.FIXED,
-        paid: true,
-        value: 100,
-        total: 100,
-        month: EMonth.MARCH,
-        active: true,
-        supplier: {
-          id: '1',
-          name: 'Supplier A',
-          type: {
-            id: '1',
-            name: 'Supplier A',
-            created_at: new Date('2023-01-01'),
-            updated_at: new Date('2023-01-02'),
-            deleted_at: undefined,
-          },
-          active: true,
-          created_at: new Date('2023-01-01'),
-          updated_at: new Date('2023-01-02'),
-          deleted_at: undefined,
-          description: 'This supplier delivers raw materials.',
-        },
-        total_paid: 100,
-        description: 'Test expense',
-        instalment_number: 1,
-        created_at: new Date('2023-01-01'),
-        updated_at: new Date('2023-01-02'),
-        deleted_at: undefined,
-      },
-      {
-        id: '234',
-        year: 2022,
-        type: EExpenseType.FIXED,
-        paid: true,
-        value: 100,
-        total: 100,
-        month: EMonth.MARCH,
-        active: true,
-        supplier: {
-          id: '1',
-          name: 'Supplier A',
-          type: {
-            id: '1',
-            name: 'Supplier A',
-            created_at: new Date('2023-01-01'),
-            updated_at: new Date('2023-01-02'),
-            deleted_at: undefined,
-          },
-          active: true,
-          created_at: new Date('2023-01-01'),
-          updated_at: new Date('2023-01-02'),
-          deleted_at: undefined,
-          description: 'This supplier delivers raw materials.',
-        },
-        total_paid: 100,
-        description: 'Test expense',
-        instalment_number: 1,
-        created_at: new Date('2023-01-01'),
-        updated_at: new Date('2023-01-02'),
-        deleted_at: undefined,
-      },
-    ],
-    type: EBillType.CREDIT_CARD,
-    bank: {
-      id: '1',
-      name: 'Bank A',
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
-      deleted_at: undefined,
-    },
-    user: {
-      id: '1',
-      name: 'User A',
-      cpf: '12345678901',
-      role: ERole.USER,
-      email: 'usera@example.com',
-      gender: EGender.MALE,
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
-      deleted_at: undefined,
-      status: EStatus.ACTIVE,
-      whatsapp: '1234567890',
-      date_of_birth: new Date('1990-01-01'),
-    },
+    name: 'Bank A',
     created_at: new Date('2023-01-01'),
     updated_at: new Date('2023-01-02'),
     deleted_at: undefined,
+  };
+
+  const supplierTypeMock = {
+    id: '1',
+    name: 'Supplier A',
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
+  const supplierMock = {
+    id: '1',
+    name: 'Supplier A',
+    type: supplierTypeMock,
+    active: true,
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+    description: 'This supplier delivers raw materials.',
+  };
+
+  const financeMock = {
+    id: '1',
+    user: USER_FIXTURE,
+    bills: undefined,
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
+  const billMock = {
+    id: '1',
+    name: 'Bill A',
+    type: EBillType.CREDIT_CARD,
+    bank: bankMock,
+    total: 100,
+    finance: financeMock,
+    expenses: [],
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
+  const expenseMockOne = {
+    id: '123',
+    year: 2022,
+    bill: billMock,
+    type: EExpenseType.FIXED,
+    paid: true,
+    value: 100,
+    total: 100,
+    month: EMonth.MARCH,
+    active: true,
+    supplier: supplierMock,
+    total_paid: 100,
+    description: 'Test expense',
+    instalment_number: 1,
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
+  const expenseMockTwo = {
+    id: '234',
+    year: 2022,
+    bill: billMock,
+    type: EExpenseType.FIXED,
+    paid: true,
+    value: 100,
+    total: 100,
+    month: EMonth.MARCH,
+    active: true,
+    supplier: supplierMock,
+    total_paid: 100,
+    description: 'Test expense',
+    instalment_number: 1,
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
+  const mockBillConstructorParams: BillConstructorParams = {
+    ...billMock,
+    expenses: [expenseMockOne, expenseMockTwo],
   };
 
   beforeEach(() => {
@@ -129,7 +125,7 @@ describe('billBusiness', () => {
       expect(bill).toBeInstanceOf(Bill);
       expect(bill.total).toBe(2400);
       expect(bill.total_paid).toBe(2400);
-      expect(bill.expenses.length).toBe(2);
+      expect(bill?.expenses?.length).toBe(2);
       expect(bill.all_paid).toBe(true);
     });
   });

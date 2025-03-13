@@ -7,17 +7,71 @@ import {
   jest,
 } from '@jest/globals';
 
+import { USER_FIXTURE } from '@repo/mock/auth/fixture';
+
 import { Nest } from '../../api';
 
 import { ExpenseService } from './expenseService';
-import { EExpenseType, EMonth } from '../../api/nest/finance';
+import { EBillType, EExpenseType, EMonth } from '../../api/nest/finance';
 
 describe('ExpenseService', () => {
   let mockNest: jest.Mocked<Nest>;
   let service: ExpenseService;
 
+  const bankMock = {
+    id: '1',
+    name: 'Bank',
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
+  const supplierTypeMock = {
+    id: '1',
+    user: USER_FIXTURE,
+    name: 'Supplier A',
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
+  const supplierMock = {
+    id: '1',
+    user: USER_FIXTURE,
+    name: 'Supplier A',
+    type: supplierTypeMock,
+    active: true,
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+    description: 'This supplier delivers raw materials.',
+  };
+
+  const financeMock = {
+    id: '1',
+    user: USER_FIXTURE,
+    bills: undefined,
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
+  const billMock = {
+    id: '1',
+    name: 'Bill A',
+    type: EBillType.CREDIT_CARD,
+    bank: bankMock,
+    total: 100,
+    finance: financeMock,
+    expenses: [],
+    created_at: new Date('2023-01-01'),
+    updated_at: new Date('2023-01-02'),
+    deleted_at: undefined,
+  };
+
   const mockEntity = {
     id: '123',
+    bill: billMock,
     year: 2025,
     value: 100,
     type: EExpenseType.FIXED,
@@ -26,22 +80,7 @@ describe('ExpenseService', () => {
     total: 1200,
     total_paid: 1200,
     month: EMonth.MARCH,
-    supplier: {
-      id: '1',
-      name: 'Supplier A',
-      type: {
-        id: '1',
-        name: 'Supplier A',
-        created_at: new Date('2023-01-01'),
-        updated_at: new Date('2023-01-02'),
-        deleted_at: undefined,
-      },
-      active: true,
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
-      deleted_at: undefined,
-      description: 'This supplier delivers raw materials.',
-    },
+    supplier: supplierMock,
     january: 100,
     january_paid: true,
     february: 100,
@@ -116,10 +155,12 @@ describe('ExpenseService', () => {
     it('should successfully create an supplier', async () => {
       mockNest.finance.expense.create.mockResolvedValue(mockEntity);
 
+
       const result = await service.create(mockEntity);
 
       expect(mockNest.finance.expense.create).toHaveBeenCalledWith({
         id: mockEntity.id,
+        bill: mockEntity.bill,
         year: mockEntity.year,
         type: mockEntity.type,
         paid: mockEntity.paid,
@@ -173,6 +214,7 @@ describe('ExpenseService', () => {
         mockEntity.id,
         {
           id: mockEntity.id,
+          bill: mockEntity.bill,
           year: mockEntity.year,
           type: mockEntity.type,
           paid: mockEntity.paid,

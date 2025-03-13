@@ -4,20 +4,20 @@ import { QueryParameters } from '../../shared';
 import { Paginate } from '../../paginate';
 
 import Bank from './bank';
-import type { BankEntity } from './interface';
+import { BankEntity, CreateBankParams, UpdateBankParams } from './interface';
 
 export class BankService {
   constructor(private nest: Nest) {}
 
-  public async create(name: string): Promise<Bank> {
+  public async create(params: CreateBankParams): Promise<Bank> {
     return await this.nest.finance.bank
-      .create({ name })
+      .create(params)
       .then((response) => new Bank(response));
   }
 
-  public async update(param: string, name: string): Promise<Bank> {
+  public async update(param: string, params: UpdateBankParams): Promise<Bank> {
     return await this.nest.finance.bank
-      .update(param, { name })
+      .update(param, params)
       .then((response) => new Bank(response));
   }
 

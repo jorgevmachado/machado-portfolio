@@ -59,7 +59,6 @@ export class BillService extends Service<Bill> {
         );
         const currentBill = this.billBusiness.initialize({
           ...bill,
-          user,
           bank,
           expenses,
         });
