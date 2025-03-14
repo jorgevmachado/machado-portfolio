@@ -87,22 +87,6 @@ describe('ExpenseService', () => {
     });
   });
 
-  describe('getRelation', () => {
-    const relation = 'Supplier';
-    it('should throw ConflictException when the relation is not found', () => {
-      const list = [{ name: 'Supplier1' }, { name: 'Supplier2' }];
-      const name = 'Supplier3';
-
-      expect(() => {
-        service['getRelation'](list, relation, name);
-      }).toThrow(
-        new ConflictException(
-          `The selected ${relation} does not exist, try another one or create one.`,
-        ),
-      );
-    });
-  });
-
   describe('create', () => {
     it('should create a new expense with type equal variable and save it', async () => {
       const createDto: CreateExpenseDto = {

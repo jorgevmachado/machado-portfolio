@@ -6,11 +6,11 @@ export default class Bill implements BillEntity {
   year?: BillEntity['year'];
   bank: BillEntity['bank'];
   name: BillEntity['name'];
-  total: BillEntity['total'];
+  total: BillEntity['total'] = 0;
   finance: BillEntity['finance'];
   expenses: BillEntity['expenses'];
-  all_paid?: BillEntity['all_paid'];
-  total_paid?: BillEntity['total_paid'];
+  all_paid?: BillEntity['all_paid'] = false;
+  total_paid?: BillEntity['total_paid'] = 0;
   created_at: BillEntity['created_at'];
   updated_at: BillEntity['updated_at'];
   deleted_at: BillEntity['deleted_at'];

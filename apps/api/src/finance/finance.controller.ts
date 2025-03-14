@@ -11,6 +11,11 @@ import { User } from '../auth/users/user.entity';
 export class FinanceController {
   constructor(private readonly financeService: FinanceService) {}
 
+  @Post('/initialize')
+  seed(@GetUserAuth() user: User) {
+    return this.financeService.initializeFinance(user);
+  }
+
   @Post('/seeds')
   seeds(@GetUserAuth() user: User) {
     return this.financeService.seeds(user);

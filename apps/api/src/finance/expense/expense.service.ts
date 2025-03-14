@@ -25,7 +25,7 @@ export class ExpenseService extends Service<Expense> {
     protected supplierService: SupplierService,
     protected expenseBusiness: ExpenseBusiness,
   ) {
-    super('expenses', ['group', 'supplier', 'category'], repository);
+    super('expenses', ['supplier'], repository);
   }
 
   async create({
@@ -41,7 +41,12 @@ export class ExpenseService extends Service<Expense> {
     const supplierEntity =
       await this.supplierService.treatSupplierParam(supplier);
 
-    const entity = await this.findBySupplier(supplierEntity.id);
+    const entity = await this.repository.findOne({
+      where: {
+        supplier: { id: supplierEntity.id },
+      },
+      relations: ['supplier'],
+    });
 
     const newExpense = this.expenseBusiness.initializeExpense({
       supplier: supplierEntity,
@@ -92,64 +97,21 @@ export class ExpenseService extends Service<Expense> {
     return { message: 'Successfully removed' };
   }
 
-  private async findBySupplier(supplierId: string) {
-    return await this.repository.findOne({
-      where: {
-        supplier: { id: supplierId },
-      },
-      relations: ['supplier'],
-    });
-  }
-
-  async seed(suppliers: Array<Supplier>) {
-    this.validateListMock<Expense>({
-      list: EXPENSE_LIST_FIXTURE,
+  async seed(supplierList: Array<Supplier>) {
+    return this.seedEntities({
+      by: 'id',
       key: 'id',
       label: 'Expense',
+      seeds: EXPENSE_LIST_FIXTURE,
+      createdEntityFn: async (item) => {
+        const supplier = this.getRelation<Supplier>({
+          key: 'name',
+          list: supplierList,
+          relation: 'Supplier',
+          param: item?.supplier?.name,
+        });
+        return { ...item, supplier };
+      },
     });
-    console.info('# => start expense seeding');
-    const existingExpenses = await this.repository.find({ withDeleted: true });
-    const existingIds = new Set(existingExpenses?.map((expense) => expense.id));
-
-    const expensesToCreate = EXPENSE_LIST_FIXTURE.filter(
-      (expense) => !existingIds.has(expense.id),
-    );
-
-    if (expensesToCreate.length === 0) {
-      console.info('# => No new Expenses to seed');
-      return existingExpenses;
-    }
-
-    const createdExpenses = await Promise.all(
-      expensesToCreate.map(async (expense) => {
-        const supplier = this.getRelation<Supplier>(
-          suppliers,
-          'Supplier',
-          expense?.supplier?.name,
-        );
-        return await this.repository.save({ ...expense, supplier });
-      }),
-    );
-
-    console.info(`# => Seeded ${createdExpenses.length} new expenses`);
-    return [...existingExpenses, ...createdExpenses].filter(
-      (expense): expense is Expense => expense !== undefined,
-    );
-  }
-
-  private getRelation<T extends { name: string }>(
-    list: Array<T>,
-    relation: string,
-    name: string,
-  ) {
-    const item = list?.find((item) => item.name === name);
-    if (!item) {
-      throw this.error(
-        new ConflictException(
-          `The selected ${relation} does not exist, try another one or create one.`,
-        ),
-      );
-    }
-    return item;
   }
 }

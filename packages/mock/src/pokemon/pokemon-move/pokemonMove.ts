@@ -1,8 +1,16 @@
 import { Router } from 'express';
 
-import { findAll, findOne } from '../../shared';
+import { LIST_MOVE_FIXTURE } from '@repo/business/pokemon/pokemon-move/fixtures/pokemonMove';
 
-import { POKEMON_MOVE_MOCK_ENTITY } from './fixtures';
+import { findAll, findOne } from '../../shared';
+import type { MockEntity } from '../../shared/interface';
+
+export const POKEMON_MOVE_MOCK_ENTITY: MockEntity = {
+  id: 'POKEMON_MOVE',
+  alias: 'pokemon_moves',
+  label: 'Pokemon Moves',
+  list: LIST_MOVE_FIXTURE,
+};
 
 const pokemonMoveRouter: Router = Router();
 

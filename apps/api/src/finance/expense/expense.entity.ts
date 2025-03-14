@@ -26,7 +26,7 @@ export class Expense implements ExpenseEntity {
   year?: number;
 
   @ManyToOne(() => Bill, (bill) => bill.expenses, {
-    nullable: false,
+    nullable: true,
   })
   @JoinTable()
   bill?: Bill;

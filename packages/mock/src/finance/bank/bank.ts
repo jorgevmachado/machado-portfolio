@@ -1,9 +1,19 @@
 import { Router } from 'express';
 
+import { BANK_LIST_FIXTURE } from '@repo/business/finance/bank/fixtures/bank';
+
 import { findAll, findOne } from '../../shared';
 
 import { create, remove, update } from '../shared';
-import { BANK_FINANCE_ENTITY } from './fixtures';
+
+import type { FinanceEntity } from '../interface';
+
+export const BANK_FINANCE_ENTITY: FinanceEntity = {
+  id: 'BANK',
+  list: BANK_LIST_FIXTURE,
+  label: 'Bank',
+  alias: 'banks',
+};
 
 const bankRouter = Router();
 

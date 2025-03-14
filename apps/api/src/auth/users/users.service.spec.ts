@@ -3,7 +3,7 @@ import {
   BadRequestException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {beforeEach, describe, expect, it, jest, xit} from '@jest/globals';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import fs from 'fs';
@@ -121,9 +121,9 @@ describe('UsersService', () => {
   describe('checkCredentials', () => {
     it('should return true', async () => {
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
         withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
         getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
       } as any);
 
@@ -137,9 +137,9 @@ describe('UsersService', () => {
 
     it('should return false because the user is inactive', async () => {
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
         withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
         getOne: jest.fn().mockReturnValueOnce({
           ...ENTITY_USER_FIXTURE,
           status: EStatus.INACTIVE,
@@ -156,9 +156,9 @@ describe('UsersService', () => {
 
     it('should return false because the credentials is incorrectly', async () => {
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
         withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
         getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
       } as any);
 
@@ -237,9 +237,9 @@ describe('UsersService', () => {
     const seedEntityUser = ENTITY_USER_FIXTURE;
     it('should seed the database when exist in database', async () => {
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        leftJoinAndSelect: jest.fn(),
         andWhere: jest.fn(),
         withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
         getOne: jest.fn().mockReturnValueOnce(seedEntityUser),
       } as any);
 
@@ -372,6 +372,5 @@ describe('UsersService', () => {
         picture: `http://localhost:3001/uploads/${ENTITY_USER_FIXTURE.email}.jpeg`
       })
     })
-
   });
 });

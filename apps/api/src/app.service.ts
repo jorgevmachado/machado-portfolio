@@ -8,14 +8,12 @@ export class AppService {
     protected authService: AuthService,
     protected financeService: FinanceService,
   ) {}
-  getHello(): string {
-    return 'Hello World!';
-  }
-  async seed() {
+  async seed(key?: 'all' | 'finance' | 'pokemon') {
     const user = await this.authService.seed();
     console.info('# => user exist => ', Boolean(user));
-    const finance = await this.financeService.seed(user);
-    console.info('# => finance exist => ', Boolean(finance));
+    if(key === 'all' || key === 'finance') {
+      await this.financeService.seeds(user);
+    }
     return {
       message: 'Seeds executed successfully',
     };

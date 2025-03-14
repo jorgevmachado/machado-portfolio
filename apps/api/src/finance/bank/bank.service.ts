@@ -33,33 +33,13 @@ export class BankService extends Service<Bank> {
     return this.save(bank);
   }
 
-  async seed(): Promise<Array<Bank>> {
-    this.validateListMock<Bank>({
-      list: BANK_LIST_FIXTURE,
+  async seed() {
+    return this.seedEntities({
+      by: 'name',
       key: 'all',
       label: 'Bank',
+      seeds: BANK_LIST_FIXTURE,
+      createdEntityFn: async (item) => item,
     });
-    console.info('# => start bank seeding');
-    const existingBanks = await this.repository.find({
-      withDeleted: true,
-    });
-
-    const existingNames = new Set(existingBanks.map((bank) => bank.name));
-
-    const banksToCreate = BANK_LIST_FIXTURE.filter(
-      (bank) => !existingNames.has(bank.name),
-    );
-
-    if (banksToCreate.length === 0) {
-      console.info('# => No new banks to seed');
-      return existingBanks;
-    }
-
-    const createdBanks = (
-      await Promise.all(banksToCreate.map(async (bank) => this.create(bank)))
-    ).filter((bank): bank is Bank => !!bank);
-
-    console.info(`# => Seeded ${createdBanks.length} new banks`);
-    return [...existingBanks, ...createdBanks];
   }
 }

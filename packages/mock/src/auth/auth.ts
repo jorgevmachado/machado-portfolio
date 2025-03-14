@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { AUTH_TOKEN, USER_FIXTURE_WITH_FINANCE } from './fixture';
+
+import { AUTH_TOKEN, USER_FIXTURE } from '@repo/business/auth/fixtures/auth';
 
 const authRouter: Router = Router();
 
@@ -17,11 +18,11 @@ authRouter.post('/auth/signIn', (req, res) => {
 });
 
 authRouter.get('/me', (req, res) => {
-  res.json(USER_FIXTURE_WITH_FINANCE);
+  res.json(USER_FIXTURE);
 });
 
 authRouter.get('/auth/:id', (req, res) => {
-  res.json(USER_FIXTURE_WITH_FINANCE);
+  res.json(USER_FIXTURE);
 });
 
 export default authRouter;

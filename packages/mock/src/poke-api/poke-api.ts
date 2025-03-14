@@ -1,16 +1,16 @@
 import { Router } from 'express';
-import LIST_BASIC from './jsons/list.json';
-import { POKEMON_EXTERNAL_BY_ID_NAME_LIST_FIXTURE } from './jsons/byId';
-import { MOVES_BY_ORDER_LIST_FIXTURE } from './jsons/moveByOrder';
-import { SPECIE_BY_POKEMON_NAME_OR_ID_LIST_FIXTURE } from './jsons/specieByPokemonNameOrId';
-import { EVOLUTION_BY_ORDER_FIXTURE } from './jsons/evolutionByOrder';
+import { POKEMON_LIST_BASIC_JSON } from '@repo/business/pokemon/fixtures/poke-api/index';
+import { POKEMON_EXTERNAL_BY_ID_NAME_LIST_FIXTURE } from '@repo/business/pokemon/fixtures/poke-api/byId/byId';
+import { MOVES_BY_ORDER_LIST_FIXTURE } from '@repo/business/pokemon/fixtures/poke-api/moveByOrder/moveByOrder';
+import { SPECIE_BY_POKEMON_NAME_OR_ID_LIST_FIXTURE } from '@repo/business/pokemon/fixtures/poke-api/specieByPokemonNameOrId/specieByPokemonNameOrId';
+import { EVOLUTION_BY_ORDER_FIXTURE } from '@repo/business/pokemon/fixtures/poke-api//evolutionByOrder/evolutionByOrder';
 
 const pokeApiRouter: Router = Router();
 
 const baseUrl = '/external/api/v2';
 
 pokeApiRouter.get(`${baseUrl}/pokemon`, (req, res) => {
-  res.json(LIST_BASIC);
+  res.json(POKEMON_LIST_BASIC_JSON);
 });
 
 pokeApiRouter.get(`${baseUrl}/pokemon/:param`, (req, res) => {

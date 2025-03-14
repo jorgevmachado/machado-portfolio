@@ -1,2 +1,1 @@
-export { default } from './supplier';
-export * from './fixtures';
+export { default, SUPPLIER_FINANCE_ENTITY } from './supplier';

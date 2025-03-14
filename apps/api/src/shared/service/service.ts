@@ -1,5 +1,5 @@
-import { ObjectLiteral, Repository } from 'typeorm';
-import { NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 
 import { Paginate } from '@repo/business/paginate/paginate';
 import { PaginateParameters } from '@repo/business/paginate/interface';
@@ -13,8 +13,15 @@ import {
 import { Base } from '../base';
 import { Query } from '../query';
 import { isUUID } from '@repo/services/string/string';
+import {
+  GetRelationParams,
+  SeedEntitiesParams,
+  SeedEntityParams,
+} from './interface';
 
-export abstract class Service<T extends ObjectLiteral> extends Base {
+export abstract class Service<
+  T extends { id: string; name?: string },
+> extends Base {
   protected constructor(
     protected readonly alias: string,
     protected readonly relations: Array<string>,
@@ -108,7 +115,7 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
     return await this.findBy({
       searchParams: {
         by: valueIsUUID ? 'id' : 'name',
-        value: value.toLowerCase(),
+        value: value?.toLowerCase(),
         condition: valueIsUUID ? '=' : 'LIKE',
       },
       relations,
@@ -119,10 +126,6 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
   }
 
   async save(data: T): Promise<void | T> {
-    // TODO MUST BE REMOVED BEFORE COMMIT
-    console.log('# => data => ', data);
-
-
     return this.repository
       .save(data)
       .then()
@@ -149,5 +152,78 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
     const entity = await this.findOne({ value, withThrow: false });
     this.validateParam<T>(entity as unknown as string | T, label);
     return entity;
+  }
+
+  async seedEntities({
+    by,
+    key,
+    seeds,
+    label,
+    createdEntityFn,
+  }: SeedEntitiesParams<T>) {
+    this.validateListMock<T>({ key, list: seeds, label });
+    console.info(`# => Start ${label.toLowerCase()} seeding`);
+    const existingEntities = await this.repository.find({ withDeleted: true });
+    const existingEntitiesBy = new Set(
+      existingEntities.map((entity) => entity[by]),
+    );
+
+    const entitiesToCreate = seeds.filter(
+      (entity) => !existingEntitiesBy.has(entity[by]),
+    );
+
+    if (entitiesToCreate.length === 0) {
+      console.info(`# => No new ${label.toLowerCase()} to seed`);
+      return existingEntities;
+    }
+    const createdEntities = (
+      await Promise.all(
+        entitiesToCreate.map(async (entity) => {
+          const newEntity = await createdEntityFn(entity);
+          return this.save(newEntity as T);
+        }),
+      )
+    ).filter((entity) => !!entity);
+    console.info(
+      `# => Seeded ${createdEntities.length} new ${label.toLowerCase()}`,
+    );
+    return [...existingEntities, ...createdEntities];
+  }
+
+  async seedEntity({ by, label, seed, createdEntityFn }: SeedEntityParams<T>) {
+    console.info(`# => Start ${label.toLowerCase()} seeding`);
+    const currentSeed = await this.findOne({
+      value: seed[by],
+      withThrow: false,
+    });
+    // TODO MUST BE REMOVED BEFORE COMMIT
+    console.log('# => currentSeed => ', currentSeed);
+
+
+    if (currentSeed) {
+      console.info(`# => No new ${label.toLowerCase()} to seed`);
+      return currentSeed;
+    }
+    // TODO MUST BE REMOVED BEFORE COMMIT
+    console.log('######')
+    return seed as T;
+    // return await createdEntityFn(seed as T);
+  }
+
+  getRelation<T extends { id: string; name?: string }>({
+    key,
+    list,
+    param,
+    relation,
+  }: GetRelationParams<T>) {
+    const item = list?.find((item) => item[key] === param);
+    if (!item) {
+      throw this.error(
+        new ConflictException(
+          `The selected ${relation} does not exist, try another one or create one.`,
+        ),
+      );
+    }
+    return item;
   }
 }

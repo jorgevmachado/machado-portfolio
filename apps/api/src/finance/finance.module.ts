@@ -1,13 +1,16 @@
 import { Module } from '@nestjs/common';
-import { FinanceService } from './finance.service';
-import { FinanceController } from './finance.controller';
-import { SupplierModule } from './supplier/supplier.module';
 import { PassportModule } from '@nestjs/passport';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { ExpenseModule } from './expense/expense.module';
 import { BillModule } from './bill/bill.module';
 import { BankModule } from './bank/bank.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { Finance } from './finance.entity';
+
+import { FinanceService } from './finance.service';
+import { FinanceController } from './finance.controller';
+import { SupplierModule } from './supplier/supplier.module';
 
 @Module({
   imports: [

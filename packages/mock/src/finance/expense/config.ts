@@ -3,14 +3,23 @@ import { Request, Response } from 'express';
 import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 import type { ExpenseEntity } from '@repo/business/finance/expense/interface';
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
+import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 import { buildResponse } from '../../shared';
-import { USER_FIXTURE } from '../../auth';
+import { USER_FIXTURE } from '@repo/business/auth/fixtures/auth';
 
 import { findEntityByKey, validateEntityType } from '../shared';
 
-import { EXPENSE_FINANCE_ENTITY } from './fixtures';
 import { FinanceEntity } from '../interface';
+import { SUPPLIER_FINANCE_ENTITY } from '../supplier';
+
+export const EXPENSE_FINANCE_ENTITY: FinanceEntity = {
+  id: 'EXPENSE',
+  label: 'Expense',
+  alias: 'expenses',
+  supplier: SUPPLIER_FINANCE_ENTITY,
+  list: EXPENSE_LIST_FIXTURE,
+};
 
 const EXPENSE = {
   id: '1781d932-aaf8-4c8d-be3b-db23ffa602c7',

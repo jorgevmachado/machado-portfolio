@@ -7,3 +7,4 @@ export * from './cookies';
 export * from './formatter';
 export * from './validator';
 export * from './error';
+export * from './entities';

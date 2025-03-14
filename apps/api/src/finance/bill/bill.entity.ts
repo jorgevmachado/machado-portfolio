@@ -61,7 +61,7 @@ export class Bill implements BillEntity {
   @JoinTable()
   finance: Finance;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, default: false })
   all_paid?: boolean;
 
   @Column({

@@ -12,6 +12,7 @@ import { Supplier } from './supplier.entity';
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
+import { SupplierType } from './supplier-type/supplierType.entity';
 
 @Injectable()
 export class SupplierService extends Service<Supplier> {
@@ -63,42 +64,29 @@ export class SupplierService extends Service<Supplier> {
   }
 
   async seed() {
-    this.validateListMock<Supplier>({ list: LIST_SUPPLIER_FIXTURE, key: 'all', label: 'Supplier' })
     const supplierTypes = await this.supplierTypeService.seed();
-    console.info('# => start suppliers seeding');
-    const existingSuppliers = await this.repository.find({ withDeleted: true });
-    const existingNames = new Set(existingSuppliers.map((supplier) => supplier.name));
-
-    const suppliersToCreate = LIST_SUPPLIER_FIXTURE.filter((supplier) => !existingNames.has(supplier.name));
-
-    if(suppliersToCreate.length === 0) {
-      console.info('# => No new Suppliers to seed');
-      return {
-        supplierTypes,
-        suppliers: existingSuppliers
-      }
-    }
-
-    const createdSuppliers = await Promise.all(suppliersToCreate.map(async (supplier) => {
-      const type = supplierTypes?.find((type) => type.name === supplier?.type?.name);
-      if (!type) {
-        throw new ConflictException(
-            'The selected Supplier Type does not exist, try another one or create one.',
+    return this.seedEntities({
+      by: 'name',
+      key: 'all',
+      label: 'Supplier',
+      seeds: LIST_SUPPLIER_FIXTURE,
+      createdEntityFn: async (data) => {
+        const type = supplierTypes?.find(
+          (type): type is SupplierType =>
+            !!type && type.name === data?.type?.name,
         );
-      }
+        if (!type) {
+          throw new ConflictException(
+            'The selected Supplier Type does not exist, try another one or create one.',
+          );
+        }
 
-      return this.create({
-        name: supplier.name,
-        type,
-      });
-    }));
-
-    console.info(`# => Seeded ${createdSuppliers.length} new suppliers`);
-
-    return {
-      supplierTypes,
-      suppliers: [...existingSuppliers, ...createdSuppliers].filter((supplier): supplier is Supplier => supplier !== undefined),
-    };
+        return new SupplierBusiness({
+          name: data.name,
+          type,
+        });
+      },
+    });
   }
 
   async treatSupplierParam(supplier: string | Supplier) {

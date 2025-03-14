@@ -34,7 +34,8 @@ export class AuthService extends Base {
     return await this.userService
       .checkCredentials(CredentialsAuthDto)
       .then((response) => {
-        const jwtPayload = { id: response.id };
+
+        const jwtPayload = { id: response.id, financeId: response?.finance?.id };
 
         const token = this.jwtService.sign(jwtPayload);
 
@@ -64,7 +65,7 @@ export class AuthService extends Base {
 
   async seed() {
     const currentUser = (await this.userService.seed()) as User;
-    return new UserBusiness({ ...currentUser, clean: true });
+    return new UserBusiness({...currentUser, clean: true });
   }
 
   async promoteUser(id: string, authUser: User) {

@@ -128,3 +128,7 @@ npm run lint
     npm run test -- --findRelatedTests src/error/error.spec.ts               
 ```
 
+### entities
+```bash
+    npm run test -- --findRelatedTests src/entities/entities.spec.ts               
+```

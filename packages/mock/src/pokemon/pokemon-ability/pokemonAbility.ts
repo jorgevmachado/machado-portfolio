@@ -1,8 +1,16 @@
 import { Router } from 'express';
 
-import { findAll, findOne } from '../../shared';
+import { LIST_ABILITIES_FIXTURE } from '@repo/business/pokemon/pokemon-ability/fixtures/pokemonAbility';
 
-import { POKEMON_ABILITY_MOCK_ENTITY } from './fixtures';
+import { findAll, findOne } from '../../shared';
+import type { MockEntity } from '../../shared/interface';
+
+export const POKEMON_ABILITY_MOCK_ENTITY: MockEntity = {
+  id: 'POKEMON_ABILITY',
+  alias: 'pokemon_abilities',
+  label: 'Pokemon Abilities',
+  list: LIST_ABILITIES_FIXTURE,
+};
 
 const pokemonAbilityRouter: Router = Router();
 

@@ -2,8 +2,7 @@ import { Router } from 'express';
 
 import { findAll, findOne } from '../../shared';
 
-import { EXPENSE_FINANCE_ENTITY } from './fixtures';
-import { create, update } from './config';
+import { create, EXPENSE_FINANCE_ENTITY, update } from './config';
 
 const expenseRouter = Router();
 

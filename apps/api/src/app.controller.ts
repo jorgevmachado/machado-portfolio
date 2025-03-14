@@ -1,17 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
+
+import { QueryParameters } from '@repo/business/shared/interface';
+
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
   @Get('seed')
-  seed() {
-    return this.appService.seed();
+  seed(@Query() parameters: QueryParameters) {
+    return this.appService.seed(parameters?.['key']);
   }
 }

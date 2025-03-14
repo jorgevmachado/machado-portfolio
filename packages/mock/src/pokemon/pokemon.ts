@@ -1,12 +1,20 @@
 import { Router } from 'express';
 
-import { findAll, findOne } from '../shared';
+import { LIST_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/business/pokemon/fixtures/pokemon/completes/completes';
 
-import { POKEMON_MOCK_ENTITY } from './fixtures';
+import { findAll, findOne } from '../shared';
 
 import pokemonTypeRouter from './pokemon-type';
 import pokemonMoveRouter from './pokemon-move';
 import pokemonAbilityRouter from './pokemon-ability';
+import { MockEntity } from '../shared/interface';
+
+export const POKEMON_MOCK_ENTITY: MockEntity = {
+  id: 'POKEMON',
+  alias: 'pokemon',
+  label: 'Pokemon',
+  list: LIST_ENTITY_COMPLETE_POKEMON_FIXTURE,
+};
 
 const pokemonRouter: Router = Router();
 

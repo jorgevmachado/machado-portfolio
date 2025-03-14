@@ -1,12 +1,22 @@
 import { Router } from 'express';
 
+import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
+
 import { findAll, findOne } from '../../shared';
 
 import { create, remove, update } from '../shared';
 
-import { SUPPLIER_FINANCE_ENTITY } from './fixtures';
+import supplierTypeRouter, { SUPPLIER_TYPE_FINANCE_ENTITY } from '../supplier-type';
 
-import supplierTypeRouter from '../supplier-type'
+import type { FinanceEntity } from '../interface';
+
+export const SUPPLIER_FINANCE_ENTITY: FinanceEntity = {
+  id: 'SUPPLIER',
+  label: 'Supplier',
+  alias: 'suppliers',
+  list: SUPPLIER_LIST_FIXTURE,
+  type: SUPPLIER_TYPE_FINANCE_ENTITY,
+};
 
 const supplierRouter = Router();
 

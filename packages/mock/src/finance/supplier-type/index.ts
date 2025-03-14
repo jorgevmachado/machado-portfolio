@@ -1,2 +1,1 @@
-export { default } from './supplierType';
-export * from './fixtures';
+export { default, SUPPLIER_TYPE_FINANCE_ENTITY } from './supplierType';
