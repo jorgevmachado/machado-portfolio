@@ -18,6 +18,8 @@ import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/
 
 import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
+import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
+
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 
@@ -69,7 +71,7 @@ describe('ExpenseService', () => {
         .spyOn(repository, 'find')
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
 
-      expect(await service.seed(SUPPLIER_LIST_FIXTURE)).toEqual(
+      expect(await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE)).toEqual(
         EXPENSE_LIST_FIXTURE,
       );
     });
@@ -81,7 +83,7 @@ describe('ExpenseService', () => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(expense);
       });
 
-      expect(await service.seed(SUPPLIER_LIST_FIXTURE)).toEqual(
+      expect(await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE)).toEqual(
         EXPENSE_LIST_FIXTURE,
       );
     });

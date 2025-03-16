@@ -196,18 +196,11 @@ export abstract class Service<
       value: seed[by],
       withThrow: false,
     });
-    // TODO MUST BE REMOVED BEFORE COMMIT
-    console.log('# => currentSeed => ', currentSeed);
-
-
     if (currentSeed) {
       console.info(`# => No new ${label.toLowerCase()} to seed`);
       return currentSeed;
     }
-    // TODO MUST BE REMOVED BEFORE COMMIT
-    console.log('######')
-    return seed as T;
-    // return await createdEntityFn(seed as T);
+    return await createdEntityFn(seed as T);
   }
 
   getRelation<T extends { id: string; name?: string }>({

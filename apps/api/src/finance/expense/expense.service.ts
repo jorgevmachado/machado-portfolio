@@ -16,6 +16,7 @@ import { CreateExpenseDto } from './dto/create-expense.dto';
 import { Expense } from './expense.entity';
 import { Supplier } from '../supplier/supplier.entity';
 import { SupplierService } from '../supplier/supplier.service';
+import {Bill} from "../bill/bill.entity";
 
 @Injectable()
 export class ExpenseService extends Service<Expense> {
@@ -97,7 +98,7 @@ export class ExpenseService extends Service<Expense> {
     return { message: 'Successfully removed' };
   }
 
-  async seed(supplierList: Array<Supplier>) {
+  async seed(supplierList: Array<Supplier>, billList: Array<Bill>) {
     return this.seedEntities({
       by: 'id',
       key: 'id',
@@ -110,7 +111,8 @@ export class ExpenseService extends Service<Expense> {
           relation: 'Supplier',
           param: item?.supplier?.name,
         });
-        return { ...item, supplier };
+        const bill = billList.find((bill) => bill.id === item.bill?.id);
+        return { ...item, supplier, bill };
       },
     });
   }

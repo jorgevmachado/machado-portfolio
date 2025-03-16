@@ -10,7 +10,6 @@ import { Service } from '../../shared';
 import { Bill } from './bill.entity';
 import { Bank } from '../bank/bank.entity';
 import { Finance } from '../finance.entity';
-import { Expense } from '../expense/expense.entity';
 
 @Injectable()
 export class BillService extends Service<Bill> {
@@ -25,11 +24,9 @@ export class BillService extends Service<Bill> {
   async seed({
     finance,
     bankList,
-    expenseList,
   }: {
     finance?: Finance;
     bankList: Array<Bank>;
-    expenseList: Array<Expense>;
   }) {
     return this.seedEntities({
       by: 'id',
@@ -43,28 +40,13 @@ export class BillService extends Service<Bill> {
           param: item?.bank?.name,
           relation: 'Bank',
         });
-        const expenses = this.expenseRelations(item, expenseList);
         return this.billBusiness.initialize({
           ...item,
           bank,
           finance,
-          expenses,
+          expenses: undefined,
         });
       },
     });
-  }
-
-  private expenseRelations(
-    bill: Bill,
-    expenseList: Array<Expense>,
-  ): Array<Expense> {
-    const expenses: Array<Expense> = [];
-    for (const expense of bill.expenses) {
-      const currentExpense = expenseList.find((item) => item.id === expense.id);
-      if (currentExpense) {
-        expenses.push(currentExpense);
-      }
-    }
-    return expenses;
   }
 }

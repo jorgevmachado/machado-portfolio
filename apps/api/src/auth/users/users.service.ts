@@ -144,10 +144,16 @@ export class UserService extends Service<User> {
   async seed() {
     console.info('# => Start seeding User');
     const item = USER_FIXTURE
-    const currentSeed = await this.findOne({
-      value: item.id,
-      withThrow: false,
+
+    const currentSeed = await this.findBy({
+      searchParams: {
+        by: 'cpf',
+        value: item.cpf,
+        condition: '=',
+      },
+      relations: this.relations,
     });
+
     if (currentSeed) {
       console.info(`# => No new ${'User'.toLowerCase()} to seed`);
       return currentSeed;

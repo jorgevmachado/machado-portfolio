@@ -56,14 +56,17 @@ export class FinanceService extends Service<Finance> {
         label: 'Banks',
         seedMethod: () => this.bankService.seed(),
       });
-      const expenseList = await this.executeSeed<Expense>({
-        label: 'Expenses',
-        seedMethod: () => this.expenseService.seed(suppliers),
-      });
-      await this.executeSeed<Bill>({
+
+      const billList = await this.executeSeed<Bill>({
         label: 'Bills',
-        seedMethod: () => this.billService.seed({ finance, bankList, expenseList }),
+        seedMethod: () => this.billService.seed({ finance, bankList }),
       });
+
+      await this.executeSeed<Expense>({
+        label: 'Expenses',
+        seedMethod: () => this.expenseService.seed(suppliers, billList),
+      });
+
 
       return {
         message: 'Seeds executed successfully',
@@ -75,7 +78,6 @@ export class FinanceService extends Service<Finance> {
   }
 
   private async seedFinance(user: User): Promise<Finance> {
-    console.info('# => Start seeding Finance');
     return this.seedEntity({
       by: 'id',
       label: 'Finance',
