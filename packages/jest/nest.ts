@@ -15,6 +15,8 @@ export const config = {
       'enum.ts',
       'interface.ts',
       'index.ts',
+      'main.ts',
+      'app.data-source.ts',
       '.module.ts',
       '.strategy.ts',
       '.decorator.ts',

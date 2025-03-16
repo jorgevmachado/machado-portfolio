@@ -12,12 +12,13 @@ import {
 import { Repository } from 'typeorm';
 
 import BillBusiness from '@repo/business/finance/bill/billBusiness';
-import { BANK_LIST_FIXTURE } from '@repo/mock/finance/bank/fixtures/bank';
-import { BILL_LIST_FIXTURE } from '@repo/mock/finance/bill/fixtures/bill';
+import { BANK_LIST_FIXTURE } from '@repo/business/finance/bank/fixtures/bank';
+import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
 import { Bill } from './bill.entity';
 import { BillService } from './bill.service';
-import { FINANCE_FIXTURE } from '@repo/mock/finance/fixtures/finance';
+import { FINANCE_FIXTURE } from '@repo/business/finance/fixtures/finance';
+import {EXPENSE_LIST_FIXTURE} from "@repo/business/finance/expense/fixtures/expense";
 
 describe('BillService', () => {
   let repository: Repository<Bill>;
@@ -53,6 +54,7 @@ describe('BillService', () => {
         await service.seed({
           finance: FINANCE_FIXTURE,
           bankList: BANK_LIST_FIXTURE,
+          expenseList: EXPENSE_LIST_FIXTURE
         }),
       ).toEqual(BILL_LIST_FIXTURE);
     });
@@ -68,6 +70,7 @@ describe('BillService', () => {
         await service.seed({
           finance: FINANCE_FIXTURE,
           bankList: BANK_LIST_FIXTURE,
+          expenseList: EXPENSE_LIST_FIXTURE
         }),
       ).toEqual(BILL_LIST_FIXTURE);
     });
@@ -78,6 +81,7 @@ describe('BillService', () => {
         service.seed({
           finance: FINANCE_FIXTURE,
           bankList: [],
+          expenseList: EXPENSE_LIST_FIXTURE
         }),
       ).rejects.toThrowError(ConflictException);
     });

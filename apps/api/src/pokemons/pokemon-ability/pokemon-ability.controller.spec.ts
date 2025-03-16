@@ -6,7 +6,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   OVERGROW_ABILITY_FIXTURE,
   LIST_ABILITIES_FIXTURE,
-} from '@repo/mock/pokemon/pokemon-ability/fixtures/index';
+} from '@repo/business/pokemon/pokemon-ability/fixtures/pokemonAbility';
 
 describe('PokemonAbilityController', () => {
   let service: PokemonAbilityService;

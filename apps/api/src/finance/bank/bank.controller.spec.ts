@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import {
   BANK_LIST_FIXTURE,
   CAIXA_BANK_FIXTURE,
-} from '@repo/mock/finance/bank/fixtures/bank';
+} from '@repo/business/finance/bank/fixtures/bank';
 
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';

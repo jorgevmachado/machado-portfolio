@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { FINANCE_FIXTURE } from '@repo/mock/finance/fixtures/finance';
+import { FINANCE_FIXTURE } from '@repo/business/finance/fixtures/finance';
 
 import FinanceBusiness from '@repo/business/finance/finance';
 
@@ -35,8 +35,8 @@ export class FinanceService extends Service<Finance> {
 
   async initializeFinance(user: User) {
     const currentFinance = await this.repository
-      .createQueryBuilder('finances')
-      .leftJoinAndSelect('finances.user', 'user')
+      .createQueryBuilder(this.alias)
+      .leftJoinAndSelect(`${this.alias}.user`, 'user')
       .getOne();
     if (currentFinance) {
       return currentFinance;
@@ -48,11 +48,23 @@ export class FinanceService extends Service<Finance> {
   async seeds(user: User) {
     try {
       const finance = await this.seedFinance(user);
-      const suppliers = await this.executeSeed<Supplier>({ label: 'Suppliers', seedMethod: async () => this.supplierService.seed()});
-      const bankList = await this.executeSeed<Bank>({ label: 'Banks', seedMethod: () => this.bankService.seed()});
-      const billsList = await this.executeSeed<Bill>({ label: 'Bills', seedMethod: () => this.billService.seed({ finance, bankList })});
-      const expenseList = await this.executeSeed<Expense>({ label: 'Expenses', seedMethod: () => this.expenseService.seed(suppliers) });
-      await this.billService.seedUnify(billsList, expenseList);
+      const suppliers = await this.executeSeed<Supplier>({
+        label: 'Suppliers',
+        seedMethod: async () => this.supplierService.seed(),
+      });
+      const bankList = await this.executeSeed<Bank>({
+        label: 'Banks',
+        seedMethod: () => this.bankService.seed(),
+      });
+      const expenseList = await this.executeSeed<Expense>({
+        label: 'Expenses',
+        seedMethod: () => this.expenseService.seed(suppliers),
+      });
+      await this.executeSeed<Bill>({
+        label: 'Bills',
+        seedMethod: () => this.billService.seed({ finance, bankList, expenseList }),
+      });
+
       return {
         message: 'Seeds executed successfully',
       };
@@ -87,15 +99,11 @@ export class FinanceService extends Service<Finance> {
   }): Promise<Array<T>> {
     console.info(`# => Seeding ${label}`);
     const items = await seedMethod();
-    const validItems = this.filterValidItems<T>(items, label);
+    const validItems = this.filterValidItems<T>(items);
     console.info(`# => ${validItems.length} ${label} seeded successfully`);
     return validItems;
   }
-  private filterValidItems<T>(items: Array<T | void>, label: string): Array<T> {
-    const validItems = items.filter((item): item is T => item !== undefined);
-    if (!validItems.length) {
-      console.warn(`# => No valid ${label} found during seed process`);
-    }
-    return validItems;
+  private filterValidItems<T>(items: Array<T | void>): Array<T> {
+    return items.filter((item): item is T => item !== undefined);
   }
 }

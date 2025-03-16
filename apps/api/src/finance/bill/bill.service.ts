@@ -4,8 +4,7 @@ import { Repository } from 'typeorm';
 
 import BillBusiness from '@repo/business/finance/bill/billBusiness';
 
-import { BILL_LIST_FIXTURE } from '@repo/mock/finance/bill/fixtures/bill';
-import { BILL_EXPENSES_FIXTURES } from '@repo/mock/finance/bill-expenses/fixtures/fixtures';
+import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
 import { Service } from '../../shared';
 import { Bill } from './bill.entity';
@@ -26,9 +25,11 @@ export class BillService extends Service<Bill> {
   async seed({
     finance,
     bankList,
+    expenseList,
   }: {
-    finance: Finance;
+    finance?: Finance;
     bankList: Array<Bank>;
+    expenseList: Array<Expense>;
   }) {
     return this.seedEntities({
       by: 'id',
@@ -42,43 +43,28 @@ export class BillService extends Service<Bill> {
           param: item?.bank?.name,
           relation: 'Bank',
         });
+        const expenses = this.expenseRelations(item, expenseList);
         return this.billBusiness.initialize({
           ...item,
           bank,
           finance,
+          expenses,
         });
       },
     });
   }
 
-  async seedUnify(billsList: Array<Bill>, expenseList: Array<Expense>) {
-    const updateBills = [];
-    for (const bill of billsList) {
-      const updateBill = await this.addExpenseToBill(bill, expenseList);
-      updateBills.push(updateBill);
+  private expenseRelations(
+    bill: Bill,
+    expenseList: Array<Expense>,
+  ): Array<Expense> {
+    const expenses: Array<Expense> = [];
+    for (const expense of bill.expenses) {
+      const currentExpense = expenseList.find((item) => item.id === expense.id);
+      if (currentExpense) {
+        expenses.push(currentExpense);
+      }
     }
-    return updateBills;
-  }
-
-  private async addExpenseToBill(bill: Bill, expenseList: Array<Expense>) {
-    const currentBill = await this.findOne({ value: bill.id });
-    if (currentBill && currentBill.expenses.length > 0) {
-      return currentBill;
-    }
-    const billSeed = BILL_EXPENSES_FIXTURES.find((item) => bill.id === item.id);
-    if (!billSeed) {
-      return bill;
-    }
-    const associatedExpenses = expenseList.filter((expense) =>
-      billSeed.expenses.some((seedExpense) => seedExpense.id === expense.id),
-    );
-    if (associatedExpenses?.length === 0) {
-      return bill;
-    }
-
-    return await this.repository.save({
-      ...bill,
-      expenses: associatedExpenses,
-    });
+    return expenses;
   }
 }

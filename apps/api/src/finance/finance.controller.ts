@@ -12,7 +12,7 @@ export class FinanceController {
   constructor(private readonly financeService: FinanceService) {}
 
   @Post('/initialize')
-  seed(@GetUserAuth() user: User) {
+  initialize(@GetUserAuth() user: User) {
     return this.financeService.initializeFinance(user);
   }
 

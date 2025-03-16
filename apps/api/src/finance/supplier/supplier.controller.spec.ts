@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
 import {
-  LIST_SUPPLIER_FIXTURE,
+  SUPPLIER_LIST_FIXTURE,
   VIVO_HOUSING_SUPPLIER_FIXTURE,
-} from '@repo/mock/finance/supplier/fixtures/supplier';
+} from '@repo/business/finance/supplier/fixtures/supplier';
 
 import { SupplierService } from './supplier.service';
 
@@ -45,9 +45,9 @@ describe('SupplierController', () => {
 
   describe('findAll', () => {
     it('Should return an list of suppliers', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(LIST_SUPPLIER_FIXTURE);
+      jest.spyOn(service, 'list').mockResolvedValue(SUPPLIER_LIST_FIXTURE,);
 
-      expect(await controller.findAll({})).toEqual(LIST_SUPPLIER_FIXTURE);
+      expect(await controller.findAll({})).toEqual(SUPPLIER_LIST_FIXTURE,);
     });
   });
 

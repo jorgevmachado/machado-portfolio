@@ -43,4 +43,17 @@ describe('AppController', () => {
     expect(controller).toBeDefined();
     expect(service).toBeDefined();
   });
+
+  describe('seed', () => {
+    it('should initialize seed', async () => {
+      jest.spyOn(service, 'seed').mockResolvedValueOnce({
+        message: 'Seeds executed successfully',
+      });
+      expect(await controller.seed({})).toEqual(
+        expect.objectContaining({
+          message: 'Seeds executed successfully',
+        }),
+      );
+    });
+  });
 });

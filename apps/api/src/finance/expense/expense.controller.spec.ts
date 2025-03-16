@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { EXPENSE_LIST_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
+import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 import { ExpenseController } from './expense.controller';
 import { ExpenseService } from './expense.service';

@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
 import { ERole } from '@repo/business/shared/enum';
 
-import { ENTITY_USER_FIXTURE, USER_PASSWORD } from '@repo/mock/auth/fixture';
+import { USER_ENTITY_FIXTURE, USER_PASSWORD } from '@repo/business/auth/fixtures/auth';
 
 import { AuthService } from './auth.service';
 
@@ -50,13 +50,13 @@ describe('AuthController', () => {
 
       expect(
         await controller.signUp({
-          cpf: ENTITY_USER_FIXTURE.cpf,
-          name: ENTITY_USER_FIXTURE.name,
-          email: ENTITY_USER_FIXTURE.email,
-          whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-          password: ENTITY_USER_FIXTURE.password,
-          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-          password_confirmation: ENTITY_USER_FIXTURE.password,
+          cpf: USER_ENTITY_FIXTURE.cpf,
+          name: USER_ENTITY_FIXTURE.name,
+          email: USER_ENTITY_FIXTURE.email,
+          whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+          password: USER_ENTITY_FIXTURE.password,
+          date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+          password_confirmation: USER_ENTITY_FIXTURE.password,
         }),
       ).toEqual({ message: 'Registration Completed Successfully!' });
     });
@@ -71,7 +71,7 @@ describe('AuthController', () => {
 
       expect(
         await controller.signIn({
-          email: ENTITY_USER_FIXTURE.email,
+          email: USER_ENTITY_FIXTURE.email,
           password: USER_PASSWORD,
         }),
       ).toEqual({ token: 'token', message: 'Authentication Successfully!' });
@@ -81,34 +81,34 @@ describe('AuthController', () => {
   describe('findOne', () => {
     it('should be able to find user', async () => {
       jest.spyOn(service, 'findOne').mockResolvedValueOnce({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
-        role: ENTITY_USER_FIXTURE.role,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
-        deleted_at: ENTITY_USER_FIXTURE.deleted_at,
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
+        role: USER_ENTITY_FIXTURE.role,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
+        deleted_at: USER_ENTITY_FIXTURE.deleted_at,
       });
 
       expect(
-        await controller.findOne(ENTITY_USER_FIXTURE, ENTITY_USER_FIXTURE.id),
+        await controller.findOne(USER_ENTITY_FIXTURE, USER_ENTITY_FIXTURE.id),
       ).toEqual({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
-        role: ENTITY_USER_FIXTURE.role,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
+        role: USER_ENTITY_FIXTURE.role,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
       });
     });
   });
@@ -116,32 +116,32 @@ describe('AuthController', () => {
   describe('me', () => {
     it('should be able to find user', async () => {
       jest.spyOn(service, 'me').mockResolvedValueOnce({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
-        role: ENTITY_USER_FIXTURE.role,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
-        deleted_at: ENTITY_USER_FIXTURE.deleted_at,
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
+        role: USER_ENTITY_FIXTURE.role,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
+        deleted_at: USER_ENTITY_FIXTURE.deleted_at,
       });
 
-      expect(await controller.getMe(ENTITY_USER_FIXTURE)).toEqual({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
-        role: ENTITY_USER_FIXTURE.role,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
+      expect(await controller.getMe(USER_ENTITY_FIXTURE)).toEqual({
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
+        role: USER_ENTITY_FIXTURE.role,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
       });
     });
   });
@@ -149,32 +149,32 @@ describe('AuthController', () => {
   describe('seed', () => {
     it('should be able to seed database', async () => {
       jest.spyOn(service, 'seed').mockResolvedValueOnce({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
         role: ERole.ADMIN,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
-        deleted_at: ENTITY_USER_FIXTURE.deleted_at,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
+        deleted_at: USER_ENTITY_FIXTURE.deleted_at,
       });
 
       expect(await controller.seed()).toEqual({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
         role: ERole.ADMIN,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
       });
     });
   });
@@ -183,42 +183,42 @@ describe('AuthController', () => {
     it('should be able to promote user', async () => {
       jest.spyOn(service, 'promoteUser').mockResolvedValueOnce({
         user: {
-          id: ENTITY_USER_FIXTURE.id,
-          cpf: ENTITY_USER_FIXTURE.cpf,
+          id: USER_ENTITY_FIXTURE.id,
+          cpf: USER_ENTITY_FIXTURE.cpf,
           role: ERole.ADMIN,
-          name: ENTITY_USER_FIXTURE.name,
-          email: ENTITY_USER_FIXTURE.email,
-          status: ENTITY_USER_FIXTURE.status,
-          gender: ENTITY_USER_FIXTURE.gender,
-          whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-          created_at: ENTITY_USER_FIXTURE.created_at,
-          updated_at: ENTITY_USER_FIXTURE.updated_at,
-          deleted_at: ENTITY_USER_FIXTURE.deleted_at,
+          name: USER_ENTITY_FIXTURE.name,
+          email: USER_ENTITY_FIXTURE.email,
+          status: USER_ENTITY_FIXTURE.status,
+          gender: USER_ENTITY_FIXTURE.gender,
+          whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+          date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+          created_at: USER_ENTITY_FIXTURE.created_at,
+          updated_at: USER_ENTITY_FIXTURE.updated_at,
+          deleted_at: USER_ENTITY_FIXTURE.deleted_at,
         },
         valid: true,
         message: 'User promoted successfully!',
       });
 
       expect(
-        await controller.promoteUser(ENTITY_USER_FIXTURE.id, {
-          ...ENTITY_USER_FIXTURE,
+        await controller.promoteUser(USER_ENTITY_FIXTURE.id, {
+          ...USER_ENTITY_FIXTURE,
           role: ERole.ADMIN,
         }),
       ).toEqual({
         user: {
-          id: ENTITY_USER_FIXTURE.id,
-          cpf: ENTITY_USER_FIXTURE.cpf,
+          id: USER_ENTITY_FIXTURE.id,
+          cpf: USER_ENTITY_FIXTURE.cpf,
           role: ERole.ADMIN,
-          name: ENTITY_USER_FIXTURE.name,
-          email: ENTITY_USER_FIXTURE.email,
-          status: ENTITY_USER_FIXTURE.status,
-          gender: ENTITY_USER_FIXTURE.gender,
-          whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-          created_at: ENTITY_USER_FIXTURE.created_at,
-          updated_at: ENTITY_USER_FIXTURE.updated_at,
-          deleted_at: ENTITY_USER_FIXTURE.deleted_at,
+          name: USER_ENTITY_FIXTURE.name,
+          email: USER_ENTITY_FIXTURE.email,
+          status: USER_ENTITY_FIXTURE.status,
+          gender: USER_ENTITY_FIXTURE.gender,
+          whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+          date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+          created_at: USER_ENTITY_FIXTURE.created_at,
+          updated_at: USER_ENTITY_FIXTURE.updated_at,
+          deleted_at: USER_ENTITY_FIXTURE.deleted_at,
         },
         valid: true,
         message: 'User promoted successfully!',
@@ -234,12 +234,12 @@ describe('AuthController', () => {
 
       expect(
         await controller.update(
-          ENTITY_USER_FIXTURE.id,
+          USER_ENTITY_FIXTURE.id,
           {
             name: 'Demi Moore',
             date_of_birth: new Date('2000-01-01'),
           },
-          ENTITY_USER_FIXTURE,
+          USER_ENTITY_FIXTURE,
         ),
       ).toEqual({ message: 'Update Successfully!' });
     });
@@ -264,9 +264,9 @@ describe('AuthController', () => {
       });
       expect(
           await controller.upload(
-              ENTITY_USER_FIXTURE.id,
+              USER_ENTITY_FIXTURE.id,
               mockFile,
-              ENTITY_USER_FIXTURE,
+              USER_ENTITY_FIXTURE,
           ),
       ).toEqual({ message: 'File uploaded successfully!' });
     });

@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import BankBusiness from '@repo/business/finance/bank/bank';
 
-import { BANK_LIST_FIXTURE } from '@repo/mock/finance/bank/fixtures/bank';
+import { BANK_LIST_FIXTURE } from '@repo/business/finance/bank/fixtures/bank';
 
 import { Service } from '../../shared';
 

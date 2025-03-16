@@ -64,6 +64,10 @@ npm run test
 ```
 
 #### auth:
+##### -INTERCEPTORS
+```bash
+  npm run test -- --findRelatedTests src/auth/interceptors/sanitize-user.interceptor.spec.ts                                 
+```
 ##### - SERVICE
 ```bash
   npm run test -- --findRelatedTests src/auth/auth.service.spec.ts                                 

@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import SupplierBusiness from '@repo/business/finance/supplier/supplier';
 
-import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
+import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
 
 import { Service } from '../../shared';
 
@@ -69,7 +69,7 @@ export class SupplierService extends Service<Supplier> {
       by: 'name',
       key: 'all',
       label: 'Supplier',
-      seeds: LIST_SUPPLIER_FIXTURE,
+      seeds: SUPPLIER_LIST_FIXTURE,
       createdEntityFn: async (data) => {
         const type = supplierTypes?.find(
           (type): type is SupplierType =>

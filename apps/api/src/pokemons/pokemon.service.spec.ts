@@ -10,8 +10,8 @@ import {
   IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
   LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
   VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
-} from '@repo/mock/pokemon/fixtures/incompletes/index';
-import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/mock/pokemon/fixtures/completes/index';
+} from '@repo/business/pokemon/fixtures/pokemon/incompletes/incompletes';
+import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/business/pokemon/fixtures/pokemon/completes/completes';
 
 import { PokemonService } from './pokemon.service';
 import { Pokemon } from './pokemon.entity';

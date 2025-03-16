@@ -6,7 +6,7 @@ import { isUUID } from '@repo/services/string/string';
 
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
 
-import { EXPENSE_LIST_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
+import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 import { Service } from '../../shared';
 

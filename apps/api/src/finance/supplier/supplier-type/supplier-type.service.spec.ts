@@ -5,10 +5,10 @@ import { Repository } from 'typeorm';
 
 import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
-  LIST_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/supplier-type/fixtures/supplierType';
+  SUPPLIER_TYPE_LIST_FIXTURE,
+} from '@repo/business/finance/supplier-type/fixtures/supplierType';
 
-import { VIVO_HOUSING_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
+import { VIVO_HOUSING_SUPPLIER_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
 
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
 
@@ -126,17 +126,17 @@ describe('SupplierTypeService', () => {
 
   describe('seed', () => {
     it('should seed the database when exist in database', async () => {
-      jest.spyOn(repository, 'find').mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
+      jest.spyOn(repository, 'find').mockResolvedValueOnce(SUPPLIER_TYPE_LIST_FIXTURE);
 
-      expect(await service.seed()).toEqual(LIST_SUPPLIER_TYPE_FIXTURE);
+      expect(await service.seed()).toEqual(SUPPLIER_TYPE_LIST_FIXTURE);
     });
     it('should seed the database when not exist in database', async () => {
       jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
-      LIST_SUPPLIER_TYPE_FIXTURE.forEach((type) => {
+      SUPPLIER_TYPE_LIST_FIXTURE.forEach((type) => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(type);
       });
-      expect(await service.seed()).toEqual(LIST_SUPPLIER_TYPE_FIXTURE);
+      expect(await service.seed()).toEqual(SUPPLIER_TYPE_LIST_FIXTURE);
     });
   });
 

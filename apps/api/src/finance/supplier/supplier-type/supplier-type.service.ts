@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import SupplierTypeBusiness from '@repo/business/finance/supplier-type/supplierType';
 
-import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/supplier-type/fixtures/supplierType';
+import { SUPPLIER_TYPE_LIST_FIXTURE } from '@repo/business/finance/supplier-type/fixtures/supplierType';
 
 import { Service } from '../../../shared';
 
@@ -58,7 +58,7 @@ export class SupplierTypeService extends Service<SupplierType> {
       by: 'name',
       key: 'all',
       label: 'Supplier Type',
-      seeds: LIST_SUPPLIER_TYPE_FIXTURE,
+      seeds: SUPPLIER_TYPE_LIST_FIXTURE,
       createdEntityFn: async (item) => item,
     });
   }

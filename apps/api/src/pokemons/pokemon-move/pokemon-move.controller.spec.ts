@@ -5,7 +5,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   BIND_MOVE_FIXTURE,
   LIST_MOVE_FIXTURE,
-} from '@repo/mock/pokemon/pokemon-move/fixtures/index';
+} from '@repo/business/pokemon/pokemon-move/fixtures/pokemonMove';
 
 describe('PokemonMoveController', () => {
   let service: PokemonMoveService;

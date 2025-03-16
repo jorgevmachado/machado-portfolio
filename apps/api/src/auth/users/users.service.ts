@@ -13,7 +13,7 @@ import { ERole, EStatus } from '@repo/business/shared/enum';
 
 import UserBusiness from '@repo/business/auth/user';
 
-import { USER_FIXTURE, USER_PASSWORD } from '@repo/mock/auth/fixture';
+import { USER_FIXTURE, USER_PASSWORD } from '@repo/business/auth/fixtures/auth';
 
 import { Service } from '../../shared';
 
@@ -142,6 +142,7 @@ export class UserService extends Service<User> {
   }
 
   async seed() {
+    console.info('# => Start seeding User');
     const item = USER_FIXTURE
     const currentSeed = await this.findOne({
       value: item.id,

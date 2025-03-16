@@ -6,7 +6,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
 
-import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/mock/pokemon/fixtures/completes/index';
+import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/business/pokemon/fixtures/pokemon/completes/completes';
 
 import { PokemonMove } from './pokemon-move.entity';
 

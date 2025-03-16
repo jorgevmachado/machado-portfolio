@@ -14,9 +14,9 @@ import { ConflictException } from '@nestjs/common';
 import { EMonth } from '@repo/business/finance/enum';
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
 
-import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
+import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
 
-import { EXPENSE_LIST_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
+import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
@@ -69,7 +69,7 @@ describe('ExpenseService', () => {
         .spyOn(repository, 'find')
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
 
-      expect(await service.seed(LIST_SUPPLIER_FIXTURE)).toEqual(
+      expect(await service.seed(SUPPLIER_LIST_FIXTURE)).toEqual(
         EXPENSE_LIST_FIXTURE,
       );
     });
@@ -81,7 +81,7 @@ describe('ExpenseService', () => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(expense);
       });
 
-      expect(await service.seed(LIST_SUPPLIER_FIXTURE)).toEqual(
+      expect(await service.seed(SUPPLIER_LIST_FIXTURE)).toEqual(
         EXPENSE_LIST_FIXTURE,
       );
     });

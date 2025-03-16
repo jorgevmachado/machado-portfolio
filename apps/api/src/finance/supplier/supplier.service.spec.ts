@@ -5,14 +5,14 @@ import { Repository } from 'typeorm';
 
 import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
-  LIST_SUPPLIER_TYPE_FIXTURE,
+  SUPPLIER_TYPE_LIST_FIXTURE,
   TRANSPORT_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/supplier-type/fixtures/supplierType';
+} from '@repo/business/finance/supplier-type/fixtures/supplierType';
 import {
-  LIST_SUPPLIER_FIXTURE,
+  SUPPLIER_LIST_FIXTURE,
   VIVO_HOUSING_SUPPLIER_FIXTURE,
-} from '@repo/mock/finance/supplier/fixtures/supplier';
-import { ELECTRICITY_BILL_MONTE_CARLO_RESIDENTIAL_EXPENSE_FIXTURE } from '@repo/mock/finance/expense/fixtures/monte-carlo/monteCarlo';
+} from '@repo/business/finance/supplier/fixtures/supplier';
+import { INGRID_RESIDENTIAL_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
 
@@ -58,36 +58,30 @@ describe('SupplierService', () => {
     it('should seed the database when exist in database', async () => {
       jest
         .spyOn(supplierTypeService, 'seed')
-        .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
+        .mockResolvedValueOnce(SUPPLIER_TYPE_LIST_FIXTURE);
 
-      jest.spyOn(repository, 'find').mockResolvedValueOnce(LIST_SUPPLIER_FIXTURE);
+      jest.spyOn(repository, 'find').mockResolvedValueOnce(SUPPLIER_LIST_FIXTURE);
 
-      expect(await service.seed()).toEqual({
-        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
-        suppliers: LIST_SUPPLIER_FIXTURE,
-      });
+      expect(await service.seed()).toEqual(SUPPLIER_LIST_FIXTURE);
     });
     it('should seed the database when not exist in database', async () => {
       jest
         .spyOn(supplierTypeService, 'seed')
-        .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
+        .mockResolvedValueOnce(SUPPLIER_TYPE_LIST_FIXTURE);
 
       jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
-      LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
+      SUPPLIER_LIST_FIXTURE.forEach((supplier) => {
         jest.spyOn(supplierTypeService, 'treatSupplierTypeParam').mockResolvedValueOnce(supplier.type);
         jest.spyOn(repository, 'save').mockResolvedValueOnce(supplier);
       });
-      expect(await service.seed()).toEqual({
-        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
-        suppliers: LIST_SUPPLIER_FIXTURE,
-      });
+      expect(await service.seed()).toEqual(SUPPLIER_LIST_FIXTURE);
     });
     it('should return conflict Exception because dont exist one SupplierType in dataBase', async () => {
       jest
         .spyOn(supplierTypeService, 'seed')
         .mockResolvedValueOnce(
-          LIST_SUPPLIER_TYPE_FIXTURE.filter(
+          SUPPLIER_TYPE_LIST_FIXTURE.filter(
             (type) => type.id !== HOUSING_SUPPLIER_TYPE_FIXTURE.id,
           ),
         );
@@ -227,7 +221,7 @@ describe('SupplierService', () => {
     it('should throw a ConflictException when Supplier is in use', async () => {
       const expected: Supplier = {
         ...VIVO_HOUSING_SUPPLIER_FIXTURE,
-        expenses: [ELECTRICITY_BILL_MONTE_CARLO_RESIDENTIAL_EXPENSE_FIXTURE],
+        expenses: [INGRID_RESIDENTIAL_LIST_FIXTURE[0]],
       };
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
         andWhere: jest.fn(),

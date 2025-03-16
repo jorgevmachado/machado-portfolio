@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
-import { BILL_LIST_FIXTURE } from '@repo/mock/finance/bill/fixtures/bill';
+import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
 import { BillService } from './bill.service';
 import { BillController } from './bill.controller';
