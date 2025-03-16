@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ENTITY_USER_FIXTURE } from '@repo/mock/auth/fixture';
+import { USER_ENTITY_FIXTURE } from '@repo/business/auth/fixtures/auth';
 
 import { OContext } from '@repo/ds/utils/colors/options';
 
@@ -11,10 +11,10 @@ import Profile from '@repo/ui/components/profile/Profile';
 
 const meta = {
   args: {
-    name: ENTITY_USER_FIXTURE.name,
-    email: ENTITY_USER_FIXTURE.email,
+    name: USER_ENTITY_FIXTURE.name,
+    email: USER_ENTITY_FIXTURE.email,
     context: 'primary',
-    picture: ENTITY_USER_FIXTURE.picture ?? 'https://placehold.co/150',
+    picture: USER_ENTITY_FIXTURE.picture ?? 'https://placehold.co/150',
     children: 'Hello, World!',
     profileMenu: PROFILE_MENU,
   },

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ENTITY_USER_FIXTURE } from '@repo/mock/auth/fixture';
+import { USER_ENTITY_FIXTURE } from '@repo/business/auth/fixtures/auth';
 import { OContext } from '@repo/ds/utils/colors/options';
 
 import { LOGOUT_MENU, MENU } from '@repo/ui/utils/menu/menu';
@@ -11,7 +11,7 @@ import Sidebar from '@repo/ui/components/v1/sidebar/Sidebar';
 
 const meta = {
   args: {
-    user: ENTITY_USER_FIXTURE,
+    user: USER_ENTITY_FIXTURE,
     menu: MENU,
     logout: LOGOUT_MENU,
     context: 'primary',
@@ -23,7 +23,7 @@ const meta = {
     user: {
       table: {
         type: { summary: 'object' },
-        defaultValue: { summary: JSON.stringify(ENTITY_USER_FIXTURE) },
+        defaultValue: { summary: JSON.stringify(USER_ENTITY_FIXTURE) },
       },
       control: { type: 'object' },
     },
