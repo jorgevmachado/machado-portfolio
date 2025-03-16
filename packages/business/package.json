@@ -47,6 +47,7 @@
     "@jest/globals": "^29.7.0",
     "@repo/eslint-config": "*",
     "@repo/jest": "*",
+    "@repo/mock-json": "*",
     "@repo/services": "*",
     "@repo/typescript": "*",
     "@types/node": "^20.3.1",

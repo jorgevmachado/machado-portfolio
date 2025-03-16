@@ -1,6 +1,6 @@
 import { findEntityBy } from '@repo/services/entities/entities';
 
-import BILL_LIST_FIXTURE_JSON from './bills.json';
+import BILL_LIST_FIXTURE_JSON from '@repo/mock-json/finance/bill/bills.json';
 
 import Bill from '../bill';
 

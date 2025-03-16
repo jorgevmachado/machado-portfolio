@@ -7,110 +7,16 @@ import {
   jest,
 } from '@jest/globals';
 
-import { USER_FIXTURE } from '@repo/mock/auth/fixture';
-
 import { Nest } from '../../api';
 
 import { ExpenseService } from './expenseService';
-import { EBillType, EExpenseType, EMonth } from '../../api/nest/finance';
+import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
 
 describe('ExpenseService', () => {
   let mockNest: jest.Mocked<Nest>;
   let service: ExpenseService;
 
-  const bankMock = {
-    id: '1',
-    name: 'Bank',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const supplierTypeMock = {
-    id: '1',
-    user: USER_FIXTURE,
-    name: 'Supplier A',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const supplierMock = {
-    id: '1',
-    user: USER_FIXTURE,
-    name: 'Supplier A',
-    type: supplierTypeMock,
-    active: true,
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-    description: 'This supplier delivers raw materials.',
-  };
-
-  const financeMock = {
-    id: '1',
-    user: USER_FIXTURE,
-    bills: undefined,
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const billMock = {
-    id: '1',
-    name: 'Bill A',
-    type: EBillType.CREDIT_CARD,
-    bank: bankMock,
-    total: 100,
-    finance: financeMock,
-    expenses: [],
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const mockEntity = {
-    id: '123',
-    bill: billMock,
-    year: 2025,
-    value: 100,
-    type: EExpenseType.FIXED,
-    paid: true,
-    active: true,
-    total: 1200,
-    total_paid: 1200,
-    month: EMonth.MARCH,
-    supplier: supplierMock,
-    january: 100,
-    january_paid: true,
-    february: 100,
-    february_paid: true,
-    march: 100,
-    march_paid: true,
-    april: 100,
-    april_paid: true,
-    may: 100,
-    may_paid: true,
-    june: 100,
-    june_paid: true,
-    july: 100,
-    july_paid: true,
-    august: 100,
-    august_paid: true,
-    september: 100,
-    september_paid: true,
-    october: 100,
-    october_paid: true,
-    november: 100,
-    november_paid: true,
-    december: 100,
-    december_paid: true,
-    instalment_number: 12,
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-    description: 'Test expense',
-  };
+  const mockEntity = INGRID_RESIDENTIAL_LIST_FIXTURE[0];
   const mockPaginateParams = { page: 1, limit: 10 };
   const mockEntityList = [mockEntity, mockEntity];
   const mockEntityPaginate = {
@@ -154,7 +60,6 @@ describe('ExpenseService', () => {
   describe('create', () => {
     it('should successfully create an supplier', async () => {
       mockNest.finance.expense.create.mockResolvedValue(mockEntity);
-
 
       const result = await service.create(mockEntity);
 

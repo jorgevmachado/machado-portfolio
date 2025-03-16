@@ -1,5 +1,5 @@
 {
-  "name": "@repo/mock",
+  "name": "@repo/mock-api",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@repo/business": "*",
+    "@repo/mock-json": "*",
     "@repo/eslint-config": "*",
     "@repo/services": "*",
     "@repo/typescript": "*",

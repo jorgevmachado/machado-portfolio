@@ -8,15 +8,10 @@ import {
 } from '@jest/globals';
 
 import Bank from './bank';
+import { CAIXA_BANK_FIXTURE } from './fixtures';
 
 describe('Bank', () => {
-  const bankMock = {
-    id: '1',
-    name: 'Bank A',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
+  const bankMock = CAIXA_BANK_FIXTURE;
   beforeEach(() => {
     jest.clearAllMocks();
   });

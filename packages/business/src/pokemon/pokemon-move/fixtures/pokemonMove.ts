@@ -1,14 +1,14 @@
-import PokemonMove from '../pokemonMove';
+import BIND_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/bind.json';
+import BODY_SLAM_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/body-slam.json';
+import CUT_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/cut.json';
+import HEADBUTT_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/headbutt.json';
+import RAZOR_WIND_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/razor-wind.json';
+import SWORDS_DANCE_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/swords-dance.json';
+import TACKLE_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/tackle.json';
+import TAKE_DOWN_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/take-down.json';
+import VINE_WHIP_FIXTURE from '@repo/mock-json/pokemon/pokemon-move/vine-whip.json';
 
-import BIND_FIXTURE from './bind.json';
-import BODY_SLAM_FIXTURE from './body-slam.json';
-import CUT_FIXTURE from './cut.json';
-import HEADBUTT_FIXTURE from './headbutt.json';
-import RAZOR_WIND_FIXTURE from './razor-wind.json';
-import SWORDS_DANCE_FIXTURE from './swords-dance.json';
-import TACKLE_FIXTURE from './tackle.json';
-import TAKE_DOWN_FIXTURE from './take-down.json';
-import VINE_WHIP_FIXTURE from './vine-whip.json';
+import PokemonMove from '../pokemonMove';
 
 export const BIND_MOVE_FIXTURE: PokemonMove =
   BIND_FIXTURE as unknown as PokemonMove;

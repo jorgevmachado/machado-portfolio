@@ -9,6 +9,7 @@ import {
 
 import PokemonAbility from './pokemonAbility';
 import { ensureOrder } from '../config';
+import { OVERGROW_ABILITY_FIXTURE } from './fixtures';
 
 jest.mock('../config', () => ({
   ensureOrder: jest.fn(
@@ -17,6 +18,7 @@ jest.mock('../config', () => ({
 }));
 
 describe('PokemonAbility', () => {
+  const pokemonAbilityEntity = OVERGROW_ABILITY_FIXTURE;
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -27,14 +29,7 @@ describe('PokemonAbility', () => {
 
   it('should correctly instantiate with all provided parameters', () => {
     const abilityParams = {
-      id: '123',
-      url: 'https://pokeapi.co/api/v2/ability/1/',
-      slot: 2,
-      name: 'Overgrow',
-      order: 100,
-      is_hidden: false,
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
+      ...pokemonAbilityEntity,
       deleted_at: undefined,
     };
 
@@ -53,8 +48,8 @@ describe('PokemonAbility', () => {
 
   it('should use default values for missing parameters', () => {
     const abilityParams = {
-      url: 'https://pokeapi.co/api/v2/ability/2/',
-      name: 'Chlorophyll',
+      url: pokemonAbilityEntity.url,
+      name: pokemonAbilityEntity.name,
     };
 
     const ability = new PokemonAbility(abilityParams);
@@ -72,8 +67,8 @@ describe('PokemonAbility', () => {
 
   it('should call ensureOrder when order is not provided', () => {
     const abilityParams = {
-      url: 'https://pokeapi.co/api/v2/ability/3/',
-      name: 'Blaze',
+      url: pokemonAbilityEntity.url,
+      name: pokemonAbilityEntity.name,
     };
 
     const ability = new PokemonAbility(abilityParams);
@@ -85,8 +80,8 @@ describe('PokemonAbility', () => {
 
   it('should handle null or undefined values for optional fields', () => {
     const abilityParams = {
-      url: 'https://pokeapi.co/api/v2/ability/4/',
-      name: 'Torrent',
+      url: pokemonAbilityEntity.url,
+      name: pokemonAbilityEntity.name,
       created_at: undefined,
     };
 

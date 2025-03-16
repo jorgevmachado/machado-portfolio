@@ -7,24 +7,17 @@ import {
   jest,
 } from '@jest/globals';
 
-import { USER_FIXTURE } from '@repo/mock/auth/fixture';
-
 import { Nest } from '../../api';
 
 import { SupplierTypeService } from './supplierTypeService';
+import { HOUSING_SUPPLIER_TYPE_FIXTURE } from './fixtures';
 
 jest.mock('../../api');
 
 describe('SupplierTypeService', () => {
   let service: SupplierTypeService;
   let mockNest: jest.Mocked<Nest>;
-  const mockEntity = {
-    id: '1',
-    name: 'Supplier Type A',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
+  const mockEntity = HOUSING_SUPPLIER_TYPE_FIXTURE;
   const mockPaginateParams = { page: 1, limit: 10 };
   const mockEntityList = [mockEntity, mockEntity];
   const mockEntityPaginate = {
@@ -78,7 +71,9 @@ describe('SupplierTypeService', () => {
     it('should successfully update an supplier type', async () => {
       mockNest.finance.supplier.type.update.mockResolvedValue(mockEntity);
 
-      const result = await service.update(mockEntity.id, { name: mockEntity.name });
+      const result = await service.update(mockEntity.id, {
+        name: mockEntity.name,
+      });
 
       expect(mockNest.finance.supplier.type.update).toHaveBeenCalledWith(
         mockEntity.id,

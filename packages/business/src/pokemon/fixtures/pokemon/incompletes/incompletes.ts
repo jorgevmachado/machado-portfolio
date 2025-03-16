@@ -1,9 +1,9 @@
-import { EStatus } from '@repo/business/shared/enum';
-import Pokemon from '../../../pokemon';
+import BULBASAUR_INCOMPLETE_FIXTURE from '@repo/mock-json/pokemon/incompletes/bulbasaur-incomplete.json';
+import IVYSAUR_INCOMPLETE_FIXTURE from '@repo/mock-json/pokemon/incompletes/ivysaur-incomplete.json';
+import VENUSAUR_INCOMPLETE_FIXTURE from '@repo/mock-json/pokemon/incompletes/venusaur-incomplete.json';
 
-import BULBASAUR_INCOMPLETE_FIXTURE from './bulbasaur-incomplete.json';
-import IVYSAUR_INCOMPLETE_FIXTURE from './ivysaur-incomplete.json';
-import VENUSAUR_INCOMPLETE_FIXTURE from './venusaur-incomplete.json';
+import { EStatus } from '../../../../shared';
+import Pokemon from '../../../pokemon';
 
 export const BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE: Pokemon = new Pokemon(
   {
@@ -30,7 +30,7 @@ export const VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE: Pokemon = new Pokemon({
 });
 
 export const LIST_ENTITY_INCOMPLETE_POKEMON_FIXTURE: Array<Pokemon> = [
-    BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
-    IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
-    VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+  BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+  IVYSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
+  VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
 ];

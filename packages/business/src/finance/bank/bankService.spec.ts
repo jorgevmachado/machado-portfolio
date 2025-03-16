@@ -10,19 +10,14 @@ import {
 import { Nest } from '../../api';
 
 import { BankService } from './bankService';
+import { CAIXA_BANK_FIXTURE } from './fixtures';
 
 jest.mock('../../api');
 
 describe('BankService', () => {
   let service: BankService;
   let mockNest: jest.Mocked<Nest>;
-  const mockEntity = {
-    id: '1',
-    name: 'Bank',
-    created_at: new Date(),
-    updated_at: new Date(),
-    deleted_at: undefined,
-  };
+  const mockEntity = CAIXA_BANK_FIXTURE;
   const mockPaginateParams = { page: 1, limit: 10 };
   const mockEntityList = [mockEntity, mockEntity];
   const mockEntityPaginate = {

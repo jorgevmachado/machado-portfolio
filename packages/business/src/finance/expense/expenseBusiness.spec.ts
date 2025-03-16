@@ -7,12 +7,11 @@ import {
   jest,
 } from '@jest/globals';
 
-import { USER_FIXTURE } from '@repo/mock/auth/fixture';
-
-import { EBillType, EExpenseType, EMonth } from '../enum';
+import { EExpenseType, EMonth } from '../enum';
 
 import ExpenseBusiness from './expenseBusiness';
 import Expense from './expense';
+import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
 
 jest.mock('./config', () => ({
   getCurrentMonth: jest.fn(),
@@ -38,68 +37,7 @@ jest.mock('./config', () => ({
 describe('ExpenseBusiness', () => {
   const business = new ExpenseBusiness();
 
-  const bankMock = {
-    id: '1',
-    user: USER_FIXTURE,
-    name: 'Bank',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const supplierTypeMock = {
-    id: '1',
-    user: USER_FIXTURE,
-    name: 'Supplier A',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const supplierMock = {
-    id: '1',
-    user: USER_FIXTURE,
-    name: 'Supplier A',
-    type: supplierTypeMock,
-    active: true,
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-    description: 'This supplier delivers raw materials.',
-  };
-
-  const billMock = {
-    id: '1',
-    user: USER_FIXTURE,
-    name: 'Bill',
-    year: 2025,
-    type: EBillType.CREDIT_CARD,
-    bank: bankMock,
-    total: 0,
-    expenses: [],
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const mockExpenseConstructorParams = {
-    id: '123',
-    bill: billMock,
-    year: 2022,
-    type: EExpenseType.VARIABLE,
-    paid: true,
-    value: 100,
-    total: 100,
-    month: EMonth.MARCH,
-    active: true,
-    supplier: supplierMock,
-    total_paid: 100,
-    description: 'Test expense',
-    instalment_number: 1,
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
+  const mockExpenseConstructorParams = INGRID_RESIDENTIAL_LIST_FIXTURE[0];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -216,7 +154,7 @@ describe('ExpenseBusiness', () => {
       const result = business.processAllCalculate(expense);
 
       expect(result.total).toBe(800);
-      expect(result.total_paid).toBe(300);
+      expect(result.total_paid).toBe(800);
       expect(result.paid).toBe(false);
     });
   });
@@ -226,14 +164,15 @@ describe('ExpenseBusiness', () => {
       const expense = new Expense({
         ...mockExpenseConstructorParams,
         january: 100,
-        february: 200,
+        january_paid: false,
+        february: 100,
         february_paid: true,
       });
 
       const result = business.calculateTotal(expense);
 
-      expect(result.total).toBe(300);
-      expect(result.total_paid).toBe(200);
+      expect(result.total).toBe(200);
+      expect(result.total_paid).toBe(100);
     });
   });
 

@@ -14,14 +14,16 @@ export default class BillBusiness {
       const expensesCalculated = bill.expenses.map((expense) =>
         expenseBusiness.initializeExpense(expense),
       );
-      bill.total = expensesCalculated.reduce(
+      const total = expensesCalculated.reduce(
         (acc, expense) => acc + expense.total,
         0,
       );
-      bill.total_paid = expensesCalculated.reduce(
+      bill.total = Math.ceil(total);
+      const total_paid = expensesCalculated.reduce(
         (acc, expense) => acc + expense.total_paid,
         0,
       );
+      bill.total_paid = Math.ceil(total_paid);
       bill.all_paid = expensesCalculated.every((expense) => expense.paid);
     }
     return bill;

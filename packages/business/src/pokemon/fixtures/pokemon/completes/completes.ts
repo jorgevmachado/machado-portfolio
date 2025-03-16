@@ -9,9 +9,9 @@ import {
   VENUSAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,
 } from '../incompletes';
 
-import BULBASAUR_COMPLETE_FIXTURE from './bulbasaur-complete.json';
-import IVYSAUR_COMPLETE_FIXTURE from './ivysaur-complete.json';
-import VENUSAUR_COMPLETE_FIXTURE from './venusaur-complete.json';
+import BULBASAUR_COMPLETE_FIXTURE from '@repo/mock-json/pokemon/completes/bulbasaur-complete.json';
+import IVYSAUR_COMPLETE_FIXTURE from '@repo/mock-json/pokemon/completes/ivysaur-complete.json';
+import VENUSAUR_COMPLETE_FIXTURE from '@repo/mock-json/pokemon/completes/venusaur-complete.json';
 
 const BULBASAUR_COMPLETE_POKEMON_FIXTURE: Pokemon = new Pokemon({
   ...BULBASAUR_COMPLETE_FIXTURE,

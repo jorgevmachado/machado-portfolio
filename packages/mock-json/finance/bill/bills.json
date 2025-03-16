@@ -10,7 +10,7 @@
       "updated_at": "2025-02-01T19:46:54.072Z"
     },
     "name": "Ingrid Residential Bank Slip",
-    "total": 4109.68,
+    "total": 4110,
     "finance": {
       "id": "493de6c1-ec4b-48a7-9169-c8ba750798ce",
       "created_at": "2025-02-01T17:37:47.783Z",
@@ -227,7 +227,7 @@
       }
     ],
     "all_paid": false,
-    "total_paid": 2609.68
+    "total_paid": 2610
   },
   {
     "id": "89a19ea6-13e2-44c6-ba8f-cb93729b0ed7",

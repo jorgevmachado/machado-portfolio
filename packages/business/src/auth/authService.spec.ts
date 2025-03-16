@@ -9,11 +9,10 @@ import {
 
 import { Nest } from '../api';
 
-import { EGender, ERole, EStatus } from '../shared';
-
 import { AuthService } from './authService';
 
 import { SignInParams, SignUpParams, UserEntity } from './interface';
+import { USER_ENTITY_FIXTURE } from './fixtures';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -27,19 +26,7 @@ describe('AuthService', () => {
     jest.restoreAllMocks();
   });
 
-  const mockUser: UserEntity = {
-    id: 'eaca4c08-e62d-495a-ae1c-918199da8d52',
-    cpf: '12345678909',
-    role: ERole.USER,
-    name: 'Test User',
-    email: 'testuser@example.com',
-    gender: EGender.MALE,
-    status: EStatus.ACTIVE,
-    whatsapp: '123456789',
-    created_at: new Date('2024-09-09'),
-    updated_at: new Date('2024-09-09'),
-    date_of_birth: new Date('2000-01-01'),
-  };
+  const mockUser: UserEntity = USER_ENTITY_FIXTURE;
   const mockPassword: string = 'testPassword';
   const mockSignUpParams: SignUpParams = {
     cpf: mockUser.cpf,

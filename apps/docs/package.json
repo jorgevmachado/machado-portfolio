@@ -15,7 +15,7 @@
     "@repo/business": "*",
     "@repo/ds": "*",
     "@repo/eslint-config": "*",
-    "@repo/mock": "*",
+    "@repo/mock-json": "*",
     "@repo/tokens": "*",
     "@repo/typescript": "*",
     "@repo/ui": "*",

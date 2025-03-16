@@ -1,7 +1,7 @@
-import PokemonType from '../pokemonType';
+import GRASS_FIXTURE from '@repo/mock-json/pokemon/pokemon-type/grass.json'
+import POISON_FIXTURE from '@repo/mock-json/pokemon/pokemon-type/poison.json';
 
-import GRASS_FIXTURE from './grass.json';
-import POISON_FIXTURE from './poison.json';
+import PokemonType from '../pokemonType';
 
 export const GRASS_TYPE_FIXTURE: PokemonType =
   GRASS_FIXTURE as unknown as PokemonType;

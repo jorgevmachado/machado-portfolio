@@ -2,7 +2,7 @@ import { findEntityBy } from '@repo/services/entities/entities';
 
 import Expense from '../expense';
 
-import EXPENSE_LIST_FIXTURE_JSON from './expenses.json';
+import EXPENSE_LIST_FIXTURE_JSON from '@repo/mock-json/finance/expense/expenses.json';
 
 const EXPENSE_LIST_TEMP: Array<Expense> = EXPENSE_LIST_FIXTURE_JSON.map(
   (expense) => expense as unknown as Expense,
@@ -499,5 +499,6 @@ export {
   INGRID_RESIDENTIAL_LIST_FIXTURE,
   MONTE_CARLO_RESIDENTIAL_LIST_FIXTURE,
   MOTHER_LIST_FIXTURE,
+  PERSONAL_LIST_FIXTURE,
   EXPENSE_LIST_FIXTURE,
 };

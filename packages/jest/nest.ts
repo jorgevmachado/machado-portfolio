@@ -21,5 +21,6 @@ export const config = {
       '.guards.ts',
       '.entity.ts',
       '.dto.ts',
+      'fixtures',
   ]
 } as const satisfies Config;

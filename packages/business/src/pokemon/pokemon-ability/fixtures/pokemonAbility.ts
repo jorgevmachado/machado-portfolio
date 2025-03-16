@@ -1,7 +1,7 @@
-import PokemonAbility from '../pokemonAbility';
+import OVERGROW_FIXTURE from '@repo/mock-json/pokemon/pokemon-ability/overgrow.json';
+import CHLOROPHYLL_FIXTURE from '@repo/mock-json/pokemon/pokemon-ability/chlorophyll.json';
 
-import OVERGROW_FIXTURE from './overgrow.json';
-import CHLOROPHYLL_FIXTURE from './chlorophyll.json';
+import PokemonAbility from '../pokemonAbility';
 
 export const OVERGROW_ABILITY_FIXTURE: PokemonAbility =
   OVERGROW_FIXTURE as unknown as PokemonAbility;

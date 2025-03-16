@@ -1,6 +1,6 @@
-import BULBASAUR_BY_ID_NAME_FIXTURE from './bulbasaur.json';
-import IVYSAUR_BY_ID_NAME_FIXTURE from './ivysaur.json';
-import VENUSAUR_BY_ID_NAME_FIXTURE from './venusaur.json';
+import BULBASAUR_BY_ID_NAME_FIXTURE from '@repo/mock-json/poke-api/byId/bulbasaur.json';
+import IVYSAUR_BY_ID_NAME_FIXTURE from '@repo/mock-json/poke-api/byId/ivysaur.json';
+import VENUSAUR_BY_ID_NAME_FIXTURE from '@repo/mock-json/poke-api/byId/venusaur.json';
 
 export const POKEMON_EXTERNAL_BY_ID_NAME_LIST_FIXTURE = [
     BULBASAUR_BY_ID_NAME_FIXTURE,

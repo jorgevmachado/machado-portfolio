@@ -1,7 +1,7 @@
 import { findEntityBy } from '@repo/services/entities/entities';
 import Supplier from '../supplier';
 
-import SUPPLIER_LIST_FIXTURE_JSON from './suppliers.json';
+import SUPPLIER_LIST_FIXTURE_JSON from '@repo/mock-json/finance/supplier/suppliers.json';
 
 const SUPPLIER_LIST_TEMP: Array<Supplier> = SUPPLIER_LIST_FIXTURE_JSON.map(
   (supplier) => supplier as unknown as Supplier,

@@ -9,28 +9,16 @@ import {
 
 import { Nest } from '../../api';
 
+import { VIVO_HOUSING_SUPPLIER_FIXTURE } from './fixtures';
 import { SupplierService } from './supplierService';
+
 
 jest.mock('../../api');
 
 describe('SupplierService', () => {
   let service: SupplierService;
   let mockNest: jest.Mocked<Nest>;
-  const supplierTypeMock = {
-    id: '1',
-    name: 'Supplier Type A',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-  const mockEntity = {
-    id: '1',
-    name: 'Expenses Category',
-    type: supplierTypeMock,
-    created_at: new Date(),
-    updated_at: new Date(),
-    deleted_at: undefined,
-  };
+  const mockEntity = VIVO_HOUSING_SUPPLIER_FIXTURE;
   const mockPaginateParams = { page: 1, limit: 10 };
   const mockEntityList = [mockEntity, mockEntity];
   const mockEntityPaginate = {

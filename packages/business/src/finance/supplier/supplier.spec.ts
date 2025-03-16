@@ -11,6 +11,7 @@ import { Error, ERROR_STATUS_CODE } from '@repo/services/error/error';
 
 import Supplier from './supplier';
 import type { SupplierEntity } from './interface';
+import { VIVO_HOUSING_SUPPLIER_FIXTURE } from './fixtures';
 
 describe('Supplier', () => {
   beforeEach(() => {
@@ -20,22 +21,17 @@ describe('Supplier', () => {
     jest.restoreAllMocks();
   });
   describe('Constructor', () => {
-    const supplierTypeMock = {
-      id: '1',
-      name: 'Supplier Type A',
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
-      deleted_at: undefined,
-    };
+    const supplierEntityMock = VIVO_HOUSING_SUPPLIER_FIXTURE;
+
     const params = {
-      id: '1',
-      name: 'Supplier A',
-      type: supplierTypeMock,
-      active: true,
-      created_at: new Date('2023-01-01'),
-      updated_at: new Date('2023-01-02'),
-      deleted_at: undefined,
-      description: 'This supplier delivers raw materials.',
+      id: supplierEntityMock.id,
+      name: supplierEntityMock.name,
+      type: supplierEntityMock.type,
+      active: supplierEntityMock.active,
+      created_at: supplierEntityMock.created_at,
+      updated_at: supplierEntityMock.updated_at,
+      deleted_at: supplierEntityMock.deleted_at,
+      description: supplierEntityMock.description,
     };
     it('should create an instance with all parameters when valid data is provided', () => {
       const supplier = new Supplier(params);
@@ -52,8 +48,8 @@ describe('Supplier', () => {
 
     it('should create an instance with minimal valid data', () => {
       const params = {
-        name: 'Supplier B',
-        type: supplierTypeMock,
+        name: supplierEntityMock.name,
+        type: supplierEntityMock.type,
       };
 
       const supplier = new Supplier(params);
@@ -118,8 +114,8 @@ describe('Supplier', () => {
 
     it('should fill default values for optional fields if they are undefined', () => {
       const params = {
-        name: 'Supplier D',
-        type: supplierTypeMock,
+        name: supplierEntityMock.name,
+        type: supplierEntityMock.type,
       };
 
       const supplier = new Supplier(params);

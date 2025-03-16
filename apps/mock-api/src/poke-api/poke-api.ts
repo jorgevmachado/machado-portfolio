@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import { POKEMON_LIST_BASIC_JSON } from '@repo/business/pokemon/fixtures/poke-api/index';
+
+import POKEMON_LIST_BASIC_JSON from '@repo/mock-json/poke-api/list.json';
+
 import { POKEMON_EXTERNAL_BY_ID_NAME_LIST_FIXTURE } from '@repo/business/pokemon/fixtures/poke-api/byId/byId';
 import { MOVES_BY_ORDER_LIST_FIXTURE } from '@repo/business/pokemon/fixtures/poke-api/moveByOrder/moveByOrder';
 import { SPECIE_BY_POKEMON_NAME_OR_ID_LIST_FIXTURE } from '@repo/business/pokemon/fixtures/poke-api/specieByPokemonNameOrId/specieByPokemonNameOrId';

@@ -1,6 +1,6 @@
 import User from '../user';
 
-import AUTH_FIXTURE_JSON from './auth.json';
+import AUTH_FIXTURE_JSON from '@repo/mock-json/auth/auth.json';
 
 export const USER_ENTITY_FIXTURE: User = AUTH_FIXTURE_JSON as unknown as User;
 

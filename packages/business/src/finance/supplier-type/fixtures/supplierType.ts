@@ -2,7 +2,7 @@ import SupplierType from '../supplierType';
 
 import { findEntityBy } from '@repo/services/entities/entities';
 
-import SUPPLIER_TYPE_LIST_FIXTURE_JSON from './supplier-types.json';
+import SUPPLIER_TYPE_LIST_FIXTURE_JSON from '@repo/mock-json/finance/supplier-type/supplier-types.json';
 
 const SUPPLIER_TYPE_LIST_TEMP: Array<SupplierType> =
   SUPPLIER_TYPE_LIST_FIXTURE_JSON.map(

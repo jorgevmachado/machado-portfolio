@@ -7,81 +7,14 @@ import {
   jest,
 } from '@jest/globals';
 
-import { USER_FIXTURE } from '@repo/mock/auth/fixture';
-
-import { EBillType, EExpenseType, EMonth } from '../../api/nest/finance';
+import { EMonth } from '../../api/nest/finance';
 
 import Expense from './expense';
 import { getCurrentMonth } from './config';
+import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
 
 describe('Expense', () => {
-  const bankMock = {
-    id: '1',
-    name: 'Bank A',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const supplierTypeMock = {
-    id: '1',
-    name: 'Supplier A',
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const supplierMock = {
-    id: '1',
-    name: 'Supplier A',
-    type: supplierTypeMock,
-    active: true,
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-    description: 'This supplier delivers raw materials.',
-  };
-
-  const financeMock = {
-    id: '1',
-    user: USER_FIXTURE,
-    bills: undefined,
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const billMock = {
-    id: '1',
-    name: 'Bill A',
-    type: EBillType.CREDIT_CARD,
-    bank: bankMock,
-    total: 100,
-    finance: financeMock,
-    expenses: [],
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
-
-  const mockExpenseConstructorParams = {
-    id: '123',
-    year: 2022,
-    bill: billMock,
-    type: EExpenseType.FIXED,
-    paid: true,
-    value: 100,
-    total: 100,
-    month: EMonth.MARCH,
-    active: true,
-    supplier: supplierMock,
-    total_paid: 100,
-    description: 'Test expense',
-    instalment_number: 1,
-    created_at: new Date('2023-01-01'),
-    updated_at: new Date('2023-01-02'),
-    deleted_at: undefined,
-  };
+  const mockExpenseConstructorParams = INGRID_RESIDENTIAL_LIST_FIXTURE[0];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -152,7 +85,7 @@ describe('Expense', () => {
 
   it('should keep optional fields undefined when they are not provided', () => {
     const params = {
-      bill: billMock,
+      bill: mockExpenseConstructorParams.bill,
       type: mockExpenseConstructorParams.type,
       supplier: mockExpenseConstructorParams.supplier,
     };
