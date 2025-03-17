@@ -8,7 +8,7 @@ export interface Route {
   path: string;
   type: 'public' | 'private';
   title: string;
-  element: React.ReactElement;
+  element?: React.ReactElement;
   children?: Array<Route>;
 }
 

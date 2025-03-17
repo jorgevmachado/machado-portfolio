@@ -11,6 +11,7 @@ import type {
   IFinance,
   IUpdateFinanceParams,
 } from './interface';
+import { FinanceEntity } from '../../../finance';
 
 export class Finance extends NestModuleAbstract<
   IFinance,
@@ -44,5 +45,9 @@ export class Finance extends NestModuleAbstract<
 
   get bill() {
     return this.billModule;
+  }
+
+  async initialize(): Promise<FinanceEntity> {
+    return this.post('finance/initialize');
   }
 }

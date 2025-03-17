@@ -20,6 +20,7 @@ import { Bank } from '../bank/bank.entity';
 import { Expense } from '../expense/expense.entity';
 
 import { Finance } from '../finance.entity';
+import { BillCategory } from './bill-category/bill-category.entity';
 
 @Entity({ name: 'bills' })
 export class Bill implements BillEntity {
@@ -77,6 +78,12 @@ export class Bill implements BillEntity {
   @OneToMany(() => Expense, (expense) => expense.bill, { nullable: true })
   @JoinTable()
   expenses?: Array<Expense>;
+
+  @ManyToOne(() => BillCategory, (billCategory) => billCategory.bills, {
+    nullable: false,
+  })
+  @JoinTable()
+  category: BillCategory;
 
   @CreateDateColumn()
   created_at: Date;

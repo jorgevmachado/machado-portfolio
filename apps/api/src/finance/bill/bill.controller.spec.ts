@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
+import { USER_ENTITY_FIXTURE } from '@repo/business/auth/fixtures/auth';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
 import { BillService } from './bill.service';
@@ -18,6 +19,7 @@ describe('BillController', () => {
           provide: BillService,
           useValue: {
             list: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
@@ -38,9 +40,11 @@ describe('BillController', () => {
 
   describe('findAll', () => {
     it('Should return an list of bills', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(BILL_LIST_FIXTURE);
+      jest.spyOn(service, 'findAll').mockResolvedValue(BILL_LIST_FIXTURE);
 
-      expect(await controller.findAll({})).toEqual(BILL_LIST_FIXTURE);
+      expect(await controller.findAll(USER_ENTITY_FIXTURE, {})).toEqual(
+        BILL_LIST_FIXTURE,
+      );
     });
   });
 

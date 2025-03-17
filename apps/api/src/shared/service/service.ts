@@ -84,7 +84,7 @@ export abstract class Service<
     relations,
     searchParams,
     withDeleted,
-    withRelations,
+    withRelations = true,
   }: FindByParams) {
     const query = new Query<T>({
       alias: this.alias,

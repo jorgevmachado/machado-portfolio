@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { AUTH_TOKEN, USER_FIXTURE } from '@repo/business/auth/fixtures/auth';
+import UserBusiness from '@repo/business/auth/user';
 
 const authRouter: Router = Router();
 
@@ -12,17 +13,26 @@ authRouter.post('/auth/signUp', (req, res) => {
 
 authRouter.post('/auth/signIn', (req, res) => {
   res.json({
-    token: AUTH_TOKEN,
     message: 'Authentication Successfully!',
+    token: AUTH_TOKEN,
   });
 });
 
-authRouter.get('/me', (req, res) => {
-  res.json(USER_FIXTURE);
+authRouter.get('/auth/me', (req, res) => {
+  const finance = {
+  ...USER_FIXTURE.finance,
+        user: undefined
+  }
+  res.json(new UserBusiness({ ...USER_FIXTURE,
+    finance
+    , clean: true }));
 });
 
 authRouter.get('/auth/:id', (req, res) => {
-  res.json(USER_FIXTURE);
+  res.json(new UserBusiness({ ...USER_FIXTURE, finance: {
+      ...USER_FIXTURE.finance,
+      user: undefined
+    }, clean: true }));
 });
 
 export default authRouter;

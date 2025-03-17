@@ -26,6 +26,7 @@ describe('Bill', () => {
       expect(bill.name).toBe(billEntity.name);
       expect(bill.bank).toBe(billEntity.bank);
       expect(bill.type).toBe(billEntity.type);
+      expect(bill.category).toBe(billEntity.category);
       expect(bill.created_at).toEqual(billEntity.created_at);
       expect(bill.updated_at).toEqual(billEntity.updated_at);
       expect(bill.deleted_at).toBe(billEntity.deleted_at);
@@ -38,6 +39,7 @@ describe('Bill', () => {
         type: billEntity.type,
         total: billEntity.total,
         finance: billEntity.finance,
+        category: billEntity.category,
         expenses: billEntity.expenses,
       };
 
@@ -47,6 +49,7 @@ describe('Bill', () => {
       expect(bill.name).toBe(params.name);
       expect(bill.type).toBe(params.type);
       expect(bill.total).toBe(params.total);
+      expect(bill.category).toBe(params.category);
       expect(bill.created_at).toBeUndefined();
       expect(bill.updated_at).toBeUndefined();
       expect(bill.deleted_at).toBeUndefined();

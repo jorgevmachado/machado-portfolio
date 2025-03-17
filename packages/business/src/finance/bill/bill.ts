@@ -8,6 +8,7 @@ export default class Bill implements BillEntity {
   name: BillEntity['name'];
   total: BillEntity['total'] = 0;
   finance: BillEntity['finance'];
+  category: BillEntity['category'];
   expenses: BillEntity['expenses'];
   all_paid?: BillEntity['all_paid'] = false;
   total_paid?: BillEntity['total_paid'] = 0;
@@ -24,6 +25,7 @@ export default class Bill implements BillEntity {
       this.name = params?.name ?? this.name;
       this.total = params?.total ?? this.total;
       this.finance = params?.finance ?? this.finance;
+      this.category = params?.category ?? this.category;
       this.expenses = params?.expenses ?? this.expenses;
       this.total_paid = params?.total_paid ?? this.total_paid;
       this.created_at = params?.created_at ?? this.created_at;

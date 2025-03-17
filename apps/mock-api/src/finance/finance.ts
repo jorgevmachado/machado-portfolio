@@ -29,6 +29,8 @@ financeRouter.use(`${currentPath}/expense`, expenseRouter);
 
 financeRouter.get(`${currentPath}/`, (req, res) => findAll(req, res, FINANCE_ENTITY));
 
+financeRouter.post(`${currentPath}/initialize`, (req, res) => findAll(req, res, FINANCE_ENTITY));
+
 financeRouter.get(`${currentPath}/:param`, (req, res) => findOne(req, res, FINANCE_ENTITY));
 
 financeRouter.post(`${currentPath}/seeds`, (req, res) => {

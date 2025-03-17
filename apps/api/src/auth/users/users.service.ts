@@ -104,12 +104,12 @@ export class UserService extends Service<User> {
   }
 
   async checkCredentials({ email, password }: CredentialsAuthDto) {
-    const user = await this.repository
-        .createQueryBuilder(this.alias)
-        .leftJoinAndSelect(`${this.alias}.finance`, 'finance')
-        .leftJoinAndSelect('finance.bills', 'bills')
-        .andWhere(`${this.alias}.email = :email`, { email })
-        .getOne();
+    const user = await this.findBy({
+      searchParams: {
+        by: 'email',
+        value: email,
+      }
+    })
 
     if (!user || user?.status === EStatus.INACTIVE) {
       throw new UnprocessableEntityException('Inactive User');
@@ -133,7 +133,7 @@ export class UserService extends Service<User> {
       };
     }
     user.role = ERole.ADMIN;
-    const newUser = await this.save(user);
+    const newUser = (await this.save(user)) as User;
     return {
       user: newUser,
       valid: true,
@@ -170,7 +170,7 @@ export class UserService extends Service<User> {
     });
     const promotedUser = await this.promoteUser(currentUser);
     console.info(`# => Seeded 1 new user`);
-    return promotedUser?.user;
+    return await this.findOne({ value: promotedUser.user.id, relations: ['finance'] });
   }
 
   async upload(id: string, file: Express.Multer.File) {

@@ -8,9 +8,13 @@ import {
 } from '@jest/globals';
 
 import { NestModuleAbstract } from '../../nestModuleAbstract';
+
+import { BillCategory } from '../bill-category';
+
 import { Bill } from './bill';
 
 jest.mock('../../nestModuleAbstract');
+jest.mock('../bill-category');
 
 describe('Bill', () => {
   const mockBaseUrl = 'http://mock-base-url.com';
@@ -35,6 +39,18 @@ describe('Bill', () => {
         pathUrl: 'finance/bill',
         nestModuleConfig: mockConfig,
       });
+    });
+  });
+
+  describe('billCategoryModule', () => {
+    it('should initialize billCategory module', () => {
+      expect(BillCategory).toHaveBeenCalledTimes(1);
+      expect(BillCategory).toHaveBeenCalledWith(mockConfig);
+    });
+    it('should return the instance of billCategory via type getter', () => {
+      const categoryModule = bill.category;
+      expect(categoryModule).toBeInstanceOf(BillCategory);
+      expect(BillCategory).toHaveBeenCalledTimes(1);
     });
   });
 });

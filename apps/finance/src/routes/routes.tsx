@@ -1,8 +1,6 @@
-import React from 'react';
+import type { Route } from '@repo/ui/utils/route/interface';
 
-import { RouteProps } from './interface';
-
-export const publicRoutes: Array<RouteProps> = [
+export const publicRoutes: Array<Route> = [
   {
     key: 'sign-in',
     path: '/sign-in',
@@ -29,7 +27,7 @@ export const publicRoutes: Array<RouteProps> = [
   },
 ];
 
-export const privateRoutes: Array<RouteProps> = [
+export const privateRoutes: Array<Route> = [
   {
     key: 'dashboard',
     icon: 'home',
@@ -90,7 +88,7 @@ export const privateRoutes: Array<RouteProps> = [
   },
 ];
 
-export const allRoutes: Array<RouteProps> = [...publicRoutes, ...privateRoutes];
+export const allRoutes: Array<Route> = [...publicRoutes, ...privateRoutes];
 
 interface FormatPathParams {
   childPath: string;

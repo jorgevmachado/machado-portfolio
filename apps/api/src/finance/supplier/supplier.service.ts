@@ -64,23 +64,20 @@ export class SupplierService extends Service<Supplier> {
   }
 
   async seed() {
-    const supplierTypes = await this.supplierTypeService.seed();
+    const supplierTypeList = (await this.supplierTypeService.seed()).filter((type): type is SupplierType => !!type);
     return this.seedEntities({
       by: 'name',
       key: 'all',
       label: 'Supplier',
       seeds: SUPPLIER_LIST_FIXTURE,
       createdEntityFn: async (data) => {
-        const type = supplierTypes?.find(
-          (type): type is SupplierType =>
-            !!type && type.name === data?.type?.name,
-        );
-        if (!type) {
-          throw new ConflictException(
-            'The selected Supplier Type does not exist, try another one or create one.',
-          );
-        }
+        const type = this.getRelation<SupplierType>({
+          key: 'name',
+          list: supplierTypeList,
+          param: data?.type?.name,
+          relation: 'SupplierType',
 
+        })
         return new SupplierBusiness({
           name: data.name,
           type,

@@ -114,6 +114,9 @@ describe('AuthService', () => {
 
   describe('me', () => {
     it('should be found a complete user', async () => {
+      jest
+          .spyOn(userService, 'findOne')
+          .mockResolvedValueOnce(USER_ENTITY_FIXTURE);
       expect(await service.me(USER_ENTITY_FIXTURE)).toEqual({
         id: USER_ENTITY_FIXTURE.id,
         cpf: USER_ENTITY_FIXTURE.cpf,

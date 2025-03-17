@@ -8,9 +8,15 @@ import useAlert from '@repo/ui/hooks/alert/useAlert';
 
 import PageLayout from '@repo/ui/layout/page-layout/PageLayout';
 
-import { authService, getAccessToken, removeAccessToken } from '../shared';
+import {
+  authService,
+  FinanceProvider,
+  financeService,
+  getAccessToken,
+  removeAccessToken,
+} from '../shared';
 
-import {privateRoutes, publicRoutes} from '../routes';
+import { privateRoutes, publicRoutes } from '../routes';
 
 interface DefaultProps {
   children: React.ReactNode;
@@ -60,14 +66,16 @@ export default function Layout({ children }: DefaultProps) {
 
   return (
     <UserProvider user={user}>
-      <PageLayout
-        user={user}
-        menu={privateRoutes}
-        navbarTitle="Finance"
-        onLinkClick={handleLinkClick}
-      >
-        {children}
-      </PageLayout>
+      <FinanceProvider>
+        <PageLayout
+          user={user}
+          menu={privateRoutes}
+          navbarTitle="Finance"
+          onLinkClick={handleLinkClick}
+        >
+          {children}
+        </PageLayout>
+      </FinanceProvider>
     </UserProvider>
   );
 }
