@@ -1,0 +1,65 @@
+.tabs {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tabs__menu {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid #ccc;
+  justify-content: flex-start;
+}
+
+.tabs__menu--item {
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 0;
+  font-size: 16px;
+  color: #444;
+  white-space: nowrap;
+  transition: color 0.3s, border-bottom 0.3s;
+}
+
+.tabs__menu--item:hover {
+  color: #0070f3;
+}
+
+.tabs__menu--item.active {
+  color: #0070f3;
+  border-bottom: 2px solid #0070f3;
+  font-weight: bold;
+}
+
+.tabs__content {
+  padding: 20px;
+  color: #222;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Estilo para tabs fluídas */
+.tabs--fluid .tabs__menu {
+  justify-content: space-between; /* Distribui os itens uniformemente */
+}
+
+.tabs--fluid .tabs__menu--item {
+  flex: 1; /* Abas ocupam a largura igualmente */
+  text-align: center; /* Centraliza o texto */
+}
+
+/* Responsividade: Adaptação para telas menores */
+@media (max-width: 768px) {
+  .tabs__menu {
+    flex-wrap: wrap; /* Permite quebra de linha para abas */
+  }
+
+  .tabs__menu--item {
+    flex: 1 0 100%; /* Cada aba ocupa 100% por linha */
+    text-align: center;
+    padding: 10px;
+  }
+}

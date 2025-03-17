@@ -1,18 +1,18 @@
 'use client';
 import { QueryParameters } from '@repo/business/shared/interface';
 import { Paginate } from '@repo/business/paginate';
-import SupplierType from '@repo/business/finance/supplier-type';
+import BillCategory from '@repo/business/finance/bill-category';
 
-import { supplierTypeService } from '../../../shared';
-
+import { billCategoryService } from '../../../shared';
 import { CRUDPage } from '../../../layout';
 
-export default function SupplierTypePage() {
+export default function BillCategoryPage() {
   const fetchItems = async (params: QueryParameters) => {
-    return await supplierTypeService
+    return await billCategoryService
       .getAll(params)
-      .then((response) => response as Paginate<SupplierType>);
+      .then((response) => response as Paginate<BillCategory>);
   };
+
   return (
     <CRUDPage
       headers={[
@@ -21,16 +21,21 @@ export default function SupplierTypePage() {
           value: 'name',
           sortable: true,
         },
-        { text: 'Created At', value: 'created_at', type: 'date', sortable: true },
+        {
+          text: 'Created At',
+          value: 'created_at',
+          type: 'date',
+          sortable: true,
+        },
       ]}
-      resourceName="Supplier Type"
       fetchItems={fetchItems}
+      resourceName="Bill Category"
       saveItem={(item) =>
         item.id
-          ? supplierTypeService.update(item.id, { name: item.name ?? ''})
-          : supplierTypeService.create({ name: item.name ?? '' })
+          ? billCategoryService.update(item.id, { name: item.name ?? '' })
+          : billCategoryService.create({ name: item.name ?? '' })
       }
-      deleteItem={(id) => supplierTypeService.remove(id)}
+      deleteItem={(id) => billCategoryService.remove(id)}
       renderItemForm={({ item, handleChange }) => (
         <div>
           <label>Name:</label>

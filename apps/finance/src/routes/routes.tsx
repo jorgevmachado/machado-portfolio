@@ -86,6 +86,29 @@ export const privateRoutes: Array<Route> = [
       },
     ],
   },
+  {
+    key: 'bill-parent',
+    icon: 'wallet',
+    path: '/bills',
+    type: 'private',
+    title: 'Bill',
+    children: [
+      {
+        key: 'bill',
+        icon: 'wallet',
+        path: '',
+        type: 'private',
+        title: 'Bill',
+      },
+      {
+        key: 'bill-category',
+        path: '/categories',
+        type: 'private',
+        icon: 'category',
+        title: 'Bill Category',
+      },
+    ],
+  },
 ];
 
 export const allRoutes: Array<Route> = [...publicRoutes, ...privateRoutes];

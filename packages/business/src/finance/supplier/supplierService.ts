@@ -1,6 +1,6 @@
-import { type INestBaseResponse, Nest } from '../../api';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
-import { QueryParameters } from '@repo/business/shared/interface';
+import { type INestBaseResponse, Nest } from '../../api';
 
 import { Paginate } from '../../paginate';
 

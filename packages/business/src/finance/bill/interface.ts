@@ -3,6 +3,7 @@ import type {
   ICreateBillParams,
   IUpdateBillParams,
 } from '../../api/nest/finance/bill';
+import Bill from './bill';
 
 export type BillEntity = IBill;
 
@@ -17,3 +18,11 @@ export interface BillConstructorParams
 export type CreateBillParams = ICreateBillParams;
 
 export type UpdateBillParams = IUpdateBillParams;
+
+export type TList = 'type' | 'bank' | 'category';
+
+export interface BillList {
+  title: string;
+  list: Array<Bill>;
+  listType: TList,
+}

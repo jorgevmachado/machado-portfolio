@@ -5,6 +5,8 @@ import { FinanceService } from '@repo/business/finance/financeService';
 import { SupplierTypeService } from '@repo/business/finance/supplier-type/supplierTypeService';
 import { SupplierService } from '@repo/business/finance/supplier/supplierService';
 import { BankService } from '@repo/business/finance/bank/bankService';
+import { BillCategoryService } from '@repo/business/finance/bill-category/billCategoryService';
+import { BillService } from '@repo/business/finance/bill/billService';
 
 const baseUrl = process.env.NEXT_PUBLIC_API ?? 'http://localhost:3001';
 
@@ -22,5 +24,9 @@ export const supplierService = new SupplierService(nest);
 export const supplierTypeService = new SupplierTypeService(nest);
 
 export const bankService = new BankService(nest);
+
+export const billCategoryService = new BillCategoryService(nest);
+
+export const billService = new BillService(nest);
 
 export const financeService = new FinanceService(nest);

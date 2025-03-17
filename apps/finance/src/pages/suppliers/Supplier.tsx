@@ -77,12 +77,14 @@ export default function SupplierPage() {
       resourceName="Supplier"
       saveItem={(item) =>
         item.id
-          ? supplierService.update(
-              item.id,
-              item.name ?? '',
-              item?.type?.name ?? '',
-            )
-          : supplierService.create(item.name ?? '', item?.type?.name ?? '')
+          ? supplierService.update(item.id, {
+              name: item.name ?? '',
+              type: item?.type?.name ?? '',
+            })
+          : supplierService.create({
+              name: item.name ?? '',
+              type: item?.type?.name ?? '',
+            })
       }
       deleteItem={(id) => supplierService.remove(id)}
       renderItemForm={({ item, handleChange }) => (
