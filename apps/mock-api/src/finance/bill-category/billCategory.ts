@@ -24,7 +24,7 @@ supplierTypeRouter.get(`/:param/category`, (req, res) =>
   findOne(req, res, BILL_CATEGORY_FINANCE_ENTITY),
 );
 
-supplierTypeRouter.post(`/type`, (req, res) =>
+supplierTypeRouter.post(`/category`, (req, res) =>
   create(req, res, BILL_CATEGORY_FINANCE_ENTITY),
 );
 
