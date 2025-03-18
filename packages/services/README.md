@@ -96,10 +96,24 @@ npm run lint
 ```
 
 ### string:
-#### Utilitários relacionados a manipulação ou validação de strings.
+#### Utilitários relacionados a manipulação ou validação de 'strings'.
+#### testes
+```bash
+  npm run test -- --findRelatedTests src/string/string.spec.ts               
 ```
-    npm run test -- --findRelatedTests src/string/string.spec.ts               
-```
+##### uuid: Gera uma 'string' UUID (identificador universal único) com base na data fornecida.
+##### isUUID: Verifica se uma 'string' é um UUID válido.
+##### initials: Retorna as iniciais de uma 'string' com um número específico de letras. 
+##### normalize: Remove acentos e espaços extras e Normaliza espaços múltiplos para um único espaço.
+##### formatUrl: Constrói uma URL formatada com caminho adicional ('path') e parâmetros de consulta ('params').
+##### capitalize: Retorna uma 'string' com a primeira letra em maiúscula.
+##### toSnakeCase: Converte strings em camel case (ou similares) para snake case (formato `snake_case`).
+##### toCamelCase: Converte strings no formato `snake_case` para camel case.
+##### findRepeated: Procura duplicatas numa lista de objetos com base numa chave definida ('id' ou 'name').
+##### truncateString: Trunca uma 'string' para o comprimento especificado ('length') e converte para maiúsculas.
+##### separateCamelCase: Separa palavras em camel case ('CamelCase') para uma versão com espaços e capitalização individual.
+##### extractLastItemFromUrl: Extrai o último segmento de uma URL.
+
 ### number:
 #### Utilitários relacionados a manipulação ou validação de numbers.
 ```

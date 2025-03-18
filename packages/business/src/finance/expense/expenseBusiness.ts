@@ -12,6 +12,12 @@ import {
 } from './config';
 
 export default class ExpenseBusiness {
+  private _months: Array<string> = MONTH_KEYS;
+
+  get months(): Array<string> {
+    return this._months;
+  }
+
   initializeExpense(params: ExpenseConstructorParams): Expense {
     const builtExpense = new Expense(params);
     const processedExpenseValues = this.processValues(builtExpense);
@@ -109,6 +115,19 @@ export default class ExpenseBusiness {
 
   validateAllPaid(expense: Expense) {
     return MONTH_KEYS.every((month) => expense[`${month}_paid`] === true);
+  }
+
+  calculateAllExpenses(expenses: Array<Expense>) {
+    const total = expenses.reduce((acc, expense) => acc + (expense.total || 0), 0);
+    const allPaid  = expenses.every((expense) => expense.paid);
+    const totalPaid = expenses.reduce((acc, expense) => acc + (expense.total_paid || 0), 0);
+    const totalPending = total - totalPaid;
+    return {
+      total,
+      allPaid,
+      totalPaid,
+      totalPending
+    }
   }
 
   private processValuesMonthsInstallment(expense: Expense): Expense {

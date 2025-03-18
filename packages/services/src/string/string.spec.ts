@@ -3,16 +3,60 @@ import { describe, expect, it } from '@jest/globals';
 import {
   capitalize,
   extractLastItemFromUrl,
+  findRepeated,
   formatUrl,
+  initials,
   isUUID,
+  normalize,
   separateCamelCase,
   toCamelCase,
   toSnakeCase,
+  truncateString,
   uuid,
 } from './string';
-import {findRepeated} from "@repo/services/string/string";
 
 describe('String functions', () => {
+  describe('uuid', () => {
+    it('should return uuid based on the date it receives', () => {
+      expect(uuid(new Date('1990-01-01'))).toEqual(
+        '00c3793f-2900-4000-8000-000000000000',
+      );
+    });
+  });
+
+  describe('isUUID', () => {
+    it('Must validate if it is a uuid', () => {
+      expect(isUUID('981553ee-e275-4f0a-8d88-5bf778ff772d')).toBeTruthy();
+    });
+  });
+
+  describe('initials', () => {
+    it('should return initials ignoring stop-words.', () => {
+      expect(initials('Maria Clara de Souza', 3)).toBe('MCS');
+      expect(initials('João da Silva', 2)).toBe('JS');
+      expect(initials('Ana dos Santos', 2)).toBe('AS');
+    });
+
+    it('should return complete when initialsLength <= 0.', () => {
+      expect(initials('joão da silva', 0)).toBe('João da silva');
+    });
+
+    it('should work with empty strings and return empty.', () => {
+      expect(initials('', 3)).toBe('');
+      expect(initials('   ', 2)).toBe('');
+    });
+
+    it('should allow customization of stop-words.', () => {
+      expect(initials('João da Silva Junior', 3, ['junior'])).toBe('JDS');
+      expect(initials('Pedro de Alcântara', 2, ['de', 'alcântara'])).toBe('P');
+    });
+
+    it('should calculate initials even with multiple extra spaces.', () => {
+      expect(initials('  João   da   Silva   ', 2)).toBe('JS');
+      expect(initials(' Pedro    de   Moraes', 2)).toBe('PM');
+    });
+  });
+
   describe('formatUrl', () => {
     const url = 'http://localhost:3000';
     it('should return formatted url when received url, path and params', () => {
@@ -26,17 +70,26 @@ describe('String functions', () => {
     });
   });
 
-  describe('uuid', () => {
-    it('should return uuid based on the date it receives', () => {
-      expect(uuid(new Date('1990-01-01'))).toEqual(
-        '00c3793f-2900-4000-8000-000000000000',
-      );
+  describe('normalize', () => {
+    it('should remove accents from a string', () => {
+      expect(normalize('João')).toBe('Joao');
+      expect(normalize('çaêü')).toBe('caeu');
     });
-  });
 
-  describe('isUUID', () => {
-    it('Must validate if it is a uuid', () => {
-      expect(isUUID('981553ee-e275-4f0a-8d88-5bf778ff772d')).toBeTruthy();
+    it('must remove extra spaces at the beginning and end', () => {
+      expect(normalize('  João Silva  ')).toBe('Joao Silva');
+    });
+
+    it('deve normalizar múltiplos espaços entre palavras para um único espaço', () => {
+      expect(normalize('João    da    Silva')).toBe('Joao da Silva');
+    });
+
+    it('should normalize multiple spaces between words to a single space', () => {
+      expect(normalize('Joao da Silva')).toBe('Joao da Silva');
+    });
+
+    it('should return empty string if input is empty\n', () => {
+      expect(normalize('')).toBe('');
     });
   });
 
@@ -58,6 +111,67 @@ describe('String functions', () => {
     });
   });
 
+  describe('findRepeated', () => {
+    const firstObject = {
+      id: '10738468f-3285-4e89-9687-0a6463731374',
+      name: 'first',
+    };
+    const listObjectId = [
+      firstObject,
+      { id: '698e7b69-077a-4a34-8abd-e4cc556e2afe', name: 'second' },
+      { id: '442d3d56-de9c-402a-8230-bee52fbe85dc', name: 'third' },
+    ];
+    it('should return undefined because it does not have a repeated id', () => {
+      expect(findRepeated(listObjectId, 'id')).toBeUndefined();
+    });
+
+    it('should return undefined because it does not have a repeated name', () => {
+      expect(findRepeated(listObjectId, 'name')).toBeUndefined();
+    });
+
+    it('should return id because it have a repeated id', () => {
+      expect(findRepeated([...listObjectId, firstObject], 'id')).toEqual(
+        firstObject.id,
+      );
+    });
+
+    it('should return name because it have a repeated name', () => {
+      expect(findRepeated([...listObjectId, firstObject], 'name')).toEqual(
+        firstObject.name,
+      );
+    });
+  });
+
+  describe('truncateString', () => {
+    it('should truncate the string to the first 3 uppercase characters.', () => {
+      expect(truncateString('Janeiro', 3)).toBe('JAN');
+    });
+
+    it('should return the string in all uppercase if the length is greater than the size of the string.', () => {
+      expect(truncateString('Junho', 10)).toBe('JUNHO');
+    });
+
+    it('should return the string for the first 3 characters in uppercase and normalized without accent.', () => {
+      expect(truncateString('Março', 4)).toBe('MARC');
+    });
+
+    it('should return the string for the first 3 characters in uppercase with accent.', () => {
+      expect(truncateString('Março', 4, false)).toBe('MARÇ');
+    });
+
+    it('should return empty if the string is empty.', () => {
+      expect(truncateString('', 5)).toBe('');
+    });
+
+    it('should return empty if length is 0.', () => {
+      expect(truncateString('Julho', 0)).toBe('');
+    });
+
+    it('should work correctly with strings shorter than the length.', () => {
+      expect(truncateString('Maio', 10)).toBe('MAIO');
+    });
+  });
+
   describe('separateCamelCase', () => {
     it('Must separate camel case string', () => {
       expect(separateCamelCase('helloWorld')).toEqual('hello World');
@@ -74,30 +188,6 @@ describe('String functions', () => {
     });
     it('Must return empty string if url is undefined', () => {
       expect(extractLastItemFromUrl()).toEqual('');
-    });
-  });
-
-  describe('findRepeated', () => {
-    const firstObject = { id: '10738468f-3285-4e89-9687-0a6463731374', name: 'first' };
-    const listObjectId = [
-        firstObject,
-        { id: '698e7b69-077a-4a34-8abd-e4cc556e2afe', name: 'second' },
-        { id: '442d3d56-de9c-402a-8230-bee52fbe85dc', name: 'third' },
-    ]
-    it('should return undefined because it does not have a repeated id', () => {
-      expect(findRepeated(listObjectId, 'id')).toBeUndefined();
-    });
-
-    it('should return undefined because it does not have a repeated name', () => {
-      expect(findRepeated(listObjectId, 'name')).toBeUndefined();
-    });
-
-    it('should return id because it have a repeated id', () => {
-      expect(findRepeated([ ...listObjectId, firstObject ], 'id')).toEqual(firstObject.id);
-    });
-
-    it('should return name because it have a repeated name', () => {
-      expect(findRepeated([ ...listObjectId, firstObject ], 'name')).toEqual(firstObject.name);
     });
   });
 });

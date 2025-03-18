@@ -1,7 +1,8 @@
 import React from 'react';
 
 import type { TIcon } from '../../elements';
-import type { TContext } from '../../utils';
+import type { TColors, TContext } from '../../utils';
+import { ETypeTableHeaderItem } from './enum';
 
 export interface TableProps {
   items: Array<unknown>;
@@ -18,15 +19,20 @@ export interface TableProps {
   currentSortedColumn?: SortedColumn;
 }
 
-type TTableHeaderItem = 'string' | 'number' | 'date';
+export type ConditionColor = {
+  value: string;
+  trueColor: TColors;
+  falseColor: TColors;
+};
 
-type TableHeaderItem = {
+export type TableHeaderItem = {
   text: string;
-  type?: TTableHeaderItem;
+  type?: ETypeTableHeaderItem;
   value: string;
   align?: TAlign;
   style?: React.CSSProperties;
   sortable?: boolean;
+  conditionColor?: ConditionColor;
 };
 
 type TAlign = 'left' | 'right' | 'center';

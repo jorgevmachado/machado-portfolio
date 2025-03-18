@@ -14,12 +14,14 @@ export default function BillPage() {
   const [items, setItems] = useState<Array<BillList>>([]);
 
   useEffect(() => {
-    billService.getBillList().then((response) => {
-      const currentResponse = billBusiness.mapBillListByItem(
-        response,
-        'category',
-      );
-      setItems(currentResponse);
+    billService.getAll({}).then((response) => {
+      if(Array.isArray(response)) {
+        const currentResponse = billBusiness.mapBillListByItem(
+            response,
+            'category',
+        );
+        setItems(currentResponse);
+      }
     });
   }, []);
   return (

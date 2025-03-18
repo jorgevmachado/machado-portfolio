@@ -12,6 +12,8 @@ export function currencyFormatter(
   return new Intl.NumberFormat(mapped.locale, {
     style: 'currency',
     currency: mapped.currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
     maximumSignificantDigits: 7,
   })
     .format(value)

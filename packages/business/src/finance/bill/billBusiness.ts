@@ -28,6 +28,20 @@ export default class BillBusiness {
     }, []);
   }
 
+  calculateAllBill(bill: Bill) {
+    const total = bill.total ?? 0;
+    const allPaid = bill.all_paid ?? false;
+    const totalPaid = bill.total_paid ?? 0;
+    const totalPending = total - totalPaid;
+
+    return {
+      total,
+      allPaid,
+      totalPaid,
+      totalPending
+    }
+  }
+
   private listTitle(
     bill: Bill,
     listType: TList,
@@ -49,16 +63,14 @@ export default class BillBusiness {
       const expensesCalculated = bill.expenses.map((expense) =>
         expenseBusiness.initializeExpense(expense),
       );
-      const total = expensesCalculated.reduce(
+      bill.total = expensesCalculated.reduce(
         (acc, expense) => acc + expense.total,
         0,
       );
-      bill.total = Math.ceil(total);
-      const total_paid = expensesCalculated.reduce(
+      bill.total_paid = expensesCalculated.reduce(
         (acc, expense) => acc + expense.total_paid,
         0,
       );
-      bill.total_paid = Math.ceil(total_paid);
       bill.all_paid = expensesCalculated.every((expense) => expense.paid);
     }
     return bill;

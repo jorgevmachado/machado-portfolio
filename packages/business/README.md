@@ -57,6 +57,7 @@ npm run lint
 # Irá executar todos os testes do módulo.
 npm run test
 ```
+#### Módulos
 #### base:
 ```
     npm run test -- --findRelatedTests src/shared/base.spec.ts                                 
