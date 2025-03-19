@@ -30,6 +30,7 @@ export class CreateExpenseDto {
   @IsNumber({ maxDecimalPlaces: 0 })
   value: number;
 
+  @IsEmpty()
   @IsEnum(EMonth)
   month?: EMonth;
 
@@ -37,7 +38,9 @@ export class CreateExpenseDto {
   @MaxLength(200)
   supplier: string | Supplier;
 
-
+  @IsEmpty()
+  @MaxLength(200)
+  description?: string;
 
   @IsPositive()
   @IsNotEmpty()

@@ -20,8 +20,16 @@ export class UpdateExpenseDto {
   bill?: string | Bill;
 
   @IsEmpty()
+  @IsBoolean()
+  paid?: boolean;
+
+  @IsEmpty()
   @MaxLength(200)
   supplier?: string | Supplier;
+
+  @IsEmpty()
+  @MaxLength(200)
+  description?: string;
 
   @IsPositive()
   @IsEmpty()

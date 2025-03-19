@@ -1,7 +1,8 @@
 import {
   Body,
   ConflictException,
-  Controller, Delete,
+  Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -11,15 +12,15 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { QueryParameters } from '@repo/business/shared/interface';
-
-import { BillService } from './bill.service';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
 import { AuthRoleGuards } from '../../auth/guards/auth-role.guards';
 import { AuthStatusGuards } from '../../auth/guards/auth-status.guards';
 import { GetUserAuth } from '../../auth/decorators/auth-user.decorator';
 import { User } from '../../auth/users/user.entity';
+
 import { CreateBillDto } from './dto/create-bill.dto';
+import { BillService } from './bill.service';
 
 @Controller('finance/bill')
 @UseGuards(AuthGuard(), AuthRoleGuards, AuthStatusGuards)
@@ -29,7 +30,7 @@ export class BillController {
   @Get()
   findAll(@GetUserAuth() user: User, @Query() parameters: QueryParameters) {
     this.validateFinance(user);
-    return this.service.findAll(user.finance, { parameters });
+    return this.service.findAllBills(user.finance, { parameters });
   }
 
   @Post()

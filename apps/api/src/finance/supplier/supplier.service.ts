@@ -73,14 +73,14 @@ export class SupplierService extends Service<Supplier> {
     const supplierTypeList = (
       (await this.supplierTypeService.seed()) as Array<SupplierType>
     ).filter((type): type is SupplierType => !!type);
-    return this.seedEntities({
+    return this.seeder.entities({
       by: 'name',
       key: 'all',
       label: 'Supplier',
       seeds: SUPPLIER_LIST_FIXTURE,
       withReturnSeed,
       createdEntityFn: async (data) => {
-        const type = this.getRelation<SupplierType>({
+        const type = this.seeder.getRelation<SupplierType>({
           key: 'name',
           list: supplierTypeList,
           param: data?.type?.name,

@@ -1,4 +1,4 @@
-import {ConflictException, Injectable} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -8,16 +8,18 @@ import BillBusiness from '@repo/business/finance/bill/billBusiness';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
 import { Service } from '../../shared';
-import { ListParams } from '../../shared/interface';
 
-import { Bill } from './bill.entity';
+import type { ListParams } from '../../shared/queries';
+
 import { Finance } from '../finance.entity';
 import { Bank } from '../bank/bank.entity';
 import { BankService } from '../bank/bank.service';
-import { BillCategory } from './bill-category/bill-category.entity';
-import { BillCategoryService } from './bill-category/bill-category.service';
 import { Expense } from '../expense/expense.entity';
 import { ExpenseService } from '../expense/expense.service';
+
+import { BillCategory } from './bill-category/bill-category.entity';
+import { BillCategoryService } from './bill-category/bill-category.service';
+import { Bill } from './bill.entity';
 
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update.bill.dto';
@@ -114,8 +116,8 @@ export class BillService extends Service<Bill> {
     return await this.save(bill);
   }
 
-  async findAll(finance: Finance, params: ListParams) {
-    return await this.list({
+  async findAllBills(finance: Finance, params: ListParams) {
+    return await this.queries.list({
       ...params,
       filters: [
         {
@@ -134,9 +136,9 @@ export class BillService extends Service<Bill> {
     });
     if (result?.expenses?.length) {
       throw this.error(
-          new ConflictException(
-              'You cannot delete this bill because it is already in use.',
-          ),
+        new ConflictException(
+          'You cannot delete this bill because it is already in use.',
+        ),
       );
     }
     await this.repository.softRemove(result);
@@ -153,20 +155,20 @@ export class BillService extends Service<Bill> {
     billCategoryList?: Array<BillCategory>;
   }) {
     const billCategories = await this.billCategorySeed(billCategoryList);
-    return this.seedEntities({
+    return this.seeder.entities({
       by: 'id',
       key: 'id',
       label: 'Bill',
       seeds: BILL_LIST_FIXTURE,
       withReturnSeed: true,
       createdEntityFn: async (item) => {
-        const bank = this.getRelation<Bank>({
+        const bank = this.seeder.getRelation<Bank>({
           key: 'name',
           list: bankList,
           param: item?.bank?.name,
           relation: 'Bank',
         });
-        const category = this.getRelation<BillCategory>({
+        const category = this.seeder.getRelation<BillCategory>({
           key: 'name',
           list: billCategories,
           param: item?.category?.name,

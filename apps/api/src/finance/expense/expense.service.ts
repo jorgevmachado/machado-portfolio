@@ -10,13 +10,14 @@ import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/ex
 
 import { Service } from '../../shared';
 
+import { Supplier } from '../supplier/supplier.entity';
+import { SupplierService } from '../supplier/supplier.service';
+import { Bill } from '../bill/bill.entity';
+
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 
 import { Expense } from './expense.entity';
-import { Supplier } from '../supplier/supplier.entity';
-import { SupplierService } from '../supplier/supplier.service';
-import { Bill } from '../bill/bill.entity';
 
 @Injectable()
 export class ExpenseService extends Service<Expense> {
@@ -43,6 +44,7 @@ export class ExpenseService extends Service<Expense> {
       paid: createExpenseDto.paid,
       value: createExpenseDto.value,
       month: createExpenseDto.month,
+      description: createExpenseDto.description,
       instalment_number: createExpenseDto.instalment_number,
     });
     return await this.save(newExpense);
@@ -81,14 +83,14 @@ export class ExpenseService extends Service<Expense> {
   }
 
   async seed(supplierList: Array<Supplier>, billList: Array<Bill>) {
-    return this.seedEntities({
+    return this.seeder.entities({
       by: 'id',
       key: 'id',
       label: 'Expense',
       seeds: EXPENSE_LIST_FIXTURE,
       withReturnSeed: true,
       createdEntityFn: async (item) => {
-        const supplier = this.getRelation<Supplier>({
+        const supplier = this.seeder.getRelation<Supplier>({
           key: 'name',
           list: supplierList,
           relation: 'Supplier',
@@ -101,11 +103,11 @@ export class ExpenseService extends Service<Expense> {
   }
 
   private getBill(bills: Array<Bill>, param: string | Bill) {
-    if (this.paramIsEntity<Bill>(param)) {
+    if (this.validate.paramIsEntity<Bill>(param)) {
       return param;
     }
     const bill = bills.find((item) => item.id === param);
-    this.validateParam<Bill>(bill, 'Bill');
+    this.validate.param<Bill>(bill, 'Bill');
     return bill;
   }
 }

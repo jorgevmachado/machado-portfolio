@@ -1,5 +1,6 @@
 export * from './service';
-export * from './controller';
+export * from './seeder';
+export * from './validate';
 export * from './query';
 export * from './base';
 export * from './file';

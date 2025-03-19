@@ -1,9 +1,9 @@
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm';
 import { ConflictException } from '@nestjs/common';
 
-import { QueryParameters } from '@repo/business/shared/interface';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
-import { FilterParams, SearchParams, WhereParams } from '../interface';
+import type { FilterParams, SearchParams, WhereParams } from './interface';
 
 export interface QueryParams<T> {
   readonly alias: string;

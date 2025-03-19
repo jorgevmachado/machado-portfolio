@@ -26,12 +26,9 @@ describe('FinanceController', () => {
         {
           provide: FinanceService,
           useValue: {
-            list: jest.fn(),
-            findOne: jest.fn(),
-            create: jest.fn(),
-            update: jest.fn(),
-            remove: jest.fn(),
+            seed: jest.fn(),
             seeds: jest.fn(),
+            basicSeeds: jest.fn(),
             initializeFinance: jest.fn(),
           },
         },
@@ -51,14 +48,40 @@ describe('FinanceController', () => {
     expect(controller).toBeDefined();
   });
 
+  describe('seed', () => {
+    it('should seed the database finance', async () => {
+      jest.spyOn(service, 'seed').mockResolvedValueOnce({
+        message: `Seeding Finance Completed Successfully!`,
+      });
+
+      expect(await controller.seed(USER_FIXTURE)).toEqual({
+        message: `Seeding Finance Completed Successfully!`,
+      });
+    });
+  });
+
   describe('seeds', () => {
-    it('should seed the database ', async () => {
+    it('should seeds the database finance, suppliers, supplier types, banks, bill categories, bills and expenses', async () => {
       jest.spyOn(service, 'seeds').mockResolvedValueOnce({
         message: 'Seeds executed successfully',
       });
 
       expect(await controller.seeds(USER_FIXTURE)).toEqual({
         message: 'Seeds executed successfully',
+      });
+    });
+  });
+
+  describe('seedsBasic', () => {
+    it('should seeds the database suppliers, supplier types, banks and bill categories', async () => {
+      jest.spyOn(service, 'basicSeeds').mockResolvedValueOnce({
+        message:
+          'Seeding suppliers , banks and Bill Categories  Completed Successfully!',
+      });
+
+      expect(await controller.seedBasic(USER_FIXTURE)).toEqual({
+        message:
+          'Seeding suppliers , banks and Bill Categories  Completed Successfully!',
       });
     });
   });

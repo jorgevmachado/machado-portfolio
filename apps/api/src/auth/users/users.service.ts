@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
-
 import {
   BadRequestException,
   Injectable,
@@ -16,7 +15,6 @@ import UserBusiness from '@repo/business/auth/user';
 import { USER_FIXTURE, USER_PASSWORD } from '@repo/business/auth/fixtures/auth';
 
 import { Service } from '../../shared';
-
 import type { TBy } from '../../shared/interface';
 
 import { CreateAuthDto } from '../dto/create-auth.dto';
@@ -88,7 +86,7 @@ export class UserService extends Service<User> {
   }
 
   private async hasInactiveUser(by: TBy, value: string) {
-    const entity = await this.findBy({
+    const entity = await this.queries.findBy({
       searchParams: {
         by,
         value,
@@ -104,12 +102,12 @@ export class UserService extends Service<User> {
   }
 
   async checkCredentials({ email, password }: CredentialsAuthDto) {
-    const user = await this.findBy({
+    const user = await this.queries.findBy({
       searchParams: {
         by: 'email',
         value: email,
-      }
-    })
+      },
+    });
 
     if (!user || user?.status === EStatus.INACTIVE) {
       throw new UnprocessableEntityException('Inactive User');
@@ -143,9 +141,9 @@ export class UserService extends Service<User> {
 
   async seed() {
     console.info('# => Start seeding User');
-    const item = USER_FIXTURE
+    const item = USER_FIXTURE;
 
-    const currentSeed = await this.findBy({
+    const currentSeed = await this.queries.findBy({
       searchParams: {
         by: 'cpf',
         value: item.cpf,
@@ -170,7 +168,10 @@ export class UserService extends Service<User> {
     });
     const promotedUser = await this.promoteUser(currentUser);
     console.info(`# => Seeded 1 new user`);
-    return await this.findOne({ value: promotedUser.user.id, relations: ['finance'] });
+    return await this.findOne({
+      value: promotedUser.user.id,
+      relations: ['finance'],
+    });
   }
 
   async upload(id: string, file: Express.Multer.File) {

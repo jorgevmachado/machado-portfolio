@@ -1,6 +1,15 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 
-import { QueryParameters } from '@repo/business/shared/interface';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';
@@ -13,12 +22,17 @@ export class BankController {
 
   @Get()
   findAll(@Query() parameters: QueryParameters) {
-    return this.service.list({ parameters });
+    return this.service.findAll({ parameters });
   }
 
   @Post()
   async create(@Body() { name }: CreateBankDto) {
     return await this.service.create({ name });
+  }
+
+  @Get('seed')
+  seed() {
+    return this.service.seed(false);
   }
 
   @Get(':param')
@@ -34,10 +48,5 @@ export class BankController {
   @Delete(':param')
   remove(@Param('param') param: string) {
     return this.service.remove(param);
-  }
-
-  @Get('seed')
-  seed() {
-    return this.service.seed(false);
   }
 }

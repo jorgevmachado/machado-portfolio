@@ -38,7 +38,7 @@ export class PokemonService extends Service<Pokemon> {
     parameters: QueryParameters,
   ): Promise<Array<Pokemon> | PaginateParameters<Pokemon>> {
     await this.initializeDatabase();
-    return this.list({ parameters, defaultAsc: 'order' });
+    return this.queries.list({ parameters, defaultAsc: 'order' });
   }
 
   private async initializeDatabase(): Promise<void> {
@@ -73,7 +73,7 @@ export class PokemonService extends Service<Pokemon> {
   }
 
   async findOnePokemon(value: string, complete: boolean = true) {
-    const result = await this.findBy({
+    const result = await this.queries.findBy({
       searchParams: {
         by: isUUID(value) ? 'id' : 'name',
         value,

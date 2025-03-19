@@ -1,26 +1,16 @@
-import {ValidateKey} from "../base/base.interface";
-
-export type TByParam = 'name' | 'id';
-
-export interface SeedEntitiesParams<T> {
-    by: TByParam;
-    key: ValidateKey;
-    label: string;
-    seeds: Array<T>;
-    withReturnSeed: boolean;
-    createdEntityFn: (entity: T) => Promise<T>;
-}
+import type { TByParam } from '../interface';
 
 export interface SeedEntityParams<T> {
-    by: TByParam;
-    seed: T;
-    label: string;
-    createdEntityFn: (entity: T) => Promise<T>;
+  by: TByParam;
+  seed: T;
+  label: string;
+  withReturnSeed?: boolean;
+  createdEntityFn: (entity: T) => Promise<T>;
 }
 
 export interface GetRelationParams<T> {
-    key: TByParam,
-    list: Array<T>,
-    param: string,
-    relation: string,
+  key: TByParam;
+  list: Array<T>;
+  param: string;
+  relation: string;
 }

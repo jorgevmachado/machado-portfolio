@@ -9,12 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { QueryParameters } from '@repo/business/shared/interface';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
 import { BillCategoryService } from './bill-category.service';
 import { CreateBillCategoryDto } from './dto/create-bill-category.dto';
 import { UpdateBillCategoryDto } from './dto/update-bill-category.dto';
-
 
 @Controller('finance/bill')
 export class BillCategoryController {
@@ -22,7 +21,7 @@ export class BillCategoryController {
 
   @Get('/list/category')
   findAll(@Query() parameters: QueryParameters) {
-    return this.billCategoryService.list({ parameters });
+    return this.billCategoryService.findAll({ parameters });
   }
 
   @Post('/category')

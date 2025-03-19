@@ -19,7 +19,7 @@ import { User } from '../../auth/users/user.entity';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
 
-import { ExpenseQueryParameters } from './expense.interface';
+import type { ExpenseQueryParameters } from './expense.interface';
 import { ExpenseService } from './expense.service';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 
@@ -30,7 +30,7 @@ export class ExpenseController {
 
   @Get()
   findAll(@Query() parameters: ExpenseQueryParameters) {
-    return this.service.list({ parameters });
+    return this.service.findAll({ parameters });
   }
 
   @Post()

@@ -34,7 +34,7 @@ export class BankService extends Service<Bank> {
   }
 
   async seed(withReturnSeed: boolean = true) {
-    return this.seedEntities({
+    return this.seeder.entities({
       by: 'name',
       key: 'all',
       label: 'Bank',

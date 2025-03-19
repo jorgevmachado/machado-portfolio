@@ -44,7 +44,7 @@ describe('ExpenseService', () => {
           useValue: {
             seed: jest.fn(),
             findOne: jest.fn(),
-            treatSupplierParam: jest.fn(),
+            treatEntityParam: jest.fn(),
           },
         },
       ],
@@ -93,14 +93,16 @@ describe('ExpenseService', () => {
     it('should create a new expense with type equal variable and save it', async () => {
       const createDto: CreateExpenseDto = {
         type: EXPENSE_LIST_FIXTURE[0].type,
+        bill: EXPENSE_LIST_FIXTURE[0].bill.id,
         value: 100,
         month: EMonth.FEBRUARY,
         supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
+        description: EXPENSE_LIST_FIXTURE[0].description,
         instalment_number: EXPENSE_LIST_FIXTURE[0].instalment_number,
       };
 
       jest
-        .spyOn(supplierService, 'treatSupplierParam')
+        .spyOn(supplierService, 'treatEntityParam')
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
 
       jest.spyOn(repository, 'findOne').mockReturnValueOnce(null);
@@ -109,14 +111,14 @@ describe('ExpenseService', () => {
         .spyOn(repository, 'save')
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
 
-      expect(await service.create(createDto)).toEqual(EXPENSE_LIST_FIXTURE[0]);
+      expect(await service.create(BILL_LIST_FIXTURE,createDto)).toEqual(EXPENSE_LIST_FIXTURE[0]);
     });
   });
 
   describe('update', () => {
     const updateDto: UpdateExpenseDto = {
-      year: EXPENSE_LIST_FIXTURE[0].year,
       type: EXPENSE_LIST_FIXTURE[0].type,
+      paid: EXPENSE_LIST_FIXTURE[0].paid,
       january: EXPENSE_LIST_FIXTURE[0].january,
       january_paid: EXPENSE_LIST_FIXTURE[0].january_paid,
       february: EXPENSE_LIST_FIXTURE[0].february,
@@ -153,7 +155,7 @@ describe('ExpenseService', () => {
       } as any);
 
       jest
-        .spyOn(supplierService, 'treatSupplierParam')
+        .spyOn(supplierService, 'treatEntityParam')
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
 
       jest
@@ -161,7 +163,7 @@ describe('ExpenseService', () => {
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
 
       expect(
-        await service.update(EXPENSE_LIST_FIXTURE[0].id, {
+        await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE,  {
           ...updateDto,
           supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
         }),
@@ -184,13 +186,13 @@ describe('ExpenseService', () => {
       jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
 
       expect(
-        await service.update(EXPENSE_LIST_FIXTURE[0].id, updateDto),
+        await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, updateDto),
       ).toEqual(expected);
     });
 
     it('should return conflict exception because the id is not uuid', async () => {
       await expect(
-        service.update(EXPENSE_LIST_FIXTURE[0].supplier.name, updateDto),
+        service.update(EXPENSE_LIST_FIXTURE[0].supplier.name, BILL_LIST_FIXTURE, updateDto),
       ).rejects.toThrow(ConflictException);
     });
   });

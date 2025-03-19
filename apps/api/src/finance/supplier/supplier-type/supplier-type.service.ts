@@ -10,7 +10,6 @@ import { Service } from '../../../shared';
 
 import { SupplierType } from './supplierType.entity';
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
-
 import { UpdateSupplierTypeDto } from './dto/update-supplier-type.dto';
 
 @Injectable()
@@ -54,7 +53,7 @@ export class SupplierTypeService extends Service<SupplierType> {
   }
 
   async seed(withReturnSeed: boolean = true) {
-    return this.seedEntities({
+    return this.seeder.entities({
       by: 'name',
       key: 'all',
       label: 'Supplier Type',

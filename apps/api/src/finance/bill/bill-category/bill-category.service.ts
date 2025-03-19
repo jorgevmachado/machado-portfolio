@@ -50,7 +50,7 @@ export class BillCategoryService extends Service<BillCategory> {
   }
 
   async seed(withReturnSeed: boolean = true) {
-    return this.seedEntities({
+    return this.seeder.entities({
       by: 'name',
       key: 'all',
       label: 'Bill Category',
@@ -58,12 +58,5 @@ export class BillCategoryService extends Service<BillCategory> {
       withReturnSeed,
       createdEntityFn: async (item) => item,
     });
-  }
-
-  async treatBillCategoryParam(billCategory: string | BillCategory) {
-    return await this.treatEntityParam<BillCategory>(
-      billCategory,
-      'Bill Category',
-    );
   }
 }

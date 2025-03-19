@@ -47,10 +47,11 @@ export class FinanceService extends Service<Finance> {
   }
 
   async seed(user: User, withReturnSeed: boolean = true) {
-    const seed = await this.seedEntity({
+    return await this.seeder.entity({
       by: 'id',
       label: 'Finance',
       seed: FINANCE_FIXTURE,
+      withReturnSeed,
       createdEntityFn: (item) =>
         this.save({
           id: item.id,
@@ -60,29 +61,24 @@ export class FinanceService extends Service<Finance> {
           deleted_at: item.deleted_at,
         }) as Promise<Finance>,
     });
-    if (withReturnSeed) {
-      return seed;
-    }
-
-    return { message: 'Seeding Completed Successfully!' };
   }
 
   async basicSeeds(withReturnSeed: boolean = true) {
-    const supplierList = await this.executeSeed<Supplier>({
+    const supplierList = await this.seeder.executeSeed<Supplier>({
       label: 'Suppliers',
       seedMethod: async () => {
         const result = await this.supplierService.seed();
         return Array.isArray(result) ? result : [];
       },
     });
-    const bankList = await this.executeSeed<Bank>({
+    const bankList = await this.seeder.executeSeed<Bank>({
       label: 'Banks',
       seedMethod: async () => {
         const result = await this.bankService.seed();
         return Array.isArray(result) ? result : [];
       },
     });
-    const billCategoryList = await this.executeSeed<BillCategory>({
+    const billCategoryList = await this.seeder.executeSeed<BillCategory>({
       label: 'Bill Categories',
       seedMethod: async () => {
         const result = await this.billService.billCategorySeed();
@@ -103,7 +99,7 @@ export class FinanceService extends Service<Finance> {
       const finance = (await this.seed(user)) as Finance;
       const { supplierList, bankList, billCategoryList } =
         await this.basicSeeds();
-      const billList = await this.executeSeed<Bill>({
+      const billList = await this.seeder.executeSeed<Bill>({
         label: 'Bills',
         seedMethod: async () => {
           const result = await this.billService.seed({
@@ -115,7 +111,7 @@ export class FinanceService extends Service<Finance> {
         },
       });
 
-      await this.executeSeed<Expense>({
+      await this.seeder.executeSeed<Expense>({
         label: 'Expenses',
         seedMethod: async () => {
           const result = await this.expenseService.seed(supplierList, billList);

@@ -1,7 +1,7 @@
-import {Controller, Get, Param, Query, UseGuards} from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { QueryParameters } from '@repo/business/shared/interface';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
 import { AuthRoleGuards } from '../../auth/guards/auth-role.guards';
 import { AuthStatusGuards } from '../../auth/guards/auth-status.guards';
@@ -15,11 +15,11 @@ export class PokemonMoveController {
 
   @Get('list/move')
   findAll(@Query() parameters: QueryParameters) {
-    return this.service.list(parameters);
+    return this.service.findAll({ parameters });
   }
 
-    @Get(':param/move')
-    findOne(@Param('param') param: string) {
-        return this.service.findOne({ value: param });
-    }
+  @Get(':param/move')
+  findOne(@Param('param') param: string) {
+    return this.service.findOne({ value: param });
+  }
 }
