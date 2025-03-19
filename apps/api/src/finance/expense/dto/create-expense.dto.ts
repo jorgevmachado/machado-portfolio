@@ -10,14 +10,16 @@ import {
 
 import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 import { Supplier } from '../../supplier/supplier.entity';
+import { Bill } from '../../bill/bill.entity';
 
 export class CreateExpenseDto {
-  @IsNumber({ maxDecimalPlaces: 0 })
-  year?: number;
-
   @IsNotEmpty()
   @IsEnum(EExpenseType)
   type: EExpenseType;
+
+  @IsNotEmpty()
+  @MaxLength(200)
+  bill: string | Bill;
 
   @IsEmpty()
   @IsBoolean()
@@ -35,9 +37,7 @@ export class CreateExpenseDto {
   @MaxLength(200)
   supplier: string | Supplier;
 
-  @IsNotEmpty()
-  @MaxLength(200)
-  description?: string;
+
 
   @IsPositive()
   @IsNotEmpty()

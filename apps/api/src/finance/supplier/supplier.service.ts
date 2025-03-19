@@ -26,7 +26,10 @@ export class SupplierService extends Service<Supplier> {
 
   async create({ name, type }: CreateSupplierDto) {
     const supplierType =
-      await this.supplierTypeService.treatSupplierTypeParam(type);
+      await this.supplierTypeService.treatEntityParam<SupplierType>(
+        type,
+        'Supplier Type',
+      );
     const supplier = new SupplierBusiness({
       name,
       type: supplierType,
@@ -38,7 +41,10 @@ export class SupplierService extends Service<Supplier> {
     const result = await this.findOne({ value: param });
     const supplierType = !type
       ? result.type
-      : await this.supplierTypeService.treatSupplierTypeParam(type);
+      : await this.supplierTypeService.treatEntityParam<SupplierType>(
+          type,
+          'Supplier Type',
+        );
     const supplier = new SupplierBusiness({
       name,
       type: supplierType,
@@ -46,11 +52,11 @@ export class SupplierService extends Service<Supplier> {
     return await this.save(supplier);
   }
 
-  async remove(param: string) {
+  async remove(param: string, withDeleted: boolean = false) {
     const result = await this.findOne({
       value: param,
-      withDeleted: true,
       relations: ['expenses'],
+      withDeleted,
     });
     if (result?.expenses?.length) {
       throw this.error(
@@ -63,30 +69,28 @@ export class SupplierService extends Service<Supplier> {
     return { message: 'Successfully removed' };
   }
 
-  async seed() {
-    const supplierTypeList = (await this.supplierTypeService.seed()).filter((type): type is SupplierType => !!type);
+  async seed(withReturnSeed: boolean = true) {
+    const supplierTypeList = (
+      (await this.supplierTypeService.seed()) as Array<SupplierType>
+    ).filter((type): type is SupplierType => !!type);
     return this.seedEntities({
       by: 'name',
       key: 'all',
       label: 'Supplier',
       seeds: SUPPLIER_LIST_FIXTURE,
+      withReturnSeed,
       createdEntityFn: async (data) => {
         const type = this.getRelation<SupplierType>({
           key: 'name',
           list: supplierTypeList,
           param: data?.type?.name,
           relation: 'SupplierType',
-
-        })
+        });
         return new SupplierBusiness({
           name: data.name,
           type,
         });
       },
     });
-  }
-
-  async treatSupplierParam(supplier: string | Supplier) {
-    return await this.treatEntityParam<Supplier>(supplier, 'Supplier');
   }
 }

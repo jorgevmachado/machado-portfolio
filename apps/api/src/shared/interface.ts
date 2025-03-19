@@ -1,5 +1,7 @@
 import { QueryParameters } from '@repo/business/shared/interface';
 
+export type BasicEntity = { id: string; name?: string };
+
 export interface ListParams {
   filters?: Array<FilterParams>;
   defaultAsc?: string;

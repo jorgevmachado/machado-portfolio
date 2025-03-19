@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { FinanceService } from './finance.service';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthRoleGuards } from '../auth/guards/auth-role.guards';
@@ -16,8 +16,18 @@ export class FinanceController {
     return this.financeService.initializeFinance(user);
   }
 
-  @Post('/seeds')
+  @Get('/seed')
+  seed(@GetUserAuth() user: User) {
+    return this.financeService.seed(user, false);
+  }
+
+  @Get('/seeds')
   seeds(@GetUserAuth() user: User) {
     return this.financeService.seeds(user);
+  }
+
+  @Get('/seeds/basic')
+  seedBasic(@GetUserAuth() user: User) {
+    return this.financeService.basicSeeds(false);
   }
 }

@@ -7,6 +7,7 @@ export interface SeedEntitiesParams<T> {
     key: ValidateKey;
     label: string;
     seeds: Array<T>;
+    withReturnSeed: boolean;
     createdEntityFn: (entity: T) => Promise<T>;
 }
 

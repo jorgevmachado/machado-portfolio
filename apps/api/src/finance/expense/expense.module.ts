@@ -9,11 +9,13 @@ import { SupplierModule } from '../supplier/supplier.module';
 import { Expense } from './expense.entity';
 import { ExpenseService } from './expense.service';
 import { ExpenseController } from './expense.controller';
+import { AuthModule } from '../../auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Expense]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
+    AuthModule,
     SupplierModule,
   ],
   controllers: [ExpenseController],

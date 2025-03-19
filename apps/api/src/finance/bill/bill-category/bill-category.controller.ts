@@ -47,4 +47,9 @@ export class BillCategoryController {
   remove(@Param('param') param: string) {
     return this.billCategoryService.remove(param);
   }
+
+  @Post('seed/category')
+  seed() {
+    return this.billCategoryService.seed(false);
+  }
 }

@@ -1,6 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {ConflictException, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import { snakeCaseToNormal } from '@repo/services/string/string';
 
 import BillBusiness from '@repo/business/finance/bill/billBusiness';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
@@ -8,14 +10,17 @@ import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 import { Service } from '../../shared';
 import { ListParams } from '../../shared/interface';
 
-import { AuthService } from '../../auth/auth.service';
-import { User } from '../../auth/users/user.entity';
-
 import { Bill } from './bill.entity';
-import { Bank } from '../bank/bank.entity';
 import { Finance } from '../finance.entity';
+import { Bank } from '../bank/bank.entity';
+import { BankService } from '../bank/bank.service';
 import { BillCategory } from './bill-category/bill-category.entity';
 import { BillCategoryService } from './bill-category/bill-category.service';
+import { Expense } from '../expense/expense.entity';
+import { ExpenseService } from '../expense/expense.service';
+
+import { CreateBillDto } from './dto/create-bill.dto';
+import { UpdateBillDto } from './dto/update.bill.dto';
 
 @Injectable()
 export class BillService extends Service<Bill> {
@@ -23,27 +28,98 @@ export class BillService extends Service<Bill> {
     @InjectRepository(Bill)
     protected repository: Repository<Bill>,
     protected billBusiness: BillBusiness,
+    protected readonly bankService: BankService,
     protected readonly billCategoryService: BillCategoryService,
-    private readonly authService: AuthService,
+    protected readonly expenseService: ExpenseService,
   ) {
     super('bills', ['bank', 'category', 'finance', 'expenses'], repository);
   }
 
-  async findAll(user: User, params: ListParams) {
-    const currentUser = await this.authService.findOne(user.id, user);
-    if (!currentUser.finance) {
-      throw this.error(
-        new ConflictException(
-          'Finance is not initialized, please start it to access this feature.',
-        ),
-      );
-    }
+  async create(finance: Finance, createBillDto: CreateBillDto) {
+    const bank = await this.bankService.treatEntityParam<Bank>(
+      createBillDto.bank,
+      'Bank',
+    );
 
+    const category =
+      await this.billCategoryService.treatEntityParam<BillCategory>(
+        createBillDto.category,
+        'Bill Category',
+      );
+
+    const name = `${category.name} ${snakeCaseToNormal(createBillDto.type)}`;
+
+    const expenses = await Promise.all(
+      await this.expenseService.treatEntitiesParams<Expense>(
+        createBillDto.expenses,
+        'Expense',
+      ),
+    );
+
+    const bill = this.billBusiness.initialize({
+      name,
+      year: createBillDto.year,
+      type: createBillDto.type,
+      finance,
+      bank,
+      category,
+      expenses,
+    });
+
+    return await this.save(bill);
+  }
+
+  async update(finance: Finance, param: string, updateBillDto: UpdateBillDto) {
+    const result = await this.findOne({ value: param });
+
+    const bank = !updateBillDto.bank
+      ? result.bank
+      : await this.bankService.treatEntityParam<Bank>(
+          updateBillDto.bank,
+          'Bank',
+        );
+
+    const category = !updateBillDto.category
+      ? result.category
+      : await this.billCategoryService.treatEntityParam<BillCategory>(
+          updateBillDto.category,
+          'Bill Category',
+        );
+
+    const expenses = !updateBillDto.expenses
+      ? result.expenses
+      : await Promise.all(
+          await this.expenseService.treatEntitiesParams<Expense>(
+            updateBillDto.expenses,
+            'Expense',
+          ),
+        );
+    const year = !updateBillDto.year ? result.year : updateBillDto.year;
+    const type = !updateBillDto.type ? result.type : updateBillDto.type;
+    const name =
+      !updateBillDto.category && !updateBillDto.type
+        ? result.name
+        : `${category.name} ${snakeCaseToNormal(type)}`;
+
+    const bill = this.billBusiness.initialize({
+      ...result,
+      name,
+      year,
+      type,
+      bank,
+      finance,
+      category,
+      expenses,
+    });
+    return await this.save(bill);
+  }
+
+  async findAll(finance: Finance, params: ListParams) {
     return await this.list({
       ...params,
       filters: [
         {
-          value: currentUser.finance.id,
+          value: finance.id,
           param: 'finance',
           condition: '=',
         },
@@ -51,21 +127,38 @@ export class BillService extends Service<Bill> {
     });
   }
 
+  async remove(param: string) {
+    const result = await this.findOne({
+      value: param,
+      relations: this.relations,
+    });
+    if (result?.expenses?.length) {
+      throw this.error(
+          new ConflictException(
+              'You cannot delete this bill because it is already in use.',
+          ),
+      );
+    }
+    await this.repository.softRemove(result);
+    return { message: 'Successfully removed' };
+  }
+
   async seed({
     finance,
     bankList,
+    billCategoryList,
   }: {
     finance?: Finance;
     bankList: Array<Bank>;
+    billCategoryList?: Array<BillCategory>;
   }) {
-    const billCategoryList = (await this.billCategoryService.seed()).filter(
-      (category): category is BillCategory => !!category,
-    );
+    const billCategories = await this.billCategorySeed(billCategoryList);
     return this.seedEntities({
       by: 'id',
       key: 'id',
       label: 'Bill',
       seeds: BILL_LIST_FIXTURE,
+      withReturnSeed: true,
       createdEntityFn: async (item) => {
         const bank = this.getRelation<Bank>({
           key: 'name',
@@ -75,7 +168,7 @@ export class BillService extends Service<Bill> {
         });
         const category = this.getRelation<BillCategory>({
           key: 'name',
-          list: billCategoryList,
+          list: billCategories,
           param: item?.category?.name,
           relation: 'BillCategory',
         });
@@ -88,5 +181,14 @@ export class BillService extends Service<Bill> {
         });
       },
     });
+  }
+
+  async billCategorySeed(billCategoryList?: Array<BillCategory>) {
+    if (!billCategoryList) {
+      return (
+        (await this.billCategoryService.seed()) as Array<BillCategory>
+      ).filter((category): category is BillCategory => !!category);
+    }
+    return billCategoryList;
   }
 }

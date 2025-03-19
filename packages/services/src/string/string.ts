@@ -161,6 +161,27 @@ export function separateCamelCase(value: string) {
 }
 
 /**
+ * Converts a given snake_case string into a human-readable normal case string.
+ * @param {string} value
+ */
+export function snakeCaseToNormal(value: string) {
+  const trimmedValue = value.trim();
+
+  if (!trimmedValue.includes('_')) {
+    if (trimmedValue === trimmedValue.toLowerCase() || trimmedValue === trimmedValue.toUpperCase()) {
+      return trimmedValue.charAt(0).toUpperCase() + trimmedValue.slice(1).toLowerCase();
+    }
+    return trimmedValue;
+  }
+
+  return trimmedValue
+      .toLowerCase()
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza cada palavra
+      .join(' ');
+}
+
+/**
  * Extracts the last segment of a URL.
  * @param url
  */

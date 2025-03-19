@@ -22,12 +22,13 @@ import { AuthService } from '../../auth/auth.service';
 import { Bill } from './bill.entity';
 import { BillService } from './bill.service';
 import { BillCategoryService } from './bill-category/bill-category.service';
-
+import { BankService } from '../bank/bank.service';
 
 describe('BillService', () => {
   let repository: Repository<Bill>;
   let service: BillService;
   let authService: AuthService;
+  let bankService: BankService;
   let billCategoryService: BillCategoryService;
 
   beforeEach(async () => {
@@ -38,11 +39,15 @@ describe('BillService', () => {
         BillBusiness,
         { provide: getRepositoryToken(Bill), useClass: Repository },
         {
+          provide: BankService,
+          useValue: {
+            treatEntityParam: jest.fn(),
+          },
+        },
+        {
           provide: BillCategoryService,
           useValue: {
-            seed: jest.fn(),
-            findOne: jest.fn(),
-            treatBillCategoryParam: jest.fn(),
+            treatEntityParam: jest.fn(),
           },
         },
         {
@@ -50,7 +55,7 @@ describe('BillService', () => {
           useValue: {
             findOne: jest.fn(),
           },
-        }
+        },
       ],
     }).compile();
 

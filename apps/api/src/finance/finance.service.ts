@@ -19,6 +19,7 @@ import { ExpenseService } from './expense/expense.service';
 import { SupplierService } from './supplier/supplier.service';
 import { BankService } from './bank/bank.service';
 import { BillService } from './bill/bill.service';
+import { BillCategory } from './bill/bill-category/bill-category.entity';
 
 @Injectable()
 export class FinanceService extends Service<Finance> {
@@ -45,40 +46,8 @@ export class FinanceService extends Service<Finance> {
     return await this.save(finance);
   }
 
-  async seeds(user: User) {
-    try {
-      const finance = await this.seedFinance(user);
-      const suppliers = await this.executeSeed<Supplier>({
-        label: 'Suppliers',
-        seedMethod: async () => this.supplierService.seed(),
-      });
-      const bankList = await this.executeSeed<Bank>({
-        label: 'Banks',
-        seedMethod: () => this.bankService.seed(),
-      });
-
-      const billList = await this.executeSeed<Bill>({
-        label: 'Bills',
-        seedMethod: () => this.billService.seed({ finance, bankList }),
-      });
-
-      await this.executeSeed<Expense>({
-        label: 'Expenses',
-        seedMethod: () => this.expenseService.seed(suppliers, billList),
-      });
-
-
-      return {
-        message: 'Seeds executed successfully',
-      };
-    } catch (error) {
-      console.error('# => Error during seeds execution:', error);
-      throw this.error(new ConflictException('Seed Execution Failed'));
-    }
-  }
-
-  private async seedFinance(user: User): Promise<Finance> {
-    return this.seedEntity({
+  async seed(user: User, withReturnSeed: boolean = true) {
+    const seed = await this.seedEntity({
       by: 'id',
       label: 'Finance',
       seed: FINANCE_FIXTURE,
@@ -91,21 +60,75 @@ export class FinanceService extends Service<Finance> {
           deleted_at: item.deleted_at,
         }) as Promise<Finance>,
     });
+    if (withReturnSeed) {
+      return seed;
+    }
+
+    return { message: 'Seeding Completed Successfully!' };
   }
-  private async executeSeed<T>({
-    label,
-    seedMethod,
-  }: {
-    label: string;
-    seedMethod: () => Promise<Array<T | void>>;
-  }): Promise<Array<T>> {
-    console.info(`# => Seeding ${label}`);
-    const items = await seedMethod();
-    const validItems = this.filterValidItems<T>(items);
-    console.info(`# => ${validItems.length} ${label} seeded successfully`);
-    return validItems;
+
+  async basicSeeds(withReturnSeed: boolean = true) {
+    const supplierList = await this.executeSeed<Supplier>({
+      label: 'Suppliers',
+      seedMethod: async () => {
+        const result = await this.supplierService.seed();
+        return Array.isArray(result) ? result : [];
+      },
+    });
+    const bankList = await this.executeSeed<Bank>({
+      label: 'Banks',
+      seedMethod: async () => {
+        const result = await this.bankService.seed();
+        return Array.isArray(result) ? result : [];
+      },
+    });
+    const billCategoryList = await this.executeSeed<BillCategory>({
+      label: 'Bill Categories',
+      seedMethod: async () => {
+        const result = await this.billService.billCategorySeed();
+        return Array.isArray(result) ? result : [];
+      },
+    });
+    if (withReturnSeed) {
+      return { supplierList, bankList, billCategoryList };
+    }
+    return {
+      message:
+        'Seeding suppliers , banks and Bill Categories  Completed Successfully!',
+    };
   }
-  private filterValidItems<T>(items: Array<T | void>): Array<T> {
-    return items.filter((item): item is T => item !== undefined);
+
+  async seeds(user: User) {
+    try {
+      const finance = (await this.seed(user)) as Finance;
+      const { supplierList, bankList, billCategoryList } =
+        await this.basicSeeds();
+      const billList = await this.executeSeed<Bill>({
+        label: 'Bills',
+        seedMethod: async () => {
+          const result = await this.billService.seed({
+            finance,
+            bankList,
+            billCategoryList,
+          });
+          return Array.isArray(result) ? result : [];
+        },
+      });
+
+      await this.executeSeed<Expense>({
+        label: 'Expenses',
+        seedMethod: async () => {
+          const result = await this.expenseService.seed(supplierList, billList);
+          return Array.isArray(result) ? result : [];
+        },
+      });
+
+      return {
+        message: 'Seeds finances executed successfully',
+      };
+    } catch (error) {
+      console.error('# => Error during seeds execution:', error);
+      throw this.error(new ConflictException('Seed Execution Failed'));
+    }
   }
 }

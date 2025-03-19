@@ -1,5 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
-
+import {describe, expect, it} from '@jest/globals';
 import {
   capitalize,
   extractLastItemFromUrl,
@@ -12,6 +11,7 @@ import {
   toCamelCase,
   toSnakeCase,
   truncateString,
+  snakeCaseToNormal,
   uuid,
 } from './string';
 
@@ -177,6 +177,49 @@ describe('String functions', () => {
       expect(separateCamelCase('helloWorld')).toEqual('hello World');
     });
   });
+
+  describe('snakeCaseToCamelCase', () => {
+    it('deve converter uma string SNAKE_CASE para formato normal', () => {
+      expect(snakeCaseToNormal('BANK_SLIP')).toBe('Bank Slip');
+      expect(snakeCaseToNormal('USER_ACCOUNT_DETAILS')).toBe('User Account Details');
+      expect(snakeCaseToNormal('PAYMENT_STATUS')).toBe('Payment Status');
+    });
+
+    it('deve lidar com strings de uma palavra sem underscore', () => {
+      expect(snakeCaseToNormal('BANK')).toBe('Bank');
+      expect(snakeCaseToNormal('BANKING')).toBe('Banking');
+    });
+
+    it('deve retornar uma string vazia se o valor for vazio', () => {
+      expect(snakeCaseToNormal('')).toBe('');
+    });
+
+    it('deve lidar com entradas lowercase (snake_case)', () => {
+      expect(snakeCaseToNormal('bank_slip')).toBe('Bank Slip');
+      expect(snakeCaseToNormal('user_account_details')).toBe('User Account Details');
+      expect(snakeCaseToNormal('payment_status')).toBe('Payment Status');
+    });
+
+    it('deve ignorar múltiplos underscores consecutivos corretamente', () => {
+      expect(snakeCaseToNormal('BANK__SLIP')).toBe('Bank  Slip');
+      expect(snakeCaseToNormal('USER___ACCOUNT___DETAILS')).toBe(
+          'User   Account   Details'
+      );
+    });
+
+    it('deve lidar com espaços antes e após a entrada', () => {
+      expect(snakeCaseToNormal(' BANK_SLIP ')).toBe('Bank Slip');
+      expect(snakeCaseToNormal('  USER_ACCOUNT_DETAILS  ')).toBe(
+          'User Account Details'
+      );
+    });
+
+    it('não deve alterar strings sem underscores que já estão formatadas', () => {
+      expect(snakeCaseToNormal('Bank Slip')).toBe('Bank Slip');
+      expect(snakeCaseToNormal('User Account')).toBe('User Account');
+    });
+
+  })
 
   describe('extractLastItemFromUrl', () => {
     it('Must separate item from url', () => {

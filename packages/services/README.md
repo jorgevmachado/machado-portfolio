@@ -112,6 +112,7 @@ npm run lint
 ##### findRepeated: Procura duplicatas numa lista de objetos com base numa chave definida ('id' ou 'name').
 ##### truncateString: Trunca uma 'string' para o comprimento especificado ('length') e converte para maiúsculas.
 ##### separateCamelCase: Separa palavras em camel case ('CamelCase') para uma versão com espaços e capitalização individual.
+##### snakeCaseToNormal: Converte uma 'string' snake_case fornecida em uma string case normal legível por humanos.
 ##### extractLastItemFromUrl: Extrai o último segmento de uma URL.
 
 ### number:

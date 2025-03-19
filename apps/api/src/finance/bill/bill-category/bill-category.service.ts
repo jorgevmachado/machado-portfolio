@@ -49,12 +49,13 @@ export class BillCategoryService extends Service<BillCategory> {
     return { message: 'Successfully removed' };
   }
 
-  async seed() {
+  async seed(withReturnSeed: boolean = true) {
     return this.seedEntities({
       by: 'name',
       key: 'all',
       label: 'Bill Category',
       seeds: BILL_CATEGORY_LIST_FIXTURE,
+      withReturnSeed,
       createdEntityFn: async (item) => item,
     });
   }

@@ -30,7 +30,7 @@ export class AuthController {
 
   @Get('seed')
   seed() {
-    return this.authService.seed();
+    return this.authService.seed(false);
   }
 
   @Post('signUp')

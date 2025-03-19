@@ -1,4 +1,14 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller, Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { QueryParameters } from '@repo/business/shared/interface';
@@ -9,6 +19,7 @@ import { AuthRoleGuards } from '../../auth/guards/auth-role.guards';
 import { AuthStatusGuards } from '../../auth/guards/auth-status.guards';
 import { GetUserAuth } from '../../auth/decorators/auth-user.decorator';
 import { User } from '../../auth/users/user.entity';
+import { CreateBillDto } from './dto/create-bill.dto';
 
 @Controller('finance/bill')
 @UseGuards(AuthGuard(), AuthRoleGuards, AuthStatusGuards)
@@ -17,11 +28,41 @@ export class BillController {
 
   @Get()
   findAll(@GetUserAuth() user: User, @Query() parameters: QueryParameters) {
-    return this.service.findAll(user, { parameters });
+    this.validateFinance(user);
+    return this.service.findAll(user.finance, { parameters });
+  }
+
+  @Post()
+  create(@GetUserAuth() user: User, @Body() createBillDto: CreateBillDto) {
+    this.validateFinance(user);
+    return this.service.create(user.finance, createBillDto);
+  }
+
+  @Put(':param')
+  update(
+    @GetUserAuth() user: User,
+    @Param('param') param: string,
+    @Body() updateBillDto: CreateBillDto,
+  ) {
+    this.validateFinance(user);
+    return this.service.update(user.finance, param, updateBillDto);
   }
 
   @Get(':param')
   findOne(@Param('param') param: string) {
     return this.service.findOne({ value: param });
+  }
+
+  @Delete(':param')
+  remove(@Param('param') param: string) {
+    return this.service.remove(param);
+  }
+
+  private validateFinance(user: User) {
+    if (!user.finance) {
+      throw new ConflictException(
+        'Finance is not initialized, please start it to access this feature.',
+      );
+    }
   }
 }

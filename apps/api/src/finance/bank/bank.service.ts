@@ -33,12 +33,13 @@ export class BankService extends Service<Bank> {
     return this.save(bank);
   }
 
-  async seed() {
+  async seed(withReturnSeed: boolean = true) {
     return this.seedEntities({
       by: 'name',
       key: 'all',
       label: 'Bank',
       seeds: BANK_LIST_FIXTURE,
+      withReturnSeed,
       createdEntityFn: async (item) => item,
     });
   }

@@ -53,20 +53,14 @@ export class SupplierTypeService extends Service<SupplierType> {
     return { message: 'Successfully removed' };
   }
 
-  async seed() {
-      return this.seedEntities({
-        by: 'name',
-        key: 'all',
-        label: 'Supplier Type',
-        seeds: SUPPLIER_TYPE_LIST_FIXTURE,
-        createdEntityFn: async (item) => item,
-      });
-  }
-
-  async treatSupplierTypeParam(supplierType: string | SupplierType) {
-    return await this.treatEntityParam<SupplierType>(
-      supplierType,
-      'Supplier Type',
-    );
+  async seed(withReturnSeed: boolean = true) {
+    return this.seedEntities({
+      by: 'name',
+      key: 'all',
+      label: 'Supplier Type',
+      seeds: SUPPLIER_TYPE_LIST_FIXTURE,
+      withReturnSeed,
+      createdEntityFn: async (item) => item,
+    });
   }
 }

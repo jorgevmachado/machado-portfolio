@@ -5,6 +5,7 @@ import { Paginate } from '@repo/business/paginate/paginate';
 import { PaginateParameters } from '@repo/business/paginate/interface';
 
 import {
+  BasicEntity,
   FindByParams,
   FindOneByOrder,
   FindOneByParams,
@@ -19,9 +20,12 @@ import {
   SeedEntityParams,
 } from './interface';
 
-export abstract class Service<
-  T extends { id: string; name?: string },
-> extends Base {
+type ExecuteSeedParams<T> = {
+  label: string;
+  seedMethod: () => Promise<Array<T | void>>;
+};
+
+export abstract class Service<T extends BasicEntity> extends Base {
   protected constructor(
     protected readonly alias: string,
     protected readonly relations: Array<string>,
@@ -134,11 +138,11 @@ export abstract class Service<
       });
   }
 
-  async remove(param: string) {
+  async remove(param: string, withDeleted: boolean = false) {
     const result = await this.findOne({
       value: param,
       relations: this.relations,
-      withDeleted: true,
+      withDeleted,
     });
     await this.repository.softRemove(result);
     return { message: 'Successfully removed' };
@@ -154,11 +158,19 @@ export abstract class Service<
     return entity;
   }
 
+  async treatEntitiesParams<T>(values?: Array<string | T>, label?: string) {
+    if (!values || values.length === 0) {
+      return [];
+    }
+    return values?.map((value) => this.treatEntityParam<T>(value, label));
+  }
+
   async seedEntities({
     by,
     key,
     seeds,
     label,
+    withReturnSeed = true,
     createdEntityFn,
   }: SeedEntitiesParams<T>) {
     this.validateListMock<T>({ key, list: seeds, label });
@@ -187,7 +199,11 @@ export abstract class Service<
     console.info(
       `# => Seeded ${createdEntities.length} new ${label.toLowerCase()}`,
     );
-    return [...existingEntities, ...createdEntities];
+    const seed = [...existingEntities, ...createdEntities];
+    if (!withReturnSeed) {
+      return { message: `Seeding ${label} Completed Successfully!` };
+    }
+    return seed;
   }
 
   async seedEntity({ by, label, seed, createdEntityFn }: SeedEntityParams<T>) {
@@ -201,6 +217,21 @@ export abstract class Service<
       return currentSeed;
     }
     return await createdEntityFn(seed as T);
+  }
+
+  async executeSeed<T>({
+    label,
+    seedMethod,
+  }: ExecuteSeedParams<T>): Promise<Array<T>> {
+    console.info(`# => Seeding ${label}`);
+    const items = await seedMethod();
+    const validItems = this.filterValidItems<T>(items);
+    console.info(`# => ${validItems.length} ${label} seeded successfully`);
+    return validItems;
+  }
+
+  filterValidItems<T>(items: Array<T | void>): Array<T> {
+    return items.filter((item): item is T => item !== undefined);
   }
 
   getRelation<T extends { id: string; name?: string }>({

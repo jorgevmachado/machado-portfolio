@@ -35,4 +35,9 @@ export class BankController {
   remove(@Param('param') param: string) {
     return this.service.remove(param);
   }
+
+  @Get('seed')
+  seed() {
+    return this.service.seed(false);
+  }
 }

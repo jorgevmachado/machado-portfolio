@@ -65,9 +65,13 @@ export class AuthService extends Base {
     return new UserBusiness({ ...currentUser, clean: true });
   }
 
-  async seed() {
+  async seed(withReturnSeed: boolean = true) {
     const currentUser = (await this.userService.seed()) as User;
-    return new UserBusiness({...currentUser, clean: true });
+    const user = new UserBusiness({...currentUser, clean: true });
+    if(withReturnSeed) {
+      return user;
+    }
+    return { message: 'Seeding Completed Successfully!'}
   }
 
   async promoteUser(id: string, authUser: User) {

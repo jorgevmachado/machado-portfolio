@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { FinanceService } from './finance/finance.service';
+import { User } from './auth/users/user.entity';
 
 @Injectable()
 export class AppService {
@@ -8,10 +9,10 @@ export class AppService {
     protected authService: AuthService,
     protected financeService: FinanceService,
   ) {}
-  async seed(key?: 'all' | 'finance' | 'pokemon') {
-    const user = await this.authService.seed();
+  async seed(key?: 'all' | 'auth' | 'finance' | 'pokemon') {
+    const user = (await this.authService.seed()) as User;
     console.info('# => user exist => ', Boolean(user));
-    if(key === 'all' || key === 'finance') {
+    if (key === 'all' || key === 'finance') {
       await this.financeService.seeds(user);
     }
     return {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { capitalize, separateCamelCase, toCamelCase } from '@repo/services/string/string';
+import { snakeCaseToNormal } from '@repo/services/string/string';
 
 import Bill from '@repo/business/finance/bill';
 
@@ -16,16 +16,12 @@ type SubTabProps = {
 
 const SubTab: React.FC<SubTabProps> = ({ list }) => {
   const currentList = billBusiness.mapBillListByItem(list, 'type');
-  const currentTitle = (title: string) => {
-    const camelCaseTitle = toCamelCase(title);
-    const separateCamelCaseTitle = separateCamelCase(camelCaseTitle);
-    return capitalize(separateCamelCaseTitle);
-  };
+
   return (
     <Tabs
       fluid
       tabItems={currentList.map((item) => ({
-        title: currentTitle(item.title),
+        title: snakeCaseToNormal(item.title),
         children: (
           <ListCard key={item.title} list={item.list} type={item.title} />
         ),

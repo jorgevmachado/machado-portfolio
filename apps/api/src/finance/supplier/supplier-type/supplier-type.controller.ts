@@ -51,4 +51,9 @@ export class SupplierTypeController {
   remove(@Param('param') param: string) {
     return this.service.remove(param);
   }
+
+  @Get('seed/type')
+  seed() {
+    return this.service.seed(false);
+  }
 }
