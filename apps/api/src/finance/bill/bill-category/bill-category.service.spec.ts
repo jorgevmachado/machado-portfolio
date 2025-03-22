@@ -146,14 +146,4 @@ describe('BillCategoryService', () => {
       expect(await service.seed()).toEqual(BILL_CATEGORY_LIST_FIXTURE);
     });
   });
-
-  describe('treatBillCategoryParam', () => {
-    it('should return bill category by bill object', async () => {
-      expect(
-        await service.treatBillCategoryParam(
-          INGRID_RESIDENTIAL_BILL_CATEGORY_FIXTURE,
-        ),
-      ).toEqual(INGRID_RESIDENTIAL_BILL_CATEGORY_FIXTURE);
-    });
-  });
 });

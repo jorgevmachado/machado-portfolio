@@ -59,6 +59,7 @@ export class ExpenseService extends Service<Expense> {
       throw this.error(new ConflictException('Invalid ID'));
     }
     const entity = await this.findOne({ value: id });
+
     const bill = !updateExpenseDto.bill
       ? entity.bill
       : this.getBill(bills, updateExpenseDto.bill);

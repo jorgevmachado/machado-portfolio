@@ -9,8 +9,8 @@ import {
 import { BillCategoryController } from './bill-category.controller';
 import { BillCategoryService } from './bill-category.service';
 import { CreateBillCategoryDto } from './dto/create-bill-category.dto';
-import { BillCategory } from './bill-category.entity';
 import { UpdateBillCategoryDto } from './dto/update-bill-category.dto';
+import { BillCategory } from './bill-category.entity';
 
 describe('BillCategoryController', () => {
   let controller: BillCategoryController;
@@ -23,7 +23,8 @@ describe('BillCategoryController', () => {
         {
           provide: BillCategoryService,
           useValue: {
-            list: jest.fn(),
+            seed: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
@@ -44,7 +45,9 @@ describe('BillCategoryController', () => {
 
   describe('findAll', () => {
     it('Should return an list of bill categories', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(BILL_CATEGORY_LIST_FIXTURE);
+      jest
+        .spyOn(service, 'findAll')
+        .mockResolvedValue(BILL_CATEGORY_LIST_FIXTURE);
 
       expect(await controller.findAll({})).toEqual(BILL_CATEGORY_LIST_FIXTURE);
     });
@@ -109,6 +112,15 @@ describe('BillCategoryController', () => {
       expect(
         await controller.remove(INGRID_RESIDENTIAL_BILL_CATEGORY_FIXTURE.id),
       ).toEqual({ message: 'Successfully removed' });
+    });
+  });
+
+  describe('seed', () => {
+    it('should seed a list of bill categories', async () => {
+      jest
+        .spyOn(service, 'seed')
+        .mockResolvedValueOnce(BILL_CATEGORY_LIST_FIXTURE);
+      expect(await controller.seed()).toEqual(BILL_CATEGORY_LIST_FIXTURE);
     });
   });
 });

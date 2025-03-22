@@ -78,6 +78,8 @@ export abstract class Service<T extends BasicEntity> extends Base {
     if (!values || values.length === 0) {
       return [];
     }
-    return values?.map((value) => this.treatEntityParam<T>(value, label));
+    return Promise.all(
+      values?.map(async (value) => await this.treatEntityParam<T>(value, label))
+    );
   }
 }

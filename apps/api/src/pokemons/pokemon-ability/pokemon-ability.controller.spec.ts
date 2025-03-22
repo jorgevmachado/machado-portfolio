@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {afterEach, beforeEach, describe, expect, it, jest} from '@jest/globals';
 import { PokemonAbilityController } from './pokemon-ability.controller';
 import { PokemonAbilityService } from './pokemon-ability.service';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -13,13 +13,14 @@ describe('PokemonAbilityController', () => {
   let controller: PokemonAbilityController;
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PokemonAbilityController],
       providers: [
         {
           provide: PokemonAbilityService,
           useValue: {
-            list: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
           },
         },
@@ -30,6 +31,10 @@ describe('PokemonAbilityController', () => {
     controller = module.get<PokemonAbilityController>(PokemonAbilityController);
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should be defined', () => {
     expect(service).toBeDefined();
     expect(controller).toBeDefined();
@@ -37,7 +42,7 @@ describe('PokemonAbilityController', () => {
 
   describe('findAll', () => {
     it('Should return an list of pokemon move', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(LIST_ABILITIES_FIXTURE);
+      jest.spyOn(service, 'findAll').mockResolvedValue(LIST_ABILITIES_FIXTURE);
 
       expect(await controller.findAll({})).toEqual(LIST_ABILITIES_FIXTURE);
     });

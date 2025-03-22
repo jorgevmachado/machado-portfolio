@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {afterEach, beforeEach, describe, expect, it, jest} from '@jest/globals';
 import { Repository } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -28,6 +28,7 @@ describe('PokemonService', () => {
   let business: ExternalPokemonService;
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PokemonService,
@@ -68,6 +69,10 @@ describe('PokemonService', () => {
     moveService = module.get<PokemonMoveService>(PokemonMoveService);
     abilityService = module.get<PokemonAbilityService>(PokemonAbilityService);
     business = module.get<ExternalPokemonService>(ExternalPokemonService);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {

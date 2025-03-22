@@ -9,7 +9,7 @@ import {
 } from '@jest/globals';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 
 import { EMonth } from '@repo/business/finance/enum';
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
@@ -71,9 +71,9 @@ describe('ExpenseService', () => {
         .spyOn(repository, 'find')
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
 
-      expect(await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE)).toEqual(
-        EXPENSE_LIST_FIXTURE,
-      );
+      expect(
+        await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
+      ).toEqual(EXPENSE_LIST_FIXTURE);
     });
 
     it('should seed the database when not exist in database', async () => {
@@ -83,9 +83,9 @@ describe('ExpenseService', () => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(expense);
       });
 
-      expect(await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE)).toEqual(
-        EXPENSE_LIST_FIXTURE,
-      );
+      expect(
+        await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
+      ).toEqual(EXPENSE_LIST_FIXTURE);
     });
   });
 
@@ -111,7 +111,9 @@ describe('ExpenseService', () => {
         .spyOn(repository, 'save')
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
 
-      expect(await service.create(BILL_LIST_FIXTURE,createDto)).toEqual(EXPENSE_LIST_FIXTURE[0]);
+      expect(await service.create(BILL_LIST_FIXTURE, createDto)).toEqual(
+        EXPENSE_LIST_FIXTURE[0],
+      );
     });
   });
 
@@ -163,7 +165,7 @@ describe('ExpenseService', () => {
         .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
 
       expect(
-        await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE,  {
+        await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, {
           ...updateDto,
           supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
         }),
@@ -186,13 +188,20 @@ describe('ExpenseService', () => {
       jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
 
       expect(
-        await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, updateDto),
+        await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, {
+          ...updateDto,
+          bill: EXPENSE_LIST_FIXTURE[0].bill,
+        }),
       ).toEqual(expected);
     });
 
     it('should return conflict exception because the id is not uuid', async () => {
       await expect(
-        service.update(EXPENSE_LIST_FIXTURE[0].supplier.name, BILL_LIST_FIXTURE, updateDto),
+        service.update(
+          EXPENSE_LIST_FIXTURE[0].supplier.name,
+          BILL_LIST_FIXTURE,
+          updateDto,
+        ),
       ).rejects.toThrow(ConflictException);
     });
   });
@@ -216,9 +225,15 @@ describe('ExpenseService', () => {
       });
     });
     it('should return conflict exception because the id is not uuid', async () => {
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(null),
+      } as any);
       await expect(
         service.remove(EXPENSE_LIST_FIXTURE[0].supplier.name),
-      ).rejects.toThrow(ConflictException);
+      ).rejects.toThrow(NotFoundException);
     });
   });
 });

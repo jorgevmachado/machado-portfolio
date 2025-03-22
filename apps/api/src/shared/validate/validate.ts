@@ -36,7 +36,7 @@ export class Validate {
   }
 
   paramIsEntity<T>(value: any): value is T {
-    return typeof value === 'object' && 'id' in value;
+    return value !== null && value !== undefined && typeof value === 'object' && 'id' in value;
   }
 
   param<T>(value: string | T, label?: string) {

@@ -25,7 +25,7 @@ describe('BankController', () => {
           provide: BankService,
           useValue: {
             seed: jest.fn(),
-            list: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
@@ -45,7 +45,7 @@ describe('BankController', () => {
 
   describe('findAll', () => {
     it('Should return an list of bank type', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(BANK_LIST_FIXTURE);
+      jest.spyOn(service, 'findAll').mockResolvedValue(BANK_LIST_FIXTURE);
 
       expect(await controller.findAll({})).toEqual(BANK_LIST_FIXTURE);
     });

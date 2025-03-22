@@ -2,7 +2,14 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { beforeEach, describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Base } from './base';
 
@@ -10,7 +17,12 @@ describe('Base Class', () => {
   let base: Base;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     base = new (class extends Base {})();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('error()', () => {

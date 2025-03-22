@@ -7,16 +7,11 @@ import {
 } from 'class-validator';
 
 import { EBillType } from '@repo/business/finance/enum';
-
-import { User } from '../../../auth/users/user.entity';
 import { Bank } from '../../bank/bank.entity';
 import { Expense } from '../../expense/expense.entity';
 import { BillCategory } from '../bill-category/bill-category.entity';
 
 export class CreateBillDto {
-  @IsEmpty()
-  user: User;
-
   @IsEnum(EBillType)
   type: EBillType;
 

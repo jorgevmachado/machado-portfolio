@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {afterEach, beforeEach, describe, expect, it, jest} from '@jest/globals';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -22,6 +22,7 @@ describe('SupplierTypeService', () => {
   let repository: Repository<SupplierType>;
 
   beforeEach(async () => {
+    jest.restoreAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SupplierTypeService,
@@ -33,6 +34,10 @@ describe('SupplierTypeService', () => {
     repository = module.get<Repository<SupplierType>>(
       getRepositoryToken(SupplierType),
     );
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {
@@ -137,14 +142,6 @@ describe('SupplierTypeService', () => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(type);
       });
       expect(await service.seed()).toEqual(SUPPLIER_TYPE_LIST_FIXTURE);
-    });
-  });
-
-  describe('treatSupplierTypeParam', () => {
-    it('should return supplier type by supplier object', async () => {
-      expect(
-        await service.treatSupplierTypeParam(HOUSING_SUPPLIER_TYPE_FIXTURE),
-      ).toEqual(HOUSING_SUPPLIER_TYPE_FIXTURE);
     });
   });
 });

@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import { PokemonMoveController } from './pokemon-move.controller';
 import { PokemonMoveService } from './pokemon-move.service';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -12,13 +19,14 @@ describe('PokemonMoveController', () => {
   let controller: PokemonMoveController;
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PokemonMoveController],
       providers: [
         {
           provide: PokemonMoveService,
           useValue: {
-            list: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
           },
         },
@@ -28,6 +36,9 @@ describe('PokemonMoveController', () => {
     service = module.get<PokemonMoveService>(PokemonMoveService);
     controller = module.get<PokemonMoveController>(PokemonMoveController);
   });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
@@ -36,7 +47,7 @@ describe('PokemonMoveController', () => {
 
   describe('findAll', () => {
     it('Should return an list of pokemon move', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(LIST_MOVE_FIXTURE);
+      jest.spyOn(service, 'findAll').mockResolvedValue(LIST_MOVE_FIXTURE);
 
       expect(await controller.findAll({})).toEqual(LIST_MOVE_FIXTURE);
     });

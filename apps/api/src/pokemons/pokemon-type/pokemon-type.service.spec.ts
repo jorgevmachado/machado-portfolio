@@ -1,5 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
@@ -14,6 +21,7 @@ describe('TypeService', () => {
   let repository: Repository<PokemonType>;
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PokemonTypeService,
@@ -22,7 +30,13 @@ describe('TypeService', () => {
     }).compile();
 
     service = module.get<PokemonTypeService>(PokemonTypeService);
-    repository = module.get<Repository<PokemonType>>(getRepositoryToken(PokemonType));
+    repository = module.get<Repository<PokemonType>>(
+      getRepositoryToken(PokemonType),
+    );
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {

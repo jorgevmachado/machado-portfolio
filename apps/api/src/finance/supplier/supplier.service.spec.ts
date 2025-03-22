@@ -37,7 +37,7 @@ describe('SupplierService', () => {
           useValue: {
             findOne: jest.fn(),
             seed: jest.fn(),
-            treatSupplierTypeParam: jest.fn(),
+            treatEntityParam: jest.fn(),
           },
         },
       ],
@@ -72,7 +72,7 @@ describe('SupplierService', () => {
       jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
       SUPPLIER_LIST_FIXTURE.forEach((supplier) => {
-        jest.spyOn(supplierTypeService, 'treatSupplierTypeParam').mockResolvedValueOnce(supplier.type);
+        jest.spyOn(supplierTypeService, 'treatEntityParam').mockResolvedValueOnce(supplier.type);
         jest.spyOn(repository, 'save').mockResolvedValueOnce(supplier);
       });
       expect(await service.seed()).toEqual(SUPPLIER_LIST_FIXTURE);
@@ -100,7 +100,7 @@ describe('SupplierService', () => {
       };
 
       jest
-        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
+        .spyOn(supplierTypeService, 'treatEntityParam')
         .mockResolvedValueOnce(VIVO_HOUSING_SUPPLIER_FIXTURE.type);
 
       jest
@@ -119,7 +119,7 @@ describe('SupplierService', () => {
       };
 
       jest
-        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
+        .spyOn(supplierTypeService, 'treatEntityParam')
         .mockResolvedValueOnce(HOUSING_SUPPLIER_TYPE_FIXTURE);
 
       jest
@@ -156,7 +156,7 @@ describe('SupplierService', () => {
       } as any);
 
       jest
-        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
+        .spyOn(supplierTypeService, 'treatEntityParam')
         .mockResolvedValueOnce(TRANSPORT_SUPPLIER_TYPE_FIXTURE);
 
       jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
@@ -233,14 +233,6 @@ describe('SupplierService', () => {
       await expect(
         service.remove(HOUSING_SUPPLIER_TYPE_FIXTURE.id),
       ).rejects.toThrowError(ConflictException);
-    });
-  });
-
-  describe('treatSupplierParam', () => {
-    it('should return supplier by supplier object', async () => {
-      expect(
-        await service.treatSupplierParam(VIVO_HOUSING_SUPPLIER_FIXTURE),
-      ).toEqual(VIVO_HOUSING_SUPPLIER_FIXTURE);
     });
   });
 });

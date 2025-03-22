@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { beforeEach, describe, expect, it } from '@jest/globals';
+import {afterEach, beforeEach, describe, expect, it, jest} from '@jest/globals';
 
 import { PokemonController } from './pokemon.controller';
 import { PokemonService } from './pokemon.service';
@@ -9,6 +9,7 @@ describe('PokemonController', () => {
     let service: PokemonService;
 
     beforeEach(async () => {
+        jest.clearAllMocks();
         const module: TestingModule = await Test.createTestingModule({
             controllers: [PokemonController],
             providers: [
@@ -21,6 +22,10 @@ describe('PokemonController', () => {
 
         controller = module.get<PokemonController>(PokemonController);
         service = module.get<PokemonService>(PokemonService);
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it('should be defined', () => {

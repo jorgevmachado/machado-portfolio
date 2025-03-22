@@ -20,6 +20,7 @@ import { GetUserAuth } from '../../auth/decorators/auth-user.decorator';
 import { User } from '../../auth/users/user.entity';
 
 import { CreateBillDto } from './dto/create-bill.dto';
+import { UpdateBillDto } from './dto/update.bill.dto';
 import { BillService } from './bill.service';
 
 @Controller('finance/bill')
@@ -43,7 +44,7 @@ export class BillController {
   update(
     @GetUserAuth() user: User,
     @Param('param') param: string,
-    @Body() updateBillDto: CreateBillDto,
+    @Body() updateBillDto: UpdateBillDto,
   ) {
     this.validateFinance(user);
     return this.service.update(user.finance, param, updateBillDto);

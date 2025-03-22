@@ -63,6 +63,16 @@ npm run test
   npm run test -- --findRelatedTests src/shared/file/file.spec.ts                                 
 ```
 
+#### validate:
+```bash
+  npm run test -- --findRelatedTests src/shared/validate/validate.spec.ts                                 
+```
+
+#### service:
+```bash
+  npm run test -- --findRelatedTests src/shared/service/service.spec.ts                                 
+```
+
 #### auth:
 ##### -INTERCEPTORS
 ```bash

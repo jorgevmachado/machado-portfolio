@@ -12,7 +12,8 @@ import { CreateBankDto } from './dto/create-bank.dto';
 
 import { Bank } from './bank.entity';
 import { BankService } from './bank.service';
-import {UpdateBankDto} from "./dto/update-bank.dto";
+import { UpdateBankDto } from './dto/update-bank.dto';
+import { ConflictException } from '@nestjs/common';
 
 describe('BankService', () => {
   let repository: Repository<Bank>;
@@ -61,6 +62,20 @@ describe('BankService', () => {
 
       expect(await service.create(createDto)).toEqual(CAIXA_BANK_FIXTURE);
     });
+
+    it('should return conflict exception when try to create a new bank', async () => {
+      const createDto: CreateBankDto = {
+        name: CAIXA_BANK_FIXTURE.name,
+      };
+
+      jest
+        .spyOn(repository, 'save')
+        .mockRejectedValueOnce(new ConflictException());
+
+      await expect(service.create(createDto)).rejects.toThrowError(
+        ConflictException,
+      );
+    });
   });
 
   describe('update', () => {
@@ -88,4 +103,60 @@ describe('BankService', () => {
     });
   });
 
+  describe('findAll', () => {
+    it('Should return an list of banks', async () => {
+      const expected: Array<Bank> = BANK_LIST_FIXTURE;
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getMany: jest.fn().mockReturnValueOnce(expected),
+      } as any);
+
+      expect(await service.findAll({})).toEqual(expected);
+    });
+  });
+
+  describe('treatEntityParam', () => {
+    it('should return a bank when receive object', async () => {
+      const expected: Bank = BANK_LIST_FIXTURE[0];
+      expect(await service.treatEntityParam(expected)).toEqual(expected);
+    });
+    it('should return a bank when receive string', async () => {
+      const expected: Bank = BANK_LIST_FIXTURE[0];
+      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        andWhere: jest.fn(),
+        withDeleted: jest.fn(),
+        leftJoinAndSelect: jest.fn(),
+        getOne: jest.fn().mockReturnValueOnce(expected),
+      } as any);
+      expect(await service.treatEntityParam(expected.name)).toEqual(expected);
+    });
+  });
+
+  describe('treatEntitiesParams', () => {
+    it('should return a list of bank when receive a list of banks', async () => {
+      const expected: Array<Bank> = BANK_LIST_FIXTURE;
+      expect(await service.treatEntitiesParams(expected)).toEqual(expected);
+    });
+
+    it('should return a list empty when receive undefined', async () => {
+      expect(await service.treatEntitiesParams(undefined)).toEqual([]);
+    });
+
+    it('should return a list of bank when receive a list of string', async () => {
+      const expected: Array<Bank> = BANK_LIST_FIXTURE;
+      const received: Array<string> = expected.map((bank) => bank.name);
+      expected.forEach((bank) => {
+        jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+          andWhere: jest.fn(),
+          withDeleted: jest.fn(),
+          leftJoinAndSelect: jest.fn(),
+          getOne: jest.fn().mockReturnValueOnce(bank),
+        } as any);
+      });
+
+      expect(await service.treatEntitiesParams(received)).toEqual(expected);
+    });
+  });
 });
