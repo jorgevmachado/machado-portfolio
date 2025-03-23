@@ -9,6 +9,10 @@ import type { QueryParameters } from '@repo/business/shared/interface';
 import Supplier from '@repo/business/finance/supplier';
 import SupplierType from '@repo/business/finance/supplier-type';
 
+import { useRouter } from 'next/navigation';
+
+import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
+
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 import Input from '@repo/ui/components/input/Input';
 
@@ -19,6 +23,7 @@ import './Supplier.scss';
 
 export default function SupplierPage() {
   const { addAlert } = useAlert();
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [supplierTypes, setSupplierTypes] = useState<Array<SupplierType>>([]);
   const fetchItems = async (params: QueryParameters) => {
@@ -67,7 +72,7 @@ export default function SupplierPage() {
         },
         {
           text: 'Created At',
-          type: 'date',
+          type: ETypeTableHeaderItem.DATE,
           value: 'created_at',
           sortable: true,
         },
@@ -87,6 +92,15 @@ export default function SupplierPage() {
             })
       }
       deleteItem={(id) => supplierService.remove(id)}
+      fallBackCrud={{
+        show: supplierTypes.length === 0,
+        message:
+          'No supplier types were found. Please create a supplier type before creating a supplier.',
+        button: {
+          label: 'Create Supplier Type',
+          onClick: () => router.push('/suppliers/types'),
+        },
+      }}
       renderItemForm={({ item, handleChange }) => (
         <div>
           <Input

@@ -52,7 +52,7 @@ export const privateRoutes: Array<Route> = [
   {
     key: 'bank',
     icon: 'school',
-    path: '/bank',
+    path: '/banks',
     type: 'private',
     title: 'Bank',
   },

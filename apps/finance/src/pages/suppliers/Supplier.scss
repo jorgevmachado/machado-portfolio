@@ -1,44 +1,16 @@
 .supplier {
-  &__container {
-    width: 100%;
-    display: inline-block;
-    position: relative;
-    max-width: 350px;
-    margin-bottom: 20px;
-    &--select {
-      width: 100%;
-      color: #333;
-      cursor: pointer;
-      border: 2px solid #ddd;
-      padding: 10px 15px;
-      font-size: 16px;
-      transition: border-color 0.3s ease, box-shadow 0.2s ease;
-      appearance: none;
-      border-radius: 5px;
-      background-color: #fff;
-      &:focus {
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        border-color: #007bff;
-      }
-      &:hover {
-        border-color: #007bff;
-      }
-      &:disabled {
-        color: #aaa;
-        cursor: not-allowed;
-        background-color: #f5f5f5;
-      }
-    }
-    &::after {
-      top: 50%;
-      right: 15px;
-      color: #333;
-      content: '▼';
-      position: absolute;
-      transform: translateY(-50%);
-      font-size: 12px;
-      pointer-events: none;
+  &__type-not-found {
+    height: 300px;
+    display: flex;
+    padding: 20px;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    &--button {
+      padding: 10px 16px;
+      margin-top: 16px;
+      text-transform: uppercase;
     }
   }
 }

@@ -6,6 +6,7 @@ import SupplierType from '@repo/business/finance/supplier-type';
 import { supplierTypeService } from '../../../shared';
 
 import { CRUDPage } from '../../../layout';
+import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
 
 export default function SupplierTypePage() {
   const fetchItems = async (params: QueryParameters) => {
@@ -21,7 +22,7 @@ export default function SupplierTypePage() {
           value: 'name',
           sortable: true,
         },
-        { text: 'Created At', value: 'created_at', type: 'date', sortable: true },
+        { text: 'Created At', value: 'created_at', type: ETypeTableHeaderItem.DATE, sortable: true },
       ]}
       resourceName="Supplier Type"
       fetchItems={fetchItems}

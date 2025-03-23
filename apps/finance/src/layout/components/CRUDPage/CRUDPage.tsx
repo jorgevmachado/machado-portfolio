@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-// import { useSearchParams } from 'react-router-dom';
 
-import Text from '@repo/ds/elements/text/Text';
-import Button from '@repo/ds/components/button/Button';
-
-import type { SortedColumn, TSort } from '@repo/ds/components/table/interface';
+import type { SortedColumn } from '@repo/ds/components/table/interface';
 import Table from '@repo/ds/components/table/Table';
 
 import Pagination from '@repo/ds/components/pagination/Pagination';
 
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
-// import {getValidPage, getUpdatedUrlParams} from './config';
-import type { CRUDPageProps, UpdateURLParams } from './interface';
+import DependencyFallback from '../DependencyFallback';
+import CRUDHeader from '../CRUDHeader';
+
+import type { CRUDPageProps } from './interface';
 
 import './CRUDPage.scss';
+import CRUDModal from '../CRUDModal';
 
 export default function CRUDPage<T extends { id: string }>({
   headers,
@@ -23,37 +22,23 @@ export default function CRUDPage<T extends { id: string }>({
   fetchItems,
   deleteItem,
   resourceName,
+  fallBackCrud,
   renderItemForm,
   prepareItemForSave,
 }: CRUDPageProps<T>) {
   const { addAlert } = useAlert();
-  // const [searchParams, setSearchParams] = useSearchParams();
 
   const [items, setItems] = useState<Array<T>>([]);
-  // const [sortedColumn, setSortedColumn] = useState<SortedColumn>({
-  //   sort: searchParams.get('sort') ?? '',
-  //   order: (searchParams.get('order') as TSort) ?? '',
-  // });
+
   const [sortedColumn, setSortedColumn] = useState<SortedColumn>({
     sort: '',
     order: '',
   });
-  // const [currentPage, setCurrentPage] = useState<number>(
-  //     getValidPage(Number(searchParams.get('page'))),
-  // );
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(outLoading);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [editingItem, setEditingItem] = useState<T | null>(null);
-
-  // const updateURLParams = (params: UpdateURLParams) => {
-  //   const newParams = getUpdatedUrlParams({
-  //     ...params,
-  //     searchParams
-  //   });
-  //   setSearchParams(newParams);
-  // };
 
   const ITEMS_PER_PAGE = 10;
 
@@ -77,12 +62,10 @@ export default function CRUDPage<T extends { id: string }>({
   };
 
   const handleSort = ({ sort, order }: SortedColumn) => {
-    // updateURLParams({ sort, order });
     setSortedColumn({ sort, order });
   };
 
   const handlePageChange = (page: number) => {
-    // updateURLParams({ page: String(page) });
     setCurrentPage(page);
   };
 
@@ -129,8 +112,7 @@ export default function CRUDPage<T extends { id: string }>({
     } catch (error) {
       addAlert({
         type: 'error',
-        message:
-          (error as Error)?.message || `Error removing ${resourceName}.`,
+        message: (error as Error)?.message || `Error removing ${resourceName}.`,
       });
     } finally {
       setLoading(false);
@@ -148,76 +130,77 @@ export default function CRUDPage<T extends { id: string }>({
 
   return (
     <div className="crud">
-      <div className="crud__header">
-        <Text tag="h1" variant="big" color="info-80">
-          Management of {resourceName}
-        </Text>
-        {saveItem && (
-          <Button onClick={() => openModal()} context="success">
-            Create new {resourceName}
-          </Button>
-        )}
-      </div>
-      <Table
-        items={items}
-        headers={headers}
-        actions={
-          saveItem || deleteItem
-            ? {
-                text: 'Actions',
-                align: 'center',
-                edit: saveItem
-                  ? { onClick: (item: T) => openModal(item) }
-                  : undefined,
-                delete: deleteItem
-                  ? { onClick: (item: T) => handleDelete(String(item.id)) }
-                  : undefined,
-              }
-            : undefined
-        }
-        loading={loading}
-        onRowClick={saveItem ? (item: T) => openModal(item) : undefined}
-        onSortedColumn={handleSort}
-        currentSortedColumn={sortedColumn}
-      />
-      {isModalVisible && (
-        <div className="crud__modal">
-          <div className="crud__modal--content">
-            <h2>
-              {editingItem ? `Edit ${resourceName}` : `Create ${resourceName}`}
-            </h2>
-            {renderItemForm && renderItemForm({
-              item: editingItem || {},
-              handleChange: (key, value) =>
-                setEditingItem((prev) =>
-                  prev ? { ...prev, [key]: value } : ({ [key]: value } as T),
-                ),
-            })}
-            <div className="crud__modal--content-actions">
-              <Button context="success" onClick={handleSave}>
-                Save
-              </Button>
-              <Button
-                context="error"
-                appearance="outline"
-                onClick={() => setIsModalVisible(false)}
-              >
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-      {totalPages > 1 && (
-        <Pagination
-          fluid
-          currentPage={currentPage}
-          pageRange={totalPages}
-          totalPages={totalPages}
-          handleNewPage={handlePageChange}
-          isNumberedPagination
-          disableButtonsFirstAndLastPage
+      {fallBackCrud && fallBackCrud.show ? (
+        <DependencyFallback
+          message={fallBackCrud.message}
+          button={fallBackCrud.button}
         />
+      ) : (
+        <>
+          <CRUDHeader
+            title={`Management of ${resourceName}`}
+            button={{
+              label: `Create new ${resourceName}`,
+              onClick: () => openModal(),
+            }}
+          />
+          <Table
+            items={items}
+            headers={headers}
+            actions={
+              saveItem || deleteItem
+                ? {
+                    text: 'Actions',
+                    align: 'center',
+                    edit: saveItem
+                      ? { onClick: (item: T) => openModal(item) }
+                      : undefined,
+                    delete: deleteItem
+                      ? { onClick: (item: T) => handleDelete(String(item.id)) }
+                      : undefined,
+                  }
+                : undefined
+            }
+            loading={loading}
+            onRowClick={saveItem ? (item: T) => openModal(item) : undefined}
+            onSortedColumn={handleSort}
+            notFoundMessage={`No ${resourceName} found`}
+            currentSortedColumn={sortedColumn}
+          />
+          {isModalVisible && (
+            <CRUDModal
+              title={
+                editingItem ? `Edit ${resourceName}` : `Create ${resourceName}`
+              }
+              actions={{
+                error: { onClick: () => setIsModalVisible(false) },
+                success: { onClick: () => handleSave() },
+              }}
+            >
+              {renderItemForm &&
+                renderItemForm({
+                  item: editingItem || {},
+                  handleChange: (key, value) =>
+                    setEditingItem((prev) =>
+                      prev
+                        ? { ...prev, [key]: value }
+                        : ({ [key]: value } as T),
+                    ),
+                })}
+            </CRUDModal>
+          )}
+          {totalPages > 1 && (
+            <Pagination
+              fluid
+              currentPage={currentPage}
+              pageRange={totalPages}
+              totalPages={totalPages}
+              handleNewPage={handlePageChange}
+              isNumberedPagination
+              disableButtonsFirstAndLastPage
+            />
+          )}
+        </>
       )}
     </div>
   );

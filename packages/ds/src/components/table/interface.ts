@@ -16,6 +16,7 @@ export interface TableProps {
   onChangeOrder?(sortedColumn: SortedColumn): void;
   onSortedColumn?(sortedColumn: SortedColumn): void;
   getClassNameRow?(item: unknown): string;
+  notFoundMessage?: string;
   currentSortedColumn?: SortedColumn;
 }
 
