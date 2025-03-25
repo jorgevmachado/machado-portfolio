@@ -41,7 +41,10 @@ export class SupplierTypeService extends Service<SupplierType> {
       relations: ['suppliers'],
       withDeleted: true,
     });
-    if (result.suppliers.length) {
+
+    const suppliers = result?.suppliers?.filter((item) => !item.deleted_at);
+
+    if (suppliers.length) {
       throw this.error(
         new ConflictException(
           'You cannot delete the supplier type because it is already in use.',

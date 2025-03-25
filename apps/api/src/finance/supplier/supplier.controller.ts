@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Delete,
   Get,
   Param,
   Post,
@@ -48,7 +48,7 @@ export class SupplierController {
     return this.service.update(param, updateSupplierDto);
   }
 
-  @Put(':param')
+  @Delete(':param')
   remove(@Param('param') param: string) {
     return this.service.remove(param);
   }
