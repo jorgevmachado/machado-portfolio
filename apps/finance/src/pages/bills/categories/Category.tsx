@@ -1,7 +1,14 @@
 'use client';
+import React from 'react';
+import { nameValidator } from '@repo/services/validator/personal/personal';
+
 import { QueryParameters } from '@repo/business/shared/interface';
 import { Paginate } from '@repo/business/paginate';
 import BillCategory from '@repo/business/finance/bill-category';
+
+import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
+
+import Input from '@repo/ui/components/input/Input';
 
 import { billCategoryService } from '../../../shared';
 import { CRUDPage } from '../../../layout';
@@ -24,7 +31,7 @@ export default function BillCategoryPage() {
         {
           text: 'Created At',
           value: 'created_at',
-          type: 'date',
+          type: ETypeTableHeaderItem.DATE,
           sortable: true,
         },
       ]}
@@ -38,11 +45,15 @@ export default function BillCategoryPage() {
       deleteItem={(id) => billCategoryService.remove(id)}
       renderItemForm={({ item, handleChange }) => (
         <div>
-          <label>Name:</label>
-          <input
+          <Input
             type="text"
+            name="name"
+            label="Name"
             value={item.name || ''}
+            context="primary"
             onChange={(e) => handleChange('name', e.target.value)}
+            validate={(name) => nameValidator(name)}
+            placeholder="Enter a Bill Category"
           />
         </div>
       )}

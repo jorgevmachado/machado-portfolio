@@ -1,25 +1,26 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { nameValidator } from '@repo/services/validator/personal/personal';
 
 import { Paginate } from '@repo/business/paginate';
 import type { QueryParameters } from '@repo/business/shared/interface';
-
 import Supplier from '@repo/business/finance/supplier';
 import SupplierType from '@repo/business/finance/supplier-type';
 
-import { useRouter } from 'next/navigation';
-
 import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
+import Select from "@repo/ds/components/select/Select";
 
 import useAlert from '@repo/ui/hooks/alert/useAlert';
+
 import Input from '@repo/ui/components/input/Input';
 
 import { supplierService, supplierTypeService } from '../../shared';
 import { CRUDPage } from '../../layout';
 
 import './Supplier.scss';
+
 
 export default function SupplierPage() {
   const { addAlert } = useAlert();
@@ -108,27 +109,24 @@ export default function SupplierPage() {
             name="name"
             label="Name"
             value={item.name || ''}
-            onChange={(e) => handleChange('name', e.target.value)}
             context="primary"
+            onChange={(e) => handleChange('name', e.target.value)}
             validate={(name) => nameValidator(name)}
+            placeholder="Enter a supplier"
           />
           <div className="supplier__container">
-            <label>Type:</label>
-            <select
-              className="supplier__container--select"
-              value={item?.type?.name || ''}
-              onChange={(e) =>
-                handleChange('type', { ...item.type, name: e.target.value })
-              }
-            >
-              <option value="">Select a supplier type</option>
-              {Array.isArray(supplierTypes) &&
-                supplierTypes.map((type) => (
-                  <option key={type.id} value={type.name}>
-                    {type.name}
-                  </option>
-                ))}
-            </select>
+              <Select
+                  value={item?.type?.name ?? ''}
+                  label="Category"
+                  options={supplierTypes.map((item) => ({
+                      value: item.id,
+                      label: item.name,
+                  }))}
+                  onChange={(name) =>
+                      handleChange('type', { ...item.type, name: name as string })
+                  }
+                  placeholder="Choose a category"
+              />
           </div>
         </div>
       )}

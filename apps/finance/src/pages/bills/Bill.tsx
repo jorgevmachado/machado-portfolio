@@ -1,7 +1,21 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { yearValidator } from '@repo/services/validator/date/date';
+import { ValidatorMessage } from '@repo/services/validator/interface';
+
+import Bill from '@repo/business/finance/bill';
+import Bank from '@repo/business/finance/bank/bank';
+import BillCategory from '@repo/business/finance/bill-category';
+import { EBillType } from '@repo/business';
+
+import Spinner from '@repo/ds/elements/spinner/Spinner';
+import Select from '@repo/ds/components/select/Select';
+import Button from '@repo/ds/components/button/Button';
+
+import useAlert from '@repo/ui/hooks/alert/useAlert';
+import Input from '@repo/ui/components/input/Input';
 
 import {
   bankService,
@@ -9,22 +23,13 @@ import {
   billCategoryService,
   billService,
 } from '../../shared';
-import Bill from '@repo/business/finance/bill';
+
 import Tabs from '../../layout/components/Tabs';
 import { SubTab } from './components';
-import Bank from '@repo/business/finance/bank/bank';
-import BillCategory from '@repo/business/finance/bill-category';
-import useAlert from '@repo/ui/hooks/alert/useAlert';
-import Spinner from '@repo/ds/elements/spinner/Spinner';
+
 import { CRUDHeader, DependencyFallback } from '../../layout';
-import { useRouter } from 'next/navigation';
+
 import CRUDModal from '../../layout/components/CRUDModal';
-import Input from '@repo/ui/components/input/Input';
-import { EBillType } from '@repo/business';
-import Select from '../../layout/components/Select';
-import useUser from '@repo/ui/hooks/user/useUser';
-import Button from '@repo/ds/components/button/Button';
-import {ValidatorMessage} from "@repo/services/validator/interface";
 
 import './Bill.scss';
 
@@ -46,7 +51,7 @@ type BillFormErrors = {
   type?: ValidatorMessage;
   bank?: ValidatorMessage;
   category?: ValidatorMessage;
-}
+};
 
 export default function BillPage() {
   const { addAlert } = useAlert();
@@ -57,23 +62,25 @@ export default function BillPage() {
   const [categories, setCategories] = useState<Array<BillCategory>>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [hasAllDependencies, setHasAllDependencies] = useState<boolean>(false);
-  const [fields, setFields] = useState<BillParams>({ year: new Date().getFullYear()});
+  const [fields, setFields] = useState<BillParams>({
+    year: new Date().getFullYear(),
+  });
   const [errors, setErrors] = useState<Partial<BillFormErrors>>({
     year: {
       valid: true,
-      message: ''
+      message: '',
     },
     type: {
       valid: true,
-      message: 'Please select a type.'
+      message: 'Please select a type.',
     },
     bank: {
       valid: true,
-      message: 'Please select a bank.'
+      message: 'Please select a bank.',
     },
     category: {
       valid: true,
-      message: 'Please select a category.'
+      message: 'Please select a category.',
     },
   });
 
@@ -169,12 +176,12 @@ export default function BillPage() {
       default:
         return value;
     }
-  }
+  };
 
   const handleChange = (key: keyof BillParams, value: string): void => {
     const valueTreated = treatValue(key, value);
     setFields((prev) => ({ ...prev, [key]: valueTreated }));
-  }
+  };
 
   const validateFields = (): boolean => {
     const validationErrors: Partial<BillFormErrors> = {};
@@ -183,32 +190,34 @@ export default function BillPage() {
 
     validationErrors.type = {
       valid: Boolean(fields.type),
-      message: errors.type?.message ?? ''
+      message: errors.type?.message ?? '',
     };
 
     validationErrors.bank = {
       valid: Boolean(fields.bank),
-      message: errors.bank?.message ?? ''
+      message: errors.bank?.message ?? '',
     };
-
-
 
     validationErrors.category = {
       valid: Boolean(fields.category),
-      message: errors.category?.message ?? ''
+      message: errors.category?.message ?? '',
     };
 
     // TODO MUST BE REMOVED BEFORE COMMIT
     console.log('# => validationErrors => ', validationErrors);
 
-
     setErrors(validationErrors);
-    return validationErrors.year?.valid && validationErrors.bank?.valid && validationErrors.type?.valid && validationErrors.category?.valid;
+    return (
+      validationErrors.year?.valid &&
+      validationErrors.bank?.valid &&
+      validationErrors.type?.valid &&
+      validationErrors.category?.valid
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(!validateFields()) {
+    if (!validateFields()) {
       return;
     }
 
@@ -216,7 +225,7 @@ export default function BillPage() {
       await saveItem(fields);
       addAlert({
         type: 'success',
-        message: 'Bill saved successfully!'
+        message: 'Bill saved successfully!',
       });
       setIsModalVisible(false);
       await fetchBills();
@@ -236,7 +245,7 @@ export default function BillPage() {
       bank: item.bank?.id ?? '',
       type: item.type as EBillType,
       category: item.category?.id ?? '',
-    }
+    };
     item.id
       ? await billService.update(item.id, itemToSave)
       : await billService.create(itemToSave);
@@ -251,8 +260,6 @@ export default function BillPage() {
   useEffect(() => {
     setHasAllDependencies(banks.length > 0 && categories.length > 0);
   }, [banks, categories]);
-
-
 
   return loading ? (
     <Spinner context="neutral" />
@@ -293,8 +300,8 @@ export default function BillPage() {
                 name="year"
                 label="Year"
                 value={
-                    fields?.year?.toString() ??
-                    new Date().getFullYear().toString()
+                  fields?.year?.toString() ??
+                  new Date().getFullYear().toString()
                 }
                 context="primary"
                 onChange={(e) => handleChange('year', e.target.value)}

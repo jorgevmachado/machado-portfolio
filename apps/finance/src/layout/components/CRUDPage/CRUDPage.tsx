@@ -170,7 +170,7 @@ export default function CRUDPage<T extends { id: string }>({
           {isModalVisible && (
             <CRUDModal
               title={
-                editingItem ? `Edit ${resourceName}` : `Create ${resourceName}`
+                editingItem?.id ? `Edit ${resourceName}` : `Create ${resourceName}`
               }
               actions={{
                 error: { onClick: () => setIsModalVisible(false) },
