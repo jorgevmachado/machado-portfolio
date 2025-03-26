@@ -23,9 +23,9 @@ const ListCard: React.FC<ListCardProps> = ({ list }) => {
         <div key={item.title} className="list-card__accordion">
           <Text tag="h1">{item.title}</Text>
           {item.list.map((bill) => (
-            <Accordion key={bill.id} title={bill.name}>
+            <Accordion key={bill.id} title={bill.name} childrenTitle>
               <Expenses
-                expenses={bill.expenses}
+                bill={bill}
                 allCalculated={billBusiness.calculateAllBill(bill)}
               />
             </Accordion>

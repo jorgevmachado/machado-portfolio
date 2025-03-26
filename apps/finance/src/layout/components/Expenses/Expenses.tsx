@@ -5,15 +5,22 @@ import { truncateString } from '@repo/services/string/string';
 
 import Bill from '@repo/business/finance/bill';
 import Expense from '@repo/business/finance/expense/expense';
+import Supplier from '@repo/business/finance/supplier/supplier';
 
-import Text from '@repo/ds/elements/text/Text';
-import Table from '@repo/ds/components/table/Table';
 import type { TColors } from '@repo/ds/utils/colors/interface';
 import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
+import Text from '@repo/ds/elements/text/Text';
+import Table from '@repo/ds/components/table/Table';
 
-import { expenseBusiness } from '../../../shared';
+import Button from '@repo/ds/components/button/Button';
+import Spinner from '@repo/ds/elements/spinner/Spinner';
+
+import { expenseBusiness, supplierService } from '../../../shared';
 
 import './Expenses.scss';
+
+import CRUDModal from '../CRUDModal';
+import Form from './Form';
 
 type AllCalculatedExpenses = {
   total: number;
@@ -23,14 +30,17 @@ type AllCalculatedExpenses = {
 };
 
 type ExpensesProps = {
-  expenses: Array<Expense> | Bill['expenses'];
+  bill: Bill;
   allCalculated?: AllCalculatedExpenses;
 };
 
-const Expenses: React.FC<ExpensesProps> = ({ expenses, allCalculated }) => {
+const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [suppliers, setSuppliers] = useState<Array<Supplier>>([]);
   const [calculatedExpenses, setCalculatedExpenses] = useState<Array<Expense>>(
     [],
   );
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [allCalculatedExpenses, setAllCalculatedExpenses] =
     useState<AllCalculatedExpenses>({
       total: 0,
@@ -61,10 +71,28 @@ const Expenses: React.FC<ExpensesProps> = ({ expenses, allCalculated }) => {
     );
   };
 
+  const fetchSuppliers = async () => {
+    setLoading(true);
+    if (suppliers.length === 0) {
+      supplierService
+        .getAll({})
+        .then((response) => {
+          setSuppliers(response as Array<Supplier>);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
+
   useEffect(() => {
-    const calculatedExpenses = calculateExpenses(expenses);
+    const calculatedExpenses = calculateExpenses(bill.expenses);
     setCalculatedExpenses(calculatedExpenses || []);
-  }, [expenses]);
+    fetchSuppliers();
+  }, [bill.expenses]);
 
   useEffect(() => {
     if (allCalculated) {
@@ -118,10 +146,29 @@ const Expenses: React.FC<ExpensesProps> = ({ expenses, allCalculated }) => {
             {currencyFormatter(allCalculatedExpenses.totalPending)}
           </Text>
         </div>
+        <div className="expenses__summary-item">
+          <Button onClick={() => setIsModalVisible(true)} context="success">
+            Add Expense
+          </Button>
+        </div>
       </div>
       <div className="expenses__table">
         <Table headers={generateHeaders()} items={calculatedExpenses} />
       </div>
+      {isModalVisible && (
+        <CRUDModal title="Edit Expense">
+          {loading ? (
+            <Spinner context="neutral" />
+          ) : (
+            <Form
+              billId={bill.id}
+              suppliers={suppliers}
+              setLoading={setLoading}
+              setIsModalVisible={setIsModalVisible}
+            />
+          )}
+        </CRUDModal>
+      )}
     </div>
   );
 };
