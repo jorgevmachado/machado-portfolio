@@ -6,6 +6,6 @@ export interface ValidatorMessage {
 export interface ValidatorParams {
   min?: number;
   max?: number;
-  value?: string | Date | number;
+  value?: string | Date | number | boolean;
   optionalValue?: string | Date;
 }

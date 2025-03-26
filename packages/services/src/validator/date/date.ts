@@ -25,7 +25,7 @@ export function dateOfBirthValidator({ value }: ValidatorParams): ValidatorMessa
     return REQUIRED_FIELD;
   }
 
-  if (typeof value === 'number') {
+  if (typeof value === 'number' || typeof value === 'boolean') {
     return INVALID_TYPE;
   }
 

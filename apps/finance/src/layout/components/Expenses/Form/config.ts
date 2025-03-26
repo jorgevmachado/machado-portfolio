@@ -9,7 +9,7 @@ import { MONTH_KEYS } from '@repo/business/finance/expense/config';
 import type {
   ExpenseFormInputType,
   ExpenseFormType,
-  TExpenseInputForm,
+  TExpenseInputExpenseForm,
 } from './inteface';
 
 const moneyValidator = ({ value }: ValidatorParams) => {
@@ -50,7 +50,7 @@ const selectValidator = ({ value }: ValidatorParams) => {
 
 const inputFactories = {
     month: (month: string): ExpenseFormInputType => ({
-        id: month as TExpenseInputForm,
+        id: month as TExpenseInputExpenseForm,
         type: 'number',
         name: month,
         label: capitalize(month),
@@ -58,7 +58,7 @@ const inputFactories = {
         placeholder: `Enter a ${capitalize(month)} Value`,
     }),
     monthPaid: (month: string): ExpenseFormInputType => ({
-        id: `${month}_paid` as TExpenseInputForm,
+        id: `${month}_paid` as TExpenseInputExpenseForm,
         type: 'switch',
         name: `${month}_paid`,
         label: 'Paid',
@@ -66,7 +66,7 @@ const inputFactories = {
     })
 }
 
-export const FORM_TYPE: Array<ExpenseFormType> = [
+export const EXPENSE_FORM_TYPE: Array<ExpenseFormType> = [
   {
     type: 'create',
     inputs: [
@@ -87,8 +87,8 @@ export const FORM_TYPE: Array<ExpenseFormType> = [
       'supplier',
       'instalment_number',
       'description',
-      ...MONTH_KEYS.map((month) => month as TExpenseInputForm),
-      ...MONTH_KEYS.map((month) => `${month}_paid` as TExpenseInputForm),
+      ...MONTH_KEYS.map((month) => month as TExpenseInputExpenseForm),
+      ...MONTH_KEYS.map((month) => `${month}_paid` as TExpenseInputExpenseForm),
     ],
   },
 ];
@@ -98,7 +98,7 @@ const INPUT_TYPE_MONTHS: Array<ExpenseFormInputType> = MONTH_KEYS.map(inputFacto
 const INPUT_TYPE_MONTHS_WITH_PAID: Array<ExpenseFormInputType> = MONTH_KEYS.map(inputFactories.monthPaid);
 
 
-export const INPUT_TYPE: Array<ExpenseFormInputType> = [
+export const EXPENSE_FORM_INPUT_TYPE: Array<ExpenseFormInputType> = [
   {
     id: 'type',
     type: 'select',

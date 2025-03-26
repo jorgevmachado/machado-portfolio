@@ -7,13 +7,18 @@ import type {
 
 import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 import Supplier from '@repo/business/finance/supplier/supplier';
+import Expense from '@repo/business/finance/expense/expense';
 
-export type TForm = 'create' | 'edit';
+export type TExpenseForm = 'create' | 'edit';
 
 export interface FormProps
   extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
-  type: TForm;
+  billId: string;
+  expense?: Expense;
   loading?: boolean;
+  suppliers: Array<Supplier>;
+  setLoading: (value: boolean) => void;
+  handleCloseModal: () => void;
 }
 
 export type ExpenseForm = {
@@ -25,7 +30,6 @@ export type ExpenseForm = {
 };
 
 export type ExpenseFormFields = {
-  bill: string;
   paid?: boolean;
   type?: EExpenseType;
   value?: number;
@@ -60,40 +64,40 @@ export type ExpenseFormFields = {
 };
 
 export type ExpenseFormErrors = {
-  paid?: ValidatorMessage;
-  type?: ValidatorMessage;
-  value?: ValidatorMessage;
-  month?: ValidatorMessage;
-  january?: ValidatorMessage;
-  january_paid?: ValidatorMessage;
-  february?: ValidatorMessage;
-  february_paid?: ValidatorMessage;
-  march?: ValidatorMessage;
-  march_paid?: ValidatorMessage;
-  april?: ValidatorMessage;
-  april_paid?: ValidatorMessage;
-  may?: ValidatorMessage;
-  may_paid?: ValidatorMessage;
-  june?: ValidatorMessage;
-  june_paid?: ValidatorMessage;
-  july?: ValidatorMessage;
-  july_paid?: ValidatorMessage;
-  august?: ValidatorMessage;
-  august_paid?: ValidatorMessage;
-  september?: ValidatorMessage;
-  september_paid?: ValidatorMessage;
-  october?: ValidatorMessage;
-  october_paid?: ValidatorMessage;
-  november?: ValidatorMessage;
-  november_paid?: ValidatorMessage;
-  december?: ValidatorMessage;
-  december_paid?: ValidatorMessage;
-  supplier?: ValidatorMessage;
-  description?: ValidatorMessage;
-  instalment_number?: ValidatorMessage;
+  paid: ValidatorMessage;
+  type: ValidatorMessage;
+  value: ValidatorMessage;
+  month: ValidatorMessage;
+  january: ValidatorMessage;
+  january_paid: ValidatorMessage;
+  february: ValidatorMessage;
+  february_paid: ValidatorMessage;
+  march: ValidatorMessage;
+  march_paid: ValidatorMessage;
+  april: ValidatorMessage;
+  april_paid: ValidatorMessage;
+  may: ValidatorMessage;
+  may_paid: ValidatorMessage;
+  june: ValidatorMessage;
+  june_paid: ValidatorMessage;
+  july: ValidatorMessage;
+  july_paid: ValidatorMessage;
+  august: ValidatorMessage;
+  august_paid: ValidatorMessage;
+  september: ValidatorMessage;
+  september_paid: ValidatorMessage;
+  october: ValidatorMessage;
+  october_paid: ValidatorMessage;
+  november: ValidatorMessage;
+  november_paid: ValidatorMessage;
+  december: ValidatorMessage;
+  december_paid: ValidatorMessage;
+  supplier: ValidatorMessage;
+  description: ValidatorMessage;
+  instalment_number: ValidatorMessage;
 };
 
-export type TExpenseInputForm =
+export type TExpenseInputExpenseForm =
   | 'paid'
   | 'type'
   | 'value'
@@ -129,12 +133,12 @@ export type TExpenseInputForm =
 export type TExpenseInput = 'text' | 'number' | 'select' | 'switch';
 
 export type ExpenseFormType = {
-  type: FormProps['type'];
-  inputs: Array<TExpenseInputForm>;
+  type: TExpenseForm;
+  inputs: Array<TExpenseInputExpenseForm>;
 };
 
 export type ExpenseFormInputType = {
-  id: TExpenseInputForm;
+  id: TExpenseInputExpenseForm;
   min?: number;
   max?: number;
   name: string;
