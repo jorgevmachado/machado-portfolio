@@ -6,7 +6,8 @@ import Text from '@repo/ds/elements/text/Text';
 import Accordion from '@repo/ds/components/accordion/Accordion';
 
 import { billBusiness } from '../../../../shared';
-import { Expenses } from '../../../../layout';
+
+import Expenses from '../Expenses';
 
 import './ListCard.scss';
 
@@ -23,7 +24,7 @@ const ListCard: React.FC<ListCardProps> = ({ list }) => {
         <div key={item.title} className="list-card__accordion">
           <Text tag="h1">{item.title}</Text>
           {item.list.map((bill) => (
-            <Accordion key={bill.id} title={bill.name} childrenTitle>
+            <Accordion key={bill.id} title={bill.name}>
               <Expenses
                 bill={bill}
                 allCalculated={billBusiness.calculateAllBill(bill)}

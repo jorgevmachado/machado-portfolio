@@ -23,7 +23,7 @@ const SubTab: React.FC<SubTabProps> = ({ list }) => {
       tabItems={currentList.map((item) => ({
         title: snakeCaseToNormal(item.title),
         children: (
-          <ListCard key={item.title} list={item.list} type={item.title} />
+          <ListCard key={item.title} list={item.list} type={item.title}/>
         ),
       }))}
     />

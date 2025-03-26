@@ -15,12 +15,15 @@ import Table from '@repo/ds/components/table/Table';
 import Button from '@repo/ds/components/button/Button';
 import Spinner from '@repo/ds/elements/spinner/Spinner';
 
-import { expenseBusiness, supplierService } from '../../../shared';
+import {expenseBusiness, expenseService, supplierService} from '../../../../shared';
 
 import './Expenses.scss';
 
-import CRUDModal from '../CRUDModal';
+import CRUDModal from '../../../../layout/components/CRUDModal';
 import Form from './Form';
+import {ExpenseFormFields} from "./Form/inteface";
+import {EExpenseType} from "@repo/business/finance/enum";
+import useBill from "../../useBill";
 
 type AllCalculatedExpenses = {
   total: number;
@@ -35,6 +38,7 @@ type ExpensesProps = {
 };
 
 const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
+  const { handleReload } = useBill()
   const [loading, setLoading] = useState<boolean>(false);
   const [suppliers, setSuppliers] = useState<Array<Supplier>>([]);
   const [calculatedExpenses, setCalculatedExpenses] = useState<Array<Expense>>(
@@ -128,6 +132,34 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
       expenseBusiness.calculateAllExpenses(calculatedExpenses);
     setAllCalculatedExpenses(calculatedAllExpenses);
   }, [allCalculated, calculatedExpenses]);
+  
+  const handleSaveItem = async (fields: ExpenseFormFields, expense?: Expense) => {
+    setLoading(true);
+    if(!expense) {
+      return await expenseService.create({
+        type: fields.type ?? EExpenseType.VARIABLE,
+        bill: bill.id,
+        paid: fields.paid,
+        value: fields.value,
+        month: fields.month,
+        supplier: fields.supplier?.id || '',
+        description: fields.description,
+        instalment_number: fields.instalment_number,
+      }).finally(() => {
+        setLoading(false)
+        handleReload(true);
+      });
+    }
+    return await expenseService.update(expense.id, {
+      ...expense,
+      ...fields,
+      type: fields.type ?? EExpenseType.VARIABLE,
+      supplier: fields.supplier || '',
+    }).finally(() => {
+      setLoading(false);
+      handleReload(true);
+    });
+  }
 
 
   return (
@@ -176,10 +208,9 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
             <Spinner context="neutral" />
           ) : (
             <Form
-              billId={bill.id}
               expense={selectedExpense}
               suppliers={suppliers}
-              setLoading={setLoading}
+              handleSaveItem={handleSaveItem}
               handleCloseModal={handleCloseModal}
             />
           )}

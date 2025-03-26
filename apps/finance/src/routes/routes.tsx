@@ -57,13 +57,6 @@ export const privateRoutes: Array<Route> = [
     title: 'Bank',
   },
   {
-    key: 'expense',
-    icon: 'expense',
-    path: '/expenses',
-    type: 'private',
-    title: 'Expense',
-  },
-  {
     key: 'supplier-parent',
     icon: 'user-tie',
     path: '/suppliers',
