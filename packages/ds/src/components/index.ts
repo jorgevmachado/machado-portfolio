@@ -19,3 +19,4 @@ export { default as Switch } from './switch';
 export { default as Table, type TableProps } from './table';
 export { default as Pagination } from './pagination';
 export { default as Select } from './select'
+export { default as Tabs } from './tabs'

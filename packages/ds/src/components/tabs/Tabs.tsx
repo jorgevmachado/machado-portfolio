@@ -25,17 +25,20 @@ const Tabs: React.FC<TabsProps> = ({ tabItems, fluid = false }) => {
         {tabItems.map((item, index) => (
           <li
             key={`tab-${index}`}
-            className={`tabs__menu--item ${
-              activeIndex === index ? 'active' : ''
-            }`}
+            role="tab"
             onClick={() => handleTabClick(index)}
+            tabIndex={activeIndex === index ? 0 : -1}
+            className={`tabs__menu--item ${
+                activeIndex === index ? 'active' : ''
+            }`}
+            aria-selected={activeIndex === index}
           >
             {item.title}
           </li>
         ))}
       </ul>
 
-      <div className="tabs__content">{tabItems[activeIndex]?.children}</div>
+      <div className="tabs__content" role="tabpanel">{tabItems[activeIndex]?.children}</div>
     </div>
   );
 };

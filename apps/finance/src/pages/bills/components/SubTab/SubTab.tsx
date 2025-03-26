@@ -4,9 +4,9 @@ import { snakeCaseToNormal } from '@repo/services/string/string';
 
 import Bill from '@repo/business/finance/bill';
 
-import { billBusiness } from '../../../../shared';
+import Tabs from '@repo/ds/components/tabs/Tabs';
 
-import Tabs from '../../../../layout/components/Tabs';
+import { billBusiness } from '../../../../shared';
 
 import ListCard from '../ListCard';
 

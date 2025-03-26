@@ -10,6 +10,7 @@ import Bank from '@repo/business/finance/bank/bank';
 import BillCategory from '@repo/business/finance/bill-category';
 import { EBillType } from '@repo/business';
 
+import Tabs from '@repo/ds/components/tabs/Tabs';
 import Spinner from '@repo/ds/elements/spinner/Spinner';
 import Select from '@repo/ds/components/select/Select';
 import Button from '@repo/ds/components/button/Button';
@@ -24,7 +25,7 @@ import {
   billService,
 } from '../../shared';
 
-import Tabs from '../../layout/components/Tabs';
+
 import { SubTab } from './components';
 
 import { CRUDHeader, DependencyFallback } from '../../layout';
