@@ -51,6 +51,7 @@ $colors: (
         "whatsapp-80": var(--color-social-whatsapp-80),
         "whatsapp-90": var(--color-social-whatsapp-90),
         "whatsapp-100": var(--color-social-whatsapp-100),
+        "navbar-background": var(--color-navbar-background),
 );
 
 @each $name, $value in $colors {

@@ -1,5 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+
+import { yearValidator } from '@repo/services/validator/date/date';
+
 import {
   bankService,
   billBusiness,
@@ -17,16 +20,33 @@ import { CRUDHeader, DependencyFallback } from '../../layout';
 import { useRouter } from 'next/navigation';
 import CRUDModal from '../../layout/components/CRUDModal';
 import Input from '@repo/ui/components/input/Input';
-import {
-  ValidatorMessage,
-  ValidatorParams,
-} from '@repo/services/validator/interface';
 import { EBillType } from '@repo/business';
+import Select from '../../layout/components/Select';
+import useUser from '@repo/ui/hooks/user/useUser';
+import Button from '@repo/ds/components/button/Button';
+import {ValidatorMessage} from "@repo/services/validator/interface";
+
+import './Bill.scss';
 
 type BillList = {
   list: Array<Bill>;
   title: string;
 };
+
+type BillParams = {
+  id?: string;
+  year?: number;
+  type?: EBillType;
+  bank?: Bank;
+  category?: BillCategory;
+};
+
+type BillFormErrors = {
+  year?: ValidatorMessage;
+  type?: ValidatorMessage;
+  bank?: ValidatorMessage;
+  category?: ValidatorMessage;
+}
 
 export default function BillPage() {
   const { addAlert } = useAlert();
@@ -37,7 +57,25 @@ export default function BillPage() {
   const [categories, setCategories] = useState<Array<BillCategory>>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [hasAllDependencies, setHasAllDependencies] = useState<boolean>(false);
-  const [editingItem, setEditingItem] = useState<Bill | null>(null);
+  const [fields, setFields] = useState<BillParams>({ year: new Date().getFullYear()});
+  const [errors, setErrors] = useState<Partial<BillFormErrors>>({
+    year: {
+      valid: true,
+      message: ''
+    },
+    type: {
+      valid: true,
+      message: 'Please select a type.'
+    },
+    bank: {
+      valid: true,
+      message: 'Please select a bank.'
+    },
+    category: {
+      valid: true,
+      message: 'Please select a category.'
+    },
+  });
 
   const fetchBanks = async () => {
     if (banks.length === 0) {
@@ -109,11 +147,100 @@ export default function BillPage() {
   };
 
   const openModal = (item?: Bill) => {
-    setEditingItem(item ?? null);
+    setFields({
+      year: item?.year ?? new Date().getFullYear(),
+      type: item?.type,
+      bank: item?.bank,
+      category: item?.category,
+    });
     setIsModalVisible(true);
   };
 
-  const handleSave = async () => {};
+  const treatValue = (key: keyof BillParams, value: string) => {
+    switch (key) {
+      case 'year':
+        return parseInt(value);
+      case 'type':
+        return value as EBillType;
+      case 'bank':
+        return banks.find((item) => item.id === value) ?? '';
+      case 'category':
+        return categories.find((item) => item.id === value);
+      default:
+        return value;
+    }
+  }
+
+  const handleChange = (key: keyof BillParams, value: string): void => {
+    const valueTreated = treatValue(key, value);
+    setFields((prev) => ({ ...prev, [key]: valueTreated }));
+  }
+
+  const validateFields = (): boolean => {
+    const validationErrors: Partial<BillFormErrors> = {};
+
+    validationErrors.year = yearValidator({ value: fields.year });
+
+    validationErrors.type = {
+      valid: Boolean(fields.type),
+      message: errors.type?.message ?? ''
+    };
+
+    validationErrors.bank = {
+      valid: Boolean(fields.bank),
+      message: errors.bank?.message ?? ''
+    };
+
+
+
+    validationErrors.category = {
+      valid: Boolean(fields.category),
+      message: errors.category?.message ?? ''
+    };
+
+    // TODO MUST BE REMOVED BEFORE COMMIT
+    console.log('# => validationErrors => ', validationErrors);
+
+
+    setErrors(validationErrors);
+    return validationErrors.year?.valid && validationErrors.bank?.valid && validationErrors.type?.valid && validationErrors.category?.valid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if(!validateFields()) {
+      return;
+    }
+
+    try {
+      await saveItem(fields);
+      addAlert({
+        type: 'success',
+        message: 'Bill saved successfully!'
+      });
+      setIsModalVisible(false);
+      await fetchBills();
+    } catch (error) {
+      addAlert({
+        type: 'error',
+        message: (error as Error)?.message ?? `Error saving Bill.`,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveItem = async (item: BillParams) => {
+    const itemToSave = {
+      year: item.year,
+      bank: item.bank?.id ?? '',
+      type: item.type as EBillType,
+      category: item.category?.id ?? '',
+    }
+    item.id
+      ? await billService.update(item.id, itemToSave)
+      : await billService.create(itemToSave);
+  };
 
   useEffect(() => {
     fetchBanks();
@@ -125,13 +252,7 @@ export default function BillPage() {
     setHasAllDependencies(banks.length > 0 && categories.length > 0);
   }, [banks, categories]);
 
-  function handleChange(key: string, value: string): void {
-    setEditingItem((prev) => {
-      return prev
-        ? { ...prev, [key]: value }
-        : ({ [key]: value } as unknown as Bill);
-    });
-  }
+
 
   return loading ? (
     <Spinner context="neutral" />
@@ -162,87 +283,79 @@ export default function BillPage() {
         />
       )}
       {isModalVisible && (
-        <CRUDModal
-          title={editingItem ? `Edit Bill` : `Create Bill`}
-          actions={{
-            error: { onClick: () => setIsModalVisible(false) },
-            success: { onClick: () => handleSave() },
-          }}
-        >
-          <form>
-            <div className="styled-form__group">
+        <CRUDModal title={fields?.id ? `Edit Bill` : `Create Bill`}>
+          <form onSubmit={handleSubmit}>
+            <div className="bill__form--group">
               <Input
-                type="text"
+                min="1"
+                max="9999"
+                type="number"
                 name="year"
                 label="Year"
-                context="primary"
                 value={
-                  editingItem?.year?.toString() ??
-                  new Date().getFullYear().toString()
+                    fields?.year?.toString() ??
+                    new Date().getFullYear().toString()
                 }
+                context="primary"
                 onChange={(e) => handleChange('year', e.target.value)}
-                validate={function (
-                  validatorParams: ValidatorParams,
-                ): ValidatorMessage {
-                  // TODO MUST BE REMOVED BEFORE COMMIT
-                  console.log('# => validatorParams => ', validatorParams);
-                  return {
-                    valid: true,
-                    message: 'OK',
-                  };
-                }}
+                validate={(year) => yearValidator(year)}
+                placeholder="Enter a year"
+                reloadValidate={errors.year}
               />
             </div>
-            <div className="styled-form__group">
-              <label htmlFor="type">Type</label>
-              <select
-                id="type"
-                value={editingItem?.type ?? ''}
-                onChange={(e) => handleChange('type', e.target.value)}
-              >
-                <option value={editingItem?.type ?? ''} disabled>
-                  Select a type
-                </option>
-                {Object.values(EBillType).map((typeOption) => (
-                  <option key={typeOption} value={typeOption}>
-                    {typeOption}
-                  </option>
-                ))}
-              </select>
+            <div className="bill__form--group">
+              <Select
+                value={fields?.type ?? ''}
+                label="Type"
+                options={Object.values(EBillType).map((item) => ({
+                  value: item,
+                  label: item,
+                }))}
+                onChange={(value) => handleChange('type', value as string)}
+                isInvalid={!errors.type?.valid}
+                placeholder="Choose a type"
+                invalidMessage={errors.type?.message}
+              />
             </div>
-            <div className="styled-form__group">
-              <label htmlFor="banks">Bank</label>
-              <select
-                id="banks"
-                value={editingItem?.bank?.name ?? ''}
-                onChange={(e) => handleChange('bank', e.target.value)}
-              >
-                <option value="" disabled>
-                  Select a bank
-                </option>
-                {banks.map((bank) => (
-                  <option key={bank.id} value={bank.id}>
-                    {bank.name}
-                  </option>
-                ))}
-              </select>
+            <div className="bill__form--group">
+              <Select
+                value={fields?.bank?.id ?? ''}
+                label="Bank"
+                options={banks.map((item) => ({
+                  value: item.id,
+                  label: item.name,
+                }))}
+                onChange={(value) => handleChange('bank', value as string)}
+                isInvalid={!errors.bank?.valid}
+                placeholder="Choose a bank"
+                invalidMessage={errors.bank?.message}
+              />
             </div>
-            <div className="styled-form__group">
-              <label htmlFor="categories">Category</label>
-              <select
-                id="categories"
-                value={editingItem?.category?.name ?? ''}
-                onChange={(e) => handleChange('category', e.target.value)}
+            <div className="bill__form--group">
+              <Select
+                value={fields?.category?.id ?? ''}
+                label="Category"
+                options={categories.map((item) => ({
+                  value: item.id,
+                  label: item.name,
+                }))}
+                onChange={(value) => handleChange('category', value as string)}
+                isInvalid={!errors.category?.valid}
+                placeholder="Choose a category"
+                invalidMessage={errors.category?.message}
+              />
+            </div>
+            <div className="bill__form--actions">
+              <Button type="submit" context="success">
+                Save
+              </Button>
+              <Button
+                context="error"
+                appearance="outline"
+                onClick={() => setIsModalVisible(false)}
               >
-                <option value="" disabled>
-                  Select a category
-                </option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
+                Cancel
+              </Button>
             </div>
           </form>
         </CRUDModal>

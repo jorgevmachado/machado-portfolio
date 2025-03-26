@@ -1,4 +1,4 @@
-import {BillConstructorParams, BillList, TList} from './interface';
+import type { BillConstructorParams, BillList, TList } from './interface';
 import Bill from './bill';
 import ExpenseBusiness from '../expense/expenseBusiness';
 
@@ -8,10 +8,7 @@ export default class BillBusiness {
     return this.processBillValues(builtBill);
   }
 
-  mapBillListByItem(
-    bills: Array<Bill>,
-    listType: TList,
-  ): Array<BillList> {
+  mapBillListByItem(bills: Array<Bill>, listType: TList): Array<BillList> {
     return bills.reduce<Array<BillList>>((result, bill) => {
       const listTitle = this.listTitle(bill, listType);
 
@@ -38,14 +35,11 @@ export default class BillBusiness {
       total,
       allPaid,
       totalPaid,
-      totalPending
-    }
+      totalPending,
+    };
   }
 
-  private listTitle(
-    bill: Bill,
-    listType: TList,
-  ): string {
+  private listTitle(bill: Bill, listType: TList): string {
     if (listType === 'bank') {
       return bill.bank.name;
     }

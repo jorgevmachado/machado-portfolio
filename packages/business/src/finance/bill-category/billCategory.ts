@@ -13,7 +13,7 @@ export default class BillCategory implements BillCategoryEntity {
   name!: BillCategoryEntity['name'];
   created_at: BillCategoryEntity['created_at'];
   updated_at: BillCategoryEntity['updated_at'];
-  deleted_at: BillCategoryEntity['deleted_at'];
+  deleted_at?: BillCategoryEntity['deleted_at'];
 
   constructor(params?: BillCategoryConstructorParams) {
     if (params) {

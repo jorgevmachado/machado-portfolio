@@ -12,7 +12,7 @@ export default class Bank implements BankEntity {
   name!: BankEntity['name'];
   created_at: BankEntity['created_at'];
   updated_at: BankEntity['updated_at'];
-  deleted_at: BankEntity['deleted_at'];
+  deleted_at?: BankEntity['deleted_at'];
 
   constructor(params?: BankConstructorParams) {
     if (params) {

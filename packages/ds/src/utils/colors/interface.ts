@@ -50,7 +50,8 @@ export type TColors =
   | 'attention-70'
   | 'attention-80'
   | 'attention-90'
-  | 'attention-100';
+  | 'attention-100'
+  | 'navbar-background';
 
 export type TContext =
   | 'info'

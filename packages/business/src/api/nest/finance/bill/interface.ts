@@ -21,6 +21,7 @@ export interface ICreateBillParams
   extends Omit<
     IBill,
     | 'id'
+    | 'name'
     | 'bank'
     | 'finance'
     | 'category'
@@ -30,7 +31,6 @@ export interface ICreateBillParams
     | 'deleted_at'
   > {
   bank: string | IBank;
-  finance: string | IFinance;
   category: string | IBillCategory;
   expenses?: Array<string | IExpense>;
 }

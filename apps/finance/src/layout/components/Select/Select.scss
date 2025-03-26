@@ -1,0 +1,85 @@
+/* Container Principal */
+.select-container {
+  margin: 10px 0;
+  display: flex;
+  font-family: Arial, sans-serif;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Layout inline (label ao lado do select) */
+.select-container.select-inline {
+  align-items: center;
+  flex-direction: row;
+}
+
+/* Espaçamento entre a label e o select no layout inline */
+.select-container.select-inline .select-label {
+  margin-right: 10px;
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+/* Label */
+.select-label {
+  color: var(--color-neutral-90);
+  font-size: var(--size-regular);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--size-regular);
+  margin-bottom: 5px;
+}
+
+/* Dropdown Select */
+.select-dropdown {
+  color: var(--color-neutral-100);
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid var(--color-neutral-60);
+  padding: var(--size-x-small) 1rem;
+  font-size: var(--size-regular);
+  appearance: none; /* Remove o estilo padrão */
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out, outline 0.2s ease-in-out;
+  border-radius: var(--border-radius-large);
+  outline-color: transparent;
+  outline-style: solid;
+  background-color: transparent;
+  --outline-color: #70a5ff;
+}
+
+/* Estilo ao passar o mouse */
+.select-dropdown:hover {
+  background: #f9f9f9;
+  border-color: #007bff;
+}
+
+/* Estilo ao estar ativo ou em foco */
+.select-dropdown:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #0056b3;
+}
+
+/* Estilo para inputs inválidos */
+.select-dropdown--invalid {
+  border-color: var(--color-error-80, #dc3545); /* Vermelho para erro */
+  background: #fff5f5; /* Fundo levemente rosado */
+}
+
+/* Mensagens de erro */
+.select-error-message {
+  color: var(--color-error-80, #dc3545);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Se desabilitado */
+.select-dropdown:disabled {
+  cursor: not-allowed;
+  background: #eee;
+  border-color: #ddd;
+}
+
+/* Estilo adicional para estado desabilitado */
+.select-disabled .select-label,
+.select-disabled .select-dropdown {
+  color: #aaa;
+}

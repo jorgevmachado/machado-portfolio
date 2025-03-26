@@ -129,6 +129,7 @@ npm run lint
     npm run test -- --findRelatedTests src/validator/document/document.spec.ts
     npm run test -- --findRelatedTests src/validator/password/password.spec.ts            
     npm run test -- --findRelatedTests src/validator/personal/personal.spec.ts            
+    npm run test -- --findRelatedTests src/validator/date/date.spec.ts            
 ```
 
 ### window:

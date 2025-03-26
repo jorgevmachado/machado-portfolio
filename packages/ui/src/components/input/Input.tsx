@@ -15,6 +15,7 @@ import './Input.scss';
 
 export type TInput =
   | 'text'
+  | 'number'
   | 'password'
   | 'email'
   | 'phone'

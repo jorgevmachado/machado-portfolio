@@ -44,30 +44,3 @@ export function genderValidator({ value }: ValidatorParams): ValidatorMessage {
     message: valid ? 'Valid gender.' : 'Invalid Gender.',
   };
 }
-
-export function dateOfBirthValidator({
-  value,
-}: ValidatorParams): ValidatorMessage {
-  if (!value) {
-    return REQUIRED_FIELD;
-  }
-
-  const date = typeof value !== 'string' ? value : new Date(value);
-
-  if (date.toString() === 'Invalid Date') {
-    return {
-      valid: false,
-      message: 'Invalid date.',
-    };
-  }
-
-  return isUnderMinimumAge(date)
-    ? {
-        valid: false,
-        message: 'You must be over 18 years old.',
-      }
-    : {
-        valid: true,
-        message: 'valid date.',
-      };
-}

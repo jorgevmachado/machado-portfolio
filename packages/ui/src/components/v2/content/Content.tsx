@@ -20,7 +20,7 @@ export default function Content({
   return (
       <Wrapper {...(withAnimation && { enter: true })}>
         <div className="content">
-          {title && <Text tag="h1">{title}</Text>}
+          {title && <Text tag="h1" color="navbar-background">{title}</Text>}
           {children}
         </div>
       </Wrapper>
