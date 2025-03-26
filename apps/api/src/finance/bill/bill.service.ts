@@ -34,7 +34,7 @@ export class BillService extends Service<Bill> {
     protected readonly billCategoryService: BillCategoryService,
     protected readonly expenseService: ExpenseService,
   ) {
-    super('bills', ['bank', 'category', 'finance', 'expenses'], repository);
+    super('bills', ['bank', 'category', 'finance', 'expenses', 'expenses.supplier'], repository);
   }
 
   async create(finance: Finance, createBillDto: CreateBillDto) {

@@ -8,6 +8,7 @@ export interface FindOneByParams extends Omit<FindByParams, 'searchParams'> {
 
 export interface ListParams {
   filters?: Array<FilterParams>;
+  relations?: Array<string>;
   defaultAsc?: string;
   parameters?: QueryParameters;
   withDeleted?: boolean;
@@ -22,9 +23,9 @@ export interface FindByParams
 }
 
 export interface FindOneByOrder<T, R> {
-    order: number;
-    response?: R;
-    complete?: boolean;
-    withThrow?: boolean;
-    completingData?: (result: T, response: R | T) => Promise<T>;
+  order: number;
+  response?: R;
+  complete?: boolean;
+  withThrow?: boolean;
+  completingData?: (result: T, response: R | T) => Promise<T>;
 }

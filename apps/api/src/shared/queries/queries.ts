@@ -72,6 +72,7 @@ export class Queries<T extends BasicEntity> {
 
   async list({
     filters = [],
+    relations,
     parameters,
     defaultAsc,
     withDeleted = false,
@@ -80,7 +81,7 @@ export class Queries<T extends BasicEntity> {
     const query = new Query<T>({
       alias: this.alias,
       filters,
-      relations: this.relations,
+      relations:  relations ?? this.relations,
       defaultAsc,
       parameters,
       repository: this.repository,

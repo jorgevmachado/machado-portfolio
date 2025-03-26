@@ -80,6 +80,7 @@ export class ExpenseService extends Service<Expense> {
       },
       withAllCalculations: true,
     });
+
     return await this.save(newExpense);
   }
 

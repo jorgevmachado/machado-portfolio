@@ -91,14 +91,36 @@ export class Query<T extends ObjectLiteral> {
   }
 
   private insertRelationshipsParameterIntoQuery(): void {
-    if (this.withRelations) {
-      if (this.relations.length) {
-        this.relations.forEach((relation) => {
-          this.query.leftJoinAndSelect(`${this.alias}.${relation}`, relation);
-        });
-      }
+    const joinedAliases = new Set<string>();
+
+    if (this.withRelations && this.relations.length) {
+      this.relations.forEach((relation) => {
+        if (relation.includes('.')) {
+          const relations = relation.split('.');
+          let parentAlias = this.alias;
+
+          relations.forEach((currentRelation, index) => {
+            const relationAlias = index === 0 ? currentRelation : `${relations.slice(0, index + 1).join('_')}`;
+
+            if (!joinedAliases.has(relationAlias)) {
+              this.query.leftJoinAndSelect(`${parentAlias}.${currentRelation}`, relationAlias);
+              joinedAliases.add(relationAlias);
+            }
+
+            parentAlias = relationAlias;
+          });
+        } else {
+          const relationAlias = relation;
+
+          if (!joinedAliases.has(relationAlias)) {
+            this.query.leftJoinAndSelect(`${this.alias}.${relation}`, relationAlias);
+            joinedAliases.add(relationAlias);
+          }
+        }
+      });
     }
   }
+
 
   private insertFilterParametersAndParametersIntoQuery(): void {
     const filters = this.unifiesFiltersWithParameters();
