@@ -40,6 +40,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
   const [calculatedExpenses, setCalculatedExpenses] = useState<Array<Expense>>(
     [],
   );
+  const [selectedExpense, setSelectedExpense] = useState<Expense | undefined>(undefined);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [allCalculatedExpenses, setAllCalculatedExpenses] =
     useState<AllCalculatedExpenses>({
@@ -48,6 +49,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
       totalPaid: 0,
       totalPending: 0,
     });
+
   const generateHeaders = () => {
     const monthHeaders = expenseBusiness.months.map((month) => ({
       text: truncateString(month, 3),
@@ -65,11 +67,23 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
       { text: 'Total', value: 'total', type: ETypeTableHeaderItem.MONEY },
     ];
   };
+
   const calculateExpenses = (expenses: Array<Expense> | Bill['expenses']) => {
     return expenses?.map((expense) =>
       expenseBusiness.processAllCalculate(expense as unknown as Expense),
     );
   };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setSelectedExpense(undefined);
+  }
+
+  const handleOpenModal = (item: Expense) => {
+    setSelectedExpense(item);
+    setIsModalVisible(true);
+    setLoading(false);
+  }
 
   const fetchSuppliers = async () => {
     setLoading(true);
@@ -115,6 +129,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
     setAllCalculatedExpenses(calculatedAllExpenses);
   }, [allCalculated, calculatedExpenses]);
 
+
   return (
     <div className="expenses">
       <div className="expenses__summary">
@@ -153,18 +168,19 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
         </div>
       </div>
       <div className="expenses__table">
-        <Table headers={generateHeaders()} items={calculatedExpenses} />
+        <Table headers={generateHeaders()} items={calculatedExpenses} onRowClick={(item) => handleOpenModal(item as Expense)} />
       </div>
       {isModalVisible && (
-        <CRUDModal title="Edit Expense">
+        <CRUDModal title={`${selectedExpense ? 'Edit' : 'Create'} Expense` }>
           {loading ? (
             <Spinner context="neutral" />
           ) : (
             <Form
               billId={bill.id}
+              expense={selectedExpense}
               suppliers={suppliers}
               setLoading={setLoading}
-              setIsModalVisible={setIsModalVisible}
+              handleCloseModal={handleCloseModal}
             />
           )}
         </CRUDModal>
