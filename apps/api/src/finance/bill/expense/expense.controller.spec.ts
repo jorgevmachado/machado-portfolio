@@ -10,7 +10,7 @@ import { EMonth } from '@repo/business/finance/enum';
 import { USER_ENTITY_FIXTURE } from '@repo/business/auth/fixtures/auth';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
-import { User } from '../../auth/users/user.entity';
+import { User } from '../../../auth/users/user.entity';
 import { Expense } from './expense.entity';
 import { ConflictException } from '@nestjs/common';
 
@@ -114,7 +114,7 @@ describe('ExpenseController', () => {
       jest.spyOn(service, 'update').mockResolvedValueOnce(expense);
 
       expect(await controller.update(user, expense.id, updateDto)).toEqual(
-        expense,
+          expense,
       );
     });
   });
@@ -129,8 +129,8 @@ describe('ExpenseController', () => {
   describe('remove', () => {
     it('should remove a bill successfully', async () => {
       jest
-        .spyOn(service, 'remove')
-        .mockResolvedValueOnce({ message: 'Successfully removed' });
+          .spyOn(service, 'remove')
+          .mockResolvedValueOnce({ message: 'Successfully removed' });
 
       expect(await controller.remove(expense.id)).toEqual({
         message: 'Successfully removed',
@@ -146,10 +146,10 @@ describe('ExpenseController', () => {
       };
 
       expect(() => controller['validateFinanceAndBills'](user)).toThrow(
-        ConflictException,
+          ConflictException,
       );
       expect(() => controller['validateFinanceAndBills'](user)).toThrow(
-        'Finance is not initialized, please start it to access this feature.',
+          'Finance is not initialized, please start it to access this feature.',
       );
     });
 
@@ -159,10 +159,10 @@ describe('ExpenseController', () => {
       };
 
       expect(() => controller['validateFinanceAndBills'](user)).toThrow(
-        ConflictException,
+          ConflictException,
       );
       expect(() => controller['validateFinanceAndBills'](user)).toThrow(
-        'No Bill has been created for this finance item. Please create one to access this feature.',
+          'No Bill has been created for this finance item. Please create one to access this feature.',
       );
     });
 

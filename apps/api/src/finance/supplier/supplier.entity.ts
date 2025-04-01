@@ -12,7 +12,7 @@ import {
 
 import type { SupplierEntity } from '@repo/business/finance/supplier/interface';
 
-import { Expense } from '../expense/expense.entity';
+import { Expense } from '../bill/expense/expense.entity';
 
 import { SupplierType } from './supplier-type/supplierType.entity';
 

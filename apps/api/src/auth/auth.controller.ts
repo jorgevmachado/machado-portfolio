@@ -16,9 +16,9 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 import { CredentialsAuthDto } from './dto/credentials-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 
-import { AuthRoleGuards } from './guards/auth-role.guards';
+import { AuthRoleGuards } from '../guards/auth-role.guards';
 
-import { GetUserAuth } from './decorators/auth-user.decorator';
+import { GetUserAuth } from '../decorators/auth-user.decorator';
 
 import { AuthService } from './auth.service';
 

@@ -9,17 +9,17 @@ import FinanceBusiness from '@repo/business/finance/finance';
 import { Service } from '../shared';
 import { User } from '../auth/users/user.entity';
 
-import { Finance } from './finance.entity';
 import { Bank } from './bank/bank.entity';
 import { Supplier } from './supplier/supplier.entity';
 import { Bill } from './bill/bill.entity';
-import { Expense } from './expense/expense.entity';
+import { BillCategory } from './bill/bill-category/bill-category.entity';
+import { Expense } from './bill/expense/expense.entity';
 
-import { ExpenseService } from './expense/expense.service';
 import { SupplierService } from './supplier/supplier.service';
 import { BankService } from './bank/bank.service';
 import { BillService } from './bill/bill.service';
-import { BillCategory } from './bill/bill-category/bill-category.entity';
+
+import { Finance } from './finance.entity';
 
 @Injectable()
 export class FinanceService extends Service<Finance> {
@@ -28,7 +28,6 @@ export class FinanceService extends Service<Finance> {
     protected repository: Repository<Finance>,
     protected readonly supplierService: SupplierService,
     protected readonly bankService: BankService,
-    protected readonly expenseService: ExpenseService,
     protected readonly billService: BillService,
   ) {
     super('finances', [], repository);
@@ -114,7 +113,10 @@ export class FinanceService extends Service<Finance> {
       await this.seeder.executeSeed<Expense>({
         label: 'Expenses',
         seedMethod: async () => {
-          const result = await this.expenseService.seed(supplierList, billList);
+          const result = await this.billService.expenseSeed(
+            supplierList,
+            billList,
+          );
           return Array.isArray(result) ? result : [];
         },
       });

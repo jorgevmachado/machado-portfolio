@@ -8,7 +8,7 @@ import {
 
 import { EBillType } from '@repo/business/finance/enum';
 import { Bank } from '../../bank/bank.entity';
-import { Expense } from '../../expense/expense.entity';
+import { Expense } from '../expense/expense.entity';
 import { BillCategory } from '../bill-category/bill-category.entity';
 
 export class CreateBillDto {

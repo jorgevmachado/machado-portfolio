@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { dataSourceOptions } from './app.data-source';
 
-import { SanitizeUserInterceptor } from './auth/interceptors/sanitize-user.interceptor';
+import { SanitizeUserInterceptor } from './interceptors/sanitize-user.interceptor';
 import { AuthModule } from './auth/auth.module';
 import { PokemonModule } from './pokemons/pokemon.module';
 import { FinanceModule } from './finance/finance.module';

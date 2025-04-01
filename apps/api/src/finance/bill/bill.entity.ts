@@ -17,7 +17,7 @@ import { EBillType } from '@repo/business/finance/enum';
 import { DecimalTransformer } from '../../shared';
 
 import { Bank } from '../bank/bank.entity';
-import { Expense } from '../expense/expense.entity';
+import { Expense } from './expense/expense.entity';
 
 import { Finance } from '../finance.entity';
 import { BillCategory } from './bill-category/bill-category.entity';

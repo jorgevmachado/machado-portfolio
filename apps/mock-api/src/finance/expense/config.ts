@@ -12,11 +12,13 @@ import { findEntityByKey, validateEntityType } from '../shared';
 
 import { FinanceEntity } from '../interface';
 import { SUPPLIER_FINANCE_ENTITY } from '../supplier';
+import { BILL_FINANCE_ENTITY } from '../bill/bill';
 
 export const EXPENSE_FINANCE_ENTITY: FinanceEntity = {
   id: 'EXPENSE',
   label: 'Expense',
   alias: 'expenses',
+  bill: BILL_FINANCE_ENTITY,
   supplier: SUPPLIER_FINANCE_ENTITY,
   list: EXPENSE_LIST_FIXTURE,
 };

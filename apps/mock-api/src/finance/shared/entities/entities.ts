@@ -2,12 +2,21 @@ import { uuid } from '@repo/services/string/string';
 
 import type { FinanceEntity } from '../../interface';
 import { findOneEntity } from '../../../shared';
+import { validateEntityType } from '../validate';
 
 interface CreateEntityParams {
   name?: string;
   type?: string;
   entity: FinanceEntity;
 }
+
+interface EntityRelation {
+  key: 'id' | 'name';
+  param: string;
+  financeEntity: FinanceEntity;
+}
+
+
 export function createEntity({ name, type, entity }: CreateEntityParams) {
   if (Boolean(entity.type)) {
     return createEntityWithType({ name, type, entity });
@@ -109,6 +118,38 @@ export function findEntityById(id: string, list: Array<unknown>) {
   return findEntityByKey(id, list, 'id');
 }
 
-export function findEntityByKey(param: string, list: Array<unknown>, key: 'id' | 'name') {
-  return list?.find((item) => item[key] === param);
+export function findEntityByKey(
+  param: string,
+  list: Array<unknown>,
+  key: 'id' | 'name',
+) {
+  return list?.find(
+    (item) => item[key]?.toLowerCase() === param?.toLowerCase(),
+  );
+}
+
+export function findEntityRelationByKey({ key, param, financeEntity}: EntityRelation) {
+  const { list, label } = financeEntity;
+  const entity = findEntityByKey(param, list, key);
+
+  if (!entity) {
+    return validateEntityType(false, label);
+  }
+
+  return { statusCode: 200, response: entity };
+}
+
+export function findEntityRelations (relations: Array<EntityRelation>) {
+  const result = {
+    statusCode: 200,
+    response: {}
+  }
+  for (const relation of relations) {
+    const relationEntity = findEntityRelationByKey(relation);
+    if(relationEntity.statusCode !== 200) {
+      return relationEntity;
+    }
+    result.response[relation.financeEntity.label.toLowerCase()] = relationEntity.response;
+  }
+  return result;
 }

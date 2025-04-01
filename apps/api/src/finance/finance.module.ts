@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { ExpenseModule } from './expense/expense.module';
 import { BillModule } from './bill/bill.module';
 import { BankModule } from './bank/bank.module';
 
@@ -17,7 +15,6 @@ import { SupplierModule } from './supplier/supplier.module';
     TypeOrmModule.forFeature([Finance]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     SupplierModule,
-    ExpenseModule,
     BillModule,
     BankModule,
   ],

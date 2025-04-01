@@ -20,12 +20,14 @@ import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/ex
 
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
+import { SupplierService } from '../../supplier/supplier.service';
+
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 import { Expense } from './expense.entity';
+
 import { ExpenseService } from './expense.service';
-import { SupplierService } from '../supplier/supplier.service';
 
 describe('ExpenseService', () => {
   let repository: Repository<Expense>;
@@ -68,11 +70,11 @@ describe('ExpenseService', () => {
   describe('seed', () => {
     it('should seed the database when exist in database', async () => {
       jest
-        .spyOn(repository, 'find')
-        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
+          .spyOn(repository, 'find')
+          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
 
       expect(
-        await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
+          await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
       ).toEqual(EXPENSE_LIST_FIXTURE);
     });
 
@@ -84,7 +86,7 @@ describe('ExpenseService', () => {
       });
 
       expect(
-        await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
+          await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
       ).toEqual(EXPENSE_LIST_FIXTURE);
     });
   });
@@ -102,17 +104,17 @@ describe('ExpenseService', () => {
       };
 
       jest
-        .spyOn(supplierService, 'treatEntityParam')
-        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
+          .spyOn(supplierService, 'treatEntityParam')
+          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
 
       jest.spyOn(repository, 'findOne').mockReturnValueOnce(null);
 
       jest
-        .spyOn(repository, 'save')
-        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
+          .spyOn(repository, 'save')
+          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
 
       expect(await service.create(BILL_LIST_FIXTURE, createDto)).toEqual(
-        EXPENSE_LIST_FIXTURE[0],
+          EXPENSE_LIST_FIXTURE[0],
       );
     });
   });
@@ -157,18 +159,18 @@ describe('ExpenseService', () => {
       } as any);
 
       jest
-        .spyOn(supplierService, 'treatEntityParam')
-        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
+          .spyOn(supplierService, 'treatEntityParam')
+          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
 
       jest
-        .spyOn(repository, 'save')
-        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
+          .spyOn(repository, 'save')
+          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
 
       expect(
-        await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, {
-          ...updateDto,
-          supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
-        }),
+          await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, {
+            ...updateDto,
+            supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
+          }),
       ).toEqual(EXPENSE_LIST_FIXTURE[0]);
     });
 
@@ -188,20 +190,20 @@ describe('ExpenseService', () => {
       jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
 
       expect(
-        await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, {
-          ...updateDto,
-          bill: EXPENSE_LIST_FIXTURE[0].bill,
-        }),
+          await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, {
+            ...updateDto,
+            bill: EXPENSE_LIST_FIXTURE[0].bill,
+          }),
       ).toEqual(expected);
     });
 
     it('should return conflict exception because the id is not uuid', async () => {
       await expect(
-        service.update(
-          EXPENSE_LIST_FIXTURE[0].supplier.name,
-          BILL_LIST_FIXTURE,
-          updateDto,
-        ),
+          service.update(
+              EXPENSE_LIST_FIXTURE[0].supplier.name,
+              BILL_LIST_FIXTURE,
+              updateDto,
+          ),
       ).rejects.toThrow(ConflictException);
     });
   });
@@ -232,7 +234,7 @@ describe('ExpenseService', () => {
         getOne: jest.fn().mockReturnValueOnce(null),
       } as any);
       await expect(
-        service.remove(EXPENSE_LIST_FIXTURE[0].supplier.name),
+          service.remove(EXPENSE_LIST_FIXTURE[0].supplier.name),
       ).rejects.toThrow(NotFoundException);
     });
   });

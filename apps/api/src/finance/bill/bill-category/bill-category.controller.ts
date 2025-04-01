@@ -34,7 +34,7 @@ export class BillCategoryController {
     return this.billCategoryService.findOne({ value: param });
   }
 
-  @Patch(':param')
+  @Patch(':param/category')
   update(
     @Param('param') param: string,
     @Body() updateBillCategoryDto: UpdateBillCategoryDto,

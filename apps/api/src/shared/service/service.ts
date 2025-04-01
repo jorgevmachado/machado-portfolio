@@ -7,6 +7,7 @@ import { Base } from '../base';
 import { Seeder } from '../seeder';
 import { Validate } from '../validate';
 import { type FindOneByParams, type ListParams, Queries } from '../queries';
+import { isUUID } from '@repo/services/string/string';
 
 export abstract class Service<T extends BasicEntity> extends Base {
   private readonly seederModule: Seeder<T>;
@@ -64,12 +65,18 @@ export abstract class Service<T extends BasicEntity> extends Base {
     return { message: 'Successfully removed' };
   }
 
-  async treatEntityParam<T>(value?: string | T, label?: string) {
+  async treatEntityParam<T>(
+    value?: string | T,
+    label?: string,
+    list?: Array<T>,
+  ) {
     this.validate.param<T>(value, label);
     if (this.validate.paramIsEntity<T>(value)) {
       return value;
     }
-    const entity = await this.queries.findOne({ value, withThrow: false });
+    const entity = !list
+      ? await this.queries.findOne({ value, withThrow: false })
+      : this.findOneByList<T>(value, list);
     this.validate.param<T>(entity as unknown as string | T, label);
     return entity;
   }
@@ -79,7 +86,15 @@ export abstract class Service<T extends BasicEntity> extends Base {
       return [];
     }
     return Promise.all(
-      values?.map(async (value) => await this.treatEntityParam<T>(value, label))
+      values?.map(
+        async (value) => await this.treatEntityParam<T>(value, label),
+      ),
     );
+  }
+
+  findOneByList<T>(value: string, list: Array<T>) {
+    const valueIsUUID = isUUID(value);
+    const key = valueIsUUID ? 'id' : 'name';
+    return list.find((item) => item[key] === value);
   }
 }

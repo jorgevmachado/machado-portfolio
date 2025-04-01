@@ -14,15 +14,16 @@ import type { ListParams } from '../../shared/queries';
 import { Finance } from '../finance.entity';
 import { Bank } from '../bank/bank.entity';
 import { BankService } from '../bank/bank.service';
-import { Expense } from '../expense/expense.entity';
-import { ExpenseService } from '../expense/expense.service';
 
+import { Expense } from './expense/expense.entity';
+import { ExpenseService } from './expense/expense.service';
 import { BillCategory } from './bill-category/bill-category.entity';
 import { BillCategoryService } from './bill-category/bill-category.service';
 import { Bill } from './bill.entity';
 
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update.bill.dto';
+import { Supplier } from '../supplier/supplier.entity';
 
 @Injectable()
 export class BillService extends Service<Bill> {
@@ -34,7 +35,11 @@ export class BillService extends Service<Bill> {
     protected readonly billCategoryService: BillCategoryService,
     protected readonly expenseService: ExpenseService,
   ) {
-    super('bills', ['bank', 'category', 'finance', 'expenses', 'expenses.supplier'], repository);
+    super(
+      'bills',
+      ['bank', 'category', 'finance', 'expenses', 'expenses.supplier'],
+      repository,
+    );
   }
 
   async create(finance: Finance, createBillDto: CreateBillDto) {
@@ -192,5 +197,11 @@ export class BillService extends Service<Bill> {
       ).filter((category): category is BillCategory => !!category);
     }
     return billCategoryList;
+  }
+
+  async expenseSeed(supplierList: Array<Supplier>, billList: Array<Bill>) {
+    return (
+      (await this.expenseService.seed(supplierList, billList)) as Array<Expense>
+    ).filter((expense): expense is Expense => !!expense);
   }
 }

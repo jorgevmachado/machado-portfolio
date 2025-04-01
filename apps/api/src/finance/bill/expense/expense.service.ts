@@ -1,23 +1,21 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {ConflictException, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { isUUID } from '@repo/services/string/string';
-
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
 
-import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
+import { Service } from '../../../shared';
 
-import { Service } from '../../shared';
+import { SupplierService } from '../../supplier/supplier.service';
 
-import { Supplier } from '../supplier/supplier.entity';
-import { SupplierService } from '../supplier/supplier.service';
-import { Bill } from '../bill/bill.entity';
-
-import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { CreateExpenseDto } from './dto/create-expense.dto';
+import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 import { Expense } from './expense.entity';
+import {Bill} from "../bill.entity";
+import {Supplier} from "../../supplier/supplier.entity";
+import {isUUID} from "@repo/services/string/string";
+import {EXPENSE_LIST_FIXTURE} from "@repo/business/finance/expense/fixtures/expense";
 
 @Injectable()
 export class ExpenseService extends Service<Expense> {
@@ -31,10 +29,10 @@ export class ExpenseService extends Service<Expense> {
   }
 
   async create(bills: Array<Bill>, createExpenseDto: CreateExpenseDto) {
-    const bill = this.getBill(bills, createExpenseDto.bill);
+    const bill = (await this.treatEntityParam<Bill>(createExpenseDto.bill, 'Bill', bills)) as Bill;
     const supplier = await this.supplierService.treatEntityParam<Supplier>(
-      createExpenseDto.supplier,
-      'Supplier',
+        createExpenseDto.supplier,
+        'Supplier',
     );
     const newExpense = this.expenseBusiness.initializeExpense({
       supplier,
@@ -50,24 +48,20 @@ export class ExpenseService extends Service<Expense> {
     return await this.save(newExpense);
   }
 
-  async update(
-    id: string,
-    bills: Array<Bill>,
-    updateExpenseDto: UpdateExpenseDto,
-  ) {
+
+  async update(id: string, bills: Array<Bill>, updateExpenseDto: UpdateExpenseDto) {
     if (!isUUID(id)) {
       throw this.error(new ConflictException('Invalid ID'));
     }
     const entity = await this.findOne({ value: id });
-
     const bill = !updateExpenseDto.bill
-      ? entity.bill
-      : this.getBill(bills, updateExpenseDto.bill);
+        ? entity.bill
+        : (await this.treatEntityParam<Bill>(updateExpenseDto.bill, 'Bill', bills)) as Bill;
     const supplier = !updateExpenseDto.supplier
-      ? entity.supplier
-      : await this.supplierService.treatEntityParam<Supplier>(
-          updateExpenseDto.supplier,
-          'Supplier',
+        ? entity.supplier
+        : await this.supplierService.treatEntityParam<Supplier>(
+            updateExpenseDto.supplier,
+            'Supplier',
         );
 
     const newExpense = this.expenseBusiness.merge({
@@ -102,14 +96,5 @@ export class ExpenseService extends Service<Expense> {
         return { ...item, supplier, bill };
       },
     });
-  }
-
-  private getBill(bills: Array<Bill>, param: string | Bill) {
-    if (this.validate.paramIsEntity<Bill>(param)) {
-      return param;
-    }
-    const bill = bills.find((item) => item.id === param);
-    this.validate.param<Bill>(bill, 'Bill');
-    return bill;
   }
 }

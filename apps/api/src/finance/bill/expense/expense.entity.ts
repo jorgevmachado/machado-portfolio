@@ -12,10 +12,11 @@ import {
 import type { ExpenseEntity } from '@repo/business/finance/expense/interface';
 import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 
-import { DecimalTransformer } from '../../shared';
+import { DecimalTransformer } from '../../../shared';
 
-import { Supplier } from '../supplier/supplier.entity';
-import { Bill } from '../bill/bill.entity';
+import { Supplier } from '../../supplier/supplier.entity';
+
+import { Bill } from '../bill.entity';
 
 @Entity({ name: 'expenses' })
 export class Expense implements ExpenseEntity {

@@ -1,9 +1,9 @@
 import { Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { AuthRoleGuards } from '../auth/guards/auth-role.guards';
-import { AuthStatusGuards } from '../auth/guards/auth-status.guards';
-import { GetUserAuth } from '../auth/decorators/auth-user.decorator';
+import { AuthRoleGuards } from '../guards/auth-role.guards';
+import { AuthStatusGuards } from '../guards/auth-status.guards';
+import { GetUserAuth } from '../decorators/auth-user.decorator';
 import { User } from '../auth/users/user.entity';
 
 import { FinanceService } from './finance.service';

@@ -9,8 +9,10 @@ import {
 } from 'class-validator';
 
 import { EExpenseType, EMonth } from '@repo/business/finance/enum';
-import { Supplier } from '../../supplier/supplier.entity';
-import { Bill } from '../../bill/bill.entity';
+
+import { Supplier } from '../../../supplier/supplier.entity';
+
+import { Bill } from '../../bill.entity';
 
 export class CreateExpenseDto {
   @IsNotEmpty()

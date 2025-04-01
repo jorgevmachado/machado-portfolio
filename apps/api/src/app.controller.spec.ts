@@ -10,7 +10,7 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { SanitizeUserInterceptor } from './auth/interceptors/sanitize-user.interceptor';
+import { SanitizeUserInterceptor } from './interceptors/sanitize-user.interceptor';
 
 describe('AppController', () => {
   let controller: AppController;

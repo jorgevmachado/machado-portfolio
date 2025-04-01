@@ -8,19 +8,22 @@ export interface PaginateResponse<T = unknown> {
     per_page: number;
     current_page: number;
 }
+
+export interface ResultResponseError {
+    error: string;
+    message: string;
+    statusCode: number;
+}
+
 export interface ResultResponse<T = unknown> {
     response?: T;
-    responseError?: {
-        error: string;
-        message: string;
-        statusCode: number;
-    }
     statusCode: number;
+    responseError?:ResultResponseError;
 }
 
 export interface MockEntity<T = unknown> {
     id: string;
+    list: Array<T>;
     alias: string;
     label: string;
-    list: Array<T>;
 }

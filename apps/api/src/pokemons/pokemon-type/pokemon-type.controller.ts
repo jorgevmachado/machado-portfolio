@@ -3,8 +3,8 @@ import { AuthGuard } from '@nestjs/passport';
 
 import type { QueryParameters } from '@repo/business/shared/interface';
 
-import { AuthRoleGuards } from '../../auth/guards/auth-role.guards';
-import { AuthStatusGuards } from '../../auth/guards/auth-status.guards';
+import { AuthRoleGuards } from '../../guards/auth-role.guards';
+import { AuthStatusGuards } from '../../guards/auth-status.guards';
 
 import { PokemonTypeService } from './pokemon-type.service';
 

@@ -6,9 +6,12 @@ import {
   IsPositive,
   MaxLength,
 } from 'class-validator';
+
 import { EExpenseType } from '@repo/business/finance/enum';
-import { Supplier } from '../../supplier/supplier.entity';
-import { Bill } from '../../bill/bill.entity';
+
+import { Supplier } from '../../../supplier/supplier.entity';
+
+import { Bill } from '../../bill.entity';
 
 export class UpdateExpenseDto {
   @IsEmpty()
