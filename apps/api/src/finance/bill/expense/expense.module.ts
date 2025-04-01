@@ -9,7 +9,6 @@ import { SupplierModule } from '../../supplier/supplier.module';
 
 import { Expense } from './expense.entity';
 import { ExpenseService } from './expense.service';
-import { ExpenseController } from './expense.controller';
 
 @Module({
   imports: [
@@ -18,7 +17,6 @@ import { ExpenseController } from './expense.controller';
     AuthModule,
     SupplierModule,
   ],
-  controllers: [ExpenseController],
   providers: [ExpenseService, ExpenseBusiness],
   exports: [ExpenseService],
 })

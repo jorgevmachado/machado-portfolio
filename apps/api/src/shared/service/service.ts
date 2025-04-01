@@ -45,6 +45,15 @@ export abstract class Service<T extends BasicEntity> extends Base {
       });
   }
 
+  async softRemove(data: T): Promise<void | T> {
+    return this.repository
+      .softRemove(data)
+      .then()
+      .catch((error) => {
+        throw this.error(error);
+      });
+  }
+
   async findAll(
     listParams: ListParams,
   ): Promise<Array<T> | PaginateParameters<T>> {

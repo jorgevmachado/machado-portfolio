@@ -22,6 +22,8 @@ import { User } from '../../auth/users/user.entity';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update.bill.dto';
 import { BillService } from './bill.service';
+import {CreateExpenseDto} from "./expense/dto/create-expense.dto";
+import {UpdateExpenseDto} from "./expense/dto/update-expense.dto";
 
 @Controller('finance/bill')
 @UseGuards(
@@ -61,4 +63,34 @@ export class BillController {
   remove(@Param('param') param: string) {
     return this.service.remove(param);
   }
+
+  @Post(':param/expense')
+  createExpense(@Param('param') param: string, @Body() createExpenseDto: CreateExpenseDto) {
+    return this.service.createExpense(param, createExpenseDto);
+  }
+
+  @Put(':param/expense/:expenseId')
+  updateExpense(
+    @Param('param') param: string,
+    @Param('expenseId') expenseId: string,
+    @Body() updateExpenseDto: UpdateExpenseDto,
+  ) {
+    return this.service.updateExpense(param, expenseId, updateExpenseDto);
+  }
+
+  @Get(':param/expense/:expenseId')
+  findOneExpense(@Param('param') param: string, @Param('expenseId') expenseId: string) {
+    return this.service.findOneExpense(param, expenseId);
+  }
+
+  @Get(':param/list/expense')
+  findAllExpense(@Param('param') param: string, @Query() parameters: QueryParameters) {
+    return this.service.findAllExpense(param, { parameters });
+  }
+
+  @Delete(':param/expense/:expenseId')
+  removeExpense(@Param('param') param: string, @Param('expenseId') expenseId: string) {
+    return this.service.removeExpense(param, expenseId);
+  }
+
 }

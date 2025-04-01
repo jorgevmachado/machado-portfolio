@@ -15,6 +15,8 @@ import { Finance } from '../finance.entity';
 import { Bank } from '../bank/bank.entity';
 import { BankService } from '../bank/bank.service';
 
+import { Supplier } from '../supplier/supplier.entity';
+
 import { Expense } from './expense/expense.entity';
 import { ExpenseService } from './expense/expense.service';
 import { BillCategory } from './bill-category/bill-category.entity';
@@ -23,7 +25,8 @@ import { Bill } from './bill.entity';
 
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update.bill.dto';
-import { Supplier } from '../supplier/supplier.entity';
+import { CreateExpenseDto } from './expense/dto/create-expense.dto';
+import { UpdateExpenseDto } from './expense/dto/update-expense.dto';
 
 @Injectable()
 export class BillService extends Service<Bill> {
@@ -203,5 +206,53 @@ export class BillService extends Service<Bill> {
     return (
       (await this.expenseService.seed(supplierList, billList)) as Array<Expense>
     ).filter((expense): expense is Expense => !!expense);
+  }
+
+  async createExpense(param: string, createExpenseDto: CreateExpenseDto) {
+    const bill = await this.findOne({ value: param });
+    return await this.expenseService.create(bill, createExpenseDto);
+  }
+
+  async updateExpense(
+    param: string,
+    expenseId: string,
+    updateExpenseDto: UpdateExpenseDto,
+  ) {
+    const bill = await this.findOne({ value: param });
+    return await this.expenseService.update(bill, expenseId, updateExpenseDto);
+  }
+
+  async findOneExpense(param: string, expenseId: string) {
+    const bill = await this.findOne({ value: param });
+    return await this.expenseService.findOne({
+      value: expenseId,
+      filters: [
+        {
+          value: bill.id,
+          param: 'bill',
+          condition: '=',
+        },
+      ],
+    });
+  }
+
+  async findAllExpense(param: string, params: ListParams) {
+    const bill = await this.findOne({ value: param });
+    return await this.expenseService.findAll({
+      ...params,
+      filters: [
+        {
+          value: bill.id,
+          param: 'bill',
+          condition: '=',
+        },
+      ],
+    });
+  }
+
+  async removeExpense(param: string, expenseId: string) {
+    const expense = await this.findOneExpense(param, expenseId);
+    await this.expenseService.softRemove(expense);
+    return { message: 'Successfully removed' };
   }
 }

@@ -25,6 +25,7 @@ export class Queries<T extends BasicEntity> {
   ) {}
 
   async findBy({
+    filters = [],
     withThrow,
     relations,
     searchParams,
@@ -32,6 +33,7 @@ export class Queries<T extends BasicEntity> {
     withRelations = true,
   }: FindByParams) {
     const query = new Query<T>({
+      filters,
       alias: this.alias,
       relations: relations ?? this.relations,
       repository: this.repository,
