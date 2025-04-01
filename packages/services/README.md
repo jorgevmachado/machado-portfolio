@@ -144,6 +144,12 @@ npm run lint
     npm run test -- --findRelatedTests src/error/error.spec.ts               
 ```
 
+### month:
+#### Função relacionado a tratamento de meses.
+```
+    npm run test -- --findRelatedTests src/month/month.spec.ts              
+```
+
 ### entities
 ```bash
     npm run test -- --findRelatedTests src/entities/entities.spec.ts               

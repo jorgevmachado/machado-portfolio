@@ -1,6 +1,7 @@
 export * from './http';
 export * from './string';
 export * from './number';
+export * from './month';
 export * from './object';
 export * from './window';
 export * from './cookies';
