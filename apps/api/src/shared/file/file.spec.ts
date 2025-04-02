@@ -51,7 +51,7 @@ describe('File Class', () => {
       jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
       const result = file.getPath(mockFile, 'custom-file-name');
-      expect(result).toContain('uploads/custom-file-name.jpeg'); // O mimeType define a extensão ".jpeg"
+      expect(result).toContain('uploads/custom-file-name.jpeg');
     });
 
     it('should throw BadRequestException if file does not exist', () => {
@@ -59,7 +59,7 @@ describe('File Class', () => {
     });
 
     it('should throw BadRequestException if file already exists', () => {
-      jest.spyOn(fs, 'existsSync').mockReturnValue(true); // Simula que o arquivo já existe
+      jest.spyOn(fs, 'existsSync').mockReturnValue(true);
 
       expect(() => file.getPath(mockFile)).toThrow(BadRequestException);
     });
@@ -82,7 +82,7 @@ describe('File Class', () => {
     });
 
     it('should throw BadRequestException if file is invalid', async () => {
-      await expect(file.uploadFile(null)).rejects.toThrow(BadRequestException); // Verifica se lança exceção com entrada inválida
+      await expect(file.uploadFile(null)).rejects.toThrow(BadRequestException);
     });
 
     it('should throw BadRequestException if getPath throws error', async () => {

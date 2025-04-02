@@ -20,8 +20,8 @@ describe('DecimalTransformer', () => {
       expect(result).toBeNull();
     });
 
-    it('should return null if number is null\n', () => {
-      const result = transformer.to(null as unknown as number); // Forçar o tipo para o teste
+    it('should return null if number is null.', () => {
+      const result = transformer.to(null as unknown as number);
       expect(result).toBeNull();
     });
   });
@@ -38,13 +38,13 @@ describe('DecimalTransformer', () => {
     });
 
     it('should return null if the decimal string is null', () => {
-      const result = transformer.from(null as unknown as string); // Forçar o tipo para o teste
+      const result = transformer.from(null as unknown as string);
       expect(result).toBeNull();
     });
 
     it('should return NaN if the decimal string is not valid', () => {
       const result = transformer.from('invalid-number');
-      expect(result).toBeNaN(); // Garante que o valor é NaN
+      expect(result).toBeNaN();
     });
   });
 });

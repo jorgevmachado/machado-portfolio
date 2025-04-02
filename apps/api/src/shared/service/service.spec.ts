@@ -26,15 +26,15 @@ interface MockEntity {
 const mockRepository = {
   save: jest.fn().mockReturnThis(),
   createQueryBuilder: jest.fn().mockReturnThis(),
-  softRemove: jest.fn(), // Simula soft delete de uma entidade
-  findOne: jest.fn(), // Simula buscar uma única entidade
-  find: jest.fn(), // Simula buscar múltiplas entidades
-  delete: jest.fn(), // Simula deletar uma entidade diretamente
-  update: jest.fn(), // Simula atualizar uma entidade
-  create: jest.fn(), // Simula criar uma instância de uma entidade
-  count: jest.fn(), // Simula contar registros na base
+  softRemove: jest.fn(),
+  findOne: jest.fn(),
+  find: jest.fn(),
+  delete: jest.fn(),
+  update: jest.fn(),
+  create: jest.fn(),
+  count: jest.fn(),
   manager: {
-    transaction: jest.fn(), // Simula uma transação gerenciada
+    transaction: jest.fn(),
   },
 } as unknown as Repository<MockEntity>;
 
