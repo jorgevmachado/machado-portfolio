@@ -1,11 +1,19 @@
+import ExpenseBusiness from '../expense/expenseBusiness';
+
+import { Expense } from '../expense';
+
 import type { BillConstructorParams, BillList, TList } from './interface';
 import Bill from './bill';
-import ExpenseBusiness from '../expense/expenseBusiness';
 
 export default class BillBusiness {
   initialize(params: BillConstructorParams): Bill {
     const builtBill = new Bill(params);
     return this.processBillValues(builtBill);
+  }
+
+  initializeExpense(expense: Expense) {
+    const expenseBusiness = new ExpenseBusiness();
+    return expenseBusiness.initialize(expense);
   }
 
   mapBillListByItem(bills: Array<Bill>, listType: TList): Array<BillList> {
@@ -55,7 +63,7 @@ export default class BillBusiness {
     if (bill?.expenses && bill.expenses.length > 0) {
       const expenseBusiness = new ExpenseBusiness();
       const expensesCalculated = bill.expenses.map((expense) =>
-        expenseBusiness.initializeExpense(expense),
+        expenseBusiness.calculateExpense(expense),
       );
       bill.total = expensesCalculated.reduce(
         (acc, expense) => acc + expense.total,

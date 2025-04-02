@@ -1,34 +1,37 @@
-import { findEntityBy } from '@repo/services/entities/entities';
+import {
+  findEntityBy,
+  transformObjectDateAndNulls,
+} from '@repo/services/entities/entities';
 
 import BANK_LIST_FIXTURE_JSON from '@repo/mock-json/finance/bank/banks.json';
 
 import Bank from '../bank';
 
 const BANK_LIST_TEMP: Array<Bank> = BANK_LIST_FIXTURE_JSON.map(
-  (bank) => bank as unknown as Bank,
+  (bank) => transformObjectDateAndNulls<Bank, unknown>(bank),
 );
 
 export const CAIXA_BANK_FIXTURE: Bank = findEntityBy({
-  key: 'name',
-  value: 'Caixa',
+  key: 'name_code',
+  value: 'caixa',
   list: BANK_LIST_TEMP,
 });
 
 export const ITAU_BANK_FIXTURE: Bank = findEntityBy({
-  key: 'name',
-  value: 'Itaú',
+  key: 'name_code',
+  value: 'itau',
   list: BANK_LIST_TEMP,
 });
 
 export const NUBANK_BANK_FIXTURE: Bank = findEntityBy({
-  key: 'name',
-  value: 'Nubank',
+  key: 'name_code',
+  value: 'nubank',
   list: BANK_LIST_TEMP,
 });
 
 export const PORTO_BANK_FIXTURE: Bank = findEntityBy({
-  key: 'name',
-  value: 'Porto',
+  key: 'name_code',
+  value: 'porto',
   list: BANK_LIST_TEMP,
 });
 

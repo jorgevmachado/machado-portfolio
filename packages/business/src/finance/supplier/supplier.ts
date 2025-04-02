@@ -1,10 +1,13 @@
+import { toSnakeCase, normalize } from '@repo/services/string/string';
+
 import { Error, ERROR_STATUS_CODE } from '@repo/services/error/error';
+
 import type { SupplierEntity } from './interface';
 
 interface SupplierConstructorParams
   extends Omit<
     SupplierEntity,
-    'id' | 'created_at' | 'updated_at' | 'deleted_at'
+    'id' | 'name_code' | 'created_at' | 'updated_at' | 'deleted_at'
   > {
   id?: SupplierEntity['id'];
   created_at?: SupplierEntity['created_at'];
@@ -16,7 +19,7 @@ export default class Supplier implements SupplierEntity {
   id: SupplierEntity['id'];
   name!: SupplierEntity['name'];
   type!: SupplierEntity['type'];
-  active?: SupplierEntity['active'];
+  name_code!: SupplierEntity['name_code'];
   created_at: SupplierEntity['created_at'];
   updated_at: SupplierEntity['updated_at'];
   deleted_at: SupplierEntity['deleted_at'];
@@ -39,7 +42,7 @@ export default class Supplier implements SupplierEntity {
         });
       }
       this.type = params.type;
-      this.active = params?.active ?? this.active;
+      this.name_code = toSnakeCase(normalize(this.name));
       this.created_at = params?.created_at ?? this.created_at;
       this.updated_at = params?.updated_at ?? this.updated_at;
       this.deleted_at = params?.deleted_at ?? this.deleted_at;

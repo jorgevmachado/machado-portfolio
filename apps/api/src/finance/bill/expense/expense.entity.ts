@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 import type { ExpenseEntity } from '@repo/business/finance/expense/interface';
-import { EExpenseType, EMonth } from '@repo/business/finance/enum';
+import { EExpenseType } from '@repo/business/finance/enum';
 
 import { DecimalTransformer } from '../../../shared';
 
@@ -22,6 +22,9 @@ import { Bill } from '../bill.entity';
 export class Expense implements ExpenseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ nullable: false, length: 200 })
+  name: string;
 
   @Column({ nullable: false })
   year?: number;
@@ -42,8 +45,6 @@ export class Expense implements ExpenseEntity {
   @Column({ nullable: false })
   paid?: boolean;
 
-  value?: number;
-
   @Column({
     nullable: false,
     type: 'decimal',
@@ -54,8 +55,6 @@ export class Expense implements ExpenseEntity {
   })
   total?: number;
 
-  month?: EMonth;
-
   @Column({ nullable: false })
   active?: boolean;
 
@@ -64,6 +63,9 @@ export class Expense implements ExpenseEntity {
   })
   @JoinTable()
   supplier: Supplier;
+
+  @Column({ nullable: false, length: 200 })
+  name_code: string;
 
   @Column({
     nullable: false,

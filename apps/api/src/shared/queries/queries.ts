@@ -53,6 +53,7 @@ export class Queries<T extends BasicEntity> {
 
   async findOne({
     value,
+    filters = [],
     relations,
     withThrow = true,
     withDeleted = false,
@@ -65,6 +66,7 @@ export class Queries<T extends BasicEntity> {
         value: value?.toLowerCase(),
         condition: valueIsUUID ? '=' : 'LIKE',
       },
+      filters,
       relations,
       withThrow,
       withDeleted,

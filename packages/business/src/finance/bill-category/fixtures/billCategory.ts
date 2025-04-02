@@ -1,37 +1,41 @@
-import BillCategory from '../billCategory';
+import {
+    findEntityBy,
+    transformObjectDateAndNulls,
+} from '@repo/services/entities/entities';
 
-import { findEntityBy } from '@repo/services/entities/entities';
 
 import BILL_CATEGORY_LIST_FIXTURE_JSON from '@repo/mock-json/finance/bill-category/bill-categories.json';
 
+import BillCategory from '../billCategory';
+
 const BILL_CATEGORY_LIST_TEMP: Array<BillCategory> =
   BILL_CATEGORY_LIST_FIXTURE_JSON.map(
-    (billCategory) => billCategory as unknown as BillCategory,
+    (billCategory) => transformObjectDateAndNulls<BillCategory, unknown>(billCategory),
   );
 
 export const INGRID_RESIDENTIAL_BILL_CATEGORY_FIXTURE: BillCategory =
   findEntityBy({
-    key: 'name',
-    value: 'Ingrid Residential',
+    key: 'name_code',
+    value: 'ingrid_residential',
     list: BILL_CATEGORY_LIST_TEMP,
   });
 
 export const MONTE_CARLO_RESIDENTIAL_BILL_CATEGORY_FIXTURE: BillCategory =
   findEntityBy({
-    key: 'name',
-    value: 'Monte Carlo Residential',
+    key: 'name_code',
+    value: 'monte_carlo_residential',
     list: BILL_CATEGORY_LIST_TEMP,
   });
 
 export const MOTHER_BILL_CATEGORY_FIXTURE: BillCategory = findEntityBy({
-  key: 'name',
-  value: 'Mother',
+  key: 'name_code',
+  value: 'mother',
   list: BILL_CATEGORY_LIST_TEMP,
 });
 
 export const PERSONAL_BILL_CATEGORY_FIXTURE: BillCategory = findEntityBy({
-  key: 'name',
-  value: 'Personal',
+  key: 'name_code',
+  value: 'personal',
   list: BILL_CATEGORY_LIST_TEMP,
 });
 

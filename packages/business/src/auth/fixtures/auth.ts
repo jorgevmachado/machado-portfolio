@@ -1,8 +1,12 @@
-import User from '../user';
+import {
+    transformObjectDateAndNulls,
+} from '@repo/services/entities/entities';
 
 import AUTH_FIXTURE_JSON from '@repo/mock-json/auth/auth.json';
 
-export const USER_ENTITY_FIXTURE: User = AUTH_FIXTURE_JSON as unknown as User;
+import User from '../user';
+
+export const USER_ENTITY_FIXTURE: User = transformObjectDateAndNulls<User, unknown>(AUTH_FIXTURE_JSON);
 
 export const USER_FIXTURE: User = {
     ...USER_ENTITY_FIXTURE,

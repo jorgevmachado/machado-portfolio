@@ -1,7 +1,7 @@
 import type { TMonth } from './interface';
 import { EMonth } from './enum';
 
-export const months: Array<TMonth> = [
+export const MONTHS: Array<TMonth> = [
   'january',
   'february',
   'march',
@@ -18,19 +18,19 @@ export const months: Array<TMonth> = [
 
 export function getCurrentMonth(): EMonth {
   const month = new Date().getMonth();
-  return months[month].toUpperCase() as EMonth;
+  return MONTHS[month].toUpperCase() as EMonth;
 }
 
 export function getMonthIndex(month: EMonth) {
-  return months.indexOf(month.toLowerCase() as TMonth);
+  return MONTHS.indexOf(month.toLowerCase() as TMonth);
 }
 
 export function getMonthByIndex(index: number) {
-  return months[index];
+  return MONTHS[index];
 }
 
 export function validateMonth(month: string) {
-    if (!months.includes(month.toLowerCase() as TMonth)) {
+    if (!MONTHS.includes(month.toLowerCase() as TMonth)) {
         throw new Error(`The month provided is invalid: ${month}`);
     }
 }

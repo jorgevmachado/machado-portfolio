@@ -10,7 +10,7 @@ import {
 import { EMonth } from '../../api/nest/finance';
 
 import Expense from './expense';
-import { getCurrentMonth } from './config';
+
 import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
 
 describe('Expense', () => {
@@ -35,10 +35,7 @@ describe('Expense', () => {
     expect(expense.year).toBe(mockExpenseConstructorParams.year);
     expect(expense.type).toBe(mockExpenseConstructorParams.type);
     expect(expense.paid).toBe(mockExpenseConstructorParams.paid);
-    expect(expense.value).toBe(mockExpenseConstructorParams.value);
     expect(expense.total).toBe(mockExpenseConstructorParams.total);
-    expect(expense.month).toBe(mockExpenseConstructorParams.month);
-    expect(expense.active).toBe(mockExpenseConstructorParams.active);
     expect(expense.supplier).toBe(mockExpenseConstructorParams.supplier);
     expect(expense.total_paid).toBe(mockExpenseConstructorParams.total_paid);
     expect(expense.description).toBe(mockExpenseConstructorParams.description);
@@ -59,28 +56,9 @@ describe('Expense', () => {
 
     expect(expense.year).toBe(new Date().getFullYear());
     expect(expense.paid).toBe(false);
-    expect(expense.value).toBe(0);
     expect(expense.total).toBe(0);
-    expect(expense.month).toBe(EMonth.FEBRUARY);
-    expect(expense.active).toBe(true);
     expect(expense.total_paid).toBe(0);
     expect(expense.instalment_number).toBe(1);
-  });
-
-  it('should use the current month when `month` is not provided', () => {
-    jest
-      .spyOn(require('./config'), 'getCurrentMonth')
-      .mockReturnValue(EMonth.JULY);
-
-    const params = {
-      ...mockExpenseConstructorParams,
-      month: undefined,
-    };
-
-    const expense = new Expense(params);
-
-    expect(expense.month).toBe(EMonth.JULY);
-    expect(getCurrentMonth).toHaveBeenCalled();
   });
 
   it('should keep optional fields undefined when they are not provided', () => {
@@ -88,6 +66,7 @@ describe('Expense', () => {
       bill: mockExpenseConstructorParams.bill,
       type: mockExpenseConstructorParams.type,
       supplier: mockExpenseConstructorParams.supplier,
+      name: mockExpenseConstructorParams.name,
     };
 
     const expense = new Expense(params);
@@ -106,8 +85,6 @@ describe('Expense', () => {
     };
 
     const expense = new Expense(params);
-
-    expect(expense.active).toBe(false);
     expect(expense.paid).toBe(true);
   });
 });

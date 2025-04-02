@@ -23,6 +23,9 @@ export class Bank implements BankEntity {
   @JoinTable()
   bills?: Array<Bill>;
 
+  @Column({ nullable: false, unique: true, length: 200 })
+  name_code: string;
+
   @CreateDateColumn()
   created_at: Date;
 

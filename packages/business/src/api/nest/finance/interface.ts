@@ -6,11 +6,12 @@ import { IBill } from './bill';
 
 export interface IFinanceBase extends INestBaseEntity {
   name: string;
+  name_code: string;
 }
 
 export type IFinanceResponse = INestBaseResponse;
 
-export interface IFinance extends Omit<IFinanceBase, 'name'> {
+export interface IFinance extends Omit<IFinanceBase, 'name' | 'name_code'> {
   user: IUser;
   bills?: Array<IBill>;
 }

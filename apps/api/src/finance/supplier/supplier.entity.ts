@@ -30,6 +30,9 @@ export class Supplier implements SupplierEntity {
   @JoinTable()
   type: SupplierType;
 
+  @Column({ nullable: false, unique: true, length: 200 })
+  name_code: string;
+
   @OneToMany(() => Expense, (expense) => expense.supplier)
   @JoinTable()
   expenses?: Array<Expense>;

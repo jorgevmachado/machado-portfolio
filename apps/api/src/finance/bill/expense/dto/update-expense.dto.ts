@@ -140,9 +140,4 @@ export class UpdateExpenseDto {
   @IsBoolean()
   @IsEmpty()
   december_paid?: boolean;
-
-  @IsPositive()
-  @IsEmpty()
-  @IsNumber({ maxDecimalPlaces: 0 })
-  instalment_number?: number;
 }

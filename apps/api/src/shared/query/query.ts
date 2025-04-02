@@ -129,8 +129,9 @@ export class Query<T extends ObjectLiteral> {
       filters.forEach((filter) => {
         const { column, searchValue } = this.setWhereParam({
           by: filter.param,
-          condition: filter.condition,
           value: filter.value,
+          relation: filter.relation,
+          condition: filter.condition,
         });
         this.query.andWhere(column, searchValue);
       });
@@ -195,13 +196,15 @@ export class Query<T extends ObjectLiteral> {
     }
   }
 
-  private setWhereParam({ by, condition, value }: WhereParams) {
+  private setWhereParam({ by, value, relation, condition }: WhereParams) {
+    const param = !relation ? `${this.alias}.${by}` : by;
+
     const result = {
-      column: `${this.alias}.${by} ${condition} :${by}`,
+      column: `${param} ${condition} :${by}`,
       searchValue: { [by]: value },
     };
     if (condition === 'LIKE') {
-      result.column = `LOWER(${this.alias}.${by}) ${condition} :${by}`;
+      result.column = `LOWER(${param}) ${condition} :${by}`;
       result.searchValue[by] = `%${value}%`;
     }
     return result;

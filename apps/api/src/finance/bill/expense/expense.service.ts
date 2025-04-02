@@ -1,8 +1,9 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
+import ExpenseConstructor from '@repo/business/finance/expense/expense';
 
 import { Service } from '../../../shared';
 
@@ -14,7 +15,6 @@ import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { Expense } from './expense.entity';
 import { Bill } from '../bill.entity';
 import { Supplier } from '../../supplier/supplier.entity';
-import { isUUID } from '@repo/services/string/string';
 import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 @Injectable()
@@ -28,15 +28,17 @@ export class ExpenseService extends Service<Expense> {
     super('expenses', ['supplier', 'bill'], repository);
   }
 
-  async create(bill: Bill, createExpenseDto: CreateExpenseDto) {
+  async buildCreation(bill: Bill, createExpenseDto: CreateExpenseDto) {
     const supplier = await this.supplierService.treatEntityParam<Supplier>(
       createExpenseDto.supplier,
       'Supplier',
     );
-    const newExpense = this.expenseBusiness.initializeExpense({
+    const name = `${bill.name} ${supplier.name}`;
+    return new ExpenseConstructor({
       supplier,
       bill,
       year: bill.year,
+      name,
       type: createExpenseDto.type,
       paid: createExpenseDto.paid,
       value: createExpenseDto.value,
@@ -44,15 +46,9 @@ export class ExpenseService extends Service<Expense> {
       description: createExpenseDto.description,
       instalment_number: createExpenseDto.instalment_number,
     });
-    return await this.save(newExpense);
   }
 
-  async update(bill: Bill, id: string, updateExpenseDto: UpdateExpenseDto) {
-    if (!isUUID(id)) {
-      throw this.error(new ConflictException('Invalid ID'));
-    }
-    const entity = await this.findOne({ value: id });
-
+  async buildUpdate(entity: Expense, updateExpenseDto: UpdateExpenseDto) {
     const supplier = !updateExpenseDto.supplier
       ? entity.supplier
       : await this.supplierService.treatEntityParam<Supplier>(
@@ -60,17 +56,24 @@ export class ExpenseService extends Service<Expense> {
           'Supplier',
         );
 
-    const newExpense = this.expenseBusiness.merge({
+    const name = !updateExpenseDto.supplier
+      ? entity.name
+      : `${entity.bill.name} ${supplier.name}`;
+
+    return this.expenseBusiness.merge({
       entity,
       expenseToMerge: {
         type: entity.type,
+        name,
         ...updateExpenseDto,
         supplier,
-        bill,
+        bill: entity.bill,
       },
-      withAllCalculations: true,
     });
+  }
 
+  async saveExpense(expense: Expense) {
+    const newExpense = this.expenseBusiness.calculateExpense(expense);
     return await this.save(newExpense);
   }
 

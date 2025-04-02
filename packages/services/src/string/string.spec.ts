@@ -88,7 +88,7 @@ describe('String functions', () => {
       expect(normalize('Joao da Silva')).toBe('Joao da Silva');
     });
 
-    it('should return empty string if input is empty\n', () => {
+    it('should return empty string if input is empty.', () => {
       expect(normalize('')).toBe('');
     });
   });
@@ -102,6 +102,10 @@ describe('String functions', () => {
   describe('toSnakeCase', () => {
     it('Must convert a string to snake case', () => {
       expect(toSnakeCase('snakeCase')).toEqual('snake_case');
+    });
+
+    it('Must convert a string normalize to snake case', () => {
+      expect(toSnakeCase('Snake Case')).toEqual('snake_case');
     });
   });
 

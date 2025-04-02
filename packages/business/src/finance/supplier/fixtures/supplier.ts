@@ -1,10 +1,14 @@
-import { findEntityBy } from '@repo/services/entities/entities';
-import Supplier from '../supplier';
+import {
+  findEntityBy,
+  transformObjectDateAndNulls,
+} from '@repo/services/entities/entities';
 
 import SUPPLIER_LIST_FIXTURE_JSON from '@repo/mock-json/finance/supplier/suppliers.json';
 
+import Supplier from '../supplier';
+
 const SUPPLIER_LIST_TEMP: Array<Supplier> = SUPPLIER_LIST_FIXTURE_JSON.map(
-  (supplier) => supplier as unknown as Supplier,
+  (supplier) => transformObjectDateAndNulls<Supplier, unknown>(supplier),
 );
 
 export const VIVO_HOUSING_SUPPLIER_FIXTURE: Supplier = findEntityBy({

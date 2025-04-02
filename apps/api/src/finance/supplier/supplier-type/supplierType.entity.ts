@@ -20,6 +20,9 @@ export class SupplierType implements SupplierTypeEntity {
   @Column({ nullable: false, unique: true, length: 200 })
   name: string;
 
+  @Column({ nullable: false, unique: true, length: 200 })
+  name_code: string;
+
   @OneToMany(() => Supplier, (supplier) => supplier.type)
   @JoinTable()
   suppliers?: Array<Supplier>;

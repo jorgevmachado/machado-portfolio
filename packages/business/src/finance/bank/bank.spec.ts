@@ -26,6 +26,7 @@ describe('Bank', () => {
 
       expect(bank.id).toBe(params.id);
       expect(bank.name).toBe(params.name);
+      expect(bank.name_code).toBe(params.name_code);
       expect(bank.created_at).toEqual(params.created_at);
       expect(bank.updated_at).toEqual(params.updated_at);
       expect(bank.deleted_at).toBe(params.deleted_at);
@@ -34,6 +35,7 @@ describe('Bank', () => {
     it('should create an instance with minimal valid data', () => {
       const params = {
         name: bankMock.name,
+        name_code: bankMock.name_code,
       };
 
       const bank = new Bank(params);

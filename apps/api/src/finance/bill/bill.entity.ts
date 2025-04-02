@@ -43,7 +43,7 @@ export class Bill implements BillEntity {
   })
   type: EBillType;
 
-  @Column({ nullable: false, unique: true, length: 200 })
+  @Column({ nullable: false, length: 200 })
   name: string;
 
   @Column({
@@ -61,6 +61,9 @@ export class Bill implements BillEntity {
   })
   @JoinTable()
   finance: Finance;
+
+  @Column({ nullable: false, length: 200 })
+  name_code: string;
 
   @Column({ nullable: false, default: false })
   all_paid?: boolean;

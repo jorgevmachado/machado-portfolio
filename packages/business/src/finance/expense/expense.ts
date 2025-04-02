@@ -1,17 +1,17 @@
+import { normalize, toSnakeCase } from '@repo/services/string/string';
+
 import { ExpenseConstructorParams, ExpenseEntity } from './interface';
-import { getCurrentMonth } from './config';
 
 export default class Expense implements ExpenseEntity {
   id: ExpenseEntity['id'];
   bill: ExpenseEntity['bill'];
+  name: ExpenseEntity['name'];
   year?: ExpenseEntity['year'] = new Date().getFullYear();
   type: ExpenseEntity['type'];
   paid: ExpenseEntity['paid'] = false;
-  value?: ExpenseEntity['value'] = 0;
   total?: ExpenseEntity['total'] = 0;
-  month?: ExpenseEntity['month'] = getCurrentMonth();
-  active?: ExpenseEntity['active'] = true;
   supplier: ExpenseEntity['supplier'];
+  name_code: ExpenseEntity['name_code'];
   total_paid?: ExpenseEntity['total_paid'] = 0;
   january?: ExpenseEntity['january'] = 0;
   february?: ExpenseEntity['february'] = 0;
@@ -45,13 +45,12 @@ export default class Expense implements ExpenseEntity {
   constructor(params?: ExpenseConstructorParams) {
     this.id = params?.id ?? this.id;
     this.bill = params?.bill ?? this.bill;
+    this.name = params?.name ?? this.name;
     this.year = params?.year ?? this.year;
     this.type = params?.type ?? this.type;
     this.paid = params?.paid ?? this.paid;
-    this.value = params?.value ?? this.value;
     this.total = params?.total ?? this.total;
-    this.month = params?.month ?? this.month;
-    this.active = params?.active ?? this.active;
+    this.name_code = this.name ? toSnakeCase(normalize(this.name)) : this.name_code;
     this.supplier = params?.supplier;
     this.type = params?.type;
     this.total_paid = params?.total_paid ?? this.total_paid;

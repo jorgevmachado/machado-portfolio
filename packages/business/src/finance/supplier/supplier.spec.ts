@@ -27,7 +27,6 @@ describe('Supplier', () => {
       id: supplierEntityMock.id,
       name: supplierEntityMock.name,
       type: supplierEntityMock.type,
-      active: supplierEntityMock.active,
       created_at: supplierEntityMock.created_at,
       updated_at: supplierEntityMock.updated_at,
       deleted_at: supplierEntityMock.deleted_at,
@@ -39,10 +38,9 @@ describe('Supplier', () => {
       expect(supplier.id).toBe(params.id);
       expect(supplier.name).toBe(params.name);
       expect(supplier.type).toBe(params.type);
-      expect(supplier.active).toBe(params.active);
       expect(supplier.created_at).toEqual(params.created_at);
       expect(supplier.updated_at).toEqual(params.updated_at);
-      expect(supplier.deleted_at).toBe(params.deleted_at);
+      expect(supplier.deleted_at).toBeUndefined();
       expect(supplier.description).toBe(params.description);
     });
 
@@ -56,7 +54,6 @@ describe('Supplier', () => {
 
       expect(supplier.name).toBe(params.name);
       expect(supplier.type).toBe(params.type);
-      expect(supplier.active).toBeUndefined();
       expect(supplier.created_at).toBeUndefined();
       expect(supplier.updated_at).toBeUndefined();
       expect(supplier.deleted_at).toBeUndefined();
@@ -72,7 +69,6 @@ describe('Supplier', () => {
           updated_at: new Date('2023-01-02'),
           deleted_at: undefined,
         },
-        active: true,
         created_at: new Date('2023-01-01'),
       };
 
@@ -87,7 +83,6 @@ describe('Supplier', () => {
     it('should throw an error when type is missing', () => {
       const params = {
         name: 'Supplier C',
-        active: true,
         description: 'Handles logistics and transport.',
       };
 
@@ -105,7 +100,6 @@ describe('Supplier', () => {
       expect(supplier.id).toBeUndefined();
       expect(supplier.name).toBeUndefined();
       expect(supplier.type).toBeUndefined();
-      expect(supplier.active).toBeUndefined();
       expect(supplier.created_at).toBeUndefined();
       expect(supplier.updated_at).toBeUndefined();
       expect(supplier.deleted_at).toBeUndefined();

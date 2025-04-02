@@ -75,7 +75,27 @@ export class BillService extends Service<Bill> {
       category,
       expenses,
     });
+    return await this.saveBill(bill);
+  }
 
+  private async saveBill(bill: Bill) {
+    const existBill = await this.findOne({
+      value: bill.name,
+      filters: [
+        {
+          value: bill.year,
+          param: 'year',
+          condition: '=',
+        },
+      ],
+      withThrow: false,
+    });
+
+    if (existBill) {
+      throw new ConflictException(
+        `Key (name)=(${bill.name}) already exists with this (year)=(${bill.year}).`,
+      );
+    }
     return await this.save(bill);
   }
 
@@ -121,7 +141,7 @@ export class BillService extends Service<Bill> {
       category,
       expenses,
     });
-    return await this.save(bill);
+    return await this.saveBill(bill);
   }
 
   async findAllBills(finance: Finance, params: ListParams) {
@@ -210,16 +230,75 @@ export class BillService extends Service<Bill> {
 
   async createExpense(param: string, createExpenseDto: CreateExpenseDto) {
     const bill = await this.findOne({ value: param });
-    return await this.expenseService.create(bill, createExpenseDto);
+
+    const createdExpense = await this.expenseService.buildCreation(
+      bill,
+      createExpenseDto,
+    );
+
+    const bills = await this.findAll({
+      filters: [
+        {
+          value: createdExpense.name_code,
+          param: 'expenses.name_code',
+          relation: true,
+          condition: 'LIKE',
+        },
+      ],
+    }) as Array<Bill>;
+
+    if(bills.length) {
+      throw this.error(
+        new ConflictException(
+          'You cannot create this expense because it is already in use.',
+        ),
+      );}
+
+    const {
+      nextYear,
+      requiresNewBill,
+      expenseForNextYear,
+      expenseForCurrentYear
+    } = this.billBusiness.initializeExpense(createdExpense);
+
+    const expense = await this.expenseService.saveExpense(expenseForCurrentYear);
+
+    if (requiresNewBill) {
+      const newBill = (await this.createNewBillForNextYear(
+        nextYear,
+        bill,
+      )) as Bill;
+      await this.expenseService.saveExpense({
+        ...expenseForNextYear,
+        bill: newBill
+      });
+    }
+    return expense;
   }
 
-  async updateExpense(
-    param: string,
-    expenseId: string,
-    updateExpenseDto: UpdateExpenseDto,
-  ) {
-    const bill = await this.findOne({ value: param });
-    return await this.expenseService.update(bill, expenseId, updateExpenseDto);
+  private async createNewBillForNextYear(year: number, bill: Bill) {
+    const newBill = this.billBusiness.initialize({
+      ...bill,
+      id: undefined,
+      year,
+      expenses: [],
+    });
+
+    const existBill = await this.findOne({
+      value: newBill.name,
+      filters: [
+        {
+          value: newBill.year,
+          param: 'year',
+          condition: '=',
+        },
+      ],
+      withThrow: false,
+    });
+    if (!existBill) {
+      return await this.saveBill(newBill);
+    }
+    return existBill;
   }
 
   async findOneExpense(param: string, expenseId: string) {
@@ -235,6 +314,41 @@ export class BillService extends Service<Bill> {
       ],
     });
   }
+
+  async updateExpense(
+    param: string,
+    expenseId: string,
+    updateExpenseDto: UpdateExpenseDto,
+  ) {
+    const expense = await this.findOneExpense(param, expenseId);
+    const updatedExpense = await this.expenseService.buildUpdate(
+        expense,
+        updateExpenseDto,
+    );
+
+    if(expense.name_code !== updatedExpense.name_code) {
+      const bills = await this.findAll({
+        filters: [
+          {
+            value: updatedExpense.name_code,
+            param: 'expenses.name_code',
+            relation: true,
+            condition: 'LIKE',
+          },
+        ],
+      }) as Array<Bill>;
+
+      if(bills.length) {
+        throw this.error(
+            new ConflictException(
+                `You cannot update this expense with this (supplier) ${updatedExpense.supplier.name} because there is already an expense linked to this supplier.`
+            ),
+        );}
+    }
+    return await this.expenseService.saveExpense(updatedExpense);
+  }
+
+
 
   async findAllExpense(param: string, params: ListParams) {
     const bill = await this.findOne({ value: param });

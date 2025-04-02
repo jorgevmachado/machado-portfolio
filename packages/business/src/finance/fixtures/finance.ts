@@ -1,6 +1,9 @@
-import Finance from '../finance';
+import {
+    transformObjectDateAndNulls,
+} from '@repo/services/entities/entities';
 
 import FINANCE_FIXTURE_JSON from '@repo/mock-json/finance/finance.json';
 
-export const FINANCE_FIXTURE: Finance =
-  FINANCE_FIXTURE_JSON as unknown as Finance;
+import Finance from '../finance';
+
+export const FINANCE_FIXTURE: Finance = transformObjectDateAndNulls<Finance, unknown>(FINANCE_FIXTURE_JSON);

@@ -1,11 +1,14 @@
-import { findEntityBy } from '@repo/services/entities/entities';
+import {
+    findEntityBy,
+    transformObjectDateAndNulls,
+} from '@repo/services/entities/entities';
 
 import BILL_LIST_FIXTURE_JSON from '@repo/mock-json/finance/bill/bills.json';
 
 import Bill from '../bill';
 
 const BILL_LIST_TEMP: Array<Bill> = BILL_LIST_FIXTURE_JSON.map(
-  (bill) => bill as unknown as Bill,
+  (bill) => transformObjectDateAndNulls<Bill, unknown>(bill),
 );
 
 export const INGRID_RESIDENTIAL_BANK_SLIP_NUBANK_BILL_FIXTURE: Bill =

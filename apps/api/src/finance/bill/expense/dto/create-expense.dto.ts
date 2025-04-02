@@ -12,16 +12,10 @@ import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 
 import { Supplier } from '../../../supplier/supplier.entity';
 
-import { Bill } from '../../bill.entity';
-
 export class CreateExpenseDto {
   @IsNotEmpty()
   @IsEnum(EExpenseType)
   type: EExpenseType;
-
-  @IsNotEmpty()
-  @MaxLength(200)
-  bill: string | Bill;
 
   @IsEmpty()
   @IsBoolean()

@@ -1,11 +1,14 @@
-import { findEntityBy } from '@repo/services/entities/entities';
-
-import Expense from '../expense';
+import {
+  findEntityBy,
+  transformObjectDateAndNulls,
+} from '@repo/services/entities/entities';
 
 import EXPENSE_LIST_FIXTURE_JSON from '@repo/mock-json/finance/expense/expenses.json';
 
+import Expense from '../expense';
+
 const EXPENSE_LIST_TEMP: Array<Expense> = EXPENSE_LIST_FIXTURE_JSON.map(
-  (expense) => expense as unknown as Expense,
+  (expense) => transformObjectDateAndNulls<Expense, unknown>(expense)
 );
 
 const EXPENSES_CONFIG = {

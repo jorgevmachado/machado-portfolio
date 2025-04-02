@@ -1,3 +1,5 @@
+import { toSnakeCase, normalize } from '@repo/services/string/string';
+
 import type { BillConstructorParams, BillEntity } from './interface';
 
 export default class Bill implements BillEntity {
@@ -11,6 +13,7 @@ export default class Bill implements BillEntity {
   category: BillEntity['category'];
   expenses: BillEntity['expenses'];
   all_paid?: BillEntity['all_paid'] = false;
+  name_code: BillEntity['name_code'];
   total_paid?: BillEntity['total_paid'] = 0;
   created_at: BillEntity['created_at'];
   updated_at: BillEntity['updated_at'];
@@ -27,6 +30,7 @@ export default class Bill implements BillEntity {
       this.finance = params?.finance ?? this.finance;
       this.category = params?.category ?? this.category;
       this.expenses = params?.expenses ?? this.expenses;
+      this.name_code = toSnakeCase(normalize(this.name));
       this.total_paid = params?.total_paid ?? this.total_paid;
       this.created_at = params?.created_at ?? this.created_at;
       this.updated_at = params?.updated_at ?? this.updated_at;

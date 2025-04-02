@@ -8,7 +8,10 @@ import Bill from './bill';
 export type BillEntity = IBill;
 
 export interface BillConstructorParams
-  extends Omit<BillEntity, 'id' | 'created_at' | 'updated_at' | 'deleted_at'> {
+  extends Omit<
+    BillEntity,
+    'id' | 'name_code' | 'created_at' | 'updated_at' | 'deleted_at'
+  > {
   id?: BillEntity['id'];
   created_at?: BillEntity['created_at'];
   updated_at?: BillEntity['updated_at'];
@@ -24,5 +27,5 @@ export type TList = 'type' | 'bank' | 'category';
 export interface BillList {
   title: string;
   list: Array<Bill>;
-  listType: TList,
+  listType: TList;
 }

@@ -16,8 +16,9 @@ export type TQueryCondition =
     | 'NOT';
 
 export interface FilterParams {
-  value: string;
+  value: string | number;
   param: string;
+  relation?: boolean;
   condition: TQueryCondition;
 }
 
@@ -29,4 +30,5 @@ export interface SearchParams {
 
 export interface WhereParams extends Omit<SearchParams, 'by'> {
   by: string;
+  relation?: boolean;
 }

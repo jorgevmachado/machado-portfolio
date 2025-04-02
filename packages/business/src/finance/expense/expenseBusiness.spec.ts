@@ -7,37 +7,20 @@ import {
   jest,
 } from '@jest/globals';
 
+import { MONTHS } from '@repo/services/month/month';
+
 import { EExpenseType, EMonth } from '../enum';
 
 import ExpenseBusiness from './expenseBusiness';
 import Expense from './expense';
 import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
+import {ExpenseConstructorParams, ExpenseEntity} from './interface';
 
-jest.mock('./config', () => ({
-  getCurrentMonth: jest.fn(),
-  getMonthByIndex: jest.fn(),
-  getMonthIndex: jest.fn(),
-  validateMonth: jest.fn(),
-  MONTH_KEYS: [
-    'january',
-    'february',
-    'march',
-    'april',
-    'may',
-    'june',
-    'july',
-    'august',
-    'september',
-    'october',
-    'november',
-    'december',
-  ],
-}));
-
-describe('ExpenseBusiness', () => {
+describe('business', () => {
   const business = new ExpenseBusiness();
 
   const mockExpenseConstructorParams = INGRID_RESIDENTIAL_LIST_FIXTURE[0];
+  const mockExpenseConstructorParams2 = INGRID_RESIDENTIAL_LIST_FIXTURE[1];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -47,168 +30,304 @@ describe('ExpenseBusiness', () => {
     jest.restoreAllMocks();
   });
 
-  describe('initializeExpense', () => {
-    it('should initialize an expense and process it', () => {
-      const params = {
-        ...mockExpenseConstructorParams,
-        type: EExpenseType.VARIABLE,
+  describe('initialize', () => {
+    it('should initialize a FIXED expense correctly', () => {
+      const params: ExpenseConstructorParams = {
         value: 100,
-        month: EMonth.MARCH,
-      };
-
-      const expense = business.initializeExpense(params);
-
-      expect(expense).toBeInstanceOf(Expense);
-      expect(expense.value).toBe(100);
-      expect(expense.total).toBeGreaterThanOrEqual(0); // Verificar que processAllCalculate foi chamado.
-    });
-  });
-
-  describe('merge', () => {
-    it('should merge expenses correctly, overriding with expenseToMerge values', () => {
-      const entity = new Expense(mockExpenseConstructorParams);
-      const expenseToMerge = {
-        ...mockExpenseConstructorParams,
-        value: 200,
-        month: EMonth.FEBRUARY,
-        total_paid: 50,
-      };
-
-      const mergedExpense = business.merge({ entity, expenseToMerge });
-
-      expect(mergedExpense.value).toBe(200);
-      expect(mergedExpense.month).toBe(EMonth.FEBRUARY);
-      expect(mergedExpense.total_paid).toBe(50);
-    });
-
-    it('should trigger full calculations when withAllCalculations is true', () => {
-      const entity = new Expense({
-        ...mockExpenseConstructorParams,
-        value: 100,
-      });
-      const expenseToMerge = { ...mockExpenseConstructorParams, value: 200 };
-
-      const mergedExpense = business.merge({
-        entity,
-        expenseToMerge,
-        withAllCalculations: true,
-      });
-
-      expect(mergedExpense.total).toBeGreaterThan(0);
-    });
-  });
-
-  describe('processValues', () => {
-    it('should process installment-based expenses', () => {
-      const params = new Expense({
-        ...mockExpenseConstructorParams,
-        value: 1200,
-        instalment_number: 4,
+        name: mockExpenseConstructorParams.name,
+        supplier: mockExpenseConstructorParams.supplier,
         month: EMonth.JANUARY,
-      });
-      const spy = jest.spyOn(business as any, 'processValuesMonthsInstallment');
+        type: EExpenseType.FIXED,
+        year: 2023,
+      };
 
-      business.processValues(params);
+      const result = business.initialize(params);
 
-      expect(spy).toHaveBeenCalled();
+      expect(result.requiresNewBill).toBe(false);
+      expect(result.expenseForNextYear).toBeUndefined();
+      expect(result.expenseForCurrentYear).toBeInstanceOf(Expense);
+      expect(result.expenseForCurrentYear.total).toBeDefined();
     });
 
-    it('should process fixed expenses', () => {
-      const params = new Expense({
-        ...mockExpenseConstructorParams,
-        value: 500,
+    it('should initialize a VARIABLE expense correctly', () => {
+      const params: ExpenseConstructorParams = {
+        name: mockExpenseConstructorParams.name,
+        value: 100,
+        supplier: mockExpenseConstructorParams.supplier,
+        month: EMonth.FEBRUARY,
+        instalment_number: 12,
+        type: EExpenseType.VARIABLE,
+        year: 2023,
+      };
+
+      const result = business.initialize(params);
+
+      expect(result.requiresNewBill).toBe(true);
+      expect(result.expenseForNextYear).not.toBeUndefined();
+      expect(result.expenseForCurrentYear).toBeInstanceOf(Expense);
+      expect(result.expenseForCurrentYear.total).toEqual(0);
+    });
+
+    it('should throw an error if the month is invalid', () => {
+      const params: any = {
+        name: mockExpenseConstructorParams.name,
+        value: 100,
+        month: 'INVALID_MONTH',
+        supplier: mockExpenseConstructorParams.supplier,
+        instalment_number: 5,
+        type: EExpenseType.VARIABLE,
+        year: 2023,
+      };
+
+      expect(() => {
+        business.initialize(params);
+      }).toThrowError('The month provided is invalid: INVALID_MONTH');
+    });
+  });
+
+  describe('calculateExpense', () => {
+    it('should calculate totals for a paid expense', () => {
+      const params: ExpenseConstructorParams = {
+        name: mockExpenseConstructorParams.name,
+        value: 100,
+        paid: true,
+        supplier: mockExpenseConstructorParams.supplier,
+        instalment_number: 3,
+        month: EMonth.JANUARY,
+        type: EExpenseType.FIXED,
+        year: 2023,
+      };
+
+      const result = business.calculateExpense(params);
+
+      expect(result.paid).toBe(true);
+      expect(result.total).toBe(0);
+      MONTHS.forEach((month) => {
+        expect(result[`${month}_paid`]).toBe(true);
+      });
+    });
+
+    it('should calculate totals for an unpaid expense', () => {
+      const params: ExpenseConstructorParams = {
+        name: mockExpenseConstructorParams.name,
+        value: 50,
+        paid: true,
+        supplier: mockExpenseConstructorParams.supplier,
+        instalment_number: 3,
+        month: EMonth.FEBRUARY,
+        type: EExpenseType.FIXED,
+        year: 2023,
+      };
+
+      const result = business.calculateExpense(params);
+
+      expect(result.paid).toBe(true);
+      expect(result.total).toEqual(0);
+      MONTHS.forEach((month) => {
+        if (result[month] === 0) {
+          expect(result[`${month}_paid`]).toBe(true);
+        }
+      });
+    });
+  });
+
+  describe('processValuesVariable', () => {
+    it('should split values correctly across months if they span multiple years', () => {
+      const params: any = {
+        name: mockExpenseConstructorParams.name,
+        supplier: mockExpenseConstructorParams.supplier,
+        value: 200,
+        year: 2023,
+        instalment_number: 12,
+        type: EExpenseType.VARIABLE,
+        paid: false,
+        total: 0,
+      };
+
+      const result = business['processValuesVariable'](params, params.value, EMonth.NOVEMBER);
+
+      expect(result.nextYear).toBe(2024);
+      expect(result.requiresNewBill).toBe(true);
+      expect(result.expenseForCurrentYear).not.toBeUndefined();
+      expect(result.expenseForNextYear).not.toBeUndefined();
+    });
+  });
+
+  describe('processesMonthsOfExpense', () => {
+    it('should correctly apply values to the specified months', () => {
+      const expense = new Expense({
+        name: mockExpenseConstructorParams.name,
+        supplier: mockExpenseConstructorParams.supplier,
+        year: 2023,
+        value: 100,
+        paid: false,
+        instalment_number: 2,
+        month: EMonth.JANUARY,
         type: EExpenseType.FIXED,
       });
-      const spy = jest.spyOn(business as any, 'processValuesFixed');
 
-      business.processValues(params);
+      const updatedExpense = business['processesMonthsOfExpense'](expense, ['JANUARY', 'FEBRUARY'], 100, false);
 
-      expect(spy).toHaveBeenCalled();
-    });
-
-    it('should process variable expenses', () => {
-      const params = new Expense({
-        ...mockExpenseConstructorParams,
-        value: 300,
-        type: EExpenseType.VARIABLE,
-        month: EMonth.JUNE,
-      });
-      const spy = jest.spyOn(business as any, 'processValuesVariables');
-
-      business.processValues(params);
-
-      expect(spy).toHaveBeenCalled();
-    });
-  });
-
-  describe('processAllCalculate', () => {
-    it('should calculate total and total_paid correctly', () => {
-      const expense = new Expense({
-        ...mockExpenseConstructorParams,
-        january: 200,
-        february: 300,
-        march_paid: true,
-        march: 300,
-      });
-
-      const result = business.processAllCalculate(expense);
-
-      expect(result.total).toBe(800);
-      expect(result.total_paid).toBe(800);
-      expect(result.paid).toBe(false);
+      expect(updatedExpense.january).toBe(0);
+      expect(updatedExpense.february).toBe(0);
+      expect(updatedExpense.january_paid).toBe(true);
+      expect(updatedExpense.march_paid).toBe(true);
     });
   });
 
   describe('calculateTotal', () => {
-    it('should calculate total and total_paid', () => {
+    it('should calculate correctly for an expense with some paid months', () => {
       const expense = new Expense({
-        ...mockExpenseConstructorParams,
-        january: 100,
-        january_paid: false,
+        name: mockExpenseConstructorParams.name,
+        supplier: mockExpenseConstructorParams.supplier,
+        year: 2023,
+        value: 50,
+        paid: false,
+        instalment_number: 3,
+        month: EMonth.JANUARY,
+        type: EExpenseType.FIXED,
+      });
+
+      // Ajuste prévio do estado
+      expense['january'] = 50;
+      expense['february'] = 50;
+      expense['march'] = 50;
+
+      expense['january_paid'] = true;
+      expense['february_paid'] = false;
+      expense['march_paid'] = true;
+
+      const totals = business['calculateTotal'](expense);
+
+      expect(totals.total).toBe(150);
+      expect(totals.total_paid).toBe(100);
+      expect(totals.total - totals.total_paid).toBe(50);
+    });
+  });
+
+  describe('validateHaveBeenPaid', () => {
+    it('should return true if all months are paid', () => {
+      const expense = new Expense({
+        name: mockExpenseConstructorParams.name,
+        supplier: mockExpenseConstructorParams.supplier,
+        year: 2023,
+        value: 0,
+        paid: false,
+        instalment_number: 12,
+        month: EMonth.JANUARY,
+        type: EExpenseType.FIXED,
+      });
+
+      MONTHS.forEach((month) => {
+        expense[`${month}_paid`] = true;
+      });
+
+      const result = business['validateHaveBeenPaid'](expense);
+
+      expect(result).toBe(true);
+    });
+
+    it('should return false if not all months are paid', () => {
+      const expense = new Expense({
+        name: mockExpenseConstructorParams.name,
+        supplier: mockExpenseConstructorParams.supplier,
+        year: 2023,
+        value: 0,
+        paid: false,
+        instalment_number: 12,
+        month: EMonth.JANUARY,
+        type: EExpenseType.FIXED,
+      });
+
+      MONTHS.forEach((month, index) => {
+        expense[`${month}_paid`] = index !== 0; // Deixa "JANUARY" não pago
+      });
+
+      const result = business['validateHaveBeenPaid'](expense);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('merge', () => {
+    it('should merge two expenses with no conflicts', () => {
+      const expense1: ExpenseEntity = mockExpenseConstructorParams;
+      const expense2: ExpenseConstructorParams = {
+        april: 100,
+        may: 100,
+        supplier: mockExpenseConstructorParams.supplier,
+        name: 'Merged Expense',
+        type: EExpenseType.FIXED,
+      };
+
+      const result = business.merge({ entity: expense1, expenseToMerge: expense2});
+      expect(result.april).toEqual(expense2.april);
+      expect(result.may).toEqual(expense2.may);
+      expect(result.type).toEqual(expense2.type);
+      expect(result.supplier).toEqual(expense2.supplier);
+      expect(result.name).toEqual(expense2.name);
+    });
+
+    it('should merge expenses and override existing values', () => {
+      const expense1: ExpenseEntity = mockExpenseConstructorParams;
+      const expense2: ExpenseConstructorParams = {
+        year: 2023,
+        type: EExpenseType.FIXED,
+        supplier: mockExpenseConstructorParams.supplier,
+        name: 'Expense2',
+        paid: false,
+        instalment_number: 0,
+        february: 200,
+        march: 100,
+      };
+
+      const result = business.merge({ entity: expense1, expenseToMerge: expense2});
+
+      expect(result.year).toEqual(expense2.year);
+      expect(result.type).toEqual(expense2.type);
+      expect(result.supplier).toEqual(expense2.supplier);
+      expect(result.name).toEqual(expense2.name);
+      expect(result.paid).toEqual(expense2.paid);
+      expect(result.instalment_number).toEqual(expense2.instalment_number);
+      expect(result.february).toEqual(expense2.february);
+      expect(result.march).toEqual(expense2.march);
+    });
+
+    it('should merge expenses with paid status correctly', () => {
+      const expense1: ExpenseEntity = mockExpenseConstructorParams;
+      const expense2: ExpenseConstructorParams = {
+        year: 2023,
+        type: EExpenseType.FIXED,
+        supplier: mockExpenseConstructorParams.supplier,
+        name: 'Example Expense',
         february: 100,
         february_paid: true,
-      });
+      };
 
-      const result = business.calculateTotal(expense);
+      const result = business.merge({ entity: expense1, expenseToMerge: expense2});
 
-      expect(result.total).toBe(200);
-      expect(result.total_paid).toBe(100);
+      expect(result.year).toEqual(expense2.year);
+      expect(result.type).toEqual(expense2.type);
+      expect(result.supplier).toEqual(expense2.supplier);
+      expect(result.name).toEqual(expense2.name);
+      expect(result.february).toEqual(expense2.february);
+      expect(result.february_paid).toEqual(expense2.february_paid);
     });
   });
 
-  describe('validateAllPaid', () => {
-    it('should return true when all months are fully paid', () => {
-      const expense = new Expense({
-        ...mockExpenseConstructorParams,
-        january_paid: true,
-        february_paid: true,
-        march_paid: true,
-        april_paid: true,
-        may_paid: true,
-        june_paid: true,
-        july_paid: true,
-        august_paid: true,
-        september_paid: true,
-        october_paid: true,
-        november_paid: true,
-        december_paid: true,
-      });
+  describe('calculateAllExpenses', () => {
+    it('should calculate all expenses correctly', () => {
+      const expenses = [
+        mockExpenseConstructorParams,
+        mockExpenseConstructorParams2
+      ];
 
-      const isFullyPaid = business.validateAllPaid(expense);
+      const result = business.calculateAllExpenses(expenses);
 
-      expect(isFullyPaid).toBe(true);
-    });
-
-    it('should return false if any month is not fully paid', () => {
-      const expense = new Expense({
-        ...mockExpenseConstructorParams,
-        january_paid: true,
-        february_paid: false,
-      });
-
-      const isFullyPaid = business.validateAllPaid(expense);
-
-      expect(isFullyPaid).toBe(false);
-    });
-  });
+      expect(result.total).toEqual(654.26);
+      expect(result.allPaid).toEqual(false);
+      expect(result.totalPaid).toEqual(654.26);
+      expect(result.totalPending).toEqual(0);
+    })
+  })
 });

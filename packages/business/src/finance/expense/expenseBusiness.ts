@@ -1,45 +1,153 @@
+import {
+  getMonthIndex,
+  MONTHS,
+  validateMonth,
+} from '@repo/services/month/month';
+import { EMonth } from '@repo/services/month/enum';
+
 import { EExpenseType } from '../enum';
 
-import { ExpenseConstructorParams, ExpenseMergeParams } from './interface';
-
+import type {
+  ExpenseConstructorParams,
+  InitializedExpense,
+  MergeExpenseParams,
+} from './interface';
 import Expense from './expense';
 
-import {
-  getMonthByIndex,
-  getMonthIndex,
-  MONTH_KEYS,
-  validateMonth,
-} from './config';
-
 export default class ExpenseBusiness {
-  private _months: Array<string> = MONTH_KEYS;
-
-  get months(): Array<string> {
-    return this._months;
-  }
-
-  initializeExpense(params: ExpenseConstructorParams): Expense {
+  initialize(params: ExpenseConstructorParams): InitializedExpense {
+    const { value, month} = params;
     const builtExpense = new Expense(params);
-    const processedExpenseValues = this.processValues(builtExpense);
-    return this.processAllCalculate(processedExpenseValues);
+    validateMonth(month);
+    return this.initializeValues(builtExpense, value, month);
   }
 
-  merge({
-    entity,
-    expenseToMerge,
-    withAllCalculations = false,
-  }: ExpenseMergeParams): Expense {
-    const mergedExpense = {
+  private initializeValues(expense: Expense, value: number, month: EMonth): InitializedExpense {
+    if (expense.type === EExpenseType.FIXED) {
+      return {
+        nextYear: expense.year + 1,
+        requiresNewBill: false,
+        expenseForNextYear: undefined,
+        expenseForCurrentYear: this.processValuesFixed(expense, value),
+      };
+    }
+    return this.processValuesVariable(expense, value, month);
+  }
+
+  private processValuesFixed(expense: Expense, value: number): Expense {
+    return this.processesMonthsOfExpense(expense, MONTHS, value, expense.paid);
+  }
+
+  private processValuesVariable(expense: Expense, value: number, month: EMonth): InitializedExpense {
+    const result: InitializedExpense = {
+      nextYear: expense.year + 1,
+      requiresNewBill: false,
+      expenseForNextYear: undefined,
+      expenseForCurrentYear: expense,
+    };
+    const { year,instalment_number } = expense;
+    const startMonthIndex = getMonthIndex(month.toUpperCase() as EMonth);
+    const monthsForCurrentYear: Array<string> = [];
+    const monthsForNextYear: Array<string> = [];
+
+    for (let i = 0; i < instalment_number; i++) {
+      const monthIndex = (startMonthIndex + i) % 12;
+      const currentYear = year + Math.floor((startMonthIndex + i) / 12);
+      if (currentYear === year) {
+        monthsForCurrentYear.push(MONTHS[monthIndex]);
+      } else {
+        monthsForNextYear.push(MONTHS[monthIndex]);
+      }
+    }
+    result.requiresNewBill = monthsForNextYear.length > 0;
+    const currentExpense = JSON.parse(JSON.stringify(expense));
+    result.expenseForCurrentYear = this.processesMonthsOfExpense(
+      expense,
+      monthsForCurrentYear,
+      value,
+      expense.paid,
+    );
+    if (result.requiresNewBill) {
+      result.expenseForNextYear = this.processesMonthsOfExpense(
+          {
+            ...currentExpense,
+            year: result.nextYear
+          },
+        monthsForNextYear,
+        currentExpense.value,
+        currentExpense.paid,
+      );
+    }
+    return result;
+  }
+
+  private processesMonthsOfExpense(
+    expense: Expense,
+    months: Array<string>,
+    value: number,
+    paid: boolean,
+  ): Expense {
+    MONTHS.forEach((month) => {
+      expense[month] = 0;
+      expense[`${month}_paid`] = false;
+    });
+    months.forEach((month) => {
+      expense[month] = value;
+      expense[`${month}_paid`] = paid;
+    });
+    MONTHS.forEach((month) => {
+      if(expense[month] === 0) {
+        expense[`${month}_paid`] = true;
+      }
+    });
+    return expense;
+  }
+
+  calculateExpense(params: ExpenseConstructorParams) {
+    const builtExpense = new Expense(params);
+    if(params.paid) {
+      MONTHS.forEach((month) => {
+        builtExpense[`${month}_paid`] = true;
+      })
+    }
+    return this.calculate(builtExpense);
+  }
+
+  private calculate(expense: Expense) {
+    const { total, total_paid } = this.calculateTotal(expense);
+    expense.total = total;
+    expense.total_paid = total_paid;
+    expense.paid = this.validateHaveBeenPaid(expense);
+    return expense;
+  }
+
+  private calculateTotal(expense: Expense) {
+    expense.total = 0;
+    expense.total_paid = 0;
+    MONTHS.forEach((key) => {
+      expense.total += expense[key];
+      expense.total_paid += expense[`${key}_paid`] ? expense[key] : 0;
+    });
+    return {
+      total: expense.total,
+      total_paid: expense.total_paid,
+    };
+  }
+
+  private validateHaveBeenPaid(expense: Expense) {
+    return MONTHS.every((month) => expense[`${month}_paid`] === true);
+  }
+
+  merge({ entity, expenseToMerge }: MergeExpenseParams): Expense {
+    const expenseMerged = {
       id: expenseToMerge?.id ?? entity.id,
       year: expenseToMerge?.year ?? entity.year,
-      type: expenseToMerge?.type ?? entity.type,
+      type: expenseToMerge?.type,
       paid: expenseToMerge?.paid ?? entity.paid,
+      name: expenseToMerge?.name,
       bill: expenseToMerge?.bill ?? entity.bill,
-      value: expenseToMerge?.value ?? entity.value,
       total: expenseToMerge?.total ?? entity.total,
-      month: expenseToMerge?.month ?? entity.month,
-      active: expenseToMerge?.active ?? entity.active,
-      supplier: expenseToMerge?.supplier ?? entity.supplier,
+      supplier: expenseToMerge?.supplier,
       total_paid: expenseToMerge?.total_paid ?? entity.total_paid,
       january: expenseToMerge?.january ?? entity.january,
       february: expenseToMerge?.february ?? entity.february,
@@ -67,101 +175,31 @@ export default class ExpenseBusiness {
       december_paid: expenseToMerge?.december_paid ?? entity.december_paid,
       description: expenseToMerge?.description ?? entity.description,
       instalment_number:
-        expenseToMerge?.instalment_number ?? entity.instalment_number,
+          expenseToMerge?.instalment_number ?? entity.instalment_number,
       created_at: expenseToMerge?.created_at ?? entity.created_at,
       updated_at: expenseToMerge?.updated_at ?? entity.updated_at,
       deleted_at: expenseToMerge?.deleted_at ?? entity.deleted_at,
     };
-    const expense = new Expense(mergedExpense);
-    if (!withAllCalculations) {
-      return expense;
-    }
-    const expenseToProcess = this.processValues(expense);
-    return this.processAllCalculate(expenseToProcess);
-  }
 
-  processValues(expense: Expense): Expense {
-    if (expense?.instalment_number > 1) {
-      return this.processValuesMonthsInstallment(expense);
-    }
-
-    if (expense.type === EExpenseType.FIXED) {
-      return this.processValuesFixed(expense);
-    }
-
-    return this.processValuesVariables(expense);
-  }
-
-  processAllCalculate(expense: Expense): Expense {
-    const { total, total_paid } = this.calculateTotal(expense);
-    expense.total = total;
-    expense.total_paid = total_paid;
-    expense.paid = this.validateAllPaid(expense);
-    return expense;
-  }
-
-  calculateTotal(expense: Expense) {
-    expense.total = 0;
-    expense.total_paid = 0;
-    MONTH_KEYS.forEach((key) => {
-      expense.total += expense[key];
-      expense.total_paid += expense[`${key}_paid`] ? expense[key] : 0;
-    });
-    return {
-      total: expense.total,
-      total_paid: expense.total_paid,
-    };
-  }
-
-  validateAllPaid(expense: Expense) {
-    return MONTH_KEYS.every((month) => expense[`${month}_paid`] === true);
+    return new Expense(expenseMerged);
   }
 
   calculateAllExpenses(expenses: Array<Expense>) {
-    const total = expenses.reduce((acc, expense) => acc + (expense.total || 0), 0);
-    const allPaid  = expenses.every((expense) => expense.paid);
-    const totalPaid = expenses.reduce((acc, expense) => acc + (expense.total_paid || 0), 0);
+    const total = expenses.reduce(
+      (acc, expense) => acc + (expense.total || 0),
+      0,
+    );
+    const allPaid = expenses.every((expense) => expense.paid);
+    const totalPaid = expenses.reduce(
+      (acc, expense) => acc + (expense.total_paid || 0),
+      0,
+    );
     const totalPending = total - totalPaid;
     return {
       total,
       allPaid,
       totalPaid,
-      totalPending
-    }
-  }
-
-  private processValuesMonthsInstallment(expense: Expense): Expense {
-    const { month, paid, value, instalment_number } = expense;
-    validateMonth(month);
-    const currentMonthIndex = getMonthIndex(month);
-    const currentValue = value / instalment_number;
-    for (let i = 0; i < instalment_number; i++) {
-      const installmentMonthIndex = (currentMonthIndex + i) % 12;
-      const installmentMonth = getMonthByIndex(installmentMonthIndex);
-      expense[installmentMonth] =
-        (expense[installmentMonth] || 0) + currentValue;
-      expense[`${installmentMonth}_paid`] = paid;
-    }
-    return expense;
-  }
-
-  private processValuesFixed(expense: Expense): Expense {
-    const { value, paid } = expense;
-    MONTH_KEYS.forEach((key) => {
-      expense[key] = value;
-      expense[`${key}_paid`] = paid;
-    });
-    return expense;
-  }
-
-  private processValuesVariables(expense: Expense): Expense {
-    const { value, paid, month } = expense;
-    validateMonth(month);
-    const currentMonth = expense.month.toLowerCase();
-    expense[currentMonth] = !expense[currentMonth]
-      ? value
-      : expense[currentMonth] + value;
-    expense[`${currentMonth}_paid`] = paid;
-    return expense;
+      totalPending,
+    };
   }
 }

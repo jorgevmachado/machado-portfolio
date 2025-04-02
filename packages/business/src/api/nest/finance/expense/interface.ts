@@ -3,7 +3,7 @@ import { EExpenseType, EMonth } from '../enum';
 import type { ISupplier } from '../supplier';
 import type { IBill } from '../bill';
 
-export interface IExpense extends Omit<IFinanceBase, 'name'> {
+export interface IExpense extends IFinanceBase {
   year?: number;
   bill?: IBill;
   type: EExpenseType;
@@ -11,7 +11,6 @@ export interface IExpense extends Omit<IFinanceBase, 'name'> {
   value?: number;
   total?: number;
   month?: EMonth;
-  active?: boolean;
   supplier: ISupplier;
   total_paid?: number;
   january?: number;
@@ -57,7 +56,7 @@ export interface IExpenseCreateParams {
 export interface IExpenseUpdateParams
   extends Omit<
     IExpense,
-    'id' | 'bill' | 'supplier' | 'created_at' | 'updated_at' | 'deleted_at'
+    'id' | 'bill' | 'name' | 'supplier' | 'name_code' | 'created_at' | 'updated_at' | 'deleted_at'
   > {
   bill: string | IExpense['bill'];
   supplier: string | IExpense['supplier'];
