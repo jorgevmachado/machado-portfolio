@@ -7,8 +7,6 @@ import {
   jest,
 } from '@jest/globals';
 
-import { EMonth } from '../../api/nest/finance';
-
 import Expense from './expense';
 
 import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
@@ -25,10 +23,6 @@ describe('Expense', () => {
   });
 
   it('should create an instance with all provided parameters', () => {
-    jest
-      .spyOn(require('./config'), 'getCurrentMonth')
-      .mockReturnValue(EMonth.JANUARY);
-
     const expense = new Expense(mockExpenseConstructorParams);
     expect(expense).toBeInstanceOf(Expense);
     expect(expense.id).toBe(mockExpenseConstructorParams.id);
@@ -48,10 +42,6 @@ describe('Expense', () => {
   });
 
   it('should initialize fields with default values when no parameters are provided', () => {
-    jest
-      .spyOn(require('./config'), 'getCurrentMonth')
-      .mockReturnValue(EMonth.FEBRUARY);
-
     const expense = new Expense();
 
     expect(expense.year).toBe(new Date().getFullYear());

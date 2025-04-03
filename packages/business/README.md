@@ -219,10 +219,6 @@ npm run test
 ```bash     
   npm run test -- --findRelatedTests src/finance/expense/expenseBusiness.spec.ts                                                                       
 ```
-###### - CONFIG
-```bash     
-  npm run test -- --findRelatedTests src/finance/expense/config.spec.ts                                                                       
-```
 ##### BILL 
 ###### - ENTITY
 ```bash     
