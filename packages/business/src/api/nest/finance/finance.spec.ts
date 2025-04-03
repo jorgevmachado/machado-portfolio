@@ -7,12 +7,18 @@ import {
   jest,
 } from '@jest/globals';
 
+import { FINANCE_FIXTURE } from '../../../finance';
+
+import { NestModuleAbstract } from '../nestModuleAbstract';
+
 import { Supplier } from './supplier';
 import { Expense } from './expense';
 import { Bank } from './bank';
 import { Bill } from './bill';
 
 import { Finance } from './finance';
+
+jest.mock('../nestModuleAbstract');
 
 jest.mock('./supplier');
 jest.mock('./expense');
@@ -84,6 +90,20 @@ describe('Finance', () => {
       const billModule = finance.bill;
       expect(billModule).toBeInstanceOf(Bill);
       expect(Bill).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('initialize', () => {
+    const financeEntity = FINANCE_FIXTURE;
+    it('should request service initialize', async () => {
+      const mockPost = jest
+        .spyOn(NestModuleAbstract.prototype, 'post')
+        .mockResolvedValue(financeEntity);
+
+      const result = await finance.initialize();
+      expect(mockPost).toHaveBeenCalledTimes(1);
+      expect(mockPost).toHaveBeenCalledWith('finance/initialize');
+      expect(result).toEqual(financeEntity);
     });
   });
 });

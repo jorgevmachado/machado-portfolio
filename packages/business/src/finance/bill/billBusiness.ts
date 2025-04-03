@@ -1,6 +1,6 @@
 import ExpenseBusiness from '../expense/expenseBusiness';
 
-import { Expense } from '../expense';
+import { ExpenseConstructorParams, ExpenseEntity } from '../expense';
 
 import type { BillConstructorParams, BillList, TList } from './interface';
 import Bill from './bill';
@@ -8,46 +8,56 @@ import Bill from './bill';
 export default class BillBusiness {
   initialize(params: BillConstructorParams): Bill {
     const builtBill = new Bill(params);
-    return this.processBillValues(builtBill);
+    return this.calculateBillTotals(builtBill);
   }
 
-  initializeExpense(expense: Expense) {
+  private calculateBillTotals(bill: Bill): Bill {
+    if (bill?.expenses?.length) {
+      const expensesCalculated = this.processExpenses(bill.expenses);
+      bill.total = this.sumTotalExpenses(expensesCalculated, 'total');
+      bill.total_paid = this.sumTotalExpenses(expensesCalculated, 'total_paid');
+      bill.all_paid = expensesCalculated.every((expense) => expense.paid);
+    }
+    return bill;
+  }
+
+  private processExpenses(
+    expenses: Array<ExpenseEntity>,
+  ): Array<ExpenseEntity> {
+    const expenseBusiness = new ExpenseBusiness();
+    return expenses.map((expense) => expenseBusiness.calculateExpense(expense));
+  }
+
+  private sumTotalExpenses(
+    expenses: Array<ExpenseEntity>,
+    property: 'total' | 'total_paid',
+  ): number {
+    return expenses.reduce((acc, expense) => acc + (expense[property] ?? 0), 0);
+  }
+
+  initializeExpense(expense: ExpenseConstructorParams) {
     const expenseBusiness = new ExpenseBusiness();
     return expenseBusiness.initialize(expense);
   }
 
   mapBillListByItem(bills: Array<Bill>, listType: TList): Array<BillList> {
-    return bills.reduce<Array<BillList>>((result, bill) => {
-      const listTitle = this.listTitle(bill, listType);
+    return bills.reduce<Array<BillList>>((groupedBills, currentBill) => {
+      const groupTitle = this.getGroupTitle(currentBill, listType);
 
-      let listItem = result.find((item) => item.title === listTitle);
+      let group = groupedBills.find((item) => item.title === groupTitle);
 
-      if (!listItem) {
-        listItem = { title: listTitle, list: [], listType };
-        result.push(listItem);
+      if (!group) {
+        group = { title: groupTitle, list: [], listType };
+        groupedBills.push(group);
       }
 
-      listItem.list.push(bill);
+      group.list.push(currentBill);
 
-      return result;
+      return groupedBills;
     }, []);
   }
 
-  calculateAllBill(bill: Bill) {
-    const total = bill.total ?? 0;
-    const allPaid = bill.all_paid ?? false;
-    const totalPaid = bill.total_paid ?? 0;
-    const totalPending = total - totalPaid;
-
-    return {
-      total,
-      allPaid,
-      totalPaid,
-      totalPending,
-    };
-  }
-
-  private listTitle(bill: Bill, listType: TList): string {
+  private getGroupTitle(bill: Bill, listType: TList): string {
     if (listType === 'bank') {
       return bill.bank.name;
     }
@@ -59,22 +69,17 @@ export default class BillBusiness {
     return bill.category.name;
   }
 
-  private processBillValues(bill: Bill): Bill {
-    if (bill?.expenses && bill.expenses.length > 0) {
-      const expenseBusiness = new ExpenseBusiness();
-      const expensesCalculated = bill.expenses.map((expense) =>
-        expenseBusiness.calculateExpense(expense),
-      );
-      bill.total = expensesCalculated.reduce(
-        (acc, expense) => acc + expense.total,
-        0,
-      );
-      bill.total_paid = expensesCalculated.reduce(
-        (acc, expense) => acc + expense.total_paid,
-        0,
-      );
-      bill.all_paid = expensesCalculated.every((expense) => expense.paid);
-    }
-    return bill;
+  calculateAllBill(bill: Bill) {
+    const total = Number((bill.total ?? 0).toFixed(2));
+    const allPaid = bill.all_paid ?? false;
+    const totalPaid = Number((bill.total_paid ?? 0).toFixed(2));
+    const totalPending = Number((total - totalPaid).toFixed(2));
+
+    return {
+      total,
+      allPaid,
+      totalPaid,
+      totalPending,
+    };
   }
 }
