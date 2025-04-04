@@ -22,13 +22,13 @@ export default class Bill implements BillEntity {
   constructor(params?: BillConstructorParams) {
     if (params) {
       this.id = params?.id ?? this.id;
-      this.type = params?.type ?? this.type;
+      this.type = params?.type;
       this.year = params?.year ?? this.year;
-      this.bank = params?.bank ?? this.bank;
-      this.name = params?.name ?? this.name;
+      this.bank = params.bank;
+      this.name = params.name;
       this.total = params?.total ?? this.total;
-      this.finance = params?.finance ?? this.finance;
-      this.category = params?.category ?? this.category;
+      this.finance = params.finance;
+      this.category = params.category;
       this.expenses = params?.expenses ?? this.expenses;
       this.name_code = toSnakeCase(normalize(this.name));
       this.total_paid = params?.total_paid ?? this.total_paid;

@@ -37,10 +37,8 @@ describe('Bill', () => {
         bank: billEntity.bank,
         name: billEntity.name,
         type: billEntity.type,
-        total: billEntity.total,
         finance: billEntity.finance,
         category: billEntity.category,
-        expenses: billEntity.expenses,
       };
 
       const bill = new Bill(params);
@@ -48,7 +46,6 @@ describe('Bill', () => {
       expect(bill.bank).toBe(params.bank);
       expect(bill.name).toBe(params.name);
       expect(bill.type).toBe(params.type);
-      expect(bill.total).toBe(params.total);
       expect(bill.category).toBe(params.category);
       expect(bill.created_at).toBeUndefined();
       expect(bill.updated_at).toBeUndefined();

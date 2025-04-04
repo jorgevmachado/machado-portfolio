@@ -35,6 +35,18 @@ describe('Finance', () => {
       );
       expect(finance.deleted_at).toBe(mockFinanceConstructorParams.deleted_at);
     });
+    it('should create an instance with some provided parameters', () => {
+      const finance = new Finance({
+        user: mockFinanceConstructorParams.user,
+      });
+      expect(finance).toBeInstanceOf(Finance);
+      expect(finance.id).toBeUndefined();
+      expect(finance.user).toBe(mockFinanceConstructorParams.user);
+      expect(finance.bills).toBeUndefined();
+      expect(finance.created_at).toBeUndefined();
+      expect(finance.updated_at).toBeUndefined();
+      expect(finance.deleted_at).toBeUndefined();
+    });
     it('should initialize fields with default values when no parameters are provided', () => {
       const finance = new Finance();
       expect(finance.id).toBeUndefined();
