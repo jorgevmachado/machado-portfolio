@@ -56,13 +56,14 @@ describe('NestModuleAbstract', () => {
   let mockModuleSubPath: MockModuleSubPath;
 
   beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockModule = new MockModule(mockConfig);
     mockModuleSubPath = new MockModuleSubPath(mockConfig);
-    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   it('should call get with correct URL and parameters for getAll', async () => {

@@ -27,11 +27,12 @@ describe('Bill', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     bill = new Bill(mockConfig);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('constructor', () => {

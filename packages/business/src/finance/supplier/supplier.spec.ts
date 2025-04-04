@@ -16,9 +16,10 @@ import { VIVO_HOUSING_SUPPLIER_FIXTURE } from './fixtures';
 describe('Supplier', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
   describe('Constructor', () => {
     const supplierEntityMock = VIVO_HOUSING_SUPPLIER_FIXTURE;

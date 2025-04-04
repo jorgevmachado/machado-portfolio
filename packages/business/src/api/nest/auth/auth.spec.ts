@@ -23,11 +23,12 @@ describe('Auth', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     auth = new Auth(mockConfig);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   it('should initialize with the correct path and config', () => {

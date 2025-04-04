@@ -14,9 +14,10 @@ describe('Bill', () => {
   const billEntity = INGRID_RESIDENTIAL_BANK_SLIP_NUBANK_BILL_FIXTURE;
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
   describe('Constructor', () => {
     it('should create an instance with all parameters when valid data is provided', () => {

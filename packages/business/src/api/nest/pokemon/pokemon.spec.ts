@@ -25,11 +25,12 @@ describe('Pokemon', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     pokemon = new Pokemon(mockConfig);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('pokemonAbilityModule', () => {

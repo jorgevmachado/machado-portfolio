@@ -13,10 +13,11 @@ import { EnsurePokemonMoveAttributesParams } from './interface';
 describe('ensureAttributes', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   it('should return the expected attributes when moveByOrder is present', () => {

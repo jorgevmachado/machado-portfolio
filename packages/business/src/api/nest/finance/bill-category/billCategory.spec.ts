@@ -23,12 +23,13 @@ describe('BillCategory', () => {
   let billCategory: BillCategory;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    billCategory = new BillCategory(mockConfig);
+      jest.clearAllMocks();
+      jest.restoreAllMocks();
+      billCategory = new BillCategory(mockConfig);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+      jest.resetModules();
   });
 
     describe('constructor', () => {

@@ -14,9 +14,10 @@ describe('BillCategory', () => {
   const billCategoryMock = INGRID_RESIDENTIAL_BILL_CATEGORY_FIXTURE;
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('constructor', () => {

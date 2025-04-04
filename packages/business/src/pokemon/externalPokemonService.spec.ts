@@ -100,15 +100,15 @@ describe('ExternalPokemonService', () => {
   };
 
   beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockPokeApi = new PokeApi() as jest.Mocked<PokeApi>;
     service = new ExternalPokemonService();
     (service as any).pokeApi = mockPokeApi;
-
-    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('buildList', () => {

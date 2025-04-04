@@ -34,6 +34,7 @@ describe('SupplierService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockNest = {
       finance: {
         supplier: {
@@ -50,7 +51,7 @@ describe('SupplierService', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('create', () => {

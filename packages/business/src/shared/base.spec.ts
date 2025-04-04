@@ -22,11 +22,12 @@ describe('Base', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     base = new ConcreteBase();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   it('should return undefined when both order and url are missing', () => {

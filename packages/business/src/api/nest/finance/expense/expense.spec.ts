@@ -39,11 +39,12 @@ describe('Expense', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     expense = new Expense(mockConfig);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('constructor', () => {

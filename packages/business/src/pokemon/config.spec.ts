@@ -26,10 +26,11 @@ jest.mock('@repo/services/number/number');
 describe('Config Utilities', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('ensureImage', () => {

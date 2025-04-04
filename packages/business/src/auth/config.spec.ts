@@ -18,9 +18,10 @@ const mockPhoneFormatted: string = '11994567890';
 describe('config utilities', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
   describe('cleanFormatter', () => {
     it('should return the formatted value removing all special characters', () => {

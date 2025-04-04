@@ -97,6 +97,7 @@ describe('PokemonService', () => {
   ];
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     nestMock = {
       pokemon: {
         getAll: jest.fn(),
@@ -108,7 +109,7 @@ describe('PokemonService', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('getAll', () => {

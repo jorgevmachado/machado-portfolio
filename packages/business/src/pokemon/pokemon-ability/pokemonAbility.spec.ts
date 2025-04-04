@@ -21,10 +21,11 @@ describe('PokemonAbility', () => {
   const pokemonAbilityEntity = OVERGROW_ABILITY_FIXTURE;
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   it('should correctly instantiate with all provided parameters', () => {

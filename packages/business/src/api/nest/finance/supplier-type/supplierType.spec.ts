@@ -24,11 +24,12 @@ describe('SupplierType', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     supplierType = new SupplierType(mockConfig);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('constructor', () => {

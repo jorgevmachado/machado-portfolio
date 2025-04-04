@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import User from './user';
 import { cleanFormatter, validateMobile } from './config';
@@ -10,7 +17,13 @@ jest.mock('./config');
 describe('User Class', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
+
   const mockUser: UserEntity = USER_ENTITY_FIXTURE;
   const mockUserConstructorParams: UserConstructorParams = {
     id: mockUser.id,

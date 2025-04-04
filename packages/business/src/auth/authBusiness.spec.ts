@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Error } from '@repo/services/error/error';
 
@@ -21,7 +28,12 @@ describe('AuthBusiness', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     authBusiness = new AuthBusiness();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
   });
 
   describe('initializeUser', () => {

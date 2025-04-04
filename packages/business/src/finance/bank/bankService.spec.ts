@@ -33,6 +33,7 @@ describe('BankService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockNest = {
       finance: {
         bank: {
@@ -49,7 +50,7 @@ describe('BankService', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetAllMocks();
   });
 
   describe('create', () => {

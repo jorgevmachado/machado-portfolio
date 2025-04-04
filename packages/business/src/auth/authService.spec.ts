@@ -20,10 +20,11 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   const mockUser: UserEntity = USER_ENTITY_FIXTURE;

@@ -15,9 +15,10 @@ import {
 describe('getTotalNumberOfPagesIntoPagination', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
   it('should calculate total pages based on total and limit when limit > 0', () => {
     const total = 50;

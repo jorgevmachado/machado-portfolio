@@ -34,6 +34,7 @@ describe('ExpenseService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockNest = {
       finance: {
         bill: {
@@ -51,7 +52,7 @@ describe('ExpenseService', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetModules();
   });
 
   describe('constructor', () => {
