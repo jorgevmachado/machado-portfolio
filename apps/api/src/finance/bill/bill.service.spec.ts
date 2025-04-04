@@ -14,25 +14,28 @@ import { Repository } from 'typeorm';
 import * as monthModule from '@repo/services/month/month';
 import { MONTHS } from '@repo/services/month/month';
 
+import { EExpenseType, EMonth } from '@repo/business/finance/enum';
+
 import BillBusiness from '@repo/business/finance/bill/billBusiness';
 import { BANK_LIST_FIXTURE } from '@repo/business/finance/bank/fixtures/bank';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 import { BILL_CATEGORY_LIST_FIXTURE } from '@repo/business/finance/bill-category/fixtures/billCategory';
+import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
 import {
   EXPENSE_LIST_FIXTURE,
   INGRID_RESIDENTIAL_LIST_FIXTURE,
 } from '@repo/business/finance/expense/fixtures/expense';
 import { FINANCE_FIXTURE } from '@repo/business/finance/fixtures/finance';
 
+import { BankService } from '../bank/bank.service';
+
 import { Bill } from './bill.entity';
 import { BillService } from './bill.service';
 import { BillCategoryService } from './bill-category/bill-category.service';
-import { BankService } from '../bank/bank.service';
+
 import { ExpenseService } from './expense/expense.service';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update.bill.dto';
-import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
-import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 import { Expense } from './expense/expense.entity';
 
 describe('BillService', () => {

@@ -1,19 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { ConflictException } from '@nestjs/common';
+
+import { EMonth } from '@repo/services/month/enum';
 
 import { USER_ENTITY_FIXTURE } from '@repo/business/auth/fixtures/auth';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
-import { INGRID_RESIDENTIAL_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
+import {
+  EXPENSE_LIST_FIXTURE,
+  INGRID_RESIDENTIAL_LIST_FIXTURE,
+} from '@repo/business/finance/expense/fixtures/expense';
 
 import { BillService } from './bill.service';
 import { BillController } from './bill.controller';
 import { Bill } from './bill.entity';
-import { User } from '../../auth/users/user.entity';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update.bill.dto';
+import { CreateExpenseDto } from './expense/dto/create-expense.dto';
+import { Expense } from './expense/expense.entity';
+import {UpdateExpenseDto} from "./expense/dto/update-expense.dto";
 
 describe('BillController', () => {
+  const expense: Expense = EXPENSE_LIST_FIXTURE[0];
+  const bill: Bill = BILL_LIST_FIXTURE[0];
   let service: BillService;
   let controller: BillController;
 
@@ -25,11 +33,16 @@ describe('BillController', () => {
           provide: BillService,
           useValue: {
             list: jest.fn(),
-            findAllBills: jest.fn(),
-            findOne: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
+            findOne: jest.fn(),
+            findAllBills: jest.fn(),
+            createExpense: jest.fn(),
+            updateExpense: jest.fn(),
+            removeExpense: jest.fn(),
+            findOneExpense: jest.fn(),
+            findAllExpense: jest.fn(),
           },
         },
       ],
@@ -114,25 +127,58 @@ describe('BillController', () => {
     });
   });
 
-  describe('validateFinance', () => {
-    it('should throw ConflictException when "user.finance" is undefined.', () => {
-      const user: User = {
-        ...USER_ENTITY_FIXTURE,
-        finance: undefined,
+  describe('createExpense', () => {
+    it('should create a new expense and save it', async () => {
+      const createExpense: CreateExpenseDto = {
+        type: expense.type,
+        value: 100.0,
+        month: EMonth.MARCH,
+        supplier: expense.supplier.name,
+        instalment_number: 1,
       };
+      jest.spyOn(service, 'createExpense').mockResolvedValue(expense);
 
-      expect(() => controller['validateFinance'](user)).toThrow(
-        ConflictException,
-      );
-      expect(() => controller['validateFinance'](user)).toThrow(
-        'Finance is not initialized, please start it to access this feature.',
-      );
+      expect(await controller.createExpense(bill.id, createExpense)).toEqual(expense);
     });
+  });
 
-    it('should not throw any exception when "user.finance" is set.', () => {
-      const user: User = USER_ENTITY_FIXTURE;
+  describe('updateExpense', () => {
+    it('should update expense and save it', async () => {
+      const updateExpense: UpdateExpenseDto = {
+        type: expense.type,
+        supplier: expense.supplier.name,
+      };
+      jest.spyOn(service, 'updateExpense').mockResolvedValue(expense);
 
-      expect(() => controller['validateFinance'](user)).not.toThrow();
+      expect(await controller.updateExpense(bill.id, expense.id, updateExpense)).toEqual(expense);
+    });
+  });
+
+  describe('findOneExpense', () => {
+    it('should find one expense by id', async () => {
+      jest.spyOn(service, 'findOneExpense').mockResolvedValue(expense);
+
+      expect(await controller.findOneExpense(bill.id, expense.id)).toEqual(expense);
+    });
+  });
+
+  describe('findAllExpense', () => {
+    it('should find a list of expense by bill', async () => {
+      jest.spyOn(service, 'findAllExpense').mockResolvedValue([expense]);
+
+      expect(await controller.findAllExpense(bill.id, {})).toEqual([expense]);
+    });
+  });
+
+  describe('removeExpense', () => {
+    it('should remove one expense by id', async () => {
+      jest.spyOn(service, 'removeExpense').mockResolvedValue({
+        message: 'Successfully removed',
+      });
+
+      expect(await controller.removeExpense(bill.id, expense.id)).toEqual({
+        message: 'Successfully removed',
+      });
     });
   });
 });
