@@ -1,24 +1,16 @@
 'use client';
 import { nameValidator } from '@repo/services/validator/personal/personal';
 
-import type { QueryParameters } from '@repo/business/shared/interface';
-import { Paginate } from '@repo/business/paginate';
-import SupplierType from '@repo/business/finance/supplier-type';
-
 import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
 
 import Input from '@repo/ui/components/input/Input';
 
-import { supplierTypeService } from '../../../shared';
-
 import { CRUDPage } from '../../../layout';
 
+import { useSupplierType } from './useSupplierType';
+
 export default function SupplierTypePage() {
-  const fetchItems = async (params: QueryParameters) => {
-    return await supplierTypeService
-      .getAll(params)
-      .then((response) => response as Paginate<SupplierType>);
-  };
+  const { fetchItems, saveItem, deleteItem, loading } = useSupplierType();
   return (
     <CRUDPage
       headers={[
@@ -34,14 +26,11 @@ export default function SupplierTypePage() {
           sortable: true,
         },
       ]}
-      resourceName="Supplier Type"
+      loading={loading}
+      saveItem={saveItem}
       fetchItems={fetchItems}
-      saveItem={(item) =>
-        item.id
-          ? supplierTypeService.update(item.id, { name: item.name ?? '' })
-          : supplierTypeService.create({ name: item.name ?? '' })
-      }
-      deleteItem={(id) => supplierTypeService.remove(id)}
+      deleteItem={deleteItem}
+      resourceName="Supplier Type"
       renderItemForm={({ item, handleChange }) => (
         <div>
           <Input

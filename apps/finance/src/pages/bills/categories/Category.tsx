@@ -1,24 +1,17 @@
 'use client';
 import React from 'react';
-import { nameValidator } from '@repo/services/validator/personal/personal';
 
-import { QueryParameters } from '@repo/business/shared/interface';
-import { Paginate } from '@repo/business/paginate';
-import BillCategory from '@repo/business/finance/bill-category';
+import { nameValidator } from '@repo/services/validator/personal/personal';
 
 import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
 
 import Input from '@repo/ui/components/input/Input';
 
-import { billCategoryService } from '../../../shared';
 import { CRUDPage } from '../../../layout';
+import { useBillCategory } from './useBillCategory';
 
 export default function BillCategoryPage() {
-  const fetchItems = async (params: QueryParameters) => {
-    return await billCategoryService
-      .getAll(params)
-      .then((response) => response as Paginate<BillCategory>);
-  };
+  const { loading, saveItem, fetchItems, deleteItem } = useBillCategory();
 
   return (
     <CRUDPage
@@ -35,14 +28,11 @@ export default function BillCategoryPage() {
           sortable: true,
         },
       ]}
+      loading={loading}
+      saveItem={saveItem}
       fetchItems={fetchItems}
+      deleteItem={deleteItem}
       resourceName="Bill Category"
-      saveItem={(item) =>
-        item.id
-          ? billCategoryService.update(item.id, { name: item.name ?? '' })
-          : billCategoryService.create({ name: item.name ?? '' })
-      }
-      deleteItem={(id) => billCategoryService.remove(id)}
       renderItemForm={({ item, handleChange }) => (
         <div>
           <Input

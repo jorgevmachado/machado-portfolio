@@ -1,23 +1,15 @@
 'use client';
 import { nameValidator } from '@repo/services/validator/personal/personal';
 
-import { QueryParameters } from '@repo/business/shared/interface';
-import { Paginate } from '@repo/business/paginate';
-import Bank from '@repo/business/finance/bank/bank';
-
 import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
 
 import Input from '@repo/ui/components/input/Input';
-
-import { bankService } from '../../shared';
 import { CRUDPage } from '../../layout';
+import { useBank } from './useBank';
 
 export default function BankPage() {
-  const fetchItems = async (params: QueryParameters) => {
-    return await bankService
-      .getAll(params)
-      .then((response) => response as Paginate<Bank>);
-  };
+  const { loading, saveItem, fetchItems,  deleteItem } = useBank();
+
   return (
     <CRUDPage
       headers={[
@@ -33,14 +25,11 @@ export default function BankPage() {
           sortable: true,
         },
       ]}
-      resourceName="Bank"
+      loading={loading}
+      saveItem={saveItem}
       fetchItems={fetchItems}
-      saveItem={(item) =>
-        item.id
-          ? bankService.update(item.id, { name: item.name ?? '' })
-          : bankService.create({ name: item.name ?? '' })
-      }
-      deleteItem={(id) => bankService.remove(id)}
+      deleteItem={deleteItem}
+      resourceName="Bank"
       renderItemForm={({ item, handleChange }) => (
         <div>
           <Input
