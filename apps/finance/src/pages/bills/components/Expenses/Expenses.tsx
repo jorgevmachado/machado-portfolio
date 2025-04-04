@@ -4,9 +4,10 @@ import { MONTHS } from '@repo/services/month/month';
 import { currencyFormatter } from '@repo/services/formatter/currency/currency';
 import { truncateString } from '@repo/services/string/string';
 
+import { EExpenseType } from '@repo/business/finance/enum';
+
 import Bill from '@repo/business/finance/bill';
 import Expense from '@repo/business/finance/expense/expense';
-import Supplier from '@repo/business/finance/supplier/supplier';
 
 import type { TColors } from '@repo/ds/utils/colors/interface';
 import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
@@ -16,19 +17,16 @@ import Table from '@repo/ds/components/table/Table';
 import Button from '@repo/ds/components/button/Button';
 import Spinner from '@repo/ds/elements/spinner/Spinner';
 
-import {
-  expenseBusiness,
-  expenseService,
-  supplierService,
-} from '../../../../shared';
-
-import './Expenses.scss';
-
 import CRUDModal from '../../../../layout/components/CRUDModal';
+
+import { expenseBusiness, expenseService } from '../../../../shared';
+
+import useBill from '../../useBill';
+
 import Form from './Form';
 import { ExpenseFormFields } from './Form/inteface';
-import { EExpenseType } from '@repo/business/finance/enum';
-import useBill from '../../useBill';
+
+import './Expenses.scss';
 
 
 type AllCalculatedExpenses = {
@@ -44,9 +42,8 @@ type ExpensesProps = {
 };
 
 const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
-  const { handleReload } = useBill();
+  const { handleReload, suppliers } = useBill();
   const [loading, setLoading] = useState<boolean>(false);
-  const [suppliers, setSuppliers] = useState<Array<Supplier>>([]);
   const [calculatedExpenses, setCalculatedExpenses] = useState<Array<Expense>>(
     [],
   );
@@ -81,11 +78,15 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
   };
 
   const calculateExpenses = (expenses: Array<Expense> | Bill['expenses']) => {
-    // return expenses?.map((expense) =>
-    //   expenseBusiness.processAllCalculate(expense as unknown as Expense),
-    // );
-    return expenses;
+    return expenses?.map((expense) =>
+      expenseBusiness.calculateExpense(expense),
+    );
   };
+
+  const calculateAllExpenses = (expenses: Array<Expense>) => {
+    const calculatedAllExpenses = expenseBusiness.calculateAllExpenses(expenses);
+    setAllCalculatedExpenses(calculatedAllExpenses);
+  }
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
@@ -98,48 +99,22 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
     setLoading(false);
   };
 
-  const fetchSuppliers = async () => {
-    setLoading(true);
-    if (suppliers.length === 0) {
-      supplierService
-        .getAll({})
-        .then((response) => {
-          setSuppliers(response as Array<Supplier>);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  };
-
   useEffect(() => {
     const calculatedExpenses = calculateExpenses(bill.expenses);
     setCalculatedExpenses((calculatedExpenses as Expense[]) || []);
-    fetchSuppliers();
   }, [bill.expenses]);
 
   useEffect(() => {
-    if (allCalculated) {
-      if (
-        allCalculated.total === 0 &&
-        allCalculated.totalPaid === 0 &&
-        allCalculated.totalPending === 0 &&
-        !allCalculated.allPaid
-      ) {
-        const calculatedAllExpenses =
-          expenseBusiness.calculateAllExpenses(calculatedExpenses);
-        setAllCalculatedExpenses(calculatedAllExpenses);
+    if(allCalculated) {
+      const { total, totalPaid, totalPending, allPaid } = allCalculated;
+      if(total === 0 && totalPaid === 0 && totalPending === 0 && !allPaid) {
+        calculateAllExpenses(calculatedExpenses);
         return;
       }
       setAllCalculatedExpenses(allCalculated);
       return;
     }
-    const calculatedAllExpenses =
-      expenseBusiness.calculateAllExpenses(calculatedExpenses);
-    setAllCalculatedExpenses(calculatedAllExpenses);
+    calculateAllExpenses(calculatedExpenses);
   }, [allCalculated, calculatedExpenses]);
 
   const handleSaveItem = async (
@@ -149,7 +124,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
     setLoading(true);
     if (!expense) {
       return await expenseService
-        .create(bill.id,{
+        .create(bill.id, {
           type: fields.type ?? EExpenseType.VARIABLE,
           paid: fields.paid,
           value: fields.value,
@@ -164,9 +139,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
         });
     }
     return await expenseService
-      .update(
-          bill.id,
-          expense.id, {
+      .update(bill.id, expense.id, {
         ...expense,
         ...fields,
         type: fields.type ?? EExpenseType.VARIABLE,

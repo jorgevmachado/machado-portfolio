@@ -27,7 +27,7 @@ const ListCard: React.FC<ListCardProps> = ({ list }) => {
             <Accordion key={bill.id} title={bill.name}>
               <Expenses
                 bill={bill}
-                allCalculated={billBusiness.calculateAllBill(bill)}
+                // allCalculated={billBusiness.calculateAllBill(bill)}
               />
             </Accordion>
           ))}
