@@ -1,5 +1,8 @@
 import { documentCookie } from '../window';
 
+/**
+ * Represents a utility class for handling browser cookies.
+ */
 class Cookies {
   public get(key: string): string | undefined {
     return documentCookie()

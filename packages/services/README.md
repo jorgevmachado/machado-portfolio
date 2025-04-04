@@ -63,19 +63,22 @@ npm run lint
 
 ## Módulos
 ### cookies:
-#### Funções para manipulação de cookies.
-```
+#### Classe de utilitário para manipular ‘cookies’ do navegador.
+#### testes
+```bash
     npm run test -- --findRelatedTests src/cookies/cookies.spec.ts               
 ```
 
 ### date:
 #### Utilitários ou manipuladores de datas.
-```
+#### testes
+```bash
     npm run test -- --findRelatedTests src/date/date.spec.ts               
 ```
 ### formatter:
 #### Funções que formatam dados (datas, números, strings, etc.).
-```
+#### testes
+```bash
     npm run test -- --findRelatedTests src/formatter/formatter.spec.ts               
     npm run test -- --findRelatedTests src/formatter/address/address.spec.ts               
     npm run test -- --findRelatedTests src/formatter/contact/contact.spec.ts               
@@ -85,13 +88,14 @@ npm run lint
 
 ### http:
 #### Funções para realizar chamadas HTTP ou gerenciar requisições e respostas.
-```
+#### testes
+```bash
     npm run test -- --findRelatedTests src/http/http.spec.ts               
 ```
 
 ### object:
 #### Utilitários ou manipuladores de objetos.
-```
+```bash
     npm run test -- --findRelatedTests src/object/object.spec.ts               
 ```
 
