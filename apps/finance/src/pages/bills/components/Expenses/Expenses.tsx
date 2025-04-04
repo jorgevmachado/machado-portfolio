@@ -149,9 +149,8 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
     setLoading(true);
     if (!expense) {
       return await expenseService
-        .create({
+        .create(bill.id,{
           type: fields.type ?? EExpenseType.VARIABLE,
-          bill: bill.id,
           paid: fields.paid,
           value: fields.value,
           month: fields.month,
@@ -165,7 +164,9 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
         });
     }
     return await expenseService
-      .update(expense.id, {
+      .update(
+          bill.id,
+          expense.id, {
         ...expense,
         ...fields,
         type: fields.type ?? EExpenseType.VARIABLE,

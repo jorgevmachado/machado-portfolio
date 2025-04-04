@@ -14,7 +14,7 @@ import {
 export class ExpenseService {
   constructor(private nest: Nest) {}
 
-  public async createByBill(billId: string, params: ExpenseCreateParams): Promise<Expense> {
+  public async create(billId: string, params: ExpenseCreateParams): Promise<Expense> {
     return await this.nest.finance.bill.expense
       .createByBill(billId, params)
       .then((response) => new Expense(response));

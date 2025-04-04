@@ -76,7 +76,7 @@ describe('ExpenseService', () => {
         instalment_number: mockEntity.instalment_number,
       };
 
-      const result = await service.createByBill(
+      const result = await service.create(
         mockEntity.bill.id,
         mockExpenseCreateParams,
       );

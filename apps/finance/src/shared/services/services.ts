@@ -7,7 +7,7 @@ import { SupplierService } from '@repo/business/finance/supplier/supplierService
 import { BankService } from '@repo/business/finance/bank/bankService';
 import { BillCategoryService } from '@repo/business/finance/bill-category/billCategoryService';
 import { BillService } from '@repo/business/finance/bill/billService';
-import { ExpenseService } from '@repo/business';
+import { ExpenseService } from '@repo/business/finance/expense/expenseService';
 
 const baseUrl = process.env.NEXT_PUBLIC_API ?? 'http://localhost:3001';
 
