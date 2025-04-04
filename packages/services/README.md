@@ -111,10 +111,10 @@ npm run lint
 ##### toCamelCase: Converte strings no formato `snake_case` para camel case.
 ##### findRepeated: Procura duplicatas numa lista de objetos com base numa chave definida ('id' ou 'name').
 ##### truncateString: Trunca uma 'string' para o comprimento especificado ('length') e converte para maiúsculas.
+##### convertSubPathUrl: Converte e constrói uma URL anexando subcaminhos e parâmetros com base nas opções fornecidas.
 ##### separateCamelCase: Separa palavras em camel case ('CamelCase') para uma versão com espaços e capitalização individual.
 ##### snakeCaseToNormal: Converte uma 'string' snake_case fornecida em uma string case normal legível por humanos.
 ##### extractLastItemFromUrl: Extrai o último segmento de uma URL.
-##### convertSubPathUrlParams: Converte e constrói uma URL anexando subcaminhos e parâmetros com base nas opções fornecidas.
 
 ### number:
 #### Utilitários relacionados a manipulação ou validação de numbers.

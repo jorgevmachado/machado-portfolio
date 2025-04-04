@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 import {
   capitalize,
-  convertSubPathUrlParams,
+  convertSubPathUrl,
   extractLastItemFromUrl,
   findRepeated,
   formatUrl,
@@ -177,6 +177,33 @@ describe('String functions', () => {
     });
   });
 
+  describe('convertSubPathUrl', () => {
+    const pathUrl = 'path_url';
+    const subPathUrl = 'sub_path_url';
+    const conectorPath = 'conector_path';
+    it('should convert path without subPathUrl', () => {
+      expect(convertSubPathUrl({ pathUrl })).toEqual(pathUrl);
+    });
+
+    it('should convert path without subPathUrl with conectorPath and isParam true', () => {
+      expect(
+          convertSubPathUrl({ pathUrl, conectorPath, isParam: true }),
+      ).toEqual(`${pathUrl}/${conectorPath}`);
+    });
+
+    it('should convert path with subPathUrl', () => {
+      expect(convertSubPathUrl({ pathUrl, subPathUrl })).toEqual(
+          `${pathUrl}/${subPathUrl}`,
+      );
+    });
+
+    it('should convert path with conectorPath', () => {
+      expect(
+          convertSubPathUrl({ pathUrl, subPathUrl, conectorPath }),
+      ).toEqual(`${pathUrl}/${conectorPath}/${subPathUrl}`);
+    });
+  });
+
   describe('separateCamelCase', () => {
     it('Must separate camel case string', () => {
       expect(separateCamelCase('helloWorld')).toEqual('hello World');
@@ -245,30 +272,5 @@ describe('String functions', () => {
     });
   });
 
-  describe('convertSubPathUrlParams', () => {
-    const pathUrl = 'path_url';
-    const subPathUrl = 'sub_path_url';
-    const conectorPath = 'conector_path';
-    it('should convert path without subPathUrl', () => {
-      expect(convertSubPathUrlParams({ pathUrl })).toEqual(pathUrl);
-    });
 
-    it('should convert path without subPathUrl with conectorPath and isParam true', () => {
-      expect(
-        convertSubPathUrlParams({ pathUrl, conectorPath, isParam: true }),
-      ).toEqual(`${pathUrl}/${conectorPath}`);
-    });
-
-    it('should convert path with subPathUrl', () => {
-      expect(convertSubPathUrlParams({ pathUrl, subPathUrl })).toEqual(
-        `${pathUrl}/${subPathUrl}`,
-      );
-    });
-
-    it('should convert path with conectorPath', () => {
-      expect(
-        convertSubPathUrlParams({ pathUrl, subPathUrl, conectorPath }),
-      ).toEqual(`${pathUrl}/${conectorPath}/${subPathUrl}`);
-    });
-  });
 });

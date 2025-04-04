@@ -156,6 +156,29 @@ export function truncateString(
 }
 
 /**
+ * Converts and constructs a URL by appending sub-paths and parameters based on the provided options.
+ * @param pathUrl
+ * @param isParam
+ * @param subPathUrl
+ * @param conectorPath
+ */
+export function convertSubPathUrl({
+  pathUrl,
+  isParam,
+  subPathUrl,
+  conectorPath,
+}: ConvertSubPathUrlParams): string {
+  if (!subPathUrl) {
+    const currentParam = conectorPath ? `/${conectorPath}` : '';
+    return isParam ? `${pathUrl}${currentParam}` : pathUrl;
+  }
+  if (!conectorPath) {
+    return `${pathUrl}/${subPathUrl}`;
+  }
+  return `${pathUrl}/${conectorPath}/${subPathUrl}`;
+}
+
+/**
  * Splits words in camel case ('CamelCase') to a version with spaces and individual capitalization.
  * @param value
  */
@@ -208,27 +231,4 @@ export function extractLastItemFromUrl(url?: string) {
 
   const segments = sanitizedUrl.split('/');
   return segments[segments.length - 1];
-}
-
-/**
- * Converts and constructs a URL by appending sub-paths and parameters based on the provided options.
- * @param pathUrl
- * @param isParam
- * @param subPathUrl
- * @param conectorPath
- */
-export function convertSubPathUrlParams({
-  pathUrl,
-  isParam,
-  subPathUrl,
-  conectorPath,
-}: ConvertSubPathUrlParams): string {
-  if (!subPathUrl) {
-    const currentParam = conectorPath ? `/${conectorPath}` : '';
-    return isParam ? `${pathUrl}${currentParam}` : pathUrl;
-  }
-  if (!conectorPath) {
-    return `${pathUrl}/${subPathUrl}`;
-  }
-  return `${pathUrl}/${conectorPath}/${subPathUrl}`;
 }
