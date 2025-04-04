@@ -166,12 +166,9 @@ npm run test
 ##### - EXPENSE
 ###### - SERVICE
 ```bash
-  npm run test -- --findRelatedTests src/finance/expense/expense.service.spec.ts                                 
+  npm run test -- --findRelatedTests src/finance/bill/expense/expense.service.spec.ts                                 
 ```
-###### - CONTROLLER
-```bash
-  npm run test -- --findRelatedTests src/finance/expense/expense.controller.spec.ts                                 
-```
+
 ##### - BILL-CATEGORY
 ###### - SERVICE
 ```bash

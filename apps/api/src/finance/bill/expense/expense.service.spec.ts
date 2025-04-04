@@ -9,9 +9,10 @@ import {
 } from '@jest/globals';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { ConflictException, NotFoundException } from '@nestjs/common';
 
-import { EMonth } from '@repo/business/finance/enum';
+import { MONTHS } from '@repo/services/month/month';
+
+import { EExpenseType } from '@repo/business/finance/enum';
 import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
 
 import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
@@ -23,13 +24,19 @@ import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 import { SupplierService } from '../../supplier/supplier.service';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
-import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 import { Expense } from './expense.entity';
 
 import { ExpenseService } from './expense.service';
+import { Supplier } from '../../supplier/supplier.entity';
+import { Bill } from '../bill.entity';
+
+import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 describe('ExpenseService', () => {
+  const bill: Bill = BILL_LIST_FIXTURE[0];
+  const expense: Expense = EXPENSE_LIST_FIXTURE[0];
+  const supplier: Supplier = expense.supplier;
   let repository: Repository<Expense>;
   let supplierService: SupplierService;
   let service: ExpenseService;
@@ -70,11 +77,11 @@ describe('ExpenseService', () => {
   describe('seed', () => {
     it('should seed the database when exist in database', async () => {
       jest
-          .spyOn(repository, 'find')
-          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
+        .spyOn(repository, 'find')
+        .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE);
 
       expect(
-          await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
+        await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
       ).toEqual(EXPENSE_LIST_FIXTURE);
     });
 
@@ -86,156 +93,125 @@ describe('ExpenseService', () => {
       });
 
       expect(
-          await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
+        await service.seed(SUPPLIER_LIST_FIXTURE, BILL_LIST_FIXTURE),
       ).toEqual(EXPENSE_LIST_FIXTURE);
     });
   });
 
-  describe('create', () => {
-    it('should create a new expense with type equal variable and save it', async () => {
+  describe('buildCreation', () => {
+    it('should build a creation expense.', async () => {
       const createDto: CreateExpenseDto = {
-        type: EXPENSE_LIST_FIXTURE[0].type,
-        bill: EXPENSE_LIST_FIXTURE[0].bill.id,
-        value: 100,
-        month: EMonth.FEBRUARY,
-        supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
-        description: EXPENSE_LIST_FIXTURE[0].description,
-        instalment_number: EXPENSE_LIST_FIXTURE[0].instalment_number,
+        type: EExpenseType.FIXED,
+        paid: true,
+        value: 93.59,
+        supplier: supplier.name,
+        instalment_number: 1,
       };
 
       jest
-          .spyOn(supplierService, 'treatEntityParam')
-          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
+        .spyOn(supplierService, 'treatEntityParam')
+        .mockResolvedValueOnce(supplier);
 
-      jest.spyOn(repository, 'findOne').mockReturnValueOnce(null);
+      const mockExpenseBuildCreation = {
+        ...expense,
+        id: undefined,
+        bill,
+        paid: createDto.paid,
+        type: createDto.type,
+        name: `${bill.name} ${supplier.name}`,
+        total: 0,
+        supplier,
+        total_paid: 0,
+        created_at: undefined,
+        updated_at: undefined,
+        deleted_at: undefined,
+        description: undefined,
+        instalment_number: createDto.instalment_number,
+      };
 
-      jest
-          .spyOn(repository, 'save')
-          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
+      MONTHS.forEach((month) => {
+        mockExpenseBuildCreation[month] = 0;
+        mockExpenseBuildCreation[`${month}_paid`] = false;
+      });
 
-      expect(await service.create(BILL_LIST_FIXTURE, createDto)).toEqual(
-          EXPENSE_LIST_FIXTURE[0],
+      expect(await service.buildCreation(bill, createDto)).toEqual(
+        mockExpenseBuildCreation,
       );
     });
   });
 
-  describe('update', () => {
-    const updateDto: UpdateExpenseDto = {
-      type: EXPENSE_LIST_FIXTURE[0].type,
-      paid: EXPENSE_LIST_FIXTURE[0].paid,
-      january: EXPENSE_LIST_FIXTURE[0].january,
-      january_paid: EXPENSE_LIST_FIXTURE[0].january_paid,
-      february: EXPENSE_LIST_FIXTURE[0].february,
-      february_paid: EXPENSE_LIST_FIXTURE[0].february_paid,
-      march: EXPENSE_LIST_FIXTURE[0].march,
-      march_paid: EXPENSE_LIST_FIXTURE[0].march_paid,
-      april: EXPENSE_LIST_FIXTURE[0].april,
-      april_paid: EXPENSE_LIST_FIXTURE[0].april_paid,
-      may: EXPENSE_LIST_FIXTURE[0].may,
-      may_paid: EXPENSE_LIST_FIXTURE[0].may_paid,
-      june: EXPENSE_LIST_FIXTURE[0].june,
-      june_paid: EXPENSE_LIST_FIXTURE[0].june_paid,
-      july: EXPENSE_LIST_FIXTURE[0].july,
-      july_paid: EXPENSE_LIST_FIXTURE[0].july_paid,
-      august: EXPENSE_LIST_FIXTURE[0].august,
-      august_paid: EXPENSE_LIST_FIXTURE[0].august_paid,
-      september: EXPENSE_LIST_FIXTURE[0].september,
-      september_paid: EXPENSE_LIST_FIXTURE[0].september_paid,
-      october: EXPENSE_LIST_FIXTURE[0].october,
-      october_paid: EXPENSE_LIST_FIXTURE[0].october_paid,
-      november: EXPENSE_LIST_FIXTURE[0].november,
-      november_paid: EXPENSE_LIST_FIXTURE[0].november_paid,
-      december: EXPENSE_LIST_FIXTURE[0].december,
-      december_paid: EXPENSE_LIST_FIXTURE[0].december_paid,
-      description: EXPENSE_LIST_FIXTURE[0].description,
-      instalment_number: EXPENSE_LIST_FIXTURE[0].instalment_number,
-    };
-    it('should update a expense with all fields and save it', async () => {
-      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
-        withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(EXPENSE_LIST_FIXTURE[0]),
-      } as any);
-
-      jest
-          .spyOn(supplierService, 'treatEntityParam')
-          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0].supplier);
-
-      jest
-          .spyOn(repository, 'save')
-          .mockResolvedValueOnce(EXPENSE_LIST_FIXTURE[0]);
-
-      expect(
-          await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, {
-            ...updateDto,
-            supplier: EXPENSE_LIST_FIXTURE[0].supplier.name,
-          }),
-      ).toEqual(EXPENSE_LIST_FIXTURE[0]);
-    });
-
-    it('should update a expense without relations fields and save it', async () => {
-      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
-        withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(EXPENSE_LIST_FIXTURE[0]),
-      } as any);
-
-      const expected = {
-        ...EXPENSE_LIST_FIXTURE[0],
-        supplier: EXPENSE_LIST_FIXTURE[0].supplier,
+  describe('buildUpdate', () => {
+    it('should build a update expense only type.', async () => {
+      const updateDto: UpdateExpenseDto = {
+        type: EExpenseType.FIXED,
       };
 
-      jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
+      const mockExpenseBuildUpdate = {
+        ...expense,
+        bill,
+        type: updateDto.type,
+        total: 0,
+        supplier,
+        total_paid: 0,
+      };
 
-      expect(
-          await service.update(EXPENSE_LIST_FIXTURE[0].id, BILL_LIST_FIXTURE, {
-            ...updateDto,
-            bill: EXPENSE_LIST_FIXTURE[0].bill,
-          }),
-      ).toEqual(expected);
+      MONTHS.forEach((month) => {
+        mockExpenseBuildUpdate[month] = 0;
+        mockExpenseBuildUpdate[`${month}_paid`] = false;
+      });
+      const result = await service.buildUpdate(expense, updateDto);
+      expect(result.id).toEqual(mockExpenseBuildUpdate.id);
+      expect(result.name).toEqual(mockExpenseBuildUpdate.name);
+      expect(result.year).toEqual(mockExpenseBuildUpdate.year);
+      expect(result.bill.id).toEqual(mockExpenseBuildUpdate.bill.id);
+      expect(result.type).toEqual(mockExpenseBuildUpdate.type);
+      expect(result.paid).toEqual(mockExpenseBuildUpdate.paid);
+      expect(result.total).toEqual(expense.total);
+      expect(result.supplier.id).toEqual(mockExpenseBuildUpdate.supplier.id);
+      expect(result.name_code).toEqual(mockExpenseBuildUpdate.name_code);
+      expect(result.total_paid).toEqual(expense.total_paid);
     });
 
-    it('should return conflict exception because the id is not uuid', async () => {
-      await expect(
-          service.update(
-              EXPENSE_LIST_FIXTURE[0].supplier.name,
-              BILL_LIST_FIXTURE,
-              updateDto,
-          ),
-      ).rejects.toThrow(ConflictException);
+    it('should build a update expense only supplier.', async () => {
+      const updateDto: UpdateExpenseDto = {
+        supplier: supplier.name,
+      };
+
+      jest
+        .spyOn(supplierService, 'treatEntityParam')
+        .mockResolvedValueOnce(supplier);
+
+      const mockExpenseBuildUpdate = {
+        ...expense,
+        bill,
+        type: updateDto.type,
+        total: 0,
+        supplier,
+        total_paid: 0,
+      };
+
+      MONTHS.forEach((month) => {
+        mockExpenseBuildUpdate[month] = 0;
+        mockExpenseBuildUpdate[`${month}_paid`] = false;
+      });
+      const result = await service.buildUpdate(expense, updateDto);
+      expect(result.id).toEqual(mockExpenseBuildUpdate.id);
+      expect(result.name).toEqual(mockExpenseBuildUpdate.name);
+      expect(result.year).toEqual(mockExpenseBuildUpdate.year);
+      expect(result.bill.id).toEqual(mockExpenseBuildUpdate.bill.id);
+      expect(result.type).toEqual(expense.type);
+      expect(result.paid).toEqual(mockExpenseBuildUpdate.paid);
+      expect(result.total).toEqual(expense.total);
+      expect(result.supplier.id).toEqual(mockExpenseBuildUpdate.supplier.id);
+      expect(result.name_code).toEqual(mockExpenseBuildUpdate.name_code);
+      expect(result.total_paid).toEqual(expense.total_paid);
     });
   });
 
-  describe('remove', () => {
-    it('should remove expense', async () => {
-      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
-        withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(EXPENSE_LIST_FIXTURE[0]),
-      } as any);
-
-      jest.spyOn(repository, 'softRemove').mockResolvedValueOnce({
-        ...EXPENSE_LIST_FIXTURE[0],
-        deleted_at: EXPENSE_LIST_FIXTURE[0].created_at,
-      });
-
-      expect(await service.remove(EXPENSE_LIST_FIXTURE[0].id)).toEqual({
-        message: 'Successfully removed',
-      });
-    });
-    it('should return conflict exception because the id is not uuid', async () => {
-      jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
-        withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(null),
-      } as any);
-      await expect(
-          service.remove(EXPENSE_LIST_FIXTURE[0].supplier.name),
-      ).rejects.toThrow(NotFoundException);
+  describe('saveExpense', () => {
+    it('should save an expense', async () => {
+      jest.spyOn(repository, 'save').mockResolvedValueOnce(expense);
+      expect(await service.saveExpense(expense)).toEqual(expense);
     });
   });
 });
