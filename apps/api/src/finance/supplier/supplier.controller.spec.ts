@@ -96,6 +96,7 @@ describe('SupplierController', () => {
         id: VIVO_HOUSING_SUPPLIER_FIXTURE.id,
         name: `${VIVO_HOUSING_SUPPLIER_FIXTURE.name}2`,
         type: VIVO_HOUSING_SUPPLIER_FIXTURE.type,
+        name_code: `${VIVO_HOUSING_SUPPLIER_FIXTURE.name.toLowerCase()}_2`,
         created_at: VIVO_HOUSING_SUPPLIER_FIXTURE.created_at,
         updated_at: VIVO_HOUSING_SUPPLIER_FIXTURE.updated_at,
         deleted_at: VIVO_HOUSING_SUPPLIER_FIXTURE.deleted_at,

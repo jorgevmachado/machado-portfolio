@@ -19,7 +19,6 @@ import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/ex
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
 import { FinanceService } from './finance.service';
-import { ExpenseService } from './expense/expense.service';
 import { SupplierService } from './supplier/supplier.service';
 import { BankService } from './bank/bank.service';
 import { BillService } from './bill/bill.service';
@@ -32,7 +31,6 @@ describe('FinanceService', () => {
   let supplierService: SupplierService;
   let bankService: BankService;
   let billService: BillService;
-  let expenseService: ExpenseService;
 
   const mockUser = USER_FIXTURE;
   const mockFinance = FINANCE_FIXTURE;
@@ -61,15 +59,10 @@ describe('FinanceService', () => {
           },
         },
         {
-          provide: ExpenseService,
-          useValue: {
-            seed: jest.fn(),
-          },
-        },
-        {
           provide: BillService,
           useValue: {
             seed: jest.fn(),
+            expenseSeed: jest.fn(),
             billCategorySeed: jest.fn(),
           },
         },
@@ -79,7 +72,6 @@ describe('FinanceService', () => {
     repository = module.get<Repository<Finance>>(getRepositoryToken(Finance));
     supplierService = module.get<SupplierService>(SupplierService);
     bankService = module.get<BankService>(BankService);
-    expenseService = module.get<ExpenseService>(ExpenseService);
     billService = module.get<BillService>(BillService);
     service = module.get<FinanceService>(FinanceService);
   });
@@ -92,7 +84,6 @@ describe('FinanceService', () => {
     it('should be defined', () => {
       expect(supplierService).toBeDefined();
       expect(bankService).toBeDefined();
-      expect(expenseService).toBeDefined();
       expect(billService).toBeDefined();
       expect(service).toBeDefined();
     });
@@ -206,7 +197,7 @@ describe('FinanceService', () => {
       jest
         .spyOn(billService, 'billCategorySeed')
         .mockResolvedValueOnce(mockBillCategories);
-      jest.spyOn(expenseService, 'seed').mockResolvedValueOnce(mockExpenses);
+      jest.spyOn(billService, 'expenseSeed').mockResolvedValueOnce(mockExpenses);
       jest.spyOn(billService, 'seed').mockResolvedValueOnce(mockBills);
       expect(await service.seeds(mockUser)).toEqual({
         message: 'Seeds finances executed successfully',
@@ -226,7 +217,7 @@ describe('FinanceService', () => {
       jest
         .spyOn(billService, 'billCategorySeed')
         .mockResolvedValueOnce(mockBillCategories);
-      jest.spyOn(expenseService, 'seed').mockResolvedValueOnce(mockExpenses);
+      jest.spyOn(billService, 'expenseSeed').mockResolvedValueOnce(mockExpenses);
       jest.spyOn(billService, 'seed').mockResolvedValueOnce(mockBills);
       await expect(service.seeds(mockUser)).rejects.toThrowError();
     });
