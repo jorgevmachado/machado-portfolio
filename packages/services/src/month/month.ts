@@ -29,8 +29,8 @@ export function getMonthByIndex(index: number) {
   return MONTHS[index];
 }
 
-export function validateMonth(month: string) {
-    if (!MONTHS.includes(month.toLowerCase() as TMonth)) {
+export function validateMonth(month?: string) {
+    if (!MONTHS.includes(month?.toLowerCase() as TMonth)) {
         throw new Error(`The month provided is invalid: ${month}`);
     }
 }

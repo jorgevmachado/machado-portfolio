@@ -53,6 +53,8 @@ describe('billBusiness', () => {
   describe('initialize expense', () => {
     const mockExpenseEntity = INGRID_RESIDENTIAL_LIST_FIXTURE[0];
     it('should initialize a expense.', () => {
+      const value = 93.59;
+      const month = EMonth.JANUARY;
       const params: ExpenseConstructorParams = {
         ...mockExpenseEntity,
         id: undefined,
@@ -61,8 +63,6 @@ describe('billBusiness', () => {
         type: EExpenseType.FIXED,
         paid: true,
         total: 0,
-        value: 93.59,
-        month: EMonth.JANUARY,
         supplier: mockExpenseEntity.supplier,
         total_paid: 0,
         description: undefined,
@@ -71,7 +71,7 @@ describe('billBusiness', () => {
         deleted_at: undefined,
         instalment_number: 12,
       };
-      const result = business.initializeExpense(params);
+      const result = business.initializeExpense(params, month, value);
       expect(result.nextYear).toBe(2026);
       expect(result.requiresNewBill).toBeFalsy();
       expect(result.expenseForNextYear).toBeUndefined();

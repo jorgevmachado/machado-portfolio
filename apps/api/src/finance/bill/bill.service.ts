@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { snakeCaseToNormal } from '@repo/services/string/string';
+import { getCurrentMonth } from '@repo/services/month/month';
 
 import BillBusiness from '@repo/business/finance/bill/billBusiness';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
@@ -231,12 +232,16 @@ export class BillService extends Service<Bill> {
   async createExpense(param: string, createExpenseDto: CreateExpenseDto) {
     const bill = await this.findOne({ value: param });
 
+    const month = !createExpenseDto.month
+      ? getCurrentMonth()
+      : createExpenseDto.month;
+
     const createdExpense = await this.expenseService.buildCreation(
       bill,
       createExpenseDto,
     );
 
-    const bills = await this.findAll({
+    const bills = (await this.findAll({
       filters: [
         {
           value: createdExpense.name_code,
@@ -245,23 +250,26 @@ export class BillService extends Service<Bill> {
           condition: 'LIKE',
         },
       ],
-    }) as Array<Bill>;
+    })) as Array<Bill>;
 
-    if(bills.length) {
+    if (bills.length) {
       throw this.error(
         new ConflictException(
           'You cannot create this expense because it is already in use.',
         ),
-      );}
+      );
+    }
 
     const {
       nextYear,
       requiresNewBill,
       expenseForNextYear,
-      expenseForCurrentYear
-    } = this.billBusiness.initializeExpense(createdExpense);
+      expenseForCurrentYear,
+    } = this.billBusiness.initializeExpense(createdExpense, month, createExpenseDto.value);
 
-    const expense = await this.expenseService.saveExpense(expenseForCurrentYear);
+    const expense = await this.expenseService.saveExpense(
+      expenseForCurrentYear,
+    );
 
     if (requiresNewBill) {
       const newBill = (await this.createNewBillForNextYear(
@@ -270,7 +278,7 @@ export class BillService extends Service<Bill> {
       )) as Bill;
       await this.expenseService.saveExpense({
         ...expenseForNextYear,
-        bill: newBill
+        bill: newBill,
       });
     }
     return expense;
@@ -322,12 +330,12 @@ export class BillService extends Service<Bill> {
   ) {
     const expense = await this.findOneExpense(param, expenseId);
     const updatedExpense = await this.expenseService.buildUpdate(
-        expense,
-        updateExpenseDto,
+      expense,
+      updateExpenseDto,
     );
 
-    if(expense.name_code !== updatedExpense.name_code) {
-      const bills = await this.findAll({
+    if (expense.name_code !== updatedExpense.name_code) {
+      const bills = (await this.findAll({
         filters: [
           {
             value: updatedExpense.name_code,
@@ -336,19 +344,18 @@ export class BillService extends Service<Bill> {
             condition: 'LIKE',
           },
         ],
-      }) as Array<Bill>;
+      })) as Array<Bill>;
 
-      if(bills.length) {
+      if (bills.length) {
         throw this.error(
-            new ConflictException(
-                `You cannot update this expense with this (supplier) ${updatedExpense.supplier.name} because there is already an expense linked to this supplier.`
-            ),
-        );}
+          new ConflictException(
+            `You cannot update this expense with this (supplier) ${updatedExpense.supplier.name} because there is already an expense linked to this supplier.`,
+          ),
+        );
+      }
     }
     return await this.expenseService.saveExpense(updatedExpense);
   }
-
-
 
   async findAllExpense(param: string, params: ListParams) {
     const bill = await this.findOne({ value: param });

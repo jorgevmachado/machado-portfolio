@@ -2,6 +2,7 @@ import {
   getMonthIndex,
   MONTHS,
   validateMonth,
+  getCurrentMonth
 } from '@repo/services/month/month';
 import { EMonth } from '@repo/services/month/enum';
 
@@ -14,12 +15,13 @@ import type {
 } from './interface';
 import Expense from './expense';
 
+
 export default class ExpenseBusiness {
-  initialize(params: ExpenseConstructorParams): InitializedExpense {
-    const { value, month} = params;
+  initialize(params: ExpenseConstructorParams, month?: EMonth, value: number = 0): InitializedExpense {
+    const currentMonth = month ?? getCurrentMonth();
     const builtExpense = new Expense(params);
-    validateMonth(month);
-    return this.initializeValues(builtExpense, value, month);
+    validateMonth(currentMonth);
+    return this.initializeValues(builtExpense, value, currentMonth);
   }
 
   private initializeValues(expense: Expense, value: number, month: EMonth): InitializedExpense {

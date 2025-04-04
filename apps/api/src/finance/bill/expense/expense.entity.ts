@@ -55,9 +55,6 @@ export class Expense implements ExpenseEntity {
   })
   total?: number;
 
-  @Column({ nullable: false })
-  active?: boolean;
-
   @ManyToOne(() => Supplier, (supplier) => supplier.expenses, {
     nullable: false,
   })

@@ -34,6 +34,7 @@ describe('business', () => {
 
   describe('initialize', () => {
     it('should initialize a FIXED expense correctly', () => {
+      const value = 93.59;
       const params: ExpenseConstructorParams = {
         ...mockExpenseEntity,
         id: undefined,
@@ -42,8 +43,6 @@ describe('business', () => {
         type: EExpenseType.FIXED,
         paid: true,
         total: 0,
-        value: 93.59,
-        month: EMonth.JANUARY,
         supplier: mockExpenseEntity.supplier,
         total_paid: 0,
         description: undefined,
@@ -53,7 +52,7 @@ describe('business', () => {
         instalment_number: 12,
       };
 
-      const result = business.initialize(params);
+      const result = business.initialize(params, undefined, value);
 
       expect(result.nextYear).toBe(2026);
       expect(result.requiresNewBill).toBeFalsy();
@@ -104,6 +103,8 @@ describe('business', () => {
     });
 
     it('should initialize a variable expense correctly with instalment_number equal 2', () => {
+      const value = 50;
+      const month = EMonth.JANUARY;
       const params: ExpenseConstructorParams = {
         ...mockExpenseEntity,
         id: undefined,
@@ -112,8 +113,6 @@ describe('business', () => {
         type: EExpenseType.VARIABLE,
         paid: true,
         total: 0,
-        value: 50,
-        month: EMonth.JANUARY,
         supplier: mockExpenseEntity.supplier,
         total_paid: 0,
         description: undefined,
@@ -123,7 +122,7 @@ describe('business', () => {
         instalment_number: 2,
       };
 
-      const result = business.initialize(params);
+      const result = business.initialize(params, month, value);
 
       expect(result.nextYear).toBe(2026);
       expect(result.requiresNewBill).toBeFalsy();
@@ -174,6 +173,8 @@ describe('business', () => {
     });
 
     it('should initialize a variable expense correctly with instalment_number equal 12 and expenseForNextYear', () => {
+      const value = 20;
+      const month = EMonth.MARCH;
       const params: ExpenseConstructorParams = {
         ...mockExpenseEntity,
         id: undefined,
@@ -182,8 +183,6 @@ describe('business', () => {
         type: EExpenseType.VARIABLE,
         paid: false,
         total: 0,
-        value: 20,
-        month: EMonth.MARCH,
         supplier: mockExpenseEntity.supplier,
         total_paid: 0,
         description: undefined,
@@ -193,7 +192,7 @@ describe('business', () => {
         instalment_number: 12,
       };
 
-      const result = business.initialize(params);
+      const result = business.initialize(params, month, value);
 
       expect(result.nextYear).toBe(2026);
       expect(result.requiresNewBill).toBeTruthy();
