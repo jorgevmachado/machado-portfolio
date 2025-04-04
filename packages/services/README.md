@@ -114,6 +114,7 @@ npm run lint
 ##### separateCamelCase: Separa palavras em camel case ('CamelCase') para uma versão com espaços e capitalização individual.
 ##### snakeCaseToNormal: Converte uma 'string' snake_case fornecida em uma string case normal legível por humanos.
 ##### extractLastItemFromUrl: Extrai o último segmento de uma URL.
+##### convertSubPathUrlParams: Converte e constrói uma URL anexando subcaminhos e parâmetros com base nas opções fornecidas.
 
 ### number:
 #### Utilitários relacionados a manipulação ou validação de numbers.

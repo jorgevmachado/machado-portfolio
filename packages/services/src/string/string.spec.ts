@@ -1,6 +1,7 @@
-import {describe, expect, it} from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 import {
   capitalize,
+  convertSubPathUrlParams,
   extractLastItemFromUrl,
   findRepeated,
   formatUrl,
@@ -8,10 +9,10 @@ import {
   isUUID,
   normalize,
   separateCamelCase,
+  snakeCaseToNormal,
   toCamelCase,
   toSnakeCase,
   truncateString,
-  snakeCaseToNormal,
   uuid,
 } from './string';
 
@@ -185,7 +186,9 @@ describe('String functions', () => {
   describe('snakeCaseToCamelCase', () => {
     it('deve converter uma string SNAKE_CASE para formato normal', () => {
       expect(snakeCaseToNormal('BANK_SLIP')).toBe('Bank Slip');
-      expect(snakeCaseToNormal('USER_ACCOUNT_DETAILS')).toBe('User Account Details');
+      expect(snakeCaseToNormal('USER_ACCOUNT_DETAILS')).toBe(
+        'User Account Details',
+      );
       expect(snakeCaseToNormal('PAYMENT_STATUS')).toBe('Payment Status');
     });
 
@@ -200,21 +203,23 @@ describe('String functions', () => {
 
     it('deve lidar com entradas lowercase (snake_case)', () => {
       expect(snakeCaseToNormal('bank_slip')).toBe('Bank Slip');
-      expect(snakeCaseToNormal('user_account_details')).toBe('User Account Details');
+      expect(snakeCaseToNormal('user_account_details')).toBe(
+        'User Account Details',
+      );
       expect(snakeCaseToNormal('payment_status')).toBe('Payment Status');
     });
 
     it('deve ignorar múltiplos underscores consecutivos corretamente', () => {
       expect(snakeCaseToNormal('BANK__SLIP')).toBe('Bank  Slip');
       expect(snakeCaseToNormal('USER___ACCOUNT___DETAILS')).toBe(
-          'User   Account   Details'
+        'User   Account   Details',
       );
     });
 
     it('deve lidar com espaços antes e após a entrada', () => {
       expect(snakeCaseToNormal(' BANK_SLIP ')).toBe('Bank Slip');
       expect(snakeCaseToNormal('  USER_ACCOUNT_DETAILS  ')).toBe(
-          'User Account Details'
+        'User Account Details',
       );
     });
 
@@ -222,8 +227,7 @@ describe('String functions', () => {
       expect(snakeCaseToNormal('Bank Slip')).toBe('Bank Slip');
       expect(snakeCaseToNormal('User Account')).toBe('User Account');
     });
-
-  })
+  });
 
   describe('extractLastItemFromUrl', () => {
     it('Must separate item from url', () => {
@@ -233,8 +237,38 @@ describe('String functions', () => {
         ),
       ).toEqual('65');
     });
+    it('Must return default url when dont have /', () => {
+      expect(extractLastItemFromUrl('ability')).toEqual('ability');
+    });
     it('Must return empty string if url is undefined', () => {
       expect(extractLastItemFromUrl()).toEqual('');
+    });
+  });
+
+  describe('convertSubPathUrlParams', () => {
+    const pathUrl = 'path_url';
+    const subPathUrl = 'sub_path_url';
+    const conectorPath = 'conector_path';
+    it('should convert path without subPathUrl', () => {
+      expect(convertSubPathUrlParams({ pathUrl })).toEqual(pathUrl);
+    });
+
+    it('should convert path without subPathUrl with conectorPath and isParam true', () => {
+      expect(
+        convertSubPathUrlParams({ pathUrl, conectorPath, isParam: true }),
+      ).toEqual(`${pathUrl}/${conectorPath}`);
+    });
+
+    it('should convert path with subPathUrl', () => {
+      expect(convertSubPathUrlParams({ pathUrl, subPathUrl })).toEqual(
+        `${pathUrl}/${subPathUrl}`,
+      );
+    });
+
+    it('should convert path with conectorPath', () => {
+      expect(
+        convertSubPathUrlParams({ pathUrl, subPathUrl, conectorPath }),
+      ).toEqual(`${pathUrl}/${conectorPath}/${subPathUrl}`);
     });
   });
 });

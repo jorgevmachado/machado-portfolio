@@ -2,6 +2,8 @@ import { validate as isUuid } from 'uuid';
 
 import { serialize } from '../object';
 
+import type { ConvertSubPathUrlParams } from './interface';
+
 export const linkingWords: Array<string> = ['de', 'da', 'do', 'das', 'dos'];
 
 /**
@@ -41,13 +43,16 @@ export function initials(
   }
 
   const normalized = normalize(value);
-  const normalizedStopWords = stopWords.map((word) => normalize(word.toLowerCase()));
+  const normalizedStopWords = stopWords.map((word) =>
+    normalize(word.toLowerCase()),
+  );
 
   const nameParts = normalized.split(' ');
 
   const relevantWords = nameParts.filter(
     (word) =>
-      word.length > 1 && !normalizedStopWords.includes(normalize(word.toLowerCase())),
+      word.length > 1 &&
+      !normalizedStopWords.includes(normalize(word.toLowerCase())),
   );
 
   return relevantWords
@@ -138,7 +143,11 @@ export function findRepeated<T extends { id: string; name?: string }>(
  * @param length
  * @param isNormalize
  */
-export function truncateString(value: string, length: number = 0, isNormalize: boolean = true): string {
+export function truncateString(
+  value: string,
+  length: number = 0,
+  isNormalize: boolean = true,
+): string {
   if (!value || length <= 0) {
     return '';
   }
@@ -168,17 +177,23 @@ export function snakeCaseToNormal(value: string) {
   const trimmedValue = value.trim();
 
   if (!trimmedValue.includes('_')) {
-    if (trimmedValue === trimmedValue.toLowerCase() || trimmedValue === trimmedValue.toUpperCase()) {
-      return trimmedValue.charAt(0).toUpperCase() + trimmedValue.slice(1).toLowerCase();
+    if (
+      trimmedValue === trimmedValue.toLowerCase() ||
+      trimmedValue === trimmedValue.toUpperCase()
+    ) {
+      return (
+        trimmedValue.charAt(0).toUpperCase() +
+        trimmedValue.slice(1).toLowerCase()
+      );
     }
     return trimmedValue;
   }
 
   return trimmedValue
-      .toLowerCase()
-      .split('_')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza cada palavra
-      .join(' ');
+    .toLowerCase()
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza cada palavra
+    .join(' ');
 }
 
 /**
@@ -190,6 +205,30 @@ export function extractLastItemFromUrl(url?: string) {
     return '';
   }
   const sanitizedUrl = url.endsWith('/') ? url.slice(0, -1) : url;
+
   const segments = sanitizedUrl.split('/');
   return segments[segments.length - 1];
+}
+
+/**
+ * Converts and constructs a URL by appending sub-paths and parameters based on the provided options.
+ * @param pathUrl
+ * @param isParam
+ * @param subPathUrl
+ * @param conectorPath
+ */
+export function convertSubPathUrlParams({
+  pathUrl,
+  isParam,
+  subPathUrl,
+  conectorPath,
+}: ConvertSubPathUrlParams): string {
+  if (!subPathUrl) {
+    const currentParam = conectorPath ? `/${conectorPath}` : '';
+    return isParam ? `${pathUrl}${currentParam}` : pathUrl;
+  }
+  if (!conectorPath) {
+    return `${pathUrl}/${subPathUrl}`;
+  }
+  return `${pathUrl}/${conectorPath}/${subPathUrl}`;
 }
