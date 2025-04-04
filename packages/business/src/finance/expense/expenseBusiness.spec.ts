@@ -9,13 +9,13 @@ import {
 
 import type { TMonth } from '@repo/services/month/interface';
 import { EMonth } from '@repo/services/month/enum';
+import { MONTHS } from '@repo/services/month/month';
 
 import { EExpenseType } from '../enum';
 
 import ExpenseBusiness from './expenseBusiness';
 import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
 import { ExpenseConstructorParams } from './interface';
-import { MONTHS } from '@repo/services/month/month';
 
 describe('business', () => {
   const business = new ExpenseBusiness();

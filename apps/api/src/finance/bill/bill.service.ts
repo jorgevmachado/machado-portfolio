@@ -76,10 +76,11 @@ export class BillService extends Service<Bill> {
       category,
       expenses,
     });
+
     return await this.saveBill(bill);
   }
 
-  private async saveBill(bill: Bill) {
+  private async saveBill(bill: Bill, withThrow = true) {
     const existBill = await this.findOne({
       value: bill.name,
       filters: [
@@ -93,9 +94,12 @@ export class BillService extends Service<Bill> {
     });
 
     if (existBill) {
-      throw new ConflictException(
-        `Key (name)=(${bill.name}) already exists with this (year)=(${bill.year}).`,
-      );
+      if(withThrow) {
+        throw new ConflictException(
+            `Key (name)=(${bill.name}) already exists with this (year)=(${bill.year}).`,
+        );
+      }
+      return existBill;
     }
     return await this.save(bill);
   }
@@ -276,6 +280,7 @@ export class BillService extends Service<Bill> {
         nextYear,
         bill,
       )) as Bill;
+
       await this.expenseService.saveExpense({
         ...expenseForNextYear,
         bill: newBill,
@@ -292,21 +297,7 @@ export class BillService extends Service<Bill> {
       expenses: [],
     });
 
-    const existBill = await this.findOne({
-      value: newBill.name,
-      filters: [
-        {
-          value: newBill.year,
-          param: 'year',
-          condition: '=',
-        },
-      ],
-      withThrow: false,
-    });
-    if (!existBill) {
-      return await this.saveBill(newBill);
-    }
-    return existBill;
+    return await this.saveBill(newBill, false);
   }
 
   async findOneExpense(param: string, expenseId: string) {
