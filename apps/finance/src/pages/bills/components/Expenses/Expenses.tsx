@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { MONTHS } from '@repo/services/month/month';
 import { currencyFormatter } from '@repo/services/formatter/currency/currency';
 import { truncateString } from '@repo/services/string/string';
 
@@ -15,15 +16,20 @@ import Table from '@repo/ds/components/table/Table';
 import Button from '@repo/ds/components/button/Button';
 import Spinner from '@repo/ds/elements/spinner/Spinner';
 
-import {expenseBusiness, expenseService, supplierService} from '../../../../shared';
+import {
+  expenseBusiness,
+  expenseService,
+  supplierService,
+} from '../../../../shared';
 
 import './Expenses.scss';
 
 import CRUDModal from '../../../../layout/components/CRUDModal';
 import Form from './Form';
-import {ExpenseFormFields} from "./Form/inteface";
-import {EExpenseType} from "@repo/business/finance/enum";
-import useBill from "../../useBill";
+import { ExpenseFormFields } from './Form/inteface';
+import { EExpenseType } from '@repo/business/finance/enum';
+import useBill from '../../useBill';
+
 
 type AllCalculatedExpenses = {
   total: number;
@@ -38,13 +44,15 @@ type ExpensesProps = {
 };
 
 const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
-  const { handleReload } = useBill()
+  const { handleReload } = useBill();
   const [loading, setLoading] = useState<boolean>(false);
   const [suppliers, setSuppliers] = useState<Array<Supplier>>([]);
   const [calculatedExpenses, setCalculatedExpenses] = useState<Array<Expense>>(
     [],
   );
-  const [selectedExpense, setSelectedExpense] = useState<Expense | undefined>(undefined);
+  const [selectedExpense, setSelectedExpense] = useState<Expense | undefined>(
+    undefined,
+  );
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [allCalculatedExpenses, setAllCalculatedExpenses] =
     useState<AllCalculatedExpenses>({
@@ -55,7 +63,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
     });
 
   const generateHeaders = () => {
-    const monthHeaders = expenseBusiness.months.map((month) => ({
+    const monthHeaders = MONTHS.map((month) => ({
       text: truncateString(month, 3),
       type: ETypeTableHeaderItem.MONEY,
       value: month,
@@ -73,21 +81,22 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
   };
 
   const calculateExpenses = (expenses: Array<Expense> | Bill['expenses']) => {
-    return expenses?.map((expense) =>
-      expenseBusiness.processAllCalculate(expense as unknown as Expense),
-    );
+    // return expenses?.map((expense) =>
+    //   expenseBusiness.processAllCalculate(expense as unknown as Expense),
+    // );
+    return expenses;
   };
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
     setSelectedExpense(undefined);
-  }
+  };
 
   const handleOpenModal = (item: Expense) => {
     setSelectedExpense(item);
     setIsModalVisible(true);
     setLoading(false);
-  }
+  };
 
   const fetchSuppliers = async () => {
     setLoading(true);
@@ -108,7 +117,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
 
   useEffect(() => {
     const calculatedExpenses = calculateExpenses(bill.expenses);
-    setCalculatedExpenses(calculatedExpenses || []);
+    setCalculatedExpenses((calculatedExpenses as Expense[]) || []);
     fetchSuppliers();
   }, [bill.expenses]);
 
@@ -132,35 +141,41 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
       expenseBusiness.calculateAllExpenses(calculatedExpenses);
     setAllCalculatedExpenses(calculatedAllExpenses);
   }, [allCalculated, calculatedExpenses]);
-  
-  const handleSaveItem = async (fields: ExpenseFormFields, expense?: Expense) => {
+
+  const handleSaveItem = async (
+    fields: ExpenseFormFields,
+    expense?: Expense,
+  ) => {
     setLoading(true);
-    if(!expense) {
-      return await expenseService.create({
+    if (!expense) {
+      return await expenseService
+        .create({
+          type: fields.type ?? EExpenseType.VARIABLE,
+          bill: bill.id,
+          paid: fields.paid,
+          value: fields.value,
+          month: fields.month,
+          supplier: fields.supplier?.id || '',
+          description: fields.description,
+          instalment_number: fields.instalment_number,
+        })
+        .finally(() => {
+          setLoading(false);
+          handleReload(true);
+        });
+    }
+    return await expenseService
+      .update(expense.id, {
+        ...expense,
+        ...fields,
         type: fields.type ?? EExpenseType.VARIABLE,
-        bill: bill.id,
-        paid: fields.paid,
-        value: fields.value,
-        month: fields.month,
-        supplier: fields.supplier?.id || '',
-        description: fields.description,
-        instalment_number: fields.instalment_number,
-      }).finally(() => {
-        setLoading(false)
+        supplier: fields.supplier || '',
+      })
+      .finally(() => {
+        setLoading(false);
         handleReload(true);
       });
-    }
-    return await expenseService.update(expense.id, {
-      ...expense,
-      ...fields,
-      type: fields.type ?? EExpenseType.VARIABLE,
-      supplier: fields.supplier || '',
-    }).finally(() => {
-      setLoading(false);
-      handleReload(true);
-    });
-  }
-
+  };
 
   return (
     <div className="expenses">
@@ -200,10 +215,14 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
         </div>
       </div>
       <div className="expenses__table">
-        <Table headers={generateHeaders()} items={calculatedExpenses} onRowClick={(item) => handleOpenModal(item as Expense)} />
+        <Table
+          headers={generateHeaders()}
+          items={calculatedExpenses}
+          onRowClick={(item) => handleOpenModal(item as Expense)}
+        />
       </div>
       {isModalVisible && (
-        <CRUDModal title={`${selectedExpense ? 'Edit' : 'Create'} Expense` }>
+        <CRUDModal title={`${selectedExpense ? 'Edit' : 'Create'} Expense`}>
           {loading ? (
             <Spinner context="neutral" />
           ) : (

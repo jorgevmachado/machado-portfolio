@@ -3,7 +3,6 @@ import { NestModuleAbstract } from '../nestModuleAbstract';
 import type { INestModuleConfig } from '../interface';
 
 import { Supplier } from './supplier';
-import { Expense } from './expense';
 import { Bill } from './bill';
 import { Bank } from './bank';
 import type {
@@ -20,14 +19,12 @@ export class Finance extends NestModuleAbstract<
 > {
   private readonly supplierModule: Supplier;
   private readonly bankModule: Bank;
-  private readonly expenseModule: Expense;
   private readonly billModule: Bill;
   constructor(nestModuleConfig: INestModuleConfig) {
     super({ pathUrl: 'finance', nestModuleConfig });
 
     this.bankModule = new Bank(nestModuleConfig);
     this.supplierModule = new Supplier(nestModuleConfig);
-    this.expenseModule = new Expense(nestModuleConfig);
     this.billModule = new Bill(nestModuleConfig);
   }
 
@@ -37,10 +34,6 @@ export class Finance extends NestModuleAbstract<
 
   get supplier() {
     return this.supplierModule;
-  }
-
-  get expense() {
-    return this.expenseModule;
   }
 
   get bill() {

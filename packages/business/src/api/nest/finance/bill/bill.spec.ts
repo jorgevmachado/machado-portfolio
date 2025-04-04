@@ -9,12 +9,14 @@ import {
 
 import { NestModuleAbstract } from '../../nestModuleAbstract';
 
+import { Expense } from '../expense';
 import { BillCategory } from '../bill-category';
 
 import { Bill } from './bill';
 
 jest.mock('../../nestModuleAbstract');
 jest.mock('../bill-category');
+jest.mock('../expense');
 
 describe('Bill', () => {
   const mockBaseUrl = 'http://mock-base-url.com';
@@ -51,6 +53,18 @@ describe('Bill', () => {
       const categoryModule = bill.category;
       expect(categoryModule).toBeInstanceOf(BillCategory);
       expect(BillCategory).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('expenseModule', () => {
+    it('should initialize expense module', () => {
+      expect(Expense).toHaveBeenCalledTimes(1);
+      expect(Expense).toHaveBeenCalledWith(mockConfig);
+    });
+    it('should return the instance of expense via type getter', () => {
+      const expenseModule = bill.expense;
+      expect(expenseModule).toBeInstanceOf(Expense);
+      expect(Expense).toHaveBeenCalledTimes(1);
     });
   });
 });

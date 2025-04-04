@@ -42,9 +42,7 @@ export interface IExpense extends IFinanceBase {
 }
 
 export interface IExpenseCreateParams {
-  year?: number;
   type: EExpenseType;
-  bill: string | IExpense['bill'];
   paid?: boolean;
   value?: number;
   month?: EMonth;
@@ -56,8 +54,19 @@ export interface IExpenseCreateParams {
 export interface IExpenseUpdateParams
   extends Omit<
     IExpense,
-    'id' | 'bill' | 'name' | 'supplier' | 'name_code' | 'created_at' | 'updated_at' | 'deleted_at'
+    | 'id'
+    | 'bill'
+    | 'type'
+    | 'name'
+    | 'value'
+    | 'supplier'
+    | 'name_code'
+    | 'created_at'
+    | 'updated_at'
+    | 'deleted_at'
+    | 'instalment_number'
   > {
-  bill: string | IExpense['bill'];
-  supplier: string | IExpense['supplier'];
+  bill?: string | IExpense['bill'];
+  type?: IExpense['type'];
+  supplier?: string | IExpense['supplier'];
 }

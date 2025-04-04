@@ -12,7 +12,6 @@ import { FINANCE_FIXTURE } from '../../../finance';
 import { NestModuleAbstract } from '../nestModuleAbstract';
 
 import { Supplier } from './supplier';
-import { Expense } from './expense';
 import { Bank } from './bank';
 import { Bill } from './bill';
 
@@ -21,7 +20,6 @@ import { Finance } from './finance';
 jest.mock('../nestModuleAbstract');
 
 jest.mock('./supplier');
-jest.mock('./expense');
 jest.mock('./bank');
 jest.mock('./bill');
 
@@ -54,19 +52,6 @@ describe('Finance', () => {
     });
   });
 
-  describe('expenseModule', () => {
-    it('should initialize Expense module', () => {
-      expect(Expense).toHaveBeenCalledTimes(1);
-      expect(Expense).toHaveBeenCalledWith(mockConfig);
-    });
-
-    it('should return the instance of Expense via expense getter', () => {
-      const expenseModule = finance.expense;
-      expect(expenseModule).toBeInstanceOf(Expense);
-      expect(Expense).toHaveBeenCalledTimes(1);
-    });
-  });
-
   describe('bank Module', () => {
     it('should initialize Bank module', () => {
       expect(Bank).toHaveBeenCalledTimes(1);
@@ -82,8 +67,8 @@ describe('Finance', () => {
 
   describe('bill Module', () => {
     it('should initialize Bill module', () => {
-      expect(Expense).toHaveBeenCalledTimes(1);
-      expect(Expense).toHaveBeenCalledWith(mockConfig);
+      expect(Bill).toHaveBeenCalledTimes(1);
+      expect(Bill).toHaveBeenCalledWith(mockConfig);
     });
 
     it('should return the instance of Bill via bill getter', () => {

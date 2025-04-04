@@ -71,7 +71,7 @@ describe('NestModuleAbstract', () => {
         1,
         10,
         1,
-        [{ id: '1', name: 'Example' }], // results
+        [{ id: '1', name: 'Example' }],
       ),
     );
 

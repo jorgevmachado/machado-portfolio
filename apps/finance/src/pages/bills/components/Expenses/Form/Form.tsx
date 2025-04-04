@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import {
-  getCurrentMonth,
-  MONTH_KEYS,
-} from '@repo/business/finance/expense/config';
+import type { TMonth } from '@repo/services/month/interface';
+import { getCurrentMonth, MONTHS } from '@repo/services/month/month';
 
 import Button from '@repo/ds/components/button/Button';
 
@@ -248,8 +246,8 @@ const Form: React.FC<FormProps> = ({
         }
       } else {
         if (
-          MONTH_KEYS.includes(key) ||
-          MONTH_KEYS.includes(key.replace('_paid', ''))
+          MONTHS.includes(key as TMonth) ||
+          MONTHS.includes(key.replace('_paid', '') as TMonth)
         ) {
           newErrors[key as keyof ExpenseFormErrors] = {
             ...fieldValidator,
@@ -348,7 +346,7 @@ const Form: React.FC<FormProps> = ({
           <Select
             value={formFields?.month ?? getCurrentMonth()}
             label="Month"
-            options={MONTH_KEYS.map((item) => ({
+            options={MONTHS.map((item) => ({
               value: item.toUpperCase(),
               label: item,
             }))}
@@ -391,7 +389,7 @@ const Form: React.FC<FormProps> = ({
       )}
 
       {expense &&
-        MONTH_KEYS.map((item) => (
+        MONTHS.map((item) => (
           <div key={item} className="form__group form__group--inline">
             <Input
               type="text"
@@ -422,7 +420,7 @@ const Form: React.FC<FormProps> = ({
         <Select
           value={formFields?.instalment_number ?? ''}
           label="Instalment Number"
-          options={MONTH_KEYS.map((item, index) => ({
+          options={MONTHS.map((item, index) => ({
             value: index + 1,
             label: (index + 1).toString(),
           }))}

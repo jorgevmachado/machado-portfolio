@@ -11,6 +11,8 @@ import { Nest } from '../../api';
 
 import { ExpenseService } from './expenseService';
 import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
+import { ExpenseCreateParams, ExpenseUpdateParams } from './interface';
+import { EMonth } from '../../api/nest/finance';
 
 describe('ExpenseService', () => {
   let mockNest: jest.Mocked<Nest>;
@@ -34,12 +36,14 @@ describe('ExpenseService', () => {
     jest.clearAllMocks();
     mockNest = {
       finance: {
-        expense: {
-          getAll: jest.fn(),
-          getOne: jest.fn(),
-          create: jest.fn(),
-          update: jest.fn(),
-          delete: jest.fn(),
+        bill: {
+          expense: {
+            getAllByBill: jest.fn(),
+            getOneByBill: jest.fn(),
+            createByBill: jest.fn(),
+            updateByBill: jest.fn(),
+            deleteByBill: jest.fn(),
+          },
         },
       },
     } as unknown as jest.Mocked<Nest>;
@@ -59,104 +63,48 @@ describe('ExpenseService', () => {
 
   describe('create', () => {
     it('should successfully create an supplier', async () => {
-      mockNest.finance.expense.create.mockResolvedValue(mockEntity);
+      mockNest.finance.bill.expense.createByBill.mockResolvedValue(mockEntity);
 
-      const result = await service.create(mockEntity);
-
-      expect(mockNest.finance.expense.create).toHaveBeenCalledWith({
-        id: mockEntity.id,
-        bill: mockEntity.bill,
-        year: mockEntity.year,
+      const mockExpenseCreateParams: ExpenseCreateParams = {
         type: mockEntity.type,
         paid: mockEntity.paid,
-        name: mockEntity.name,
-        total: mockEntity.total,
-        supplier: mockEntity.supplier,
-        name_code: mockEntity.name_code,
-        total_paid: mockEntity.total_paid,
-        january: mockEntity.january,
-        january_paid: mockEntity.january_paid,
-        february: mockEntity.february,
-        february_paid: mockEntity.february_paid,
-        march: mockEntity.march,
-        march_paid: mockEntity.march_paid,
-        april: mockEntity.april,
-        april_paid: mockEntity.april_paid,
-        may: mockEntity.may,
-        may_paid: mockEntity.may_paid,
-        june: mockEntity.june,
-        june_paid: mockEntity.june_paid,
-        july: mockEntity.july,
-        july_paid: mockEntity.july_paid,
-        august: mockEntity.august,
-        august_paid: mockEntity.august_paid,
-        september: mockEntity.september,
-        september_paid: mockEntity.september_paid,
-        october: mockEntity.october,
-        october_paid: mockEntity.october_paid,
-        november: mockEntity.november,
-        november_paid: mockEntity.november_paid,
-        december: mockEntity.december,
-        december_paid: mockEntity.december_paid,
-        created_at: mockEntity.created_at,
-        updated_at: mockEntity.updated_at,
-        deleted_at: mockEntity.deleted_at,
-        instalment_number: mockEntity.instalment_number,
+        value: 100,
+        month: EMonth.MARCH,
+        supplier: mockEntity.supplier.name,
         description: mockEntity.description,
-      });
+        instalment_number: mockEntity.instalment_number,
+      };
+
+      const result = await service.createByBill(
+        mockEntity.bill.id,
+        mockExpenseCreateParams,
+      );
+
+      expect(mockNest.finance.bill.expense.createByBill).toHaveBeenCalledWith(
+        mockEntity.bill.id,
+        mockExpenseCreateParams,
+      );
       expect(result).toEqual(mockEntity);
     });
   });
 
   describe('update', () => {
     it('should successfully update an expense', async () => {
-      mockNest.finance.expense.update.mockResolvedValue(mockEntity);
+      mockNest.finance.bill.expense.updateByBill.mockResolvedValue(mockEntity);
+      const mockExpenseUpdateParams: ExpenseUpdateParams = {
+        ...mockEntity,
+      };
 
-      const result = await service.update(mockEntity.id, mockEntity);
-
-      expect(mockNest.finance.expense.update).toHaveBeenCalledWith(
+      const result = await service.update(
+        mockEntity.bill.id,
         mockEntity.id,
-        {
-          id: mockEntity.id,
-          bill: mockEntity.bill,
-          year: mockEntity.year,
-          type: mockEntity.type,
-          paid: mockEntity.paid,
-          name: mockEntity.name,
-          total: mockEntity.total,
-          supplier: mockEntity.supplier,
-          name_code: mockEntity.name_code,
-          total_paid: mockEntity.total_paid,
-          january: mockEntity.january,
-          january_paid: mockEntity.january_paid,
-          february: mockEntity.february,
-          february_paid: mockEntity.february_paid,
-          march: mockEntity.march,
-          march_paid: mockEntity.march_paid,
-          april: mockEntity.april,
-          april_paid: mockEntity.april_paid,
-          may: mockEntity.may,
-          may_paid: mockEntity.may_paid,
-          june: mockEntity.june,
-          june_paid: mockEntity.june_paid,
-          july: mockEntity.july,
-          july_paid: mockEntity.july_paid,
-          august: mockEntity.august,
-          august_paid: mockEntity.august_paid,
-          september: mockEntity.september,
-          september_paid: mockEntity.september_paid,
-          october: mockEntity.october,
-          october_paid: mockEntity.october_paid,
-          november: mockEntity.november,
-          november_paid: mockEntity.november_paid,
-          december: mockEntity.december,
-          december_paid: mockEntity.december_paid,
-          created_at: mockEntity.created_at,
-          updated_at: mockEntity.updated_at,
-          deleted_at: mockEntity.deleted_at,
-          instalment_number: mockEntity.instalment_number,
-          description: mockEntity.description,
-        },
+        mockExpenseUpdateParams,
+      );
+
+      expect(mockNest.finance.bill.expense.updateByBill).toHaveBeenCalledWith(
+        mockEntity.bill.id,
+        mockEntity.id,
+        mockExpenseUpdateParams,
       );
       expect(result).toEqual(mockEntity);
     });
@@ -165,10 +113,13 @@ describe('ExpenseService', () => {
   describe('delete', () => {
     it('should successfully delete an expense', async () => {
       const mockResponse = { message: 'Successfully removed' };
-      mockNest.finance.expense.delete.mockResolvedValue(mockResponse);
-      const result = await service.remove(mockEntity.id);
+      mockNest.finance.bill.expense.deleteByBill.mockResolvedValue(
+        mockResponse,
+      );
+      const result = await service.remove(mockEntity.bill.id, mockEntity.id);
 
-      expect(mockNest.finance.expense.delete).toHaveBeenCalledWith(
+      expect(mockNest.finance.bill.expense.deleteByBill).toHaveBeenCalledWith(
+        mockEntity.bill.id,
         mockEntity.id,
       );
       expect(result).toEqual(mockResponse);
@@ -177,10 +128,11 @@ describe('ExpenseService', () => {
 
   describe('get', () => {
     it('should successfully get an expense', async () => {
-      mockNest.finance.expense.getOne.mockResolvedValue(mockEntity);
-      const result = await service.get(mockEntity.id);
+      mockNest.finance.bill.expense.getOneByBill.mockResolvedValue(mockEntity);
+      const result = await service.get(mockEntity.bill.id, mockEntity.id);
 
-      expect(mockNest.finance.expense.getOne).toHaveBeenCalledWith(
+      expect(mockNest.finance.bill.expense.getOneByBill).toHaveBeenCalledWith(
+        mockEntity.bill.id,
         mockEntity.id,
       );
       expect(result).toEqual(mockEntity);
@@ -189,18 +141,29 @@ describe('ExpenseService', () => {
 
   describe('getAll', () => {
     it('should successfully getAll supplier list', async () => {
-      mockNest.finance.expense.getAll.mockResolvedValue(mockEntityList);
-      const result = await service.getAll({});
+      mockNest.finance.bill.expense.getAllByBill.mockResolvedValue(
+        mockEntityList,
+      );
+      const result = await service.getAll(mockEntity.bill.id, {});
 
-      expect(mockNest.finance.expense.getAll).toHaveBeenCalledWith({});
+      expect(mockNest.finance.bill.expense.getAllByBill).toHaveBeenCalledWith(
+        mockEntity.bill.id,
+        {},
+      );
       expect(result).toEqual(mockEntityList);
     });
 
     it('should successfully getAll supplier list paginate', async () => {
-      mockNest.finance.expense.getAll.mockResolvedValue(mockEntityPaginate);
-      const result = await service.getAll(mockPaginateParams);
+      mockNest.finance.bill.expense.getAllByBill.mockResolvedValue(
+        mockEntityPaginate,
+      );
+      const result = await service.getAll(
+        mockEntity.bill.id,
+        mockPaginateParams,
+      );
 
-      expect(mockNest.finance.expense.getAll).toHaveBeenCalledWith(
+      expect(mockNest.finance.bill.expense.getAllByBill).toHaveBeenCalledWith(
+        mockEntity.bill.id,
         mockPaginateParams,
       );
       expect(result).toEqual(mockEntityPaginate);
