@@ -122,12 +122,12 @@ npm run lint
 
 ### number:
 #### Utilitários relacionados a manipulação ou validação de numbers.
-```
+```bash
     npm run test -- --findRelatedTests src/number/number.spec.ts               
 ```
 ### validator:
 #### Funções para validação de entrada de dados ou outros tipos de verificações.
-```
+```bash
     npm run test -- --findRelatedTests src/validator/validator.spec.ts
     npm run test -- --findRelatedTests src/validator/address/address.spec.ts   
     npm run test -- --findRelatedTests src/validator/contact/contact.spec.ts
@@ -139,19 +139,19 @@ npm run lint
 
 ### window:
 #### Funções relacionadas ao objeto `window` (provavelmente para navegadores).
-```
+```bash
     npm run test -- --findRelatedTests src/window/window.spec.ts               
 ```
 
 ### error:
 #### Função relacionado a tratamento de erros.
-```
+```bash
     npm run test -- --findRelatedTests src/error/error.spec.ts               
 ```
 
 ### month:
 #### Função relacionado a tratamento de meses.
-```
+```bash
     npm run test -- --findRelatedTests src/month/month.spec.ts              
 ```
 
