@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
+import { initials } from '@repo/services/string/string';
+
 import type { TContext, TSimplySIze } from '../../utils';
 
 import joinClass from '../../utils/join-class';
@@ -28,20 +30,8 @@ export default function Avatar({
 }: AvatarProps) {
   const [isImageLoaded, setImageLoaded] = useState<boolean>(false);
 
-  const initials = useMemo(() => {
-    if (initialsLength <= 0) {
-      return name.charAt(0).toUpperCase();
-    }
-    const normalized = name
-      .normalize('NFD') // Remove acentos
-      .replace(/[\u0300-\u036f]/g, '')
-      .trim()
-      .replace(/\s+/g, ' ');
-    const nameParts = normalized.split(' ');
-    return nameParts
-      .map((word) => word?.[0]?.toUpperCase() || '')
-      .slice(0, initialsLength)
-      .join('');
+  const initialsName = useMemo(() => {
+    return initials(name, initialsLength);
   }, [name, initialsLength]);
 
   const classNameList = joinClass([
@@ -68,7 +58,7 @@ export default function Avatar({
     <div
       {...props}
       role="img"
-      aria-label={src ? name : `Avatar of ${initials}`}
+      aria-label={src ? name : `Avatar of ${initialsName}`}
       className={classNameList}
     >
       <div className="avatar__wrapper">
@@ -82,7 +72,7 @@ export default function Avatar({
         )}
         {!isImageLoaded && (
           <Text tag="span" color="neutral-90">
-            {initials}
+            {initialsName}
           </Text>
         )}
       </div>

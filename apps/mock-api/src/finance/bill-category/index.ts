@@ -1,0 +1,1 @@
+export { default, BILL_CATEGORY_FINANCE_ENTITY } from './billCategory';

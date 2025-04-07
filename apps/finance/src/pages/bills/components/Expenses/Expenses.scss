@@ -1,0 +1,37 @@
+.expenses {
+  padding: 20px;
+  margin-bottom: 16px;
+
+  &__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+
+    &-item {
+      flex: 1;
+      min-width: 150px;
+
+      p {
+        margin: 0;
+        font-size: var(--font-size-1-5);
+        color: var(--color-neutral-80);
+      }
+
+      .status--yes {
+        font-weight: bold;
+        color: var(--color-success-80);
+      }
+
+      .status--no {
+        font-weight: bold;
+        color: var(--color-error-80);
+      }
+    }
+  }
+
+  &__table {
+    margin-top: 20px;
+    overflow: hidden;
+  }
+}

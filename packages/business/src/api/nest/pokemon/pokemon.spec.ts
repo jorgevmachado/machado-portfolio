@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Pokemon } from './pokemon';
 import { PokemonType } from './pokemon-type';
@@ -18,7 +25,12 @@ describe('Pokemon', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     pokemon = new Pokemon(mockConfig);
+  });
+
+  afterEach(() => {
+    jest.resetModules();
   });
 
   describe('pokemonAbilityModule', () => {
@@ -29,7 +41,6 @@ describe('Pokemon', () => {
 
     it('should return the instance of PokemonAbility via ability getter', () => {
       const abilityModule = pokemon.ability;
-
       expect(abilityModule).toBeInstanceOf(PokemonAbility);
       expect(PokemonAbility).toHaveBeenCalledTimes(1);
     });
@@ -43,7 +54,6 @@ describe('Pokemon', () => {
 
     it('should return the instance of PokemonMove via move getter', () => {
       const moveModule = pokemon.move;
-
       expect(moveModule).toBeInstanceOf(PokemonMove);
       expect(PokemonMove).toHaveBeenCalledTimes(1);
     });
@@ -61,6 +71,5 @@ describe('Pokemon', () => {
       expect(typeModule).toBeInstanceOf(PokemonType);
       expect(PokemonType).toHaveBeenCalledTimes(1);
     });
-  })
-
+  });
 });

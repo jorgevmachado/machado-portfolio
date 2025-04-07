@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {afterEach, beforeEach, describe, expect, it, jest} from '@jest/globals';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
-  LIST_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/supplier-type/fixtures/supplierType';
+  SUPPLIER_TYPE_LIST_FIXTURE,
+} from '@repo/business/finance/supplier-type/fixtures/supplierType';
 
-import { VIVO_HOUSING_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
+import { VIVO_HOUSING_SUPPLIER_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
 
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
 
@@ -22,6 +22,7 @@ describe('SupplierTypeService', () => {
   let repository: Repository<SupplierType>;
 
   beforeEach(async () => {
+    jest.restoreAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SupplierTypeService,
@@ -33,6 +34,10 @@ describe('SupplierTypeService', () => {
     repository = module.get<Repository<SupplierType>>(
       getRepositoryToken(SupplierType),
     );
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {
@@ -126,25 +131,17 @@ describe('SupplierTypeService', () => {
 
   describe('seed', () => {
     it('should seed the database when exist in database', async () => {
-      jest.spyOn(repository, 'find').mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
+      jest.spyOn(repository, 'find').mockResolvedValueOnce(SUPPLIER_TYPE_LIST_FIXTURE);
 
-      expect(await service.seed()).toEqual(LIST_SUPPLIER_TYPE_FIXTURE);
+      expect(await service.seed()).toEqual(SUPPLIER_TYPE_LIST_FIXTURE);
     });
     it('should seed the database when not exist in database', async () => {
       jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
-      LIST_SUPPLIER_TYPE_FIXTURE.forEach((type) => {
+      SUPPLIER_TYPE_LIST_FIXTURE.forEach((type) => {
         jest.spyOn(repository, 'save').mockResolvedValueOnce(type);
       });
-      expect(await service.seed()).toEqual(LIST_SUPPLIER_TYPE_FIXTURE);
-    });
-  });
-
-  describe('treatSupplierTypeParam', () => {
-    it('should return supplier type by supplier object', async () => {
-      expect(
-        await service.treatSupplierTypeParam(HOUSING_SUPPLIER_TYPE_FIXTURE),
-      ).toEqual(HOUSING_SUPPLIER_TYPE_FIXTURE);
+      expect(await service.seed()).toEqual(SUPPLIER_TYPE_LIST_FIXTURE);
     });
   });
 });

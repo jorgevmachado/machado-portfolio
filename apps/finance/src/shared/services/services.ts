@@ -4,9 +4,10 @@ import { AuthService } from '@repo/business/auth/authService';
 import { FinanceService } from '@repo/business/finance/financeService';
 import { SupplierTypeService } from '@repo/business/finance/supplier-type/supplierTypeService';
 import { SupplierService } from '@repo/business/finance/supplier/supplierService';
-import { ExpenseCategoryTypeService } from '@repo/business/finance/expense-category-type/expenseCategoryTypeService';
-import { ExpenseCategoryService } from '@repo/business/finance/expense-category/expenseCategoryService';
-import { ExpenseGroupService } from '@repo/business/finance/expense-group/expenseGroupService';
+import { BankService } from '@repo/business/finance/bank/bankService';
+import { BillCategoryService } from '@repo/business/finance/bill-category/billCategoryService';
+import { BillService } from '@repo/business/finance/bill/billService';
+import { ExpenseService } from '@repo/business/finance/expense/expenseService';
 
 const baseUrl = process.env.NEXT_PUBLIC_API ?? 'http://localhost:3001';
 
@@ -19,14 +20,16 @@ const nest = new Nest({
 
 export const authService = new AuthService(nest);
 
-export const financeService = new FinanceService(nest);
+export const supplierService = new SupplierService(nest);
 
 export const supplierTypeService = new SupplierTypeService(nest);
 
-export const supplierService = new SupplierService(nest);
+export const bankService = new BankService(nest);
 
-export const expenseCategoryTypeService = new ExpenseCategoryTypeService(nest);
+export const billCategoryService = new BillCategoryService(nest);
 
-export const expenseCategoryService = new ExpenseCategoryService(nest);
+export const billService = new BillService(nest);
 
-export const expenseGroupService = new ExpenseGroupService(nest);
+export const expenseService = new ExpenseService(nest);
+
+export const financeService = new FinanceService(nest);

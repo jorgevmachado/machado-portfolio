@@ -1,121 +1,39 @@
-import { ObjectLiteral, Repository } from 'typeorm';
-import { NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
 
-import { Paginate } from '@repo/business/paginate/paginate';
-import { PaginateParameters } from '@repo/business/paginate/interface';
+import type { PaginateParameters } from '@repo/business/paginate/interface';
 
-import {
-  FindByParams,
-  FindOneByOrder,
-  FindOneByParams,
-  ListParams,
-} from '../interface';
+import type { BasicEntity } from '../interface';
 import { Base } from '../base';
-import { Query } from '../query';
+import { Seeder } from '../seeder';
+import { Validate } from '../validate';
+import { type FindOneByParams, type ListParams, Queries } from '../queries';
 import { isUUID } from '@repo/services/string/string';
 
-export abstract class Service<T extends ObjectLiteral> extends Base {
+export abstract class Service<T extends BasicEntity> extends Base {
+  private readonly seederModule: Seeder<T>;
+  private readonly queriesModule: Queries<T>;
+  private readonly validateModule: Validate;
   protected constructor(
     protected readonly alias: string,
     protected readonly relations: Array<string>,
     protected readonly repository: Repository<T>,
   ) {
     super();
+    this.seederModule = new Seeder<T>(alias, relations, repository);
+    this.queriesModule = new Queries<T>(alias, relations, repository);
+    this.validateModule = new Validate();
   }
 
-  async list({
-    filters = [],
-    parameters,
-    defaultAsc,
-    withDeleted = false,
-    withRelations = true,
-  }: ListParams): Promise<Array<T> | PaginateParameters<T>> {
-    const query = new Query<T>({
-      alias: this.alias,
-      filters,
-      relations: this.relations,
-      defaultAsc,
-      parameters,
-      repository: this.repository,
-      withDeleted,
-      withRelations,
-    }).initialize();
-
-    if (!parameters?.limit || !parameters?.page) {
-      return await query.getMany();
-    }
-
-    const [results, total] = await query.getManyAndCount();
-
-    return new Paginate(parameters.page, parameters.limit, total, results);
+  get seeder(): Seeder<T> {
+    return this.seederModule;
   }
 
-  async findOneByOrder<R>({
-    order,
-    complete = true,
-    withThrow = true,
-    response,
-    completingData,
-  }: FindOneByOrder<T, R>): Promise<T> {
-    const result = await this.findBy({
-      searchParams: {
-        by: 'order',
-        value: order,
-      },
-      withThrow,
-    });
-
-    if (!complete || !completingData) {
-      return result;
-    }
-
-    return completingData(result, response);
+  get validate(): Validate {
+    return this.validateModule;
   }
 
-  async findBy({
-    withThrow,
-    relations,
-    searchParams,
-    withDeleted,
-    withRelations,
-  }: FindByParams) {
-    const query = new Query<T>({
-      alias: this.alias,
-      relations: relations ?? this.relations,
-      repository: this.repository,
-      withDeleted,
-      searchParams,
-      withRelations,
-    }).initialize();
-
-    const result = await query.getOne();
-
-    if (!result && withThrow) {
-      throw new NotFoundException(`${this.alias} not found`);
-    }
-
-    return result;
-  }
-
-  async findOne({
-    value,
-    relations,
-    withThrow = true,
-    withDeleted = false,
-    withRelations = true,
-  }: FindOneByParams) {
-    const valueIsUUID = isUUID(value);
-    return await this.findBy({
-      searchParams: {
-        by: valueIsUUID ? 'id' : 'name',
-        value: value.toLowerCase(),
-        condition: valueIsUUID ? '=': 'LIKE',
-      },
-      relations,
-      withThrow,
-      withDeleted,
-      withRelations,
-    });
+  get queries(): Queries<T> {
+    return this.queriesModule;
   }
 
   async save(data: T): Promise<void | T> {
@@ -127,27 +45,65 @@ export abstract class Service<T extends ObjectLiteral> extends Base {
       });
   }
 
-  async treatEntityParam<T>(value?: string | T, label?: string) {
-    this.validateParam<T>(value, label);
-    if(this.paramIsEntity<T>(value)) {
+  async softRemove(data: T): Promise<void | T> {
+    return this.repository
+      .softRemove(data)
+      .then()
+      .catch((error) => {
+        throw this.error(error);
+      });
+  }
+
+  async findAll(
+    listParams: ListParams,
+  ): Promise<Array<T> | PaginateParameters<T>> {
+    return await this.queries.list(listParams);
+  }
+
+  async findOne(findOneByParams: FindOneByParams) {
+    return await this.queries.findOne(findOneByParams);
+  }
+
+  async remove(param: string, withDeleted: boolean = false) {
+    const result = await this.queries.findOne({
+      value: param,
+      relations: this.relations,
+      withDeleted,
+    });
+    await this.repository.softRemove(result);
+    return { message: 'Successfully removed' };
+  }
+
+  async treatEntityParam<T>(
+    value?: string | T,
+    label?: string,
+    list?: Array<T>,
+  ) {
+    this.validate.param<T>(value, label);
+    if (this.validate.paramIsEntity<T>(value)) {
       return value;
     }
-    const entity = await this.findOne({ value, withThrow: false });
-    this.validateParam<T>(entity as unknown as string | T, label);
+    const entity = !list
+      ? await this.queries.findOne({ value, withThrow: false })
+      : this.findOneByList<T>(value, list);
+    this.validate.param<T>(entity as unknown as string | T, label);
     return entity;
   }
 
-  findRepeatedId<T extends { id: string; }>(list: Array<T>): string | null {
-    const idSet = new Set<string>();
-
-    for (const item of list) {
-      if (idSet.has(item.id)) {
-        return item.id;
-      }
-      idSet.add(item.id);
+  async treatEntitiesParams<T>(values?: Array<string | T>, label?: string) {
+    if (!values || values.length === 0) {
+      return [];
     }
+    return Promise.all(
+      values?.map(
+        async (value) => await this.treatEntityParam<T>(value, label),
+      ),
+    );
+  }
 
-    return null;
-
+  findOneByList<T>(value: string, list: Array<T>) {
+    const valueIsUUID = isUUID(value);
+    const key = valueIsUUID ? 'id' : 'name';
+    return list.find((item) => item[key] === value);
   }
 }

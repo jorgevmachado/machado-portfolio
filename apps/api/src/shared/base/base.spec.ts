@@ -2,7 +2,14 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { beforeEach, describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Base } from './base';
 
@@ -10,7 +17,12 @@ describe('Base Class', () => {
   let base: Base;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     base = new (class extends Base {})();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('error()', () => {
@@ -59,53 +71,6 @@ describe('Base Class', () => {
 
       const result = base.error(mockError);
       expect(result).toBe(mockError);
-    });
-  });
-
-  describe('paramIsEntity()', () => {
-    it('should return true if value is an object and has an "id" property', () => {
-      const entity = { id: 1, name: 'Test' };
-
-      const result = base.paramIsEntity(entity);
-      expect(result).toBe(true);
-    });
-
-    it('should return false if value is an object but does not have an "id" property', () => {
-      const nonEntity = { name: 'Test' };
-
-      const result = base.paramIsEntity(nonEntity);
-      expect(result).toBe(false);
-    });
-
-    it('should return false if value is not an object', () => {
-      const nonObjectValue = 'string';
-
-      const result = base.paramIsEntity(nonObjectValue);
-      expect(result).toBe(false);
-    });
-  });
-
-  describe('validateParam()', () => {
-    it('should throw ConflictException if value is falsy', () => {
-      expect(() => base.validateParam(null, 'test field')).toThrow(
-        ConflictException,
-      );
-      expect(() => base.validateParam(null, 'test field')).toThrow(
-        'The selected test field does not exist, try another one or create one.',
-      );
-    });
-
-    it('should throw ConflictException with default message if label is not provided', () => {
-      expect(() => base.validateParam(null)).toThrow(ConflictException);
-      expect(() => base.validateParam(null)).toThrow(
-        'The selected field does not exist, try another one or create one.',
-      );
-    });
-
-    it('should not throw any error if value is valid', () => {
-      const validValue = '123';
-
-      expect(() => base.validateParam(validValue, 'field')).not.toThrow();
     });
   });
 });

@@ -13,7 +13,7 @@ export const UseFileUpload = (allowedTypes: Array<string>) => {
   return applyDecorators(
     UseInterceptors(
       FileInterceptor('file', {
-        storage: multer.memoryStorage(), // Mantém o arquivo na memória
+        storage: multer.memoryStorage(),
         fileFilter: (req, file, callback) => {
             if (!allowedTypes.includes(file.mimetype)) {
             return callback(

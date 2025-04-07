@@ -12,7 +12,7 @@ import {
 
 import type { SupplierEntity } from '@repo/business/finance/supplier/interface';
 
-import { Expense } from '../expense/expense.entity';
+import { Expense } from '../bill/expense/expense.entity';
 
 import { SupplierType } from './supplier-type/supplierType.entity';
 
@@ -30,7 +30,10 @@ export class Supplier implements SupplierEntity {
   @JoinTable()
   type: SupplierType;
 
-  @OneToMany(() => Expense, (expense) => expense.group)
+  @Column({ nullable: false, unique: true, length: 200 })
+  name_code: string;
+
+  @OneToMany(() => Expense, (expense) => expense.supplier)
   @JoinTable()
   expenses?: Array<Expense>;
 

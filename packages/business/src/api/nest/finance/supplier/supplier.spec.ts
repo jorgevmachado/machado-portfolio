@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { NestModuleAbstract } from '../../nestModuleAbstract';
 
@@ -17,7 +24,12 @@ describe('Supplier', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     supplier = new Supplier(mockConfig);
+  });
+
+  afterEach(() => {
+    jest.resetModules();
   });
 
   describe('constructor', () => {

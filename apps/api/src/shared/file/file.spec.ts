@@ -1,4 +1,11 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import fs from 'fs';
 import { writeFile } from 'fs/promises';
 import { File } from './file';
@@ -8,7 +15,6 @@ jest.mock('fs');
 jest.mock('fs/promises', () => ({
   writeFile: jest.fn(),
 }));
-
 
 describe('File Class', () => {
   let file: File;
@@ -26,7 +32,12 @@ describe('File Class', () => {
   };
 
   beforeEach(() => {
+    jest.clearAllMocks();
     file = new (class extends File {})();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('getPath', () => {
@@ -40,7 +51,7 @@ describe('File Class', () => {
       jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
       const result = file.getPath(mockFile, 'custom-file-name');
-      expect(result).toContain('uploads/custom-file-name.jpeg'); // O mimeType define a extensão ".jpeg"
+      expect(result).toContain('uploads/custom-file-name.jpeg');
     });
 
     it('should throw BadRequestException if file does not exist', () => {
@@ -48,7 +59,7 @@ describe('File Class', () => {
     });
 
     it('should throw BadRequestException if file already exists', () => {
-      jest.spyOn(fs, 'existsSync').mockReturnValue(true); // Simula que o arquivo já existe
+      jest.spyOn(fs, 'existsSync').mockReturnValue(true);
 
       expect(() => file.getPath(mockFile)).toThrow(BadRequestException);
     });
@@ -57,20 +68,21 @@ describe('File Class', () => {
   describe('uploadFile', () => {
     it('should successfully upload the file and return the path', async () => {
       jest.spyOn(fs, 'existsSync').mockReturnValue(false);
-      jest
-          .spyOn(file, 'getPath')
-          .mockReturnValue('uploads/test-image.jpeg');
+      jest.spyOn(file, 'getPath').mockReturnValue('uploads/test-image.jpeg');
 
       (writeFile as jest.MockedFunction<typeof writeFile>).mockResolvedValue();
 
       const result = await file.uploadFile(mockFile);
 
       expect(result).toBe('uploads/test-image.jpeg');
-      expect(writeFile).toHaveBeenCalledWith('uploads/test-image.jpeg', mockFile.buffer);
+      expect(writeFile).toHaveBeenCalledWith(
+        'uploads/test-image.jpeg',
+        mockFile.buffer,
+      );
     });
 
     it('should throw BadRequestException if file is invalid', async () => {
-      await expect(file.uploadFile(null)).rejects.toThrow(BadRequestException); // Verifica se lança exceção com entrada inválida
+      await expect(file.uploadFile(null)).rejects.toThrow(BadRequestException);
     });
 
     it('should throw BadRequestException if getPath throws error', async () => {
@@ -78,17 +90,21 @@ describe('File Class', () => {
         throw new BadRequestException('File not received or invalid.');
       });
 
-      await expect(file.uploadFile(mockFile)).rejects.toThrow(BadRequestException);
+      await expect(file.uploadFile(mockFile)).rejects.toThrow(
+        BadRequestException,
+      );
     });
 
     it('should throw BadRequestException if writeFile fails', async () => {
       jest.spyOn(fs, 'existsSync').mockReturnValue(false);
       jest.spyOn(file, 'getPath').mockReturnValue('uploads/test-image.jpeg');
-      (writeFile as jest.MockedFunction<typeof writeFile>).mockRejectedValue(new Error('Write failed'));
+      (writeFile as jest.MockedFunction<typeof writeFile>).mockRejectedValue(
+        new Error('Write failed'),
+      );
 
-      await expect(file.uploadFile(mockFile)).rejects.toThrow(BadRequestException);
+      await expect(file.uploadFile(mockFile)).rejects.toThrow(
+        BadRequestException,
+      );
     });
-
-
   });
 });

@@ -11,8 +11,8 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { QueryParameters } from '@repo/business/shared/interface';
 
-import { AuthRoleGuards } from '../../../auth/guards/auth-role.guards';
-import { AuthStatusGuards } from '../../../auth/guards/auth-status.guards';
+import { AuthRoleGuards } from '../../../guards/auth-role.guards';
+import { AuthStatusGuards } from '../../../guards/auth-status.guards';
 
 import { SupplierTypeService } from './supplier-type.service';
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
@@ -26,7 +26,7 @@ export class SupplierTypeController {
 
   @Get('/list/type')
   findAll(@Query() parameters: QueryParameters) {
-    return this.service.list({ parameters });
+    return this.service.findAll({ parameters });
   }
 
   @Post('/type')
@@ -50,5 +50,10 @@ export class SupplierTypeController {
   @Delete(':param/type')
   remove(@Param('param') param: string) {
     return this.service.remove(param);
+  }
+
+  @Get('seed/type')
+  seed() {
+    return this.service.seed(false);
   }
 }

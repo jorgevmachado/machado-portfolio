@@ -1,9 +1,25 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { ensureAttributes } from './config';
 import { EnsurePokemonMoveAttributesParams } from './interface';
 
 describe('ensureAttributes', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
+
   it('should return the expected attributes when moveByOrder is present', () => {
     const params = {
       pp: 10,

@@ -1,0 +1,37 @@
+.crud-modal {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  z-index: 1000;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  &__content {
+    width: 400px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-radius: 8px;
+    background-color: white;
+    h2 {
+      color: #333;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    input[type='text'] {
+      width: 100%;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    &--actions {
+      display: grid;
+      gap: 15px;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}

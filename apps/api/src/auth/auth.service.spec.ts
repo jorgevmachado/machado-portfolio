@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import AuthBusiness from '@repo/business/auth/authBusiness';
 
-import { ENTITY_USER_FIXTURE, USER_PASSWORD } from '@repo/mock/auth/fixture';
+import { USER_ENTITY_FIXTURE, USER_PASSWORD } from '@repo/business/auth/fixtures/auth';
 
 import { UserService } from './users/users.service';
 
@@ -59,12 +59,12 @@ describe('AuthService', () => {
     it('should be registered user', async () => {
       expect(
         await service.signUp({
-          cpf: ENTITY_USER_FIXTURE.cpf,
-          name: ENTITY_USER_FIXTURE.name,
-          email: ENTITY_USER_FIXTURE.email,
-          whatsapp: ENTITY_USER_FIXTURE.whatsapp,
+          cpf: USER_ENTITY_FIXTURE.cpf,
+          name: USER_ENTITY_FIXTURE.name,
+          email: USER_ENTITY_FIXTURE.email,
+          whatsapp: USER_ENTITY_FIXTURE.whatsapp,
           password: USER_PASSWORD,
-          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
+          date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
           password_confirmation: USER_PASSWORD,
         }),
       ).toEqual({ message: 'Registration Completed Successfully!' });
@@ -75,11 +75,11 @@ describe('AuthService', () => {
     it('should be authenticate user', async () => {
       jest
         .spyOn(userService, 'checkCredentials')
-        .mockResolvedValueOnce(ENTITY_USER_FIXTURE);
+        .mockResolvedValueOnce(USER_ENTITY_FIXTURE);
 
       expect(
         await service.signIn({
-          email: ENTITY_USER_FIXTURE.email,
+          email: USER_ENTITY_FIXTURE.email,
           password: USER_PASSWORD,
         }),
       ).toEqual({ token: 'token', message: 'Authentication Successfully!' });
@@ -88,42 +88,48 @@ describe('AuthService', () => {
 
   describe('findOne', () => {
     it('should be found a complete user', async () => {
+
       jest
         .spyOn(userService, 'findOne')
-        .mockResolvedValueOnce(ENTITY_USER_FIXTURE);
+        .mockResolvedValueOnce(USER_ENTITY_FIXTURE);
 
       expect(
-        await service.findOne(ENTITY_USER_FIXTURE.id, ENTITY_USER_FIXTURE),
+        await service.findOne(USER_ENTITY_FIXTURE.id, USER_ENTITY_FIXTURE),
       ).toEqual({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
-        role: ENTITY_USER_FIXTURE.role,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
+        role: USER_ENTITY_FIXTURE.role,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
+        finance: USER_ENTITY_FIXTURE.finance,
       });
     });
   });
 
   describe('me', () => {
     it('should be found a complete user', async () => {
-      expect(await service.me(ENTITY_USER_FIXTURE)).toEqual({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
-        role: ENTITY_USER_FIXTURE.role,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
+      jest
+          .spyOn(userService, 'findOne')
+          .mockResolvedValueOnce(USER_ENTITY_FIXTURE);
+      expect(await service.me(USER_ENTITY_FIXTURE)).toEqual({
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
+        role: USER_ENTITY_FIXTURE.role,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
+        finance: USER_ENTITY_FIXTURE.finance,
       });
     });
   });
@@ -132,24 +138,25 @@ describe('AuthService', () => {
     it('should be seed data', async () => {
       jest
         .spyOn(userService, 'findOne')
-        .mockResolvedValueOnce(ENTITY_USER_FIXTURE);
+        .mockResolvedValueOnce(USER_ENTITY_FIXTURE);
 
       jest
         .spyOn(userService, 'seed')
-        .mockResolvedValueOnce({ ...ENTITY_USER_FIXTURE, role: ERole.ADMIN });
+        .mockResolvedValueOnce({ ...USER_ENTITY_FIXTURE, role: ERole.ADMIN });
 
       expect(await service.seed()).toEqual({
-        id: ENTITY_USER_FIXTURE.id,
-        cpf: ENTITY_USER_FIXTURE.cpf,
+        id: USER_ENTITY_FIXTURE.id,
+        cpf: USER_ENTITY_FIXTURE.cpf,
         role: ERole.ADMIN,
-        name: ENTITY_USER_FIXTURE.name,
-        email: ENTITY_USER_FIXTURE.email,
-        status: ENTITY_USER_FIXTURE.status,
-        gender: ENTITY_USER_FIXTURE.gender,
-        whatsapp: ENTITY_USER_FIXTURE.whatsapp,
-        date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
-        created_at: ENTITY_USER_FIXTURE.created_at,
-        updated_at: ENTITY_USER_FIXTURE.updated_at,
+        name: USER_ENTITY_FIXTURE.name,
+        email: USER_ENTITY_FIXTURE.email,
+        status: USER_ENTITY_FIXTURE.status,
+        gender: USER_ENTITY_FIXTURE.gender,
+        whatsapp: USER_ENTITY_FIXTURE.whatsapp,
+        date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
+        created_at: USER_ENTITY_FIXTURE.created_at,
+        updated_at: USER_ENTITY_FIXTURE.updated_at,
+        finance: USER_ENTITY_FIXTURE.finance,
       });
     });
   });
@@ -158,21 +165,21 @@ describe('AuthService', () => {
     it('should promote user with success', async () => {
       jest
         .spyOn(userService, 'findOne')
-        .mockResolvedValueOnce({ ...ENTITY_USER_FIXTURE, role: ERole.USER });
+        .mockResolvedValueOnce({ ...USER_ENTITY_FIXTURE, role: ERole.USER });
 
       jest.spyOn(userService, 'promoteUser').mockResolvedValueOnce({
-        user: { ...ENTITY_USER_FIXTURE, role: ERole.ADMIN },
+        user: { ...USER_ENTITY_FIXTURE, role: ERole.ADMIN },
         valid: true,
         message: 'User promoted successfully!',
       });
 
       expect(
-        await service.promoteUser(ENTITY_USER_FIXTURE.id, {
-          ...ENTITY_USER_FIXTURE,
+        await service.promoteUser(USER_ENTITY_FIXTURE.id, {
+          ...USER_ENTITY_FIXTURE,
           role: ERole.ADMIN,
         }),
       ).toEqual({
-        user: { ...ENTITY_USER_FIXTURE, role: ERole.ADMIN },
+        user: { ...USER_ENTITY_FIXTURE, role: ERole.ADMIN },
         valid: true,
         message: 'User promoted successfully!',
       });
@@ -189,16 +196,16 @@ describe('AuthService', () => {
       }
       jest
         .spyOn(userService, 'findOne')
-        .mockResolvedValueOnce(ENTITY_USER_FIXTURE);
+        .mockResolvedValueOnce(USER_ENTITY_FIXTURE);
 
       jest.spyOn(userService, 'update').mockResolvedValueOnce({
-        ...ENTITY_USER_FIXTURE,
+        ...USER_ENTITY_FIXTURE,
         name: updateAuthDto.name,
         gender: updateAuthDto.gender,
       });
 
       expect(
-        await service.update(ENTITY_USER_FIXTURE.id, updateAuthDto, ENTITY_USER_FIXTURE),
+        await service.update(USER_ENTITY_FIXTURE.id, updateAuthDto, USER_ENTITY_FIXTURE),
       ).toEqual({ message: 'Update Successfully!' });
     });
   });
@@ -219,15 +226,15 @@ describe('AuthService', () => {
     it('should upload file with success', async () => {
       jest
         .spyOn(userService, 'findOne')
-        .mockResolvedValueOnce(ENTITY_USER_FIXTURE);
+        .mockResolvedValueOnce(USER_ENTITY_FIXTURE);
 
       jest.spyOn(userService, 'upload').mockResolvedValueOnce({
-        ...ENTITY_USER_FIXTURE,
-        picture: `http://localhost:3001/uploads/${ENTITY_USER_FIXTURE.email}.jpeg`
+        ...USER_ENTITY_FIXTURE,
+        picture: `http://localhost:3001/uploads/${USER_ENTITY_FIXTURE.email}.jpeg`
       });
 
       expect(
-        await service.upload(ENTITY_USER_FIXTURE.id, mockFile, ENTITY_USER_FIXTURE),
+        await service.upload(USER_ENTITY_FIXTURE.id, mockFile, USER_ENTITY_FIXTURE),
       ).toEqual({ message: 'File uploaded successfully!' });
     });
   });

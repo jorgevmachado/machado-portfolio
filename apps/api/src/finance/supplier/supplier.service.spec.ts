@@ -5,14 +5,14 @@ import { Repository } from 'typeorm';
 
 import {
   HOUSING_SUPPLIER_TYPE_FIXTURE,
-  LIST_SUPPLIER_TYPE_FIXTURE,
+  SUPPLIER_TYPE_LIST_FIXTURE,
   TRANSPORT_SUPPLIER_TYPE_FIXTURE,
-} from '@repo/mock/finance/supplier-type/fixtures/supplierType';
+} from '@repo/business/finance/supplier-type/fixtures/supplierType';
 import {
-  LIST_SUPPLIER_FIXTURE,
+  SUPPLIER_LIST_FIXTURE,
   VIVO_HOUSING_SUPPLIER_FIXTURE,
-} from '@repo/mock/finance/supplier/fixtures/supplier';
-import { NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE } from '@repo/mock/finance/expense/fixtures/expense';
+} from '@repo/business/finance/supplier/fixtures/supplier';
+import { INGRID_RESIDENTIAL_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
 
@@ -37,7 +37,7 @@ describe('SupplierService', () => {
           useValue: {
             findOne: jest.fn(),
             seed: jest.fn(),
-            treatSupplierTypeParam: jest.fn(),
+            treatEntityParam: jest.fn(),
           },
         },
       ],
@@ -58,36 +58,30 @@ describe('SupplierService', () => {
     it('should seed the database when exist in database', async () => {
       jest
         .spyOn(supplierTypeService, 'seed')
-        .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
+        .mockResolvedValueOnce(SUPPLIER_TYPE_LIST_FIXTURE);
 
-      jest.spyOn(repository, 'find').mockResolvedValueOnce(LIST_SUPPLIER_FIXTURE);
+      jest.spyOn(repository, 'find').mockResolvedValueOnce(SUPPLIER_LIST_FIXTURE);
 
-      expect(await service.seed()).toEqual({
-        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
-        suppliers: LIST_SUPPLIER_FIXTURE,
-      });
+      expect(await service.seed()).toEqual(SUPPLIER_LIST_FIXTURE);
     });
     it('should seed the database when not exist in database', async () => {
       jest
         .spyOn(supplierTypeService, 'seed')
-        .mockResolvedValueOnce(LIST_SUPPLIER_TYPE_FIXTURE);
+        .mockResolvedValueOnce(SUPPLIER_TYPE_LIST_FIXTURE);
 
       jest.spyOn(repository, 'find').mockResolvedValueOnce([]);
 
-      LIST_SUPPLIER_FIXTURE.forEach((supplier) => {
-        jest.spyOn(supplierTypeService, 'treatSupplierTypeParam').mockResolvedValueOnce(supplier.type);
+      SUPPLIER_LIST_FIXTURE.forEach((supplier) => {
+        jest.spyOn(supplierTypeService, 'treatEntityParam').mockResolvedValueOnce(supplier.type);
         jest.spyOn(repository, 'save').mockResolvedValueOnce(supplier);
       });
-      expect(await service.seed()).toEqual({
-        supplierTypes: LIST_SUPPLIER_TYPE_FIXTURE,
-        suppliers: LIST_SUPPLIER_FIXTURE,
-      });
+      expect(await service.seed()).toEqual(SUPPLIER_LIST_FIXTURE);
     });
     it('should return conflict Exception because dont exist one SupplierType in dataBase', async () => {
       jest
         .spyOn(supplierTypeService, 'seed')
         .mockResolvedValueOnce(
-          LIST_SUPPLIER_TYPE_FIXTURE.filter(
+          SUPPLIER_TYPE_LIST_FIXTURE.filter(
             (type) => type.id !== HOUSING_SUPPLIER_TYPE_FIXTURE.id,
           ),
         );
@@ -106,7 +100,7 @@ describe('SupplierService', () => {
       };
 
       jest
-        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
+        .spyOn(supplierTypeService, 'treatEntityParam')
         .mockResolvedValueOnce(VIVO_HOUSING_SUPPLIER_FIXTURE.type);
 
       jest
@@ -125,7 +119,7 @@ describe('SupplierService', () => {
       };
 
       jest
-        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
+        .spyOn(supplierTypeService, 'treatEntityParam')
         .mockResolvedValueOnce(HOUSING_SUPPLIER_TYPE_FIXTURE);
 
       jest
@@ -149,6 +143,7 @@ describe('SupplierService', () => {
         id: VIVO_HOUSING_SUPPLIER_FIXTURE.id,
         name: `${VIVO_HOUSING_SUPPLIER_FIXTURE.name}2`,
         type: TRANSPORT_SUPPLIER_TYPE_FIXTURE,
+        name_code: `${VIVO_HOUSING_SUPPLIER_FIXTURE.name.toLowerCase()}_2`,
         created_at: VIVO_HOUSING_SUPPLIER_FIXTURE.created_at,
         updated_at: VIVO_HOUSING_SUPPLIER_FIXTURE.updated_at,
         deleted_at: VIVO_HOUSING_SUPPLIER_FIXTURE.deleted_at,
@@ -162,7 +157,7 @@ describe('SupplierService', () => {
       } as any);
 
       jest
-        .spyOn(supplierTypeService, 'treatSupplierTypeParam')
+        .spyOn(supplierTypeService, 'treatEntityParam')
         .mockResolvedValueOnce(TRANSPORT_SUPPLIER_TYPE_FIXTURE);
 
       jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
@@ -180,6 +175,7 @@ describe('SupplierService', () => {
         id: VIVO_HOUSING_SUPPLIER_FIXTURE.id,
         name: `${VIVO_HOUSING_SUPPLIER_FIXTURE.name}2`,
         type: VIVO_HOUSING_SUPPLIER_FIXTURE.type,
+        name_code: `${VIVO_HOUSING_SUPPLIER_FIXTURE.name.toLowerCase()}_2`,
         created_at: VIVO_HOUSING_SUPPLIER_FIXTURE.created_at,
         updated_at: VIVO_HOUSING_SUPPLIER_FIXTURE.updated_at,
         deleted_at: VIVO_HOUSING_SUPPLIER_FIXTURE.deleted_at,
@@ -227,7 +223,7 @@ describe('SupplierService', () => {
     it('should throw a ConflictException when Supplier is in use', async () => {
       const expected: Supplier = {
         ...VIVO_HOUSING_SUPPLIER_FIXTURE,
-        expenses: [NEOENERGIA_MONTE_CARLO_EXPENSE_FIXTURE],
+        expenses: [INGRID_RESIDENTIAL_LIST_FIXTURE[0]],
       };
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
         andWhere: jest.fn(),
@@ -239,14 +235,6 @@ describe('SupplierService', () => {
       await expect(
         service.remove(HOUSING_SUPPLIER_TYPE_FIXTURE.id),
       ).rejects.toThrowError(ConflictException);
-    });
-  });
-
-  describe('treatSupplierParam', () => {
-    it('should return supplier by supplier object', async () => {
-      expect(
-        await service.treatSupplierParam(VIVO_HOUSING_SUPPLIER_FIXTURE),
-      ).toEqual(VIVO_HOUSING_SUPPLIER_FIXTURE);
     });
   });
 });

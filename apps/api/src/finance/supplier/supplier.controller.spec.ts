@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {afterEach, beforeEach, describe, expect, it, jest} from '@jest/globals';
 
 import {
-  LIST_SUPPLIER_FIXTURE,
+  SUPPLIER_LIST_FIXTURE,
   VIVO_HOUSING_SUPPLIER_FIXTURE,
-} from '@repo/mock/finance/supplier/fixtures/supplier';
+} from '@repo/business/finance/supplier/fixtures/supplier';
 
 import { SupplierService } from './supplier.service';
 
@@ -18,17 +18,19 @@ describe('SupplierController', () => {
   let service: SupplierService;
 
   beforeEach(async () => {
+    jest.restoreAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SupplierController],
       providers: [
         {
           provide: SupplierService,
           useValue: {
-            list: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
+            seed: jest.fn(),
           },
         },
       ],
@@ -38,6 +40,10 @@ describe('SupplierController', () => {
     service = module.get<SupplierService>(SupplierService);
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should be defined', () => {
     expect(controller).toBeDefined();
     expect(service).toBeDefined();
@@ -45,9 +51,9 @@ describe('SupplierController', () => {
 
   describe('findAll', () => {
     it('Should return an list of suppliers', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(LIST_SUPPLIER_FIXTURE);
+      jest.spyOn(service, 'findAll').mockResolvedValue(SUPPLIER_LIST_FIXTURE,);
 
-      expect(await controller.findAll({})).toEqual(LIST_SUPPLIER_FIXTURE);
+      expect(await controller.findAll({})).toEqual(SUPPLIER_LIST_FIXTURE,);
     });
   });
 
@@ -90,6 +96,7 @@ describe('SupplierController', () => {
         id: VIVO_HOUSING_SUPPLIER_FIXTURE.id,
         name: `${VIVO_HOUSING_SUPPLIER_FIXTURE.name}2`,
         type: VIVO_HOUSING_SUPPLIER_FIXTURE.type,
+        name_code: `${VIVO_HOUSING_SUPPLIER_FIXTURE.name.toLowerCase()}_2`,
         created_at: VIVO_HOUSING_SUPPLIER_FIXTURE.created_at,
         updated_at: VIVO_HOUSING_SUPPLIER_FIXTURE.updated_at,
         deleted_at: VIVO_HOUSING_SUPPLIER_FIXTURE.deleted_at,
@@ -112,6 +119,14 @@ describe('SupplierController', () => {
       expect(await controller.remove(VIVO_HOUSING_SUPPLIER_FIXTURE.id)).toEqual(
           { message: 'Successfully removed' },
       );
+    });
+  });
+
+  describe('seed', () => {
+    it('Should seed an list of suppliers', async () => {
+      jest.spyOn(service, 'seed').mockResolvedValue(SUPPLIER_LIST_FIXTURE,);
+
+      expect(await controller.seed()).toEqual(SUPPLIER_LIST_FIXTURE,);
     });
   });
 });

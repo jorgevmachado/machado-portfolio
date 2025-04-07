@@ -63,19 +63,22 @@ npm run lint
 
 ## Módulos
 ### cookies:
-#### Funções para manipulação de cookies.
-```
+#### Classe de utilitário para manipular ‘cookies’ do navegador.
+#### testes
+```bash
     npm run test -- --findRelatedTests src/cookies/cookies.spec.ts               
 ```
 
 ### date:
 #### Utilitários ou manipuladores de datas.
-```
+#### testes
+```bash
     npm run test -- --findRelatedTests src/date/date.spec.ts               
 ```
 ### formatter:
 #### Funções que formatam dados (datas, números, strings, etc.).
-```
+#### testes
+```bash
     npm run test -- --findRelatedTests src/formatter/formatter.spec.ts               
     npm run test -- --findRelatedTests src/formatter/address/address.spec.ts               
     npm run test -- --findRelatedTests src/formatter/contact/contact.spec.ts               
@@ -85,46 +88,74 @@ npm run lint
 
 ### http:
 #### Funções para realizar chamadas HTTP ou gerenciar requisições e respostas.
-```
+#### testes
+```bash
     npm run test -- --findRelatedTests src/http/http.spec.ts               
 ```
 
 ### object:
 #### Utilitários ou manipuladores de objetos.
-```
+```bash
     npm run test -- --findRelatedTests src/object/object.spec.ts               
 ```
 
 ### string:
-#### Utilitários relacionados a manipulação ou validação de strings.
+#### Utilitários relacionados a manipulação ou validação de 'strings'.
+#### testes
+```bash
+  npm run test -- --findRelatedTests src/string/string.spec.ts               
 ```
-    npm run test -- --findRelatedTests src/string/string.spec.ts               
-```
+##### uuid: Gera uma 'string' UUID (identificador universal único) com base na data fornecida.
+##### isUUID: Verifica se uma 'string' é um UUID válido.
+##### initials: Retorna as iniciais de uma 'string' com um número específico de letras. 
+##### normalize: Remove acentos e espaços extras e Normaliza espaços múltiplos para um único espaço.
+##### formatUrl: Constrói uma URL formatada com caminho adicional ('path') e parâmetros de consulta ('params').
+##### capitalize: Retorna uma 'string' com a primeira letra em maiúscula.
+##### toSnakeCase: Converte strings em camel case (ou similares) para snake case (formato `snake_case`).
+##### toCamelCase: Converte strings no formato `snake_case` para camel case.
+##### findRepeated: Procura duplicatas numa lista de objetos com base numa chave definida ('id' ou 'name').
+##### truncateString: Trunca uma 'string' para o comprimento especificado ('length') e converte para maiúsculas.
+##### convertSubPathUrl: Converte e constrói uma URL anexando subcaminhos e parâmetros com base nas opções fornecidas.
+##### separateCamelCase: Separa palavras em camel case ('CamelCase') para uma versão com espaços e capitalização individual.
+##### snakeCaseToNormal: Converte uma 'string' snake_case fornecida em uma string case normal legível por humanos.
+##### extractLastItemFromUrl: Extrai o último segmento de uma URL.
+
 ### number:
 #### Utilitários relacionados a manipulação ou validação de numbers.
-```
+```bash
     npm run test -- --findRelatedTests src/number/number.spec.ts               
 ```
 ### validator:
 #### Funções para validação de entrada de dados ou outros tipos de verificações.
-```
+```bash
     npm run test -- --findRelatedTests src/validator/validator.spec.ts
     npm run test -- --findRelatedTests src/validator/address/address.spec.ts   
     npm run test -- --findRelatedTests src/validator/contact/contact.spec.ts
     npm run test -- --findRelatedTests src/validator/document/document.spec.ts
     npm run test -- --findRelatedTests src/validator/password/password.spec.ts            
     npm run test -- --findRelatedTests src/validator/personal/personal.spec.ts            
+    npm run test -- --findRelatedTests src/validator/date/date.spec.ts            
 ```
 
 ### window:
 #### Funções relacionadas ao objeto `window` (provavelmente para navegadores).
-```
+```bash
     npm run test -- --findRelatedTests src/window/window.spec.ts               
 ```
 
 ### error:
 #### Função relacionado a tratamento de erros.
-```
+```bash
     npm run test -- --findRelatedTests src/error/error.spec.ts               
 ```
 
+### month:
+#### Função relacionado a tratamento de meses.
+```bash
+    npm run test -- --findRelatedTests src/month/month.spec.ts              
+```
+
+### entities
+```bash
+    npm run test -- --findRelatedTests src/entities/entities.spec.ts               
+```

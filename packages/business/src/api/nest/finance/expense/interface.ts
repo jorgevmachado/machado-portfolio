@@ -1,24 +1,17 @@
-import type { IUser } from '../../auth';
-
-import type { IFinanceBase, IFinanceResponse } from '../interface';
+import type { IFinanceBase } from '../interface';
 import { EExpenseType, EMonth } from '../enum';
-
 import type { ISupplier } from '../supplier';
-import type { IExpenseCategory } from '../expense-category';
-import type { IExpenseGroup } from '../expense-group';
+import type { IBill } from '../bill';
 
-export interface IExpense extends Omit<IFinanceBase, 'name'> {
-  user: IUser;
+export interface IExpense extends IFinanceBase {
   year?: number;
+  bill?: IBill;
   type: EExpenseType;
   paid?: boolean;
   value?: number;
   total?: number;
   month?: EMonth;
-  group: IExpenseGroup;
-  active?: boolean;
   supplier: ISupplier;
-  category: IExpenseCategory;
   total_paid?: number;
   january?: number;
   january_paid?: boolean;
@@ -48,36 +41,32 @@ export interface IExpense extends Omit<IFinanceBase, 'name'> {
   instalment_number?: number;
 }
 
-export interface IExpenseCreateParams
-  extends Pick<
-    IExpense,
-    | 'year'
-    | 'type'
-    | 'paid'
-    | 'value'
-    | 'month'
-    | 'description'
-    | 'instalment_number'
-  > {
-  group: string | IExpense['group'];
+export interface IExpenseCreateParams {
+  type: EExpenseType;
+  paid?: boolean;
+  value?: number;
+  month?: EMonth;
   supplier: string | IExpense['supplier'];
-  category: string | IExpense['category'];
+  description?: string;
+  instalment_number?: number;
 }
 
 export interface IExpenseUpdateParams
   extends Omit<
     IExpense,
     | 'id'
+    | 'bill'
+    | 'type'
+    | 'name'
+    | 'value'
+    | 'supplier'
+    | 'name_code'
     | 'created_at'
     | 'updated_at'
     | 'deleted_at'
-    | 'group'
-    | 'supplier'
-    | 'category'
+    | 'instalment_number'
   > {
-  group: string | IExpense['group'];
-  supplier: string | IExpense['supplier'];
-  category: string | IExpense['category'];
+  bill?: string | IExpense['bill'];
+  type?: IExpense['type'];
+  supplier?: string | IExpense['supplier'];
 }
-
-export type IExpenseResponse = IFinanceResponse;

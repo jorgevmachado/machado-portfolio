@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Delete,
   Get,
   Param,
   Post,
@@ -10,10 +10,10 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { QueryParameters } from '@repo/business/shared/interface';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
-import { AuthRoleGuards } from '../../auth/guards/auth-role.guards';
-import { AuthStatusGuards } from '../../auth/guards/auth-status.guards';
+import { AuthRoleGuards } from '../../guards/auth-role.guards';
+import { AuthStatusGuards } from '../../guards/auth-status.guards';
 
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 
@@ -27,7 +27,7 @@ export class SupplierController {
 
   @Get()
   findAll(@Query() parameters: QueryParameters) {
-    return this.service.list({ parameters });
+    return this.service.findAll({ parameters });
   }
 
   @Post()
@@ -48,8 +48,13 @@ export class SupplierController {
     return this.service.update(param, updateSupplierDto);
   }
 
-  @Put(':param')
+  @Delete(':param')
   remove(@Param('param') param: string) {
     return this.service.remove(param);
+  }
+
+  @Get('seed')
+  seed() {
+    return this.service.seed(false);
   }
 }

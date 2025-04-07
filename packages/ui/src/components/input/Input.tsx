@@ -15,6 +15,7 @@ import './Input.scss';
 
 export type TInput =
   | 'text'
+  | 'number'
   | 'password'
   | 'email'
   | 'phone'
@@ -34,6 +35,7 @@ interface InputProps
   context: TContext;
   onInput?: (name: string, value: string) => void;
   validate: (validatorParams: ValidatorParams) => ValidatorMessage;
+  multiline?: boolean;
   formatter?: (value?: string) => string;
   reloadValidate?: ValidatorMessage;
 }
@@ -48,6 +50,7 @@ export default function Input({
   context,
   onInput,
   validate,
+  multiline = false,
   formatter,
   reloadValidate,
   ...props
@@ -113,6 +116,7 @@ export default function Input({
           value={formatter ? formatter(currentValue) : currentValue}
           onBlur={() => handleValidate()}
           onInput={onInputHandler}
+          multiline={multiline}
           isInvalid={inputValidator.invalid}
           iconContext={context}
           invalidMessage={inputValidator?.message}

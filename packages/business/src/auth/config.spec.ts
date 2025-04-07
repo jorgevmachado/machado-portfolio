@@ -1,4 +1,11 @@
-import { describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { cleanFormatter, validateMobile } from './config';
 import { mobileValidator } from '@repo/services/validator/contact/contact';
@@ -9,6 +16,13 @@ const mockPhone: string = '(11) 99456-7890';
 const mockPhoneFormatted: string = '11994567890';
 
 describe('config utilities', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('cleanFormatter', () => {
     it('should return the formatted value removing all special characters', () => {
       const result = cleanFormatter(mockPhone, true);

@@ -1,9 +1,9 @@
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm';
 import { ConflictException } from '@nestjs/common';
 
-import { QueryParameters } from '@repo/business/shared/interface';
+import type { QueryParameters } from '@repo/business/shared/interface';
 
-import { FilterParams, SearchParams, WhereParams } from '../interface';
+import type { FilterParams, SearchParams, WhereParams } from './interface';
 
 export interface QueryParams<T> {
   readonly alias: string;
@@ -91,14 +91,36 @@ export class Query<T extends ObjectLiteral> {
   }
 
   private insertRelationshipsParameterIntoQuery(): void {
-    if (this.withRelations) {
-      if (this.relations.length) {
-        this.relations.forEach((relation) => {
-          this.query.leftJoinAndSelect(`${this.alias}.${relation}`, relation);
-        });
-      }
+    const joinedAliases = new Set<string>();
+
+    if (this.withRelations && this.relations.length) {
+      this.relations.forEach((relation) => {
+        if (relation.includes('.')) {
+          const relations = relation.split('.');
+          let parentAlias = this.alias;
+
+          relations.forEach((currentRelation, index) => {
+            const relationAlias = index === 0 ? currentRelation : `${relations.slice(0, index + 1).join('_')}`;
+
+            if (!joinedAliases.has(relationAlias)) {
+              this.query.leftJoinAndSelect(`${parentAlias}.${currentRelation}`, relationAlias);
+              joinedAliases.add(relationAlias);
+            }
+
+            parentAlias = relationAlias;
+          });
+        } else {
+          const relationAlias = relation;
+
+          if (!joinedAliases.has(relationAlias)) {
+            this.query.leftJoinAndSelect(`${this.alias}.${relation}`, relationAlias);
+            joinedAliases.add(relationAlias);
+          }
+        }
+      });
     }
   }
+
 
   private insertFilterParametersAndParametersIntoQuery(): void {
     const filters = this.unifiesFiltersWithParameters();
@@ -107,8 +129,9 @@ export class Query<T extends ObjectLiteral> {
       filters.forEach((filter) => {
         const { column, searchValue } = this.setWhereParam({
           by: filter.param,
-          condition: filter.condition,
           value: filter.value,
+          relation: filter.relation,
+          condition: filter.condition,
         });
         this.query.andWhere(column, searchValue);
       });
@@ -173,13 +196,15 @@ export class Query<T extends ObjectLiteral> {
     }
   }
 
-  private setWhereParam({ by, condition, value }: WhereParams) {
+  private setWhereParam({ by, value, relation, condition }: WhereParams) {
+    const param = !relation ? `${this.alias}.${by}` : by;
+
     const result = {
-      column: `${this.alias}.${by} ${condition} :${by}`,
+      column: `${param} ${condition} :${by}`,
       searchValue: { [by]: value },
     };
     if (condition === 'LIKE') {
-      result.column = `LOWER(${this.alias}.${by}) ${condition} :${by}`;
+      result.column = `LOWER(${param}) ${condition} :${by}`;
       result.searchValue[by] = `%${value}%`;
     }
     return result;

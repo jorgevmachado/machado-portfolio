@@ -1,0 +1,39 @@
+.list-card {
+  gap: 16px;
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  h1 {
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+  }
+  &__accordion {
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 768px) {
+    padding: 12px;
+    gap: 12px;
+
+    h1 {
+      font-size: 1.25rem;
+    }
+    &__accordion {
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+    gap: 8px;
+
+    h1 {
+      font-size: 1rem;
+    }
+    &__accordion {
+      gap: 8px;
+    }
+  }
+}

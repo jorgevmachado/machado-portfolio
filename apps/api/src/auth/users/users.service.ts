@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
-
 import {
   BadRequestException,
   Injectable,
@@ -13,10 +12,9 @@ import { ERole, EStatus } from '@repo/business/shared/enum';
 
 import UserBusiness from '@repo/business/auth/user';
 
-import { USER_FIXTURE, USER_PASSWORD } from '@repo/mock/auth/fixture';
+import { USER_FIXTURE, USER_PASSWORD } from '@repo/business/auth/fixtures/auth';
 
 import { Service } from '../../shared';
-
 import type { TBy } from '../../shared/interface';
 
 import { CreateAuthDto } from '../dto/create-auth.dto';
@@ -31,7 +29,7 @@ export class UserService extends Service<User> {
     @InjectRepository(User)
     protected repository: Repository<User>,
   ) {
-    super('users', [], repository);
+    super('users', ['finance'], repository);
   }
 
   async create({
@@ -63,7 +61,7 @@ export class UserService extends Service<User> {
     await this.hasInactiveUser('cpf', user.cpf);
     await this.hasInactiveUser('email', user.email);
     await this.hasInactiveUser('whatsapp', user.whatsapp);
-    return await this.save(user);
+    return (await this.save(user)) as User;
   }
 
   async update(
@@ -88,7 +86,7 @@ export class UserService extends Service<User> {
   }
 
   private async hasInactiveUser(by: TBy, value: string) {
-    const entity = await this.findBy({
+    const entity = await this.queries.findBy({
       searchParams: {
         by,
         value,
@@ -104,7 +102,7 @@ export class UserService extends Service<User> {
   }
 
   async checkCredentials({ email, password }: CredentialsAuthDto) {
-    const user = await this.findBy({
+    const user = await this.queries.findBy({
       searchParams: {
         by: 'email',
         value: email,
@@ -133,7 +131,7 @@ export class UserService extends Service<User> {
       };
     }
     user.role = ERole.ADMIN;
-    const newUser = await this.save(user);
+    const newUser = (await this.save(user)) as User;
     return {
       user: newUser,
       valid: true,
@@ -142,29 +140,38 @@ export class UserService extends Service<User> {
   }
 
   async seed() {
-    const userSeed = USER_FIXTURE;
-    const currentSeed = await this.findOne({
-      value: userSeed.name,
-      withThrow: false,
+    console.info('# => Start seeding User');
+    const item = USER_FIXTURE;
+
+    const currentSeed = await this.queries.findBy({
+      searchParams: {
+        by: 'cpf',
+        value: item.cpf,
+        condition: '=',
+      },
+      relations: this.relations,
     });
 
     if (currentSeed) {
+      console.info(`# => No new ${'User'.toLowerCase()} to seed`);
       return currentSeed;
     }
-
-    const createdUser = await this.create({
-      cpf: userSeed.cpf,
-      name: userSeed.name,
-      email: userSeed.email,
-      gender: userSeed.gender,
-      whatsapp: userSeed.whatsapp,
+    const currentUser = await this.create({
+      cpf: item.cpf,
+      name: item.name,
+      email: item.email,
+      gender: item.gender,
+      whatsapp: item.whatsapp,
       password: USER_PASSWORD,
-      date_of_birth: userSeed.date_of_birth,
-      password_confirmation: userSeed.password,
+      date_of_birth: item.date_of_birth,
+      password_confirmation: item.password,
     });
-
-    const promotedUser = await this.promoteUser(createdUser as User);
-    return promotedUser?.user;
+    const promotedUser = await this.promoteUser(currentUser);
+    console.info(`# => Seeded 1 new user`);
+    return await this.findOne({
+      value: promotedUser.user.id,
+      relations: ['finance'],
+    });
   }
 
   async upload(id: string, file: Express.Multer.File) {

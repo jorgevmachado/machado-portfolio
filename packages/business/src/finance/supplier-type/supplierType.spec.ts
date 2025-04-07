@@ -1,17 +1,27 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import SupplierType from './supplierType';
+import { HOUSING_SUPPLIER_TYPE_FIXTURE } from './fixtures';
 
 describe('SupplierType', () => {
+  const supplierTypeMock = HOUSING_SUPPLIER_TYPE_FIXTURE;
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('Constructor', () => {
     it('should create an instance with all parameters when valid data is provided', () => {
-      const params = {
-        id: '1',
-        name: 'Supplier A',
-        created_at: new Date('2023-01-01'),
-        updated_at: new Date('2023-01-02'),
-        deleted_at: undefined,
-      };
+      const params = supplierTypeMock;
 
       const supplierType = new SupplierType(params);
 
@@ -29,9 +39,9 @@ describe('SupplierType', () => {
 
       const supplierType = new SupplierType(params);
 
+      expect(supplierType.id).toBeUndefined();
       expect(supplierType.name).toBe(params.name);
-      expect(supplierType.id).toBeUndefined(); // ID was not provided
-      expect(supplierType.created_at).toBeUndefined(); // Defaults to undefined
+      expect(supplierType.created_at).toBeUndefined();
       expect(supplierType.updated_at).toBeUndefined();
       expect(supplierType.deleted_at).toBeUndefined();
     });

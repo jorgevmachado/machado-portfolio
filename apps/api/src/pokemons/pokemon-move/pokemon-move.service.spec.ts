@@ -1,12 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import { Repository } from 'typeorm';
 
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
 
-import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/mock/pokemon/fixtures/completes/index';
+import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/business/pokemon/fixtures/pokemon/completes/completes';
 
 import { PokemonMove } from './pokemon-move.entity';
 
@@ -18,6 +25,7 @@ describe('MoveService', () => {
   let business: ExternalPokemonService;
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PokemonMoveService,
@@ -32,8 +40,14 @@ describe('MoveService', () => {
     }).compile();
 
     service = module.get<PokemonMoveService>(PokemonMoveService);
-    repository = module.get<Repository<PokemonMove>>(getRepositoryToken(PokemonMove));
+    repository = module.get<Repository<PokemonMove>>(
+      getRepositoryToken(PokemonMove),
+    );
     business = module.get<ExternalPokemonService>(ExternalPokemonService);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {

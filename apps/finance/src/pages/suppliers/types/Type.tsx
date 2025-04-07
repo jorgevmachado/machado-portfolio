@@ -1,19 +1,16 @@
 'use client';
+import { nameValidator } from '@repo/services/validator/personal/personal';
 
-import SupplierType from '@repo/business/finance/supplier-type';
-import { QueryParameters } from '@repo/business/shared/interface';
-import { Paginate } from '@repo/business/paginate';
+import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
 
-import { supplierTypeService } from '../../../shared';
+import Input from '@repo/ui/components/input/Input';
 
 import { CRUDPage } from '../../../layout';
 
+import { useSupplierType } from './useSupplierType';
+
 export default function SupplierTypePage() {
-  const fetchItems = async (params: QueryParameters) => {
-    return await supplierTypeService
-      .getAll(params)
-      .then((response) => response as Paginate<SupplierType>);
-  };
+  const { fetchItems, saveItem, deleteItem, loading } = useSupplierType();
   return (
     <CRUDPage
       headers={[
@@ -22,23 +19,29 @@ export default function SupplierTypePage() {
           value: 'name',
           sortable: true,
         },
-        { text: 'Created At', value: 'created_at', type: 'date', sortable: true },
+        {
+          text: 'Created At',
+          value: 'created_at',
+          type: ETypeTableHeaderItem.DATE,
+          sortable: true,
+        },
       ]}
-      resourceName="Supplier Type"
+      loading={loading}
+      saveItem={saveItem}
       fetchItems={fetchItems}
-      saveItem={(item) =>
-        item.id
-          ? supplierTypeService.update(item.id, item.name ?? '')
-          : supplierTypeService.create(item.name ?? '')
-      }
-      deleteItem={(id) => supplierTypeService.remove(id)}
+      deleteItem={deleteItem}
+      resourceName="Supplier Type"
       renderItemForm={({ item, handleChange }) => (
         <div>
-          <label>Name:</label>
-          <input
+          <Input
             type="text"
+            name="name"
+            label="Name"
             value={item.name || ''}
+            context="primary"
             onChange={(e) => handleChange('name', e.target.value)}
+            validate={(name) => nameValidator(name)}
+            placeholder="Enter a Supplier Type"
           />
         </div>
       )}

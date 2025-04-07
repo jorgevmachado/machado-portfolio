@@ -3,11 +3,6 @@
   margin-top: var(--dimensions-fixed-60);
   margin-left: var(--dimensions-fixed-250);
   transition: margin-left 0.3s ease;
-
-  h1,
-  p {
-    color: var(--color-navbar-background);
-  }
 }
 
 .sidebar.closed + .content {

@@ -1,3 +1,4 @@
+export * from './interface';
 export { default } from './supplierType';
 export { SupplierTypeService } from './supplierTypeService';
-export * from './interface';
+export * from './fixtures';

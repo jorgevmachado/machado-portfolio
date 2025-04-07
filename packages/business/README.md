@@ -46,99 +46,205 @@ npm run build
 npm run dev
 ```
 
-### test
-
-```bash
-# Irá executar todos os testes do módulo.
-npm run test
-```
-
-#### Lint
-
+### Lint
 ```bash
 # Irá executar o lint no módulo.
 # Veja `@repo/eslint-config` para personalizar o comportamento.
 npm run lint
 ```
-## Módulos
-### api:
-#### Funções de configurações de apis externas.
+### test
+```bash
+# Irá executar todos os testes do módulo.
+npm run test
 ```
-    npm run test -- --findRelatedTests src/api/poke-api/pokeApi.spec.ts  
-                                   
-    npm run test -- --findRelatedTests src/api/nest/nest.spec.ts                                 
-    npm run test -- --findRelatedTests src/api/nest/nestModuleAbstract.spec.ts                                 
-    
-    npm run test -- --findRelatedTests src/api/nest/auth/auth.spec.ts
-    
-    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon.spec.ts                                 
-    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-ability/pokemonAbility.spec.ts                                 
-    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-move/pokemonMove.spec.ts                                 
-    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-type/pokemonType.spec.ts
-    
-    npm run test -- --findRelatedTests src/api/nest/finance/finance.spec.ts
-    
-    npm run test -- --findRelatedTests src/api/nest/finance/supplier-type/supplierType.spec.ts
-    npm run test -- --findRelatedTests src/api/nest/finance/supplier/supplier.spec.ts
-    
-    npm run test -- --findRelatedTests src/api/nest/finance/expense-group/expenseGroup.spec.ts
-    npm run test -- --findRelatedTests src/api/nest/finance/expense-category-type/expenseCategoryType.spec.ts
-    npm run test -- --findRelatedTests src/api/nest/finance/expense-category/expenseCategory.spec.ts
-    npm run test -- --findRelatedTests src/api/nest/finance/expense/expense.spec.ts                                       
+#### Módulos
+#### base:
 ```
-### auth:
-#### Regras de negócios relacionadas a autenticação.
+    npm run test -- --findRelatedTests src/shared/base.spec.ts                                 
 ```
-    npm run test -- --findRelatedTests src/auth/authBusiness.spec.ts
-    npm run test -- --findRelatedTests src/auth/authService.spec.ts                                 
-    npm run test -- --findRelatedTests src/auth/config.spec.ts                                 
-    npm run test -- --findRelatedTests src/auth/user.spec.ts                                 
-```
-
-### paginate:
-#### Funções utilitárias para construção de paginação.
-```
+#### paginate:
+```bash
     npm run test -- --findRelatedTests src/paginate/paginate.spec.ts                                 
     npm run test -- --findRelatedTests src/paginate/config.spec.ts                                 
 ```
+#### POKE-API
+```
+  npm run test -- --findRelatedTests src/api/poke-api/pokeApi.spec.ts
+```
+#### NEST
+```bash
+    npm run test -- --findRelatedTests src/api/nest/nest.spec.ts                                 
+    
+    npm run test -- --findRelatedTests src/api/nest/nestModuleAbstract.spec.ts
+```
+##### - AUTH
+```bash
+    npm run test -- --findRelatedTests src/api/nest/auth/auth.spec.ts
+```
+##### - POKEMON
+```bash
+    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon.spec.ts   
+```
+###### - ABILITY 
+```bash    
+    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-ability/pokemonAbility.spec.ts
+```
+###### - MOVE
+```bash                                         
+    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-move/pokemonMove.spec.ts    
+```
+###### - TYPE
+```bash                                                                                 
+    npm run test -- --findRelatedTests src/api/nest/pokemon/pokemon-type/pokemonType.spec.ts
+```
+##### - FINANCE
+```bash
+    npm run test -- --findRelatedTests src/api/nest/finance/finance.spec.ts   
+```
+###### - SUPPLIER TYPE
+```bash
+  npm run test -- --findRelatedTests src/api/nest/finance/supplier-type/supplierType.spec.ts
+```
 
-### pokemon:
-#### Regras de negócios relacionadas a api de pokemon.
-```
-    npm run test -- --findRelatedTests src/pokemon/externalPokemonService.spec.ts                                 
-    npm run test -- --findRelatedTests src/pokemon/pokemonService.spec.ts                                 
-    npm run test -- --findRelatedTests src/pokemon/config.spec.ts                                 
-    npm run test -- --findRelatedTests src/pokemon/pokemon-move/config.spec.ts                                 
-    npm run test -- --findRelatedTests src/pokemon/pokemon-ability/pokemonAbility.spec.ts                                 
+###### - SUPPLIER
+```bash
+  npm run test -- --findRelatedTests src/api/nest/finance/supplier/supplier.spec.ts
 ```
 
-### finance:
-#### Regras de negócios relacionadas a api de finanças.
+###### - BANK
+```bash
+  npm run test -- --findRelatedTests src/api/nest/finance/bank/bank.spec.ts
 ```
-    npm run test -- --findRelatedTests src/finance/financeService.spec.ts                                                                     
-    
-    npm run test -- --findRelatedTests src/finance/supplier-type/supplierType.spec.ts                                                                     
-    npm run test -- --findRelatedTests src/finance/supplier-type/supplierTypeService.spec.ts                                                                     
-    npm run test -- --findRelatedTests src/finance/supplier/supplier.spec.ts                                                                     
-    npm run test -- --findRelatedTests src/finance/supplier/supplierService.spec.ts                                                                     
-    
-    npm run test -- --findRelatedTests src/finance/expense-group/expenseGroup.spec.ts                                                                     
-    npm run test -- --findRelatedTests src/finance/expense-group/expenseGroupService.spec.ts                                                                     
-    
-    npm run test -- --findRelatedTests src/finance/expense-category-type/expenseCategoryType.spec.ts                                                                     
-    npm run test -- --findRelatedTests src/finance/expense-category-type/expenseCategoryTypeService.spec.ts                                                                         
-    npm run test -- --findRelatedTests src/finance/expense-category/expenseCategory.spec.ts                                                                     
-    npm run test -- --findRelatedTests src/finance/expense-category/expenseCategoryService.spec.ts                                                                     
-    
-    npm run test -- --findRelatedTests src/finance/expense/config.spec.ts
-    npm run test -- --findRelatedTests src/finance/expense/expense.spec.ts
-    npm run test -- --findRelatedTests src/finance/expense/expenseBusiness.spec.ts
-    npm run test -- --findRelatedTests src/finance/expense/expenseService.spec.ts
+
+###### - EXPENSE
+```bash
+  npm run test -- --findRelatedTests src/api/nest/finance/expense/expense.spec.ts
+```
+
+###### - BILL
+```bash
+  npm run test -- --findRelatedTests src/api/nest/finance/bill/bill.spec.ts
+```
+#### AUTH:
+##### - ENTITY
+```bash 
+ npm run test -- --findRelatedTests src/auth/user.spec.ts                                                                           
+```
+##### - BUSINESS
+```bash  
+ npm run test -- --findRelatedTests src/auth/authBusiness.spec.ts                                                                           
+```
+##### - SERVICE
+```bash  
+ npm run test -- --findRelatedTests src/auth/authService.spec.ts                                                                           
+```
+##### - CONFIG
+```bash  
+ npm run test -- --findRelatedTests src/auth/config.spec.ts                                                                           
+```
+#### POKEMON
+##### (POKE-API) - SERVICE
+```bash   
+   npm run test -- --findRelatedTests src/pokemon/externalPokemonService.spec.ts                                                                    
+```
+##### - SERVICE
+```bash     
+  npm run test -- --findRelatedTests src/pokemon/pokemonService.spec.ts                                                                       
+```
+##### - CONFIG
+```bash     
+  npm run test -- --findRelatedTests src/pokemon/config.spec.ts                                                                       
+```
+##### - ABILITY 
+###### - ENTITY
+```bash     
+  npm run test -- --findRelatedTests src/pokemon/pokemon-ability/pokemonAbility.spec.ts                                                                       
+```
+##### - MOVE
+######  - ENTITY
+```bash     
+  npm run test -- --findRelatedTests src/pokemon/pokemon-move/pokemonMove.spec.ts                                                                       
+```
+###### - CONFIG
+```bash     
+  npm run test -- --findRelatedTests src/pokemon/pokemon-move/config.spec.ts                                                                       
+```
+##### - TYPE 
+###### - ENTITY
+```bash     
+  npm run test -- --findRelatedTests src/pokemon/pokemon-type/pokemonType.spec.ts                                                                       
+```
+#### FINANCE:
+##### - SERVICE
+```bash     
+  npm run test -- --findRelatedTests src/finance/financeService.spec.ts                                                                       
+```
+##### SUPPLIER TYPE
+###### - ENTITY
+```bash     
+  npm run test -- --findRelatedTests src/finance/supplier-type/supplierType.spec.ts                                                                       
+``` 
+###### - SERVICE
+```bash     
+  npm run test -- --findRelatedTests src/finance/supplier-type/supplierTypeService.spec.ts                                                                       
+```
+##### SUPPLIER 
+###### - ENTITY
+```bash     
+  npm run test -- --findRelatedTests src/finance/supplier/supplier.spec.ts                                                                       
+``` 
+###### - SERVICE
+```bash     
+  npm run test -- --findRelatedTests src/finance/supplier/supplierService.spec.ts                                                                       
+```
+##### BANK 
+###### - ENTITY
+```bash     
+  npm run test -- --findRelatedTests src/finance/bank/bank.spec.ts                                                                       
+```
+###### - SERVICE
+```bash     
+  npm run test -- --findRelatedTests src/finance/bank/bankService.spec.ts                                                                       
+```
+##### EXPENSE 
+###### - ENTITY
+```bash     
+  npm run test -- --findRelatedTests src/finance/expense/expense.spec.ts                                                                       
+```
+###### - SERVICE
+```bash     
+  npm run test -- --findRelatedTests src/finance/expense/expenseService.spec.ts                                                                       
+```
+###### - BUSINESS
+```bash     
+  npm run test -- --findRelatedTests src/finance/expense/expenseBusiness.spec.ts                                                                       
+```
+##### BILL 
+###### - ENTITY
+```bash     
+  npm run test -- --findRelatedTests src/finance/bill/bill.spec.ts                                                                       
+```
+###### - SERVICE
+```bash     
+  npm run test -- --findRelatedTests src/finance/bill/billService.spec.ts                                                                       
+```
+###### - BUSINESS
+```bash     
+  npm run test -- --findRelatedTests src/finance/bill/billBusiness.spec.ts                                                                       
 ```
 
 ### shared:
 #### Funções utilitárias de recursos compartilhados de regras de negócios.
-```
-    npm run test -- --findRelatedTests src/shared/base.spec.ts                                 
-```
-
+### paginate:
+#### Funções utilitárias para construção de paginação.
+### api:
+#### Funções de configurações de apis externas.
+### Nest
+#### Funções de comunicação com a api em NEST.
+### Módulos
+#### AUTH:
+#### Regras de negócios relacionadas a autenticação.
+#### POKEMON
+#### Regras de negócios relacionadas a api de pokemon tanto internas como externas(poke-api).
+#### FINANCE:
+#### Regras de negócios relacionadas a api de finanças.

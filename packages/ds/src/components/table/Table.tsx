@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 
 import joinClass from '../../utils/join-class/joinClass';
 
-import { Spinner } from '../../elements';
+import { Spinner, Text } from '../../elements';
 
 import type { SortedColumn, TableProps, TSort } from './interface';
 
@@ -24,6 +24,7 @@ const Table = ({
   onChangeOrder,
   onSortedColumn,
   getClassNameRow,
+  notFoundMessage,
   currentSortedColumn = resetSortedColumn,
   ...props
 }: TableProps): ReactElement => {
@@ -73,14 +74,19 @@ const Table = ({
     <Spinner />
   ) : (
     <div className={classList} data-testid={tableTestId} {...props}>
-      <table cellSpacing="0" cellPadding="0" style={style}>
-        <Header
+      { sortedItems.length === 0 ? (
+          <div className="table__no-data-container">
+            <Text>{ notFoundMessage ? notFoundMessage : 'No data found!!'}</Text>
+          </div>
+      ): (
+        <table cellSpacing="0" cellPadding="0" style={style}>
+      <Header
           headers={headers}
           actions={actions}
           handleSort={handleSort}
           sortedColumn={sortedColumn}
-        />
-        <Body
+      />
+      <Body
           headers={headers}
           actions={actions}
           onRowClick={onRowClick}
@@ -88,8 +94,10 @@ const Table = ({
           sortedItems={sortedItems}
           formattedDate={formattedDate}
           getClassNameRow={getClassNameRow}
-        />
-      </table>
+      />
+    </table>
+        )}
+
     </div>
   );
 };

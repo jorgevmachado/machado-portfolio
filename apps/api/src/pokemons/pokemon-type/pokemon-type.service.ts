@@ -18,7 +18,7 @@ export class PokemonTypeService extends Service<PokemonType> {
   async findList(types: Array<PokemonType>) {
     return await Promise.all(
       types.map(async (response) =>
-        this.findOneByOrder<PokemonType>({
+        this.queries.findOneByOrder<PokemonType>({
           order: response.order,
           response,
           withThrow: false,
@@ -29,11 +29,14 @@ export class PokemonTypeService extends Service<PokemonType> {
     );
   }
 
-  async completingData(entity: PokemonType, responseType: PokemonType): Promise<PokemonType> {
+  async completingData(
+    entity: PokemonType,
+    responseType: PokemonType,
+  ): Promise<PokemonType> {
     if (!entity) {
       await this.save(responseType);
 
-      return await this.findOneByOrder({
+      return await this.queries.findOneByOrder({
         order: responseType.order,
         complete: false,
       });

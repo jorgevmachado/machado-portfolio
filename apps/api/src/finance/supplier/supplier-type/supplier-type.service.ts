@@ -4,13 +4,12 @@ import { Repository } from 'typeorm';
 
 import SupplierTypeBusiness from '@repo/business/finance/supplier-type/supplierType';
 
-import { LIST_SUPPLIER_TYPE_FIXTURE } from '@repo/mock/finance/supplier-type/fixtures/supplierType';
+import { SUPPLIER_TYPE_LIST_FIXTURE } from '@repo/business/finance/supplier-type/fixtures/supplierType';
 
 import { Service } from '../../../shared';
 
 import { SupplierType } from './supplierType.entity';
 import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
-
 import { UpdateSupplierTypeDto } from './dto/update-supplier-type.dto';
 
 @Injectable()
@@ -42,7 +41,10 @@ export class SupplierTypeService extends Service<SupplierType> {
       relations: ['suppliers'],
       withDeleted: true,
     });
-    if (result.suppliers.length) {
+
+    const suppliers = result?.suppliers?.filter((item) => !item.deleted_at);
+
+    if (suppliers.length) {
       throw this.error(
         new ConflictException(
           'You cannot delete the supplier type because it is already in use.',
@@ -53,38 +55,14 @@ export class SupplierTypeService extends Service<SupplierType> {
     return { message: 'Successfully removed' };
   }
 
-  async seed(): Promise<Array<SupplierType>> {
-    console.info('# => start supplier types seeding');
-    const existingSupplierTypes = await this.repository.find({
-      withDeleted: true,
+  async seed(withReturnSeed: boolean = true) {
+    return this.seeder.entities({
+      by: 'name',
+      key: 'all',
+      label: 'Supplier Type',
+      seeds: SUPPLIER_TYPE_LIST_FIXTURE,
+      withReturnSeed,
+      createdEntityFn: async (item) => item,
     });
-
-    const existingNames = new Set(
-      existingSupplierTypes.map((type) => type.name),
-    );
-
-    const supplierTypesToCreate = LIST_SUPPLIER_TYPE_FIXTURE.filter(
-      (type) => !existingNames.has(type.name),
-    );
-
-    if (supplierTypesToCreate.length === 0) {
-      console.info('# => No new supplier types to seed');
-      return existingSupplierTypes;
-    }
-
-    const createdSupplierTypes = (
-      await Promise.all(supplierTypesToCreate.map((type) => this.create(type)))
-    ).filter((type): type is SupplierType => !!type);
-    console.info(
-      `# => Seeded ${createdSupplierTypes.length} new supplier types`,
-    );
-    return [...existingSupplierTypes, ...createdSupplierTypes];
-  }
-
-  async treatSupplierTypeParam(supplierType: string | SupplierType) {
-    return await this.treatEntityParam<SupplierType>(
-      supplierType,
-      'Supplier Type',
-    );
   }
 }

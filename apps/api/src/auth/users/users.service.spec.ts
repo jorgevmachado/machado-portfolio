@@ -11,10 +11,10 @@ import fs from 'fs';
 import { EGender, ERole, EStatus } from '@repo/business/shared/enum';
 
 import {
-  ENTITY_USER_FIXTURE,
+  USER_ENTITY_FIXTURE,
   USER_FIXTURE,
   USER_PASSWORD,
-} from '@repo/mock/auth/fixture';
+} from '@repo/business/auth/fixtures/auth';
 
 import { User } from './user.entity';
 
@@ -71,12 +71,12 @@ describe('UsersService', () => {
 
       expect(
         await service.create({
-          cpf: ENTITY_USER_FIXTURE.cpf,
-          name: ENTITY_USER_FIXTURE.name,
-          email: ENTITY_USER_FIXTURE.email,
-          whatsapp: ENTITY_USER_FIXTURE.whatsapp,
+          cpf: USER_ENTITY_FIXTURE.cpf,
+          name: USER_ENTITY_FIXTURE.name,
+          email: USER_ENTITY_FIXTURE.email,
+          whatsapp: USER_ENTITY_FIXTURE.whatsapp,
           password: USER_PASSWORD,
-          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
+          date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
           password_confirmation: USER_PASSWORD,
         }),
       ).toEqual(USER_FIXTURE);
@@ -106,12 +106,12 @@ describe('UsersService', () => {
 
       await expect(
         service.create({
-          cpf: ENTITY_USER_FIXTURE.cpf,
-          name: ENTITY_USER_FIXTURE.name,
-          email: ENTITY_USER_FIXTURE.email,
-          whatsapp: ENTITY_USER_FIXTURE.whatsapp,
+          cpf: USER_ENTITY_FIXTURE.cpf,
+          name: USER_ENTITY_FIXTURE.name,
+          email: USER_ENTITY_FIXTURE.email,
+          whatsapp: USER_ENTITY_FIXTURE.whatsapp,
           password: USER_PASSWORD,
-          date_of_birth: ENTITY_USER_FIXTURE.date_of_birth,
+          date_of_birth: USER_ENTITY_FIXTURE.date_of_birth,
           password_confirmation: USER_PASSWORD,
         }),
       ).rejects.toThrow(BadRequestException);
@@ -121,10 +121,10 @@ describe('UsersService', () => {
   describe('checkCredentials', () => {
     it('should return true', async () => {
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
         withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
+        getOne: jest.fn().mockReturnValueOnce(USER_ENTITY_FIXTURE),
       } as any);
 
       expect(
@@ -132,16 +132,16 @@ describe('UsersService', () => {
           email: USER_FIXTURE.email,
           password: USER_PASSWORD,
         }),
-      ).toEqual(ENTITY_USER_FIXTURE);
+      ).toEqual(USER_ENTITY_FIXTURE);
     });
 
     it('should return false because the user is inactive', async () => {
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
         withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
         getOne: jest.fn().mockReturnValueOnce({
-          ...ENTITY_USER_FIXTURE,
+          ...USER_ENTITY_FIXTURE,
           status: EStatus.INACTIVE,
         }),
       } as any);
@@ -156,10 +156,10 @@ describe('UsersService', () => {
 
     it('should return false because the credentials is incorrectly', async () => {
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
-        andWhere: jest.fn(),
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
         withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
+        getOne: jest.fn().mockReturnValueOnce(USER_ENTITY_FIXTURE),
       } as any);
 
       await expect(
@@ -177,11 +177,11 @@ describe('UsersService', () => {
         andWhere: jest.fn(),
         withDeleted: jest.fn(),
         leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
+        getOne: jest.fn().mockReturnValueOnce(USER_ENTITY_FIXTURE),
       } as any);
 
-      expect(await service.findOne({ value: ENTITY_USER_FIXTURE.id })).toEqual(
-        ENTITY_USER_FIXTURE,
+      expect(await service.findOne({ value: USER_ENTITY_FIXTURE.id })).toEqual(
+        USER_ENTITY_FIXTURE,
       );
     });
   });
@@ -206,11 +206,13 @@ describe('UsersService', () => {
       const expected = {
         ...USER_FIXTURE,
         ...updateAuthDto,
-      }
+      };
 
       jest.spyOn(repository, 'save').mockResolvedValueOnce(expected);
 
-      expect(await service.update(USER_FIXTURE.id, updateAuthDto)).toEqual(expected);
+      expect(await service.update(USER_FIXTURE.id, updateAuthDto)).toEqual(
+        expected,
+      );
     });
 
     it('It should return the user without changes.', async () => {
@@ -234,12 +236,12 @@ describe('UsersService', () => {
   });
 
   describe('seed', () => {
-    const seedEntityUser = ENTITY_USER_FIXTURE;
+    const seedEntityUser = USER_ENTITY_FIXTURE;
     it('should seed the database when exist in database', async () => {
       jest.spyOn(repository, 'createQueryBuilder').mockReturnValueOnce({
+        leftJoinAndSelect: jest.fn(),
         andWhere: jest.fn(),
         withDeleted: jest.fn(),
-        leftJoinAndSelect: jest.fn(),
         getOne: jest.fn().mockReturnValueOnce(seedEntityUser),
       } as any);
 
@@ -296,7 +298,7 @@ describe('UsersService', () => {
   });
 
   describe('promoteUser', () => {
-    const promoteEntityUser = ENTITY_USER_FIXTURE;
+    const promoteEntityUser = USER_ENTITY_FIXTURE;
     it('should promote user', async () => {
       jest
         .spyOn(repository, 'save')
@@ -357,21 +359,20 @@ describe('UsersService', () => {
         andWhere: jest.fn(),
         withDeleted: jest.fn(),
         leftJoinAndSelect: jest.fn(),
-        getOne: jest.fn().mockReturnValueOnce(ENTITY_USER_FIXTURE),
+        getOne: jest.fn().mockReturnValueOnce(USER_ENTITY_FIXTURE),
       } as any);
 
       jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
       jest.spyOn(service as any, 'save').mockResolvedValue({
-        ...ENTITY_USER_FIXTURE,
-        picture: `http://localhost:3001/uploads/${ENTITY_USER_FIXTURE.email}.jpeg`
+        ...USER_ENTITY_FIXTURE,
+        picture: `http://localhost:3001/uploads/${USER_ENTITY_FIXTURE.email}.jpeg`,
       });
 
-      expect(await service.upload(ENTITY_USER_FIXTURE.id, mockFile)).toEqual({
-        ...ENTITY_USER_FIXTURE,
-        picture: `http://localhost:3001/uploads/${ENTITY_USER_FIXTURE.email}.jpeg`
-      })
-    })
-
+      expect(await service.upload(USER_ENTITY_FIXTURE.id, mockFile)).toEqual({
+        ...USER_ENTITY_FIXTURE,
+        picture: `http://localhost:3001/uploads/${USER_ENTITY_FIXTURE.email}.jpeg`,
+      });
+    });
   });
 });

@@ -1,24 +1,32 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import { PokemonTypeController } from './pokemon-type.controller';
 import { PokemonTypeService } from './pokemon-type.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import {
   GRASS_TYPE_FIXTURE,
   LIST_TYPES_FIXTURE,
-} from  '@repo/mock/pokemon/pokemon-type/fixtures/index'
+} from '@repo/business/pokemon/pokemon-type/fixtures/pokemonType';
 
 describe('PokemonTypeController', () => {
   let service: PokemonTypeService;
   let controller: PokemonTypeController;
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PokemonTypeController],
       providers: [
         {
           provide: PokemonTypeService,
           useValue: {
-            list: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
           },
         },
@@ -29,6 +37,10 @@ describe('PokemonTypeController', () => {
     controller = module.get<PokemonTypeController>(PokemonTypeController);
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should be defined', () => {
     expect(service).toBeDefined();
     expect(controller).toBeDefined();
@@ -36,7 +48,7 @@ describe('PokemonTypeController', () => {
 
   describe('findAll', () => {
     it('Should return an list of pokemon move', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(LIST_TYPES_FIXTURE);
+      jest.spyOn(service, 'findAll').mockResolvedValue(LIST_TYPES_FIXTURE);
 
       expect(await controller.findAll({})).toEqual(LIST_TYPES_FIXTURE);
     });

@@ -1,0 +1,16 @@
+.form {
+  &__group {
+    margin-bottom: 1.5rem;
+    &--inline {
+      gap: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  &__actions {
+    gap: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

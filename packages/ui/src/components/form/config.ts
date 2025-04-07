@@ -5,20 +5,19 @@ import {
   passwordValidator,
 } from '@repo/services/validator/password/password';
 import {
-  dateOfBirthValidator,
-  genderValidator,
-  nameValidator,
-} from '@repo/services/validator/personal/personal';
-import {
   emailValidator,
   mobileValidator,
 } from '@repo/services/validator/contact/contact';
 import { cpfValidator } from '@repo/services/validator/document/document';
-
+import { dateOfBirthValidator } from '@repo/services/validator/date/date';
+import {
+  genderValidator,
+  nameValidator,
+} from '@repo/services/validator/personal/personal';
 import { cpfFormatter } from '@repo/services/formatter/document/document';
 import { mobileFormatter } from '@repo/services/formatter/contact/contact';
 
-import { FormType, InputType } from './interface';
+import type { FormType, InputType } from './interface';
 
 export const FORM_TYPE: Array<FormType> = [
   {

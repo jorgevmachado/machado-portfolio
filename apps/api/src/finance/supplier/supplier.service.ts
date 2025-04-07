@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import SupplierBusiness from '@repo/business/finance/supplier/supplier';
 
-import { LIST_SUPPLIER_FIXTURE } from '@repo/mock/finance/supplier/fixtures/supplier';
+import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
 
 import { Service } from '../../shared';
 
@@ -12,6 +12,7 @@ import { Supplier } from './supplier.entity';
 import { SupplierTypeService } from './supplier-type/supplier-type.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
+import { SupplierType } from './supplier-type/supplierType.entity';
 
 @Injectable()
 export class SupplierService extends Service<Supplier> {
@@ -25,7 +26,10 @@ export class SupplierService extends Service<Supplier> {
 
   async create({ name, type }: CreateSupplierDto) {
     const supplierType =
-      await this.supplierTypeService.treatSupplierTypeParam(type);
+      await this.supplierTypeService.treatEntityParam<SupplierType>(
+        type,
+        'Supplier Type',
+      );
     const supplier = new SupplierBusiness({
       name,
       type: supplierType,
@@ -37,7 +41,10 @@ export class SupplierService extends Service<Supplier> {
     const result = await this.findOne({ value: param });
     const supplierType = !type
       ? result.type
-      : await this.supplierTypeService.treatSupplierTypeParam(type);
+      : await this.supplierTypeService.treatEntityParam<SupplierType>(
+          type,
+          'Supplier Type',
+        );
     const supplier = new SupplierBusiness({
       name,
       type: supplierType,
@@ -45,11 +52,11 @@ export class SupplierService extends Service<Supplier> {
     return await this.save(supplier);
   }
 
-  async remove(param: string) {
+  async remove(param: string, withDeleted: boolean = false) {
     const result = await this.findOne({
       value: param,
-      withDeleted: true,
       relations: ['expenses'],
+      withDeleted,
     });
     if (result?.expenses?.length) {
       throw this.error(
@@ -62,45 +69,28 @@ export class SupplierService extends Service<Supplier> {
     return { message: 'Successfully removed' };
   }
 
-  async seed() {
-    const supplierTypes = await this.supplierTypeService.seed();
-    console.info('# => start suppliers seeding');
-    const existingSuppliers = await this.repository.find({ withDeleted: true });
-    const existingNames = new Set(existingSuppliers.map((supplier) => supplier.name));
-
-    const suppliersToCreate = LIST_SUPPLIER_FIXTURE.filter((supplier) => !existingNames.has(supplier.name));
-
-    if(suppliersToCreate.length === 0) {
-      console.info('# => No new Suppliers to seed');
-      return {
-        supplierTypes,
-        suppliers: existingSuppliers
-      }
-    }
-
-    const createdSuppliers = await Promise.all(suppliersToCreate.map(async (supplier) => {
-      const type = supplierTypes?.find((type) => type.name === supplier?.type?.name);
-      if (!type) {
-        throw new ConflictException(
-            'The selected Supplier Type does not exist, try another one or create one.',
-        );
-      }
-
-      return this.create({
-        name: supplier.name,
-        type,
-      });
-    }));
-
-    console.info(`# => Seeded ${createdSuppliers.length} new suppliers`);
-
-    return {
-      supplierTypes,
-      suppliers: [...existingSuppliers, ...createdSuppliers].filter((supplier): supplier is Supplier => supplier !== undefined),
-    };
-  }
-
-  async treatSupplierParam(supplier: string | Supplier) {
-    return await this.treatEntityParam<Supplier>(supplier, 'Supplier');
+  async seed(withReturnSeed: boolean = true) {
+    const supplierTypeList = (
+      (await this.supplierTypeService.seed()) as Array<SupplierType>
+    ).filter((type): type is SupplierType => !!type);
+    return this.seeder.entities({
+      by: 'name',
+      key: 'all',
+      label: 'Supplier',
+      seeds: SUPPLIER_LIST_FIXTURE,
+      withReturnSeed,
+      createdEntityFn: async (data) => {
+        const type = this.seeder.getRelation<SupplierType>({
+          key: 'name',
+          list: supplierTypeList,
+          param: data?.type?.name,
+          relation: 'SupplierType',
+        });
+        return new SupplierBusiness({
+          name: data.name,
+          type,
+        });
+      },
+    });
   }
 }

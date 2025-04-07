@@ -1,9 +1,7 @@
-import type {IFinanceBase, IFinanceResponse} from '../interface';
+import type { IFinanceBase } from '../interface';
 
 export type ISupplierType = IFinanceBase;
 
-export type ISupplierTypeResponse = IFinanceResponse;
+export type ICreateSupplierTypeParams = Pick<IFinanceBase, 'name'>;
 
-export interface ISupplierTypeParams {
-    name: string;
-}
+export type IUpdateSupplierTypeParams = ICreateSupplierTypeParams;

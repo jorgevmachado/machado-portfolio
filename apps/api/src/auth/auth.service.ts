@@ -2,18 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { ERole } from '@repo/business/shared/enum';
-
 import AuthBusiness from '@repo/business/auth/authBusiness';
 import UserBusiness from '@repo/business/auth/user';
+
 import { Base } from '../shared';
 
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { CredentialsAuthDto } from './dto/credentials-auth.dto';
-
-import { User } from './users/user.entity';
-
-import { UserService } from './users/users.service';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { User } from './users/user.entity';
+import { UserService } from './users/users.service';
 
 @Injectable()
 export class AuthService extends Base {
@@ -34,7 +32,10 @@ export class AuthService extends Base {
     return await this.userService
       .checkCredentials(CredentialsAuthDto)
       .then((response) => {
-        const jwtPayload = { id: response.id };
+        const jwtPayload = {
+          id: response.id,
+          finance: { id: response?.finance?.id },
+        };
 
         const token = this.jwtService.sign(jwtPayload);
 
@@ -59,12 +60,19 @@ export class AuthService extends Base {
   }
 
   async me(user: User) {
-    return new UserBusiness({ ...user, clean: true });
+    const currentUser = await this.userService.findOne({
+      value: user.id,
+    });
+    return new UserBusiness({ ...currentUser, clean: true });
   }
 
-  async seed() {
+  async seed(withReturnSeed: boolean = true) {
     const currentUser = (await this.userService.seed()) as User;
-    return new UserBusiness({ ...currentUser, clean: true });
+    const user = new UserBusiness({ ...currentUser, clean: true });
+    if (withReturnSeed) {
+      return user;
+    }
+    return { message: 'Seeding Completed Successfully!' };
   }
 
   async promoteUser(id: string, authUser: User) {
@@ -78,6 +86,6 @@ export class AuthService extends Base {
     await this.userService.upload(id, file);
     return {
       message: 'File uploaded successfully!',
-    }
+    };
   }
 }

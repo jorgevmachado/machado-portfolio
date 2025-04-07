@@ -11,8 +11,20 @@ export interface CRUDPageProps<T extends { id: string }> {
   fetchItems: (params: QueryParameters) => Promise<Paginate<T>>;
   deleteItem?: (param: string) => Promise<{ message: string }>;
   resourceName: string;
+  fallBackCrud?: FallBackCRUD;
   renderItemForm?: (params: RenderItemFormParams<T>) => React.ReactNode;
   prepareItemForSave?: (item: unknown) => Partial<T>;
+}
+
+interface FallBackCRUD {
+  show: boolean;
+  button?: FallBackCRUDButton;
+  message: string;
+}
+
+interface FallBackCRUDButton {
+  label: string;
+  onClick: () => void;
 }
 
 interface RenderItemFormParams<T> {

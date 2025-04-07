@@ -4,20 +4,27 @@ import { QueryParameters } from '../../shared';
 import { Paginate } from '../../paginate';
 
 import SupplierType from './supplierType';
-import type { SupplierTypeEntity } from './interface';
+import type {
+  CreateSupplierTypeParams,
+  SupplierTypeEntity,
+  UpdateSupplierTypeParams,
+} from './interface';
 
 export class SupplierTypeService {
   constructor(private nest: Nest) {}
 
-  public async create(name: string): Promise<SupplierType> {
+  public async create(params: CreateSupplierTypeParams): Promise<SupplierType> {
     return await this.nest.finance.supplier.type
-      .create({ name })
+      .create(params)
       .then((response) => new SupplierType(response));
   }
 
-  public async update(param: string, name: string): Promise<SupplierType> {
+  public async update(
+    param: string,
+    params: UpdateSupplierTypeParams,
+  ): Promise<SupplierType> {
     return await this.nest.finance.supplier.type
-      .update(param, { name })
+      .update(param, params)
       .then((response) => new SupplierType(response));
   }
 

@@ -1,4 +1,5 @@
 import { Http } from '@repo/services/http/http';
+import { convertSubPathUrl } from '@repo/services/string/string';
 
 import type { QueryParameters } from '../../shared';
 import { Paginate } from '../../paginate';
@@ -9,13 +10,6 @@ interface NestModuleAbstractConstructorPrams {
   pathUrl: string;
   subPathUrl?: string;
   nestModuleConfig: INestModuleConfig;
-}
-
-interface ConvertSubPathUrlParams {
-  pathUrl: string;
-  isParam?: boolean;
-  subPathUrl?: string;
-  conectorPath?: string;
 }
 
 export abstract class NestModuleAbstract<T, CP, UP> extends Http {
@@ -33,7 +27,7 @@ export abstract class NestModuleAbstract<T, CP, UP> extends Http {
   public async getAll(
     parameters: QueryParameters,
   ): Promise<Paginate<T> | Array<T>> {
-    const path = this.convertSubPathUrl({
+    const path = convertSubPathUrl({
       pathUrl: this.pathUrl,
       subPathUrl: this.subPathUrl,
       conectorPath: 'list'
@@ -42,7 +36,7 @@ export abstract class NestModuleAbstract<T, CP, UP> extends Http {
   }
 
   public async getOne(param: string): Promise<T> {
-    const path = this.convertSubPathUrl({
+    const path = convertSubPathUrl({
       pathUrl: this.pathUrl,
       isParam: true,
       subPathUrl: this.subPathUrl,
@@ -52,7 +46,7 @@ export abstract class NestModuleAbstract<T, CP, UP> extends Http {
   }
 
   public async delete(param: string): Promise<INestBaseResponse> {
-    const path = this.convertSubPathUrl({
+    const path = convertSubPathUrl({
       pathUrl: this.pathUrl,
       isParam: true,
       subPathUrl: this.subPathUrl,
@@ -62,7 +56,7 @@ export abstract class NestModuleAbstract<T, CP, UP> extends Http {
   }
 
   public async create(params: CP): Promise<T> {
-    const path = this.convertSubPathUrl({
+    const path = convertSubPathUrl({
       pathUrl: this.pathUrl,
       subPathUrl: this.subPathUrl,
     });
@@ -70,23 +64,12 @@ export abstract class NestModuleAbstract<T, CP, UP> extends Http {
   }
 
   public async update(param: string, params: UP): Promise<T> {
-    const path = this.convertSubPathUrl({
+    const path = convertSubPathUrl({
       pathUrl: this.pathUrl,
       isParam: true,
       subPathUrl: this.subPathUrl,
       conectorPath: param
     });
     return this.path(`${path}`, { body: params });
-  }
-
-  private convertSubPathUrl({ pathUrl, isParam , subPathUrl, conectorPath } : ConvertSubPathUrlParams): string {
-    if (!subPathUrl) {
-      const currentParam = conectorPath ? `/${conectorPath}` : '';
-      return isParam ? `${pathUrl}${currentParam}` : pathUrl;
-    }
-    if(!conectorPath) {
-      return `${pathUrl}/${subPathUrl}`;
-    }
-    return `${pathUrl}/${conectorPath}/${subPathUrl}`;
   }
 }

@@ -26,6 +26,7 @@ export default function Accordion({
   context = 'neutral',
   children,
   disabled,
+  className,
   iconFormat = 'small',
   isBorderless,
   childrenTitle,
@@ -43,6 +44,7 @@ export default function Accordion({
     context && `accordion__context--${context}`,
     isOpenModel && 'accordion__open',
     disabled && 'accordion__disabled',
+    className && className,
   ]);
 
   const toggleOpen = React.useCallback(

@@ -1,28 +1,41 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import User from './user';
 import { cleanFormatter, validateMobile } from './config';
-import type { UserConstructorParams } from './interface';
-import { EGender, ERole, EStatus } from '../shared';
+import type { UserConstructorParams, UserEntity } from './interface';
+import { USER_ENTITY_FIXTURE } from './fixtures';
 
 jest.mock('./config');
 
 describe('User Class', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
+  afterEach(() => {
+    jest.resetModules();
+  });
+
+  const mockUser: UserEntity = USER_ENTITY_FIXTURE;
   const mockUserConstructorParams: UserConstructorParams = {
-    id: 'eaca4c08-e62d-495a-ae1c-918199da8d52',
-    cpf: '123.456.789-09',
-    role: ERole.USER,
-    name: 'Test User',
-    email: 'testuser@example.com',
+    id: mockUser.id,
+    cpf: mockUser.cpf,
+    role: mockUser.role,
+    name: mockUser.name,
+    email: mockUser.email,
     clean: false,
-    gender: EGender.MALE,
-    status: EStatus.ACTIVE,
-    whatsapp: '(11) 99456-7890',
-    date_of_birth: new Date('2000-01-01'),
+    gender: mockUser.gender,
+    status: mockUser.status,
+    whatsapp: mockUser.whatsapp,
+    date_of_birth: new Date(mockUser.date_of_birth),
     cleanAllFormatter: true,
   };
   const mockPhoneFormatted: string = '11994567890';
