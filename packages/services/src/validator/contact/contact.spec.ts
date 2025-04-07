@@ -1,10 +1,25 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
 import { emailValidator, mobileValidator, phoneValidator } from './contact';
 
 describe('contact validator methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('emailValidator', () => {
     it('should return valid when received valid email address', () => {
       expect(emailValidator({ value: 'nome@mail.com' })).toEqual({

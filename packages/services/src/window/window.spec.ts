@@ -1,4 +1,11 @@
-import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { documentCookie, isBrowser, isDocument } from './window';
 
@@ -11,6 +18,8 @@ describe('window methods', () => {
     };
 
     beforeEach(() => {
+      jest.clearAllMocks();
+      jest.restoreAllMocks();
       Object.defineProperty(global, 'window', {
         value: windowMock,
         writable: true,
@@ -18,6 +27,7 @@ describe('window methods', () => {
     });
 
     afterEach(() => {
+      jest.resetModules();
       Object.defineProperty(global, 'window', { value: undefined });
     });
 

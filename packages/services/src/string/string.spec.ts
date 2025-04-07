@@ -1,4 +1,11 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import {
   capitalize,
   convertSubPathUrl,
@@ -17,6 +24,14 @@ import {
 } from './string';
 
 describe('String functions', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('uuid', () => {
     it('should return uuid based on the date it receives', () => {
       expect(uuid(new Date('1990-01-01'))).toEqual(
@@ -187,20 +202,20 @@ describe('String functions', () => {
 
     it('should convert path without subPathUrl with conectorPath and isParam true', () => {
       expect(
-          convertSubPathUrl({ pathUrl, conectorPath, isParam: true }),
+        convertSubPathUrl({ pathUrl, conectorPath, isParam: true }),
       ).toEqual(`${pathUrl}/${conectorPath}`);
     });
 
     it('should convert path with subPathUrl', () => {
       expect(convertSubPathUrl({ pathUrl, subPathUrl })).toEqual(
-          `${pathUrl}/${subPathUrl}`,
+        `${pathUrl}/${subPathUrl}`,
       );
     });
 
     it('should convert path with conectorPath', () => {
-      expect(
-          convertSubPathUrl({ pathUrl, subPathUrl, conectorPath }),
-      ).toEqual(`${pathUrl}/${conectorPath}/${subPathUrl}`);
+      expect(convertSubPathUrl({ pathUrl, subPathUrl, conectorPath })).toEqual(
+        `${pathUrl}/${conectorPath}/${subPathUrl}`,
+      );
     });
   });
 
@@ -271,6 +286,4 @@ describe('String functions', () => {
       expect(extractLastItemFromUrl()).toEqual('');
     });
   });
-
-
 });

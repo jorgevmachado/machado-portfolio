@@ -1,8 +1,23 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { cepFormatter } from './address';
 
 describe('address formatter methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('cepFormatter', () => {
     it('should return a formatted cep when the string is received', () => {
       expect(cepFormatter('00000000')).toEqual('00000-000');

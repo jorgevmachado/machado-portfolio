@@ -1,8 +1,23 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { mobileFormatter, phoneFormatter } from './contact';
 
 describe('contact formatter methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('phoneFormatter', () => {
     it('should return a formatted phone number when the string is received', () => {
       expect(phoneFormatter('00000000000')).toEqual('(00) 00000-0000');

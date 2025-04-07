@@ -1,4 +1,11 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import {
   calculateMaxDate,
@@ -9,9 +16,20 @@ import {
 import {
   parseDateFromString,
   parseDateFromStringWithSeparator,
+  parseDay,
+  parseMonth,
+  parseYear,
 } from './stringToDateUtils';
 
 describe('Date functions', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('isUnderMinimumAge', () => {
     it('returns true if the date is less than 18', () => {
       const date = new Date();
@@ -166,6 +184,65 @@ describe('Date functions', () => {
           },
         }),
       ).toEqual(new Date(1990, 7, 20));
+    });
+  });
+
+  describe('parseYear', () => {
+    it('should return the year when it is between 1000 and 9999.', () => {
+      expect(parseYear('2023')).toBe(2023);
+      expect(parseYear(1999)).toBe(1999);
+    });
+
+    it('should return undefined for a year outside the allowed range.', () => {
+      expect(parseYear('999')).toBeUndefined();
+      expect(parseYear('10000')).toBeUndefined();
+    });
+
+    it('should return undefined for invalid inputs.', () => {
+      expect(parseYear('abc')).toBeUndefined();
+      expect(parseYear(undefined)).toBeUndefined();
+      expect(parseYear('')).toBeUndefined();
+    });
+  });
+
+  describe('parseMonth', () => {
+    it('should return the adjusted month (0-11) for valid entries (1-12).', () => {
+      expect(parseMonth('1')).toBe(0);
+      expect(parseMonth('12')).toBe(11);
+    });
+
+    it('should return 0 if month is 0.', () => {
+      expect(parseMonth('0')).toBe(0);
+    });
+
+    it('should return undefined for months outside the allowed range.', () => {
+      expect(parseMonth('13')).toBeUndefined();
+      expect(parseMonth('-1')).toBeUndefined();
+    });
+
+    it('should return undefined for invalid inputs.', () => {
+      expect(parseMonth('abc')).toBeUndefined();
+      expect(parseMonth(undefined)).toBeUndefined();
+      expect(parseMonth('')).toBeUndefined();
+    });
+  });
+
+  describe('parseDay', () => {
+    it('should return the day for valid entries (1-31).', () => {
+      expect(parseDay('1')).toBe(1);
+      expect(parseDay('31')).toBe(31);
+    });
+
+    it('should return undefined for days outside the allowed range.', () => {
+      expect(parseDay('0')).toBeUndefined();
+      expect(parseDay('32')).toBeUndefined();
+      expect(parseDay('-1')).toBeUndefined();
+    });
+
+    it('should return undefined for invalid inputs.', () => {
+      expect(parseDay('abc')).toBeUndefined();
+      expect(parseDay(undefined)).toBeUndefined();
+      expect(parseDay('')).toBeUndefined();
     });
   });
 });

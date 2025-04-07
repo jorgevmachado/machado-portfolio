@@ -1,10 +1,25 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
 import { genderValidator, nameValidator } from './personal';
 
 describe('personal Validator methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('genderValidator', () => {
     it('should return valid when received female gender', () => {
       expect(genderValidator({ value: 'female' })).toEqual({

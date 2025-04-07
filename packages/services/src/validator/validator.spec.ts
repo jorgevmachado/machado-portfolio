@@ -1,9 +1,24 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { isEmptyValidator, numberValidator } from './validator';
 import { INVALID_TYPE } from './utils';
 
 describe('Validator methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('numberValidator', () => {
     it('should return valid when received valid number', () => {
       expect(numberValidator({ value: '7' })).toEqual({

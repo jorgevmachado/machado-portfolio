@@ -1,7 +1,14 @@
 import type { TDateSeparator } from './interface';
 
+import { dayValidator, monthValidator, yearValidator } from '../validator';
+
 import { createDateFromYearMonthDay } from './dateUtils';
 
+/**
+ * Converts a string to a date.
+ * @param value
+ * @param dateSeparators
+ */
 export function parseDateFromString(
   value: string,
   dateSeparators: Array<TDateSeparator> = ['-', '/'],
@@ -12,6 +19,11 @@ export function parseDateFromString(
     .shift();
 }
 
+/**
+ * Converts a string with a custom separator to a date.
+ * @param value
+ * @param separator
+ */
 export function parseDateFromStringWithSeparator(
   value: string,
   separator: TDateSeparator = '-',
@@ -48,58 +60,60 @@ function createDateFromParts(array: Array<string>): Date | undefined {
   return createDateFromYearMonthDay({ year, month, day });
 }
 
-function parseYear(value?: string): number | undefined {
+/**
+ * Ensures that the year provided is within the limits 1000 and 9999
+ * @param value
+ */
+export function parseYear(value?: string | number): number | undefined {
+  if (!value && value !== 0) {
+    return;
+  }
+
+  const valueNumber = Number(value);
+
+  if (isNaN(valueNumber)) {
+    return;
+  }
+
+  return yearValidator({ value: valueNumber, min: 1000 }).valid
+    ? valueNumber
+    : undefined;
+}
+
+/**
+ * Ensures that the given month is within the limits 0 and 12.
+ * @param value
+ */
+export function parseMonth(value?: string | number): number | undefined {
+  if (!value && value !== 0) {
+    return;
+  }
+  const valueNumber = Number(value);
+
+  if (isNaN(valueNumber)) {
+    return;
+  }
+
+  if (!monthValidator({ value: valueNumber }).valid) {
+    return;
+  }
+  return valueNumber === 0 ? valueNumber : valueNumber - 1;
+}
+
+/**
+ * Ensures that the given day is within the limits 1 and 31.
+ * @param value
+ */
+export function parseDay(value?: string | number): number | undefined {
   if (!value) {
     return;
   }
 
   const valueNumber = Number(value);
 
-  return isNaN(valueNumber) ? undefined : validateYear(valueNumber);
-}
-
-export function validateYear(year?: number): number | undefined {
-  if (!year) {
-    return;
-  }
-  return year >= 1000 && year <= 9999 ? year : undefined;
-}
-
-function parseMonth(value?: string): number | undefined {
-  if (!value) {
-    return;
-  }
-  const valueNumber = Number(value);
-
-  return isNaN(valueNumber) ? undefined : validateMonth(valueNumber);
-}
-
-export function validateMonth(month?: number): number | undefined {
-  if (month === undefined) {
+  if (isNaN(valueNumber)) {
     return;
   }
 
-  if (month < 0 || month > 12) {
-    return;
-  }
-
-  return month === 0 ? month : month - 1;
-}
-
-function parseDay(value?: string): number | undefined {
-  if (!value) {
-    return;
-  }
-
-  const valueNumber = Number(value);
-
-  return isNaN(valueNumber) ? undefined : validateDay(valueNumber);
-}
-
-export function validateDay(day?: number): number | undefined {
-  if (!day) {
-    return;
-  }
-
-  return day <= 0 ? undefined : day;
+  return dayValidator({ value: valueNumber }).valid ? valueNumber : undefined;
 }

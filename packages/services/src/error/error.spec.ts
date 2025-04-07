@@ -1,8 +1,23 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Error, ERROR_STATUS_CODE, ERROR_TYPE } from './error';
 
 describe('error', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   it('should return Internal Server Error Exception when the fields is empty', () => {
     expect(new Error()).toEqual({
       statusCode: ERROR_STATUS_CODE.INTERNAL_SERVER_ERROR_EXCEPTION,

@@ -1,9 +1,25 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { isObject, serialize } from './object';
 
 describe('Object functions', () => {
   const customObject = { userId: 1, fullName: 'Text' };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
 
   describe('serialize', () => {
     it('should return serialized string when received only one value', () => {

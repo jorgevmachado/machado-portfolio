@@ -1,4 +1,11 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
@@ -12,6 +19,14 @@ import {
 } from './password';
 
 describe('password validator methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('minLength', () => {
     it('Should return valid for minimum length.', () => {
       expect(minLength({ min: 8, value: '12345678' })).toEqual({

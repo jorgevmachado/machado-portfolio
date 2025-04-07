@@ -1,4 +1,11 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { Http } from './http';
 
@@ -28,6 +35,15 @@ describe('http', () => {
   const url = 'http://localhost:8080';
   const config = { method: 'GET' };
   const http = new HttpMock(url, config);
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
 
   describe('url', () => {
     it('should return the correct url', () => {

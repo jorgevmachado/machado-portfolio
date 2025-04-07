@@ -1,14 +1,31 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
-import { yearValidator, dateOfBirthValidator } from './date';
+import { dateOfBirthValidator, yearValidator, dayValidator, monthValidator } from './date';
 
 describe('date validator methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
+
   describe('yearValidator', () => {
     it('should return valid when received valid year', () => {
       expect(yearValidator({ value: 2021 })).toEqual({
         valid: true,
+        value: 2021,
         message: 'Valid year.',
       });
     });
@@ -26,6 +43,94 @@ describe('date validator methods', () => {
 
     it('should return invalid when received invalid year type', () => {
       expect(yearValidator({ value: '2022' })).toEqual(INVALID_TYPE);
+    });
+  });
+
+  describe('monthValidator', () => {
+    it('must return valid for months between 0 and 12.', () => {
+      expect(monthValidator({ value: 0 })).toEqual({
+        valid: true,
+        value: 0,
+        message: 'Valid month.'
+      });
+      expect(monthValidator({ value: 12 })).toEqual({
+        valid: true,
+        value: 12,
+        message: 'Valid month.'
+      });
+      expect(monthValidator({ value: 6 })).toEqual({
+        valid: true,
+        value: 6,
+        message: 'Valid month.'
+      });
+    });
+
+    it('should return invalid for months outside the range.', () => {
+      expect(monthValidator({ value: -1 })).toEqual({
+        valid: false,
+        value: undefined,
+        message: 'Please enter a valid month.'
+      });
+      expect(monthValidator({ value: 13 })).toEqual({
+        valid: false,
+        value: undefined,
+        message: 'Please enter a valid month.'
+      });
+    });
+
+    it('should return a type error for non-numeric inputs.', () => {
+      expect(monthValidator({ value: 'January' })).toEqual(INVALID_TYPE);
+      expect(monthValidator({ value: true })).toEqual(INVALID_TYPE);
+    });
+
+    it('should return a required field error for missing entries.', () => {
+      expect(monthValidator({ value: undefined })).toEqual(REQUIRED_FIELD);
+    });
+  });
+
+  describe('dayValidator', () => {
+    it('must return valid for days between 1 and 31.', () => {
+      expect(dayValidator({ value: 1 })).toEqual({
+        valid: true,
+        value: 1,
+        message: 'Valid day.'
+      });
+      expect(dayValidator({ value: 31 })).toEqual({
+        valid: true,
+        value: 31,
+        message: 'Valid day.'
+      });
+      expect(dayValidator({ value: 15 })).toEqual({
+        valid: true,
+        value: 15,
+        message: 'Valid day.'
+      });
+    });
+
+    it('should return invalid for days outside the range.', () => {
+      expect(dayValidator({ value: 0 })).toEqual({
+        valid: false,
+        value: undefined,
+        message: 'Please enter a valid day.'
+      });
+      expect(dayValidator({ value: 32 })).toEqual({
+        valid: false,
+        value: undefined,
+        message: 'Please enter a valid day.'
+      });
+      expect(dayValidator({ value: -5 })).toEqual({
+        valid: false,
+        value: undefined,
+        message: 'Please enter a valid day.'
+      });
+    });
+
+    it('should return a type error for non-numeric inputs.', () => {
+      expect(dayValidator({ value: '15th' })).toEqual(INVALID_TYPE);
+    });
+
+    it('should return a required field error for missing entries.', () => {
+      expect(dayValidator({ value: undefined })).toEqual(REQUIRED_FIELD);
     });
   });
 
@@ -57,8 +162,10 @@ describe('date validator methods', () => {
     it('should return valid when received date string over 18 year old.', () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 20);
-      expect(dateOfBirthValidator({ value: date.toISOString() })).toEqual({
+      const value =  date.toISOString();
+      expect(dateOfBirthValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'valid date.',
       });
     });

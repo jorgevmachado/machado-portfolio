@@ -1,9 +1,4 @@
-import {
-  parseDateFromString,
-  validateDay,
-  validateMonth,
-  validateYear,
-} from './stringToDateUtils';
+import {parseDateFromString, parseDay, parseMonth, parseYear} from './stringToDateUtils';
 
 import type { ParseDate, YearMonthDay } from './interface';
 
@@ -17,12 +12,25 @@ interface ParseStartDateParams {
   initialDate?: ParseDate;
 }
 
+/**
+ * Validates if the date belongs to someone of legal age
+ * @param date
+ * @param min
+ */
 export function isUnderMinimumAge(date: Date, min: number = 18): boolean {
   const ageInDays =
     (new Date().getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
   return ageInDays < min * 365.25;
 }
 
+/**
+ * Transforms fields into a valid date
+ * @param day
+ * @param year
+ * @param month
+ * @param fallback
+ * @param withValidation
+ */
 export function createDateFromYearMonthDay({
   day,
   year,
@@ -48,16 +56,22 @@ function validateYearMonthDay(
   fallback?: boolean,
   withValidation?: boolean,
 ): YearMonthDay {
-  const day = withValidation ? validateDay(value?.day) : value?.day;
-  const year = withValidation ? validateYear(value?.year) : value?.year;
-  const month = withValidation ? validateMonth(value?.month) : value?.month;
+  const currentDate = new Date();
+  const day = withValidation ? parseDay(value?.day) : value?.day;
+  const year = withValidation ? parseYear(value?.year) : value?.year;
+  const month = withValidation ? parseMonth(value?.month) : value?.month;
   return {
-    day: day === undefined && fallback ? new Date().getDate() : day,
-    year: year === undefined && fallback ? new Date().getFullYear() : year,
-    month: month === undefined && fallback ? new Date().getMonth() : month,
+    day: day === undefined && fallback ? currentDate.getDate() : day,
+    year: year === undefined && fallback ? currentDate.getFullYear() : year,
+    month: month === undefined && fallback ? currentDate.getMonth() : month,
   };
 }
 
+/**
+ *  Calculates the maximum due date for someone of legal age
+ * @param date
+ * @param minAge
+ */
 export function calculateMaxDate(
   date?: Date,
   minAge?: number,
@@ -73,6 +87,11 @@ export function calculateMaxDate(
   return date;
 }
 
+/**
+ * Convert a data string to date
+ * @param stringDate
+ * @param initialDate
+ */
 export function parseStartDate({
   stringDate,
   initialDate,

@@ -1,10 +1,25 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
 import { cpfValidator } from './document';
 
 describe('document validator methods', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('cpf', () => {
     it('should return valid when received valid cpf with mask', () => {
       expect(cpfValidator({ value: '515.516.165-72' })).toEqual({

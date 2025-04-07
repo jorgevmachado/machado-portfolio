@@ -1,4 +1,11 @@
-import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import cookies from './cookies';
 
@@ -10,6 +17,8 @@ describe('cookies methods', () => {
   const domain = '.host.com.br';
 
   beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
     Object.defineProperty(global, 'document', {
       value: documentMock,
       writable: true,
@@ -17,6 +26,7 @@ describe('cookies methods', () => {
   });
 
   afterEach(() => {
+    jest.resetModules();
     Object.defineProperty(global, 'document', { value: undefined });
   });
 

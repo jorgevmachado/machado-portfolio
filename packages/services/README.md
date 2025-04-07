@@ -75,6 +75,16 @@ npm run lint
 ```bash
     npm run test -- --findRelatedTests src/date/date.spec.ts               
 ```
+##### parseDay: Garante que o dia fornecido esta dentro dos limites 1 e 31.
+##### parseYear: Garante que o ano fornecido esta dentro dos limites 1000 e 9999.
+##### parseMonth: Garante que o mes fornecido esta dentro dos limites 0 e 12.
+##### parseStartDate: Converte uma data em string para data.
+##### calculateMaxDate: Calcula a data máxima de nascimento para alguém maior de idade.
+##### isUnderMinimumAge: Valida se a data pertence a alguém  maior de idade.
+##### parseDateFromString: Converte uma string em date.
+##### parseDateFromStringWithSeparator: Converte uma string  com um separador customizado em date.
+##### createDateFromYearMonthDay: Transforma os campos em uma data valida.
+
 ### formatter:
 #### Funções que formatam dados (datas, números, strings, etc.).
 #### testes
@@ -125,6 +135,9 @@ npm run lint
 ```bash
     npm run test -- --findRelatedTests src/number/number.spec.ts               
 ```
+##### isNumberEven: Verifica se um número é par. Também valida se o número é um inteiro e lança um erro caso não seja.
+##### extractLastNumberFromUrl: Extraí o último segmento da URL e tenta convertê-lo para um número.
+
 ### validator:
 #### Funções para validação de entrada de dados ou outros tipos de verificações.
 ```bash

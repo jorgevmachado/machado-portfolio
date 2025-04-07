@@ -1,4 +1,11 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import { findEntityBy, transformObjectDateAndNulls } from './entities';
 
@@ -8,6 +15,15 @@ describe('findEntityBy', () => {
     { id: '2', name: 'Jane Smith', name_code: 'jane_smith' },
     { id: '3', name: 'Alice Johnson', name_code: 'alice_johnson' },
   ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
 
   it('Should find an entity by ID.', () => {
     const result = findEntityBy({ key: 'id', value: '2', list: mockList });

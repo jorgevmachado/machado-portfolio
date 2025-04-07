@@ -1,4 +1,5 @@
 export interface ValidatorMessage {
+  value?: string | Date | number | boolean;
   valid: boolean;
   message: string;
 }

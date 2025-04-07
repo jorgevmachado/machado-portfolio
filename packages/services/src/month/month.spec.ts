@@ -1,4 +1,11 @@
-import { describe, expect, it, jest } from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 
 import {
   getCurrentMonth,
@@ -9,6 +16,14 @@ import {
 import { EMonth } from './enum';
 
 describe('month', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
   describe('getCurrentMonth', () => {
     it('Should return the current month in string format and uppercase (EMonth).', () => {
       jest
@@ -45,8 +60,9 @@ describe('month', () => {
       expect(() => validateMonth(EMonth.DECEMBER)).not.toThrow();
     });
     it('Should throw an error for invalid months.', () => {
-      expect(() => validateMonth('INVALID')).toThrow('The month provided is invalid: INVALID');
+      expect(() => validateMonth('INVALID')).toThrow(
+        'The month provided is invalid: INVALID',
+      );
     });
-
   });
 });
