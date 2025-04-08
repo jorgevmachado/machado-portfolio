@@ -1,13 +1,13 @@
 import { Nest } from '@repo/business/api/nest/nest';
 import { getAccessToken } from '../cookies';
-import { AuthService } from '@repo/business/auth/authService';
-import { FinanceService } from '@repo/business/finance/financeService';
-import { SupplierTypeService } from '@repo/business/finance/supplier-type/supplierTypeService';
-import { SupplierService } from '@repo/business/finance/supplier/supplierService';
-import { BankService } from '@repo/business/finance/bank/bankService';
-import { BillCategoryService } from '@repo/business/finance/bill-category/billCategoryService';
-import { BillService } from '@repo/business/finance/bill/billService';
-import { ExpenseService } from '@repo/business/finance/expense/expenseService';
+import { AuthService } from '@repo/business/auth/service';
+import { FinanceService } from '@repo/business/finance/service';
+import { SupplierTypeService } from '@repo/business/finance/supplier-type/service';
+import { SupplierService } from '@repo/business/finance/supplier/service';
+import { BankService } from '@repo/business/finance/bank/service';
+import { BillCategoryService } from '@repo/business/finance/bill-category/service';
+import { BillService } from '@repo/business/finance/bill/service';
+import { ExpenseService } from '@repo/business/finance/expense/service';
 
 const baseUrl = process.env.NEXT_PUBLIC_API ?? 'http://localhost:3001';
 
