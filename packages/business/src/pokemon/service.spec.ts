@@ -13,7 +13,7 @@ import { EStatus, QueryParameters } from '../shared';
 
 import { PokemonEntity } from './interface';
 
-import { PokemonService } from './pokemonService';
+import { PokemonService } from './service';
 
 describe('PokemonService', () => {
   let pokemonService: PokemonService;

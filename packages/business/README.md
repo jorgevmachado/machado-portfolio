@@ -145,11 +145,11 @@ npm run test
 #### POKEMON
 ##### (POKE-API) - SERVICE
 ```bash   
-   npm run test -- --findRelatedTests src/pokemon/externalPokemonService.spec.ts                                                                    
+   npm run test -- --findRelatedTests src/pokemon/externalService.spec.ts                                                                    
 ```
 ##### - SERVICE
 ```bash     
-  npm run test -- --findRelatedTests src/pokemon/pokemonService.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/pokemon/service.spec.ts                                                                       
 ```
 ##### - CONFIG
 ```bash     

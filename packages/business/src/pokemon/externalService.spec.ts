@@ -7,12 +7,16 @@ import {
   jest,
 } from '@jest/globals';
 
-import { ExternalPokemonService } from './externalPokemonService';
-import { ISpecieByPokemonNameResponse, PokeApi } from '../api';
 import { extractLastNumberFromUrl } from '@repo/services/number/number';
+
+import { EStatus } from '../shared';
+
+import { type ISpecieByPokemonNameResponse, PokeApi } from '../api';
+
+import { ExternalPokemonService } from './externalService';
+
 import Pokemon from './pokemon';
 import PokemonMove from './pokemon-move';
-import { EStatus } from '../shared';
 
 jest.mock('../api');
 jest.mock('@repo/services/number/number');
