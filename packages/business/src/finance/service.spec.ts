@@ -9,7 +9,7 @@ import {
 
 import { Nest } from '../api';
 
-import { FinanceService } from './financeService';
+import { FinanceService } from './service';
 import { FINANCE_FIXTURE } from './fixtures';
 
 jest.mock('../api');

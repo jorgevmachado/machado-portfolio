@@ -6,6 +6,6 @@ export * from './bank';
 export * from './bill-category';
 export * from './bill';
 export * from './expense';
-export { FinanceService } from './financeService';
+export { FinanceService } from './service';
 export * from './fixtures';
 
