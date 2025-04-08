@@ -9,9 +9,9 @@ import {
 
 import { Nest } from '../api';
 import { Paginate } from '../paginate';
-import { EStatus, QueryParameters } from '../shared';
+import { EStatus, type QueryParameters } from '../shared';
 
-import { PokemonEntity } from './interface';
+import type { PokemonEntity } from './interface';
 
 import { PokemonService } from './service';
 

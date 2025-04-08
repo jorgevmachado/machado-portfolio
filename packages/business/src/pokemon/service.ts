@@ -1,7 +1,7 @@
 import { Nest } from '../api';
 import { Paginate } from '../paginate';
-import { QueryParameters } from '../shared';
-import { PokemonEntity } from './interface';
+import type { QueryParameters } from '../shared';
+import type { PokemonEntity } from './interface';
 
 export class PokemonService {
   constructor(private nest: Nest) {}
