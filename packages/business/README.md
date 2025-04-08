@@ -132,11 +132,11 @@ npm run test
 ```
 ##### - BUSINESS
 ```bash  
- npm run test -- --findRelatedTests src/auth/authBusiness.spec.ts                                                                           
+ npm run test -- --findRelatedTests src/auth/business.spec.ts                                                                           
 ```
 ##### - SERVICE
 ```bash  
- npm run test -- --findRelatedTests src/auth/authService.spec.ts                                                                           
+ npm run test -- --findRelatedTests src/auth/service.spec.ts                                                                           
 ```
 ##### - CONFIG
 ```bash  

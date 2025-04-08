@@ -9,7 +9,7 @@ import {
 
 import { Nest } from '../api';
 
-import { AuthService } from './authService';
+import { AuthService } from './service';
 
 import { SignInParams, SignUpParams, UserEntity } from './interface';
 import { USER_ENTITY_FIXTURE } from './fixtures';

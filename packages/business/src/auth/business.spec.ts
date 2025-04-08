@@ -9,7 +9,7 @@ import {
 
 import { Error } from '@repo/services/error/error';
 
-import AuthBusiness from './authBusiness';
+import Business from './business';
 import User from './user';
 import { ERole, EStatus } from '../shared';
 
@@ -19,7 +19,7 @@ import { USER_ENTITY_FIXTURE } from './fixtures';
 jest.mock('./user'); // Mock da classe User
 
 describe('AuthBusiness', () => {
-  let authBusiness: AuthBusiness;
+  let authBusiness: Business;
   const mockUser: UserEntity = USER_ENTITY_FIXTURE;
   const mockAuthUser: UserEntity = {
     ...mockUser,
@@ -29,7 +29,7 @@ describe('AuthBusiness', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
-    authBusiness = new AuthBusiness();
+    authBusiness = new Business();
   });
 
   afterEach(() => {
