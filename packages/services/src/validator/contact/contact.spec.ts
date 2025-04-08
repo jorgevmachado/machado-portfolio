@@ -22,13 +22,15 @@ describe('contact validator methods', () => {
   });
   describe('emailValidator', () => {
     it('should return valid when received valid email address', () => {
-      expect(emailValidator({ value: 'nome@mail.com' })).toEqual({
+      const value = 'name@mail.com';
+      expect(emailValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid Email.',
       });
     });
     it('should return invalid when received invalid email address', () => {
-      expect(emailValidator({ value: 'nome.mail.com' })).toEqual({
+      expect(emailValidator({ value: 'name.mail.com' })).toEqual({
         valid: false,
         message: 'Please enter a valid email.',
       });
@@ -43,14 +45,18 @@ describe('contact validator methods', () => {
 
   describe('phoneValidator', () => {
     it('should return valid when received valid phone fixed with mask', () => {
-      expect(phoneValidator({ value: '(11) 1234-5678' })).toEqual({
+      const value = '(11) 1234-5678';
+      expect(phoneValidator({ value  })).toEqual({
         valid: true,
+        value,
         message: 'Valid phone number.',
       });
     });
     it('should return valid when received valid phone fixed without mask', () => {
-      expect(phoneValidator({ value: '1112345678' })).toEqual({
+      const value = '1112345678';
+      expect(phoneValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid phone number.',
       });
     });
@@ -70,14 +76,18 @@ describe('contact validator methods', () => {
 
   describe('mobileValidator', () => {
     it('should return valid when received valid phone mobile with mask', () => {
-      expect(mobileValidator({ value: '(11) 12345-6789' })).toEqual({
+      const value = '(11) 12345-6789';
+      expect(mobileValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid mobile number.',
       });
     });
     it('should return valid when received valid phone mobile without mask', () => {
-      expect(mobileValidator({ value: '11123456789' })).toEqual({
+      const value = '11123456789';
+      expect(mobileValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid mobile number.',
       });
     });

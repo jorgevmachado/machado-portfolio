@@ -22,20 +22,26 @@ describe('personal Validator methods', () => {
   });
   describe('genderValidator', () => {
     it('should return valid when received female gender', () => {
-      expect(genderValidator({ value: 'female' })).toEqual({
+      const value = 'female';
+      expect(genderValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid gender.',
       });
     });
     it('should return valid when received male gender', () => {
-      expect(genderValidator({ value: 'MALE' })).toEqual({
+      const value = 'MALE';
+      expect(genderValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid gender.',
       });
     });
     it('should return valid when received other gender', () => {
-      expect(genderValidator({ value: 'other' })).toEqual({
+      const value = 'other';
+      expect(genderValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid gender.',
       });
     });
@@ -56,9 +62,11 @@ describe('personal Validator methods', () => {
   });
 
   describe('nameValidator', () => {
+    const value = 'Harry';
     it('should return valid when received valid name', () => {
-      expect(nameValidator({ value: 'Harry' })).toEqual({
+      expect(nameValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid name.',
       });
     });

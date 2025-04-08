@@ -1,3 +1,7 @@
+/**
+ * Responsible for formatting text for Telephone.
+ * @param value
+ */
 export function phoneFormatter(value?: string): string {
   if (!value) {
     return '';
@@ -9,6 +13,10 @@ export function phoneFormatter(value?: string): string {
     .substring(0, 15);
 }
 
+/**
+ * Responsible for formatting text for Cell Phone.
+ * @param value
+ */
 export function mobileFormatter(value?: string): string {
   if (!value) {
     return '';

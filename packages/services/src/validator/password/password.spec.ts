@@ -29,8 +29,10 @@ describe('password validator methods', () => {
   });
   describe('minLength', () => {
     it('Should return valid for minimum length.', () => {
-      expect(minLength({ min: 8, value: '12345678' })).toEqual({
+      const value =  '12345678';
+      expect(minLength({ min: 8, value })).toEqual({
         valid: true,
+        value,
         message: 'Valid password.',
       });
     });
@@ -52,9 +54,11 @@ describe('password validator methods', () => {
   });
 
   describe('leastOneLetter', () => {
+    const value = 'a12345678';
     it('Should return valid for least one letter', () => {
-      expect(leastOneLetter({ value: 'a12345678' })).toEqual({
+      expect(leastOneLetter({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid password.',
       });
     });
@@ -77,8 +81,10 @@ describe('password validator methods', () => {
 
   describe('leastOneNumber', () => {
     it('Should return valid for least one number', () => {
-      expect(leastOneNumber({ value: 'abcdefgh1' })).toEqual({
+      const value = 'abcdefgh1';
+      expect(leastOneNumber({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid password.',
       });
     });
@@ -101,8 +107,10 @@ describe('password validator methods', () => {
 
   describe('leastOneSpecialCharacter', () => {
     it('Should return valid for least one number', () => {
-      expect(leastOneSpecialCharacter({ value: '@12345678' })).toEqual({
+      const value = '@12345678';
+      expect(leastOneSpecialCharacter({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid password.',
       });
     });
@@ -127,8 +135,10 @@ describe('password validator methods', () => {
 
   describe('passwordValidator', () => {
     it('Should return valid for validator.', () => {
-      expect(passwordValidator({ value: '@b345678' })).toEqual({
+      const value = '@b345678';
+      expect(passwordValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid password.',
       });
     });
@@ -172,14 +182,16 @@ describe('password validator methods', () => {
 
   describe('confirmPasswordValidator', () => {
     it('Should return valid for confirmPassword.', () => {
+      const value = '@b345678';
       expect(
         confirmPasswordValidator({
           min: 8,
-          value: '@b345678',
-          optionalValue: '@b345678',
+          value,
+          optionalValue: value,
         }),
       ).toEqual({
         valid: true,
+        value,
         message: 'Valid password.',
       });
     });

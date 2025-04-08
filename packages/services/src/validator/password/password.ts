@@ -2,6 +2,11 @@ import type { ValidatorMessage, ValidatorParams } from '../interface';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
+/**
+ * Validates whether the value has the minimum number of characters.
+ * @param min
+ * @param value
+ */
 export function minLength({
   min = 8,
   value,
@@ -15,12 +20,17 @@ export function minLength({
   const valid = value.length >= min;
   return {
     valid,
+    value: valid ? value : undefined,
     message: valid
       ? 'Valid password.'
       : `Must be at least ${min} characters long.`,
   };
 }
 
+/**
+ * Validates if the value has at least one letter.
+ * @param value
+ */
 export function leastOneLetter({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
@@ -32,10 +42,15 @@ export function leastOneLetter({ value }: ValidatorParams): ValidatorMessage {
   const valid = regex.test(value);
   return {
     valid,
+    value: valid ? value : undefined,
     message: valid ? 'Valid password.' : 'It must contain at least one letter.',
   };
 }
 
+/**
+ * Validates if the value has at least one number.
+ * @param value
+ */
 export function leastOneNumber({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
@@ -47,10 +62,15 @@ export function leastOneNumber({ value }: ValidatorParams): ValidatorMessage {
   const valid = regex.test(value);
   return {
     valid,
+    value: valid ? value : undefined,
     message: valid ? 'Valid password.' : 'It must contain at least one number.',
   };
 }
 
+/**
+ * Validates if the value has at least one special character
+ * @param value
+ */
 export function leastOneSpecialCharacter({
   value,
 }: ValidatorParams): ValidatorMessage {
@@ -64,12 +84,18 @@ export function leastOneSpecialCharacter({
   const valid = regex.test(value);
   return {
     valid,
+    value: valid ? value : undefined,
     message: valid
       ? 'Valid password.'
       : 'It must contain at least one special character.',
   };
 }
 
+/**
+ * Validates if the value is a valid password.
+ * @param min
+ * @param value
+ */
 export function passwordValidator({
   min = 8,
   value,
@@ -104,10 +130,17 @@ export function passwordValidator({
 
   return {
     valid: true,
+    value,
     message: 'Valid password.',
   };
 }
 
+/**
+ * Validates whether the value of a password confirmation is a valid password.
+ * @param min
+ * @param value
+ * @param optionalValue
+ */
 export function confirmPasswordValidator({
   min = 8,
   value,
@@ -129,6 +162,7 @@ export function confirmPasswordValidator({
 
   return {
     valid,
+    value: valid ? value : undefined,
     message: valid
       ? 'Valid password.'
       : 'Password confirmation does not match the password.',

@@ -2,6 +2,10 @@ import type { ValidatorMessage, ValidatorParams } from '../interface';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
+/**
+ * Validates if the value is a valid CPF.
+ * @param value
+ */
 export function cpfValidator({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
@@ -13,6 +17,7 @@ export function cpfValidator({ value }: ValidatorParams): ValidatorMessage {
   const valid = regex.test(value);
   return {
     valid,
+    value: valid ? value : undefined,
     message: valid ? 'Valid CPF.' : 'Please enter a valid cpf number.',
   };
 }

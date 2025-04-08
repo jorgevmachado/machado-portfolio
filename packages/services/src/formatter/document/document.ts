@@ -1,3 +1,7 @@
+/**
+ * Responsible for formatting a value for cpf.
+ * @param value
+ */
 export function cpfFormatter(value?: string): string {
   if (!value) {
     return '';

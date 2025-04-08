@@ -1,11 +1,14 @@
 import { EGender } from '@repo/business/shared/enum';
 
-import { isUnderMinimumAge } from '../../date';
-
 import type { ValidatorMessage, ValidatorParams } from '../interface';
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
+/**
+ * Validates whether the value is a valid name.
+ * @param value
+ * @param min
+ */
 export function nameValidator({
   value,
   min = 2,
@@ -21,10 +24,15 @@ export function nameValidator({
   const valid = value.length >= min;
   return {
     valid,
+    value: valid ? value : undefined,
     message: valid ? 'Valid name.' : 'Name must be at least 2 characters long.',
   };
 }
 
+/**
+ * Validates whether the value is a valid gender.
+ * @param value
+ */
 export function genderValidator({ value }: ValidatorParams): ValidatorMessage {
   if (!value) {
     return REQUIRED_FIELD;
@@ -41,6 +49,7 @@ export function genderValidator({ value }: ValidatorParams): ValidatorMessage {
 
   return {
     valid,
+    value: valid ? value : undefined,
     message: valid ? 'Valid gender.' : 'Invalid Gender.',
   };
 }

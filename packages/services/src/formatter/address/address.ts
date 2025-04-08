@@ -1,3 +1,7 @@
+/**
+ * Responsible for formatting text for zip code.
+ * @param value
+ */
 export function cepFormatter(value?: string): string {
   if (!value) {
     return '';

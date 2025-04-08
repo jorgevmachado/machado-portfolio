@@ -22,14 +22,18 @@ describe('address validator methods', () => {
   });
   describe('cepValidator', () => {
     it('should return valid when received valid cep with mask', () => {
-      expect(cepValidator({ value: '12345-678' })).toEqual({
+      const value =  '12345-678';
+      expect(cepValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid zip code.',
       });
     });
     it('should return valid when received valid cep without mask', () => {
-      expect(cepValidator({ value: '12345678' })).toEqual({
+      const value =  '12345678';
+      expect(cepValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid zip code.',
       });
     });

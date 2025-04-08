@@ -22,15 +22,19 @@ describe('document validator methods', () => {
   });
   describe('cpf', () => {
     it('should return valid when received valid cpf with mask', () => {
-      expect(cpfValidator({ value: '515.516.165-72' })).toEqual({
+      const value = '515.516.165-72';
+      expect(cpfValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid CPF.',
       });
     });
 
     it('should return valid when received valid cpf without mask', () => {
-      expect(cpfValidator({ value: '51551616572' })).toEqual({
+      const value = '51551616572';
+      expect(cpfValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'Valid CPF.',
       });
     });

@@ -88,13 +88,38 @@ npm run lint
 ### formatter:
 #### Funções que formatam dados (datas, números, strings, etc.).
 #### testes
+##### base: Responsável por todas as formatações basícas.
 ```bash
-    npm run test -- --findRelatedTests src/formatter/formatter.spec.ts               
-    npm run test -- --findRelatedTests src/formatter/address/address.spec.ts               
-    npm run test -- --findRelatedTests src/formatter/contact/contact.spec.ts               
-    npm run test -- --findRelatedTests src/formatter/currency/currency.spec.ts               
-    npm run test -- --findRelatedTests src/formatter/document/document.spec.ts               
+    npm run test -- --findRelatedTests src/formatter/formatter.spec.ts                 
 ```
+###### sanitize: Responsável por realizar a higienização do texto.
+###### cleanFormatter: Responsável por limpar a formatação do texto.
+
+##### address: Responsável por todas as formatações relacionadas a endereço.
+```bash 
+    npm run test -- --findRelatedTests src/formatter/address/address.spec.ts                 
+```
+###### cepFormatter: Responsável por formatar um texto para cep.
+
+##### contact: Responsável por todas as formatações relacionadas a contato.
+```bash 
+    npm run test -- --findRelatedTests src/formatter/contact/contact.spec.ts                 
+```
+###### phoneFormatter: Responsável por formatar um texto para Telefone.
+###### mobileFormatter: Responsável por formatar um texto para Telefone Celular.
+
+##### currency: Responsável por todas as formatações relacionadas a valor monetário.
+```bash 
+    npm run test -- --findRelatedTests src/formatter/currency/currency.spec.ts                 
+```
+###### currencyFormatter: Responsável por formatar um valor para valor monetário.
+###### removeCurrencyFormatter: Responsável por remover a formatação de um valor monetário.
+
+##### document: Responsável por todas as formatações relacionadas a documentos.
+```bash 
+    npm run test -- --findRelatedTests src/formatter/document/document.spec.ts                 
+```
+###### cpfFormatter: Responsável por formatar um valor para cpf.
 
 ### http:
 #### Funções para realizar chamadas HTTP ou gerenciar requisições e respostas.
@@ -140,15 +165,59 @@ npm run lint
 
 ### validator:
 #### Funções para validação de entrada de dados ou outros tipos de verificações.
+##### base: Responsável por todas as validações basícas.
 ```bash
-    npm run test -- --findRelatedTests src/validator/validator.spec.ts
-    npm run test -- --findRelatedTests src/validator/address/address.spec.ts   
-    npm run test -- --findRelatedTests src/validator/contact/contact.spec.ts
-    npm run test -- --findRelatedTests src/validator/document/document.spec.ts
-    npm run test -- --findRelatedTests src/validator/password/password.spec.ts            
-    npm run test -- --findRelatedTests src/validator/personal/personal.spec.ts            
-    npm run test -- --findRelatedTests src/validator/date/date.spec.ts            
+    npm run test -- --findRelatedTests src/validator/validator.spec.ts                 
 ```
+###### numberValidator: Valida se é um número valido.
+###### isEmptyValidator: Valida se validador está vazio.
+
+##### address: Responsável por todas as validações de endereço.
+```bash
+    npm run test -- --findRelatedTests src/validator/address/address.spec.ts                 
+```
+###### cepValidator: Valida se o valor é um cep valido.
+
+##### contact: Responsável por todas as validações de contato.
+```bash
+    npm run test -- --findRelatedTests src/validator/contact/contact.spec.ts                 
+```
+###### emailValidator: Valida se o valor é um e-mail valido.
+###### phoneValidator: Valida se o valor é um telefone valido.
+###### mobileValidator: Valida se o valor é um telefone celular valido.
+
+##### document: Responsável por todas as validações de documento.
+```bash
+    npm run test -- --findRelatedTests src/validator/document/document.spec.ts                 
+```
+###### cpfValidator: Valida se o valor é um cpf valido.
+
+##### password: Responsável por todas as validações de senha.
+```bash
+    npm run test -- --findRelatedTests src/validator/password/password.spec.ts                 
+```
+###### minLength: Valida se o valor possui o nũmero mínimo de caracteres.
+###### leastOneLetter: Valida se o valor possui ao menos uma letra.
+###### leastOneNumber: Valida se o valor possui ao menos um número.
+###### passwordValidator: Valida se o valor é uma senha valida.
+###### leastOneSpecialCharacter: Valida se o valor possui ao menos um caractere especial.
+###### confirmPasswordValidator: Valida se o valor de uma confirmação de senha é uma senha valida.
+
+##### personal: Responsável por todas as validações de atributos de uma pessoa.
+```bash
+    npm run test -- --findRelatedTests src/validator/personal/personal.spec.ts                 
+```
+###### nameValidator: Valida se o valor é um nome válido.
+###### genderValidator: Valida se o valor é um gênero válido.
+
+##### date: Responsável por todas as validações de datas.
+```bash
+    npm run test -- --findRelatedTests src/validator/date/date.spec.ts                 
+```
+###### dayValidator: Certifique-se de que o dia esteja dentro dos limites apropriados de ser maior que 1 e menor que e igual a 31.
+###### yearValidator: Valida se o valor do ano passado é válido.
+###### monthValidator: Valida se o valor do mês passado é válido.
+###### dateOfBirthValidator: Valide se é uma data válida e é-se maior de idade
 
 ### window:
 #### Funções relacionadas ao objeto `window` (provavelmente para navegadores).
@@ -167,8 +236,15 @@ npm run lint
 ```bash
     npm run test -- --findRelatedTests src/month/month.spec.ts              
 ```
+##### getMonthIndex: Responsável por transformar o enum de mês em um índice de meses.
+##### validateMonth: Verifica se é um mês valido.
+##### getCurrentMonth: Responsável por retornar o mês atual.
+##### getMonthByIndex: Responsável por transformar um índice em um enum de mês.
 
 ### entities
+#### Função relacionado a tratamento entidades.
 ```bash
     npm run test -- --findRelatedTests src/entities/entities.spec.ts               
 ```
+##### findEntityBy: Busca uma entidade a partir de uma lista e retorna o resultado.
+##### transformObjectDateAndNulls: Formata uma entidade ou um grupo de entidades transformando tudo que for null em undefined e o que for data em Date.

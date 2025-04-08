@@ -21,8 +21,10 @@ describe('Validator methods', () => {
   });
   describe('numberValidator', () => {
     it('should return valid when received valid number', () => {
-      expect(numberValidator({ value: '7' })).toEqual({
+      const value = '7';
+      expect(numberValidator({ value })).toEqual({
         valid: true,
+        value,
         message: 'valid number.',
       });
     });
