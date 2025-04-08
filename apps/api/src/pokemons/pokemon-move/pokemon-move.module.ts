@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
-import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalService';
 
 import { PokemonMove } from './pokemon-move.entity';
 

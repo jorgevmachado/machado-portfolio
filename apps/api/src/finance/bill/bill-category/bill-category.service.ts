@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import BillCategoryBusiness from '@repo/business/finance/bill-category/billCategory';
+import BillCategoryConstructor from '@repo/business/finance/bill-category/billCategory';
 import { BILL_CATEGORY_LIST_FIXTURE } from '@repo/business/finance/bill-category/fixtures/billCategory';
 
 import { Service } from '../../../shared';
@@ -22,13 +22,13 @@ export class BillCategoryService extends Service<BillCategory> {
   }
 
   async create({ name }: CreateBillCategoryDto) {
-    const billCategory = new BillCategoryBusiness({ name });
+    const billCategory = new BillCategoryConstructor({ name });
     return await this.save(billCategory);
   }
 
   async update(param: string, { name }: UpdateBillCategoryDto) {
     const result = await this.findOne({ value: param, withDeleted: true });
-    const billCategory = new BillCategoryBusiness({ ...result, name });
+    const billCategory = new BillCategoryConstructor({ ...result, name });
     return await this.save(billCategory);
   }
 

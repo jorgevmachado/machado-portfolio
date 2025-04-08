@@ -1,6 +1,7 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { ConflictException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 import {
@@ -13,7 +14,6 @@ import { CreateBankDto } from './dto/create-bank.dto';
 import { Bank } from './bank.entity';
 import { BankService } from './bank.service';
 import { UpdateBankDto } from './dto/update-bank.dto';
-import { ConflictException } from '@nestjs/common';
 
 describe('BankService', () => {
   let repository: Repository<Bank>;

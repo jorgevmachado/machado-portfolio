@@ -2,20 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
+import ExpenseBusiness from '@repo/business/finance/expense/business';
 import ExpenseConstructor from '@repo/business/finance/expense/expense';
+import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 import { Service } from '../../../shared';
 
+import { Supplier } from '../../supplier/supplier.entity';
 import { SupplierService } from '../../supplier/supplier.service';
+
+import { Bill } from '../bill.entity';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 import { Expense } from './expense.entity';
-import { Bill } from '../bill.entity';
-import { Supplier } from '../../supplier/supplier.entity';
-import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
 
 @Injectable()
 export class ExpenseService extends Service<Expense> {

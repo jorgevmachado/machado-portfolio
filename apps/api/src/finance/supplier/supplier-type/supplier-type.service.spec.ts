@@ -1,6 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {afterEach, beforeEach, describe, expect, it, jest} from '@jest/globals';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest,
+} from '@jest/globals';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { ConflictException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 import {
@@ -15,7 +23,6 @@ import { CreateSupplierTypeDto } from './dto/create-supplier-type.dto';
 import { SupplierTypeService } from './supplier-type.service';
 import { SupplierType } from './supplierType.entity';
 import { UpdateSupplierTypeDto } from './dto/update-supplier-type.dto';
-import { ConflictException } from '@nestjs/common';
 
 describe('SupplierTypeService', () => {
   let service: SupplierTypeService;
@@ -131,7 +138,9 @@ describe('SupplierTypeService', () => {
 
   describe('seed', () => {
     it('should seed the database when exist in database', async () => {
-      jest.spyOn(repository, 'find').mockResolvedValueOnce(SUPPLIER_TYPE_LIST_FIXTURE);
+      jest
+        .spyOn(repository, 'find')
+        .mockResolvedValueOnce(SUPPLIER_TYPE_LIST_FIXTURE);
 
       expect(await service.seed()).toEqual(SUPPLIER_TYPE_LIST_FIXTURE);
     });

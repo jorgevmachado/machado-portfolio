@@ -4,7 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MulterModule } from '@nestjs/platform-express';
 
-import AuthBusiness from '@repo/business/auth/authBusiness';
+import AuthBusiness from '@repo/business/auth/business';
 
 import { AuthJwtStrategy } from './strategy/auth-jwt.strategy';
 

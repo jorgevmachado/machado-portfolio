@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
-import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalService';
 
 import { Service } from '../../shared';
 

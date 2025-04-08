@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import BankBusiness from '@repo/business/finance/bank/bank';
+import BankConstructor from '@repo/business/finance/bank/bank';
 
 import { BANK_LIST_FIXTURE } from '@repo/business/finance/bank/fixtures/bank';
 
@@ -23,13 +23,13 @@ export class BankService extends Service<Bank> {
   }
 
   async create({ name }: CreateBankDto) {
-    const bank = new BankBusiness({ name });
+    const bank = new BankConstructor({ name });
     return await this.save(bank);
   }
 
   async update(param: string, { name }: UpdateBankDto) {
     const result = await this.findOne({ value: param, withDeleted: true });
-    const bank = new BankBusiness({ ...result, name });
+    const bank = new BankConstructor({ ...result, name });
     return this.save(bank);
   }
 

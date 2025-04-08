@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { ERole } from '@repo/business/shared/enum';
-import AuthBusiness from '@repo/business/auth/authBusiness';
+import AuthBusiness from '@repo/business/auth/business';
 import UserBusiness from '@repo/business/auth/user';
 
 import { Base } from '../shared';

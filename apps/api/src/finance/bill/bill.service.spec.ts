@@ -16,7 +16,7 @@ import { MONTHS } from '@repo/services/month/month';
 
 import { EExpenseType, EMonth } from '@repo/business/finance/enum';
 
-import BillBusiness from '@repo/business/finance/bill/billBusiness';
+import BillBusiness from '@repo/business/finance/bill/business';
 import { BANK_LIST_FIXTURE } from '@repo/business/finance/bank/fixtures/bank';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 import { BILL_CATEGORY_LIST_FIXTURE } from '@repo/business/finance/bill-category/fixtures/billCategory';

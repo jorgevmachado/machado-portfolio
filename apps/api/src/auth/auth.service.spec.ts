@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { JwtService } from '@nestjs/jwt';
 
-import AuthBusiness from '@repo/business/auth/authBusiness';
+import AuthBusiness from '@repo/business/auth/business';
 
 import { USER_ENTITY_FIXTURE, USER_PASSWORD } from '@repo/business/auth/fixtures/auth';
 

@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { FINANCE_FIXTURE } from '@repo/business/finance/fixtures/finance';
 
-import FinanceBusiness from '@repo/business/finance/finance';
+import FinanceConstructor from '@repo/business/finance/finance';
 
 import { Service } from '../shared';
 import { User } from '../auth/users/user.entity';
@@ -41,7 +41,7 @@ export class FinanceService extends Service<Finance> {
     if (currentFinance) {
       return currentFinance;
     }
-    const finance = new FinanceBusiness({ user });
+    const finance = new FinanceConstructor({ user });
     return await this.save(finance);
   }
 

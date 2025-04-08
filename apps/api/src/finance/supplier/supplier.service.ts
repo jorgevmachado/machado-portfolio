@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import SupplierBusiness from '@repo/business/finance/supplier/supplier';
+import SupplierConstructor from '@repo/business/finance/supplier/supplier';
 
 import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
 
@@ -30,7 +30,7 @@ export class SupplierService extends Service<Supplier> {
         type,
         'Supplier Type',
       );
-    const supplier = new SupplierBusiness({
+    const supplier = new SupplierConstructor({
       name,
       type: supplierType,
     });
@@ -45,7 +45,7 @@ export class SupplierService extends Service<Supplier> {
           type,
           'Supplier Type',
         );
-    const supplier = new SupplierBusiness({
+    const supplier = new SupplierConstructor({
       name,
       type: supplierType,
     });
@@ -86,7 +86,7 @@ export class SupplierService extends Service<Supplier> {
           param: data?.type?.name,
           relation: 'SupplierType',
         });
-        return new SupplierBusiness({
+        return new SupplierConstructor({
           name: data.name,
           type,
         });

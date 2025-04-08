@@ -13,7 +13,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { MONTHS } from '@repo/services/month/month';
 
 import { EExpenseType } from '@repo/business/finance/enum';
-import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
+import ExpenseBusiness from '@repo/business/finance/expense/business';
 
 import { SUPPLIER_LIST_FIXTURE } from '@repo/business/finance/supplier/fixtures/supplier';
 
@@ -22,16 +22,14 @@ import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/ex
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
 import { SupplierService } from '../../supplier/supplier.service';
-
-import { CreateExpenseDto } from './dto/create-expense.dto';
-
-import { Expense } from './expense.entity';
-
-import { ExpenseService } from './expense.service';
 import { Supplier } from '../../supplier/supplier.entity';
+
 import { Bill } from '../bill.entity';
 
+import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
+import { Expense } from './expense.entity';
+import { ExpenseService } from './expense.service';
 
 describe('ExpenseService', () => {
   const bill: Bill = BILL_LIST_FIXTURE[0];

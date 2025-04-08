@@ -6,7 +6,7 @@ import { isUUID } from '@repo/services/string/string';
 
 import { EStatus } from '@repo/business/shared/enum';
 import type { PaginateParameters } from '@repo/business/paginate/interface';
-import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalService';
 import type { QueryParameters } from '@repo/business/shared/interface';
 
 import { Pokemon } from './pokemon.entity';

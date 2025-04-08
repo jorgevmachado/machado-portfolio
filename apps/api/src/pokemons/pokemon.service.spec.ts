@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalService';
 
 import {
   BULBASAUR_ENTITY_INCOMPLETE_POKEMON_FIXTURE,

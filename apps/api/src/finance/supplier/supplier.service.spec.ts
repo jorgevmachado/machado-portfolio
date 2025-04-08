@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { ConflictException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 import {
@@ -19,7 +20,6 @@ import { SupplierTypeService } from './supplier-type/supplier-type.service';
 import { Supplier } from './supplier.entity';
 import { SupplierService } from './supplier.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
-import { ConflictException } from '@nestjs/common';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 
 describe('SupplierService', () => {

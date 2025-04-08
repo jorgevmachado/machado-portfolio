@@ -11,8 +11,8 @@ import {
 
 import { EGender, ERole, EStatus } from '@repo/business/shared/enum';
 import type { UserEntity } from '@repo/business/auth/interface';
-import { Bill } from '../../finance/bill/bill.entity';
-import {Finance} from "../../finance/finance.entity";
+
+import { Finance } from '../../finance/finance.entity';
 
 @Entity({ name: 'users' })
 export class User implements UserEntity {

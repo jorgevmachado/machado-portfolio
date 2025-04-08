@@ -17,7 +17,7 @@ import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update.bill.dto';
 import { CreateExpenseDto } from './expense/dto/create-expense.dto';
 import { Expense } from './expense/expense.entity';
-import {UpdateExpenseDto} from "./expense/dto/update-expense.dto";
+import { UpdateExpenseDto } from './expense/dto/update-expense.dto';
 
 describe('BillController', () => {
   const expense: Expense = EXPENSE_LIST_FIXTURE[0];
@@ -138,7 +138,9 @@ describe('BillController', () => {
       };
       jest.spyOn(service, 'createExpense').mockResolvedValue(expense);
 
-      expect(await controller.createExpense(bill.id, createExpense)).toEqual(expense);
+      expect(await controller.createExpense(bill.id, createExpense)).toEqual(
+        expense,
+      );
     });
   });
 
@@ -150,7 +152,9 @@ describe('BillController', () => {
       };
       jest.spyOn(service, 'updateExpense').mockResolvedValue(expense);
 
-      expect(await controller.updateExpense(bill.id, expense.id, updateExpense)).toEqual(expense);
+      expect(
+        await controller.updateExpense(bill.id, expense.id, updateExpense),
+      ).toEqual(expense);
     });
   });
 
@@ -158,7 +162,9 @@ describe('BillController', () => {
     it('should find one expense by id', async () => {
       jest.spyOn(service, 'findOneExpense').mockResolvedValue(expense);
 
-      expect(await controller.findOneExpense(bill.id, expense.id)).toEqual(expense);
+      expect(await controller.findOneExpense(bill.id, expense.id)).toEqual(
+        expense,
+      );
     });
   });
 

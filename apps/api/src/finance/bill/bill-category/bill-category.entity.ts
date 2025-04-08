@@ -8,8 +8,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+import type { BillCategoryEntity } from '@repo/business/finance/bill-category/interface';
+
 import { Bill } from '../bill.entity';
-import { BillCategoryEntity } from '@repo/business/finance/bill-category/interface';
 
 @Entity({ name: 'bill_categories' })
 export class BillCategory implements BillCategoryEntity {

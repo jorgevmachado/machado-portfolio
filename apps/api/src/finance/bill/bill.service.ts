@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { snakeCaseToNormal } from '@repo/services/string/string';
 import { getCurrentMonth } from '@repo/services/month/month';
 
-import BillBusiness from '@repo/business/finance/bill/billBusiness';
+import BillBusiness from '@repo/business/finance/bill/business';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
 import { Service } from '../../shared';

@@ -11,7 +11,7 @@ import { Repository } from 'typeorm';
 
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { ExternalPokemonService } from '@repo/business/pokemon/externalPokemonService';
+import { ExternalPokemonService } from '@repo/business/pokemon/externalService';
 
 import { BULBASAUR_ENTITY_COMPLETE_POKEMON_FIXTURE } from '@repo/business/pokemon/fixtures/pokemon/completes/completes';
 
