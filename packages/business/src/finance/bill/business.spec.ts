@@ -20,7 +20,7 @@ import {
   INGRID_RESIDENTIAL_BANK_SLIP_NUBANK_BILL_FIXTURE,
 } from './fixtures';
 
-import BillBusiness from './billBusiness';
+import BillBusiness from './business';
 import type { BillConstructorParams } from './interface';
 import Bill from './bill';
 

@@ -1,4 +1,4 @@
-import ExpenseBusiness from '../expense/expenseBusiness';
+import ExpenseBusiness from '../expense/business';
 
 import { ExpenseConstructorParams, ExpenseEntity } from '../expense';
 

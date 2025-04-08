@@ -9,7 +9,7 @@ import {
 
 import { Nest } from '../../api';
 
-import { BillCategoryService } from './billCategoryService';
+import { BillCategoryService } from './service';
 import { INGRID_RESIDENTIAL_BILL_CATEGORY_FIXTURE } from './fixtures';
 
 jest.mock('../../api');

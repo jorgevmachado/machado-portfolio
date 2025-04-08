@@ -9,7 +9,7 @@ import {
 
 import { Nest } from '../../api';
 
-import { ExpenseService } from './expenseService';
+import { ExpenseService } from './service';
 import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
 import { ExpenseCreateParams, ExpenseUpdateParams } from './interface';
 import { EMonth } from '../../api/nest/finance';

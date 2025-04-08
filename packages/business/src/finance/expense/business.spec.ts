@@ -13,7 +13,7 @@ import { MONTHS } from '@repo/services/month/month';
 
 import { EExpenseType } from '../enum';
 
-import ExpenseBusiness from './expenseBusiness';
+import ExpenseBusiness from './business';
 import { INGRID_RESIDENTIAL_LIST_FIXTURE } from './fixtures';
 import { ExpenseConstructorParams } from './interface';
 

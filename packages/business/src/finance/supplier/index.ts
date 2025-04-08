@@ -1,3 +1,3 @@
 export { default } from './supplier';
-export { SupplierService } from './supplierService';
+export { SupplierService } from './service';
 export * from './interface';

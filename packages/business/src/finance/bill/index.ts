@@ -1,4 +1,4 @@
 export { default } from './bill';
-export { default as BillBusiness } from './billBusiness';
-export { BillService } from './billService';
+export { default as BillBusiness } from './business';
+export { BillService } from './service';
 export * from './interface';

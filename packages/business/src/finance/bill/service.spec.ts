@@ -9,7 +9,7 @@ import {
 
 import { Nest } from '../../api';
 
-import { BillService } from './billService';
+import { BillService } from './service';
 
 import { INGRID_RESIDENTIAL_BANK_SLIP_NUBANK_BILL_FIXTURE } from './fixtures';
 import { EBillType } from '../../api/nest/finance';

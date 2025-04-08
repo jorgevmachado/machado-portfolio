@@ -9,7 +9,7 @@ import type {
   UpdateBillParams,
 } from './interface';
 import Bill from './bill';
-import BillBusiness from './billBusiness';
+import BillBusiness from './business';
 
 export class BillService {
   constructor(private nest: Nest) {}

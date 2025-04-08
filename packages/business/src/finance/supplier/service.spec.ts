@@ -10,7 +10,7 @@ import {
 import { Nest } from '../../api';
 
 import { VIVO_HOUSING_SUPPLIER_FIXTURE } from './fixtures';
-import { SupplierService } from './supplierService';
+import { SupplierService } from './service';
 
 
 jest.mock('../../api');
