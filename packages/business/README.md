@@ -177,7 +177,7 @@ npm run test
 #### FINANCE:
 ##### - SERVICE
 ```bash     
-  npm run test -- --findRelatedTests src/finance/financeService.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/finance/service.spec.ts                                                                       
 ```
 ##### SUPPLIER TYPE
 ###### - ENTITY
@@ -204,7 +204,7 @@ npm run test
 ```
 ###### - SERVICE
 ```bash     
-  npm run test -- --findRelatedTests src/finance/bank/bankService.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/finance/bank/service.spec.ts                                                                       
 ```
 ##### EXPENSE 
 ###### - ENTITY
