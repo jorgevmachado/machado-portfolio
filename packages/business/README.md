@@ -186,7 +186,7 @@ npm run test
 ``` 
 ###### - SERVICE
 ```bash     
-  npm run test -- --findRelatedTests src/finance/supplier-type/supplierTypeService.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/finance/supplier-type/service.spec.ts                                                                       
 ```
 ##### SUPPLIER 
 ###### - ENTITY
@@ -195,7 +195,7 @@ npm run test
 ``` 
 ###### - SERVICE
 ```bash     
-  npm run test -- --findRelatedTests src/finance/supplier/supplierService.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/finance/supplier/service.spec.ts                                                                       
 ```
 ##### BANK 
 ###### - ENTITY
@@ -213,11 +213,11 @@ npm run test
 ```
 ###### - SERVICE
 ```bash     
-  npm run test -- --findRelatedTests src/finance/expense/expenseService.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/finance/expense/service.spec.ts                                                                       
 ```
 ###### - BUSINESS
 ```bash     
-  npm run test -- --findRelatedTests src/finance/expense/expenseBusiness.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/finance/expense/business.spec.ts                                                                       
 ```
 ##### BILL 
 ###### - ENTITY
@@ -226,11 +226,11 @@ npm run test
 ```
 ###### - SERVICE
 ```bash     
-  npm run test -- --findRelatedTests src/finance/bill/billService.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/finance/bill/service.spec.ts                                                                       
 ```
 ###### - BUSINESS
 ```bash     
-  npm run test -- --findRelatedTests src/finance/bill/billBusiness.spec.ts                                                                       
+  npm run test -- --findRelatedTests src/finance/bill/business.spec.ts                                                                       
 ```
 
 ### shared:
