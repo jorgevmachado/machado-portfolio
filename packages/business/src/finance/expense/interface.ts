@@ -23,11 +23,38 @@ export type ExpenseCreateParams = IExpenseCreateParams;
 
 export type ExpenseUpdateParams = IExpenseUpdateParams;
 
+export interface InitializeExpenseParams {
+  value: number;
+  type?: ExpenseEntity['type'];
+  month?: ExpenseEntity['month'];
+  expense: ExpenseConstructorParams;
+  instalment_number?: number;
+}
+
 export interface InitializedExpense {
   nextYear: number;
   requiresNewBill: boolean;
+  monthsForNextYear?: Array<string>;
   expenseForNextYear?: ExpenseEntity;
+  monthsForCurrentYear?: Array<string>;
   expenseForCurrentYear: ExpenseEntity;
+}
+
+export interface ReinitializeExpenseParams {
+  months: Array<string>;
+  expense: ExpenseEntity;
+  existingExpense?: ExpenseEntity;
+}
+
+export interface HandleExpenseForNextYearParams {
+  paid: ExpenseEntity['paid'];
+  year: ExpenseEntity['year'];
+  type: ExpenseEntity['type'];
+  value: number;
+  name: ExpenseEntity['name'];
+  months: Array<string>;
+  supplier: ExpenseEntity['supplier'];
+  description?: ExpenseEntity['description'];
 }
 
 export interface MergeExpenseParams {

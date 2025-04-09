@@ -1,10 +1,9 @@
 import ExpenseBusiness from '../expense/business';
 
-import { ExpenseConstructorParams, ExpenseEntity } from '../expense';
+import { ExpenseEntity } from '../expense';
 
 import type { BillConstructorParams, BillList, TList } from './interface';
 import Bill from './bill';
-import {EMonth} from "@repo/services/month/enum";
 
 export default class BillBusiness {
   initialize(params: BillConstructorParams): Bill {
@@ -34,11 +33,6 @@ export default class BillBusiness {
     property: 'total' | 'total_paid',
   ): number {
     return expenses.reduce((acc, expense) => acc + (expense[property] ?? 0), 0);
-  }
-
-  initializeExpense(expense: ExpenseConstructorParams, month?: EMonth, value: number = 0) {
-    const expenseBusiness = new ExpenseBusiness();
-    return expenseBusiness.initialize(expense, month, value);
   }
 
   mapBillListByItem(bills: Array<Bill>, listType: TList): Array<BillList> {

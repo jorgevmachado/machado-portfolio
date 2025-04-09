@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import ExpenseBusiness from '@repo/business/finance/expense/business';
 import ExpenseConstructor from '@repo/business/finance/expense/expense';
 import { EXPENSE_LIST_FIXTURE } from '@repo/business/finance/expense/fixtures/expense';
+import type { InitializeExpenseParams } from '@repo/business/finance/expense/interface';
 
 import { Service } from '../../../shared';
 
@@ -46,6 +47,33 @@ export class ExpenseService extends Service<Expense> {
       month: createExpenseDto.month,
       description: createExpenseDto.description,
       instalment_number: createExpenseDto.instalment_number,
+    });
+  }
+
+  async initialize(params: InitializeExpenseParams) {
+    const result = this.expenseBusiness.initialize(params);
+    const expense = await this.saveExpense(result.expenseForCurrentYear);
+    if (expense) {
+      result.expenseForCurrentYear = expense;
+    }
+    return result;
+  }
+
+  async addExpenseForNextYear(
+    bill: Bill,
+    months: Array<string>,
+    expense: Expense,
+    existingExpense?: Expense,
+  ) {
+    const currentExpenseForNextYear = this.expenseBusiness.reinitialize({
+      months,
+      expense,
+      existingExpense,
+    });
+
+    await this.saveExpense({
+      ...currentExpenseForNextYear,
+      bill,
     });
   }
 

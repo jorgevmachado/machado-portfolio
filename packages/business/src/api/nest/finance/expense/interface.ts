@@ -1,5 +1,7 @@
+import { EMonth } from '@repo/services/month/enum';
+
 import type { IFinanceBase } from '../interface';
-import { EExpenseType, EMonth } from '../enum';
+import { EExpenseType } from '../enum';
 import type { ISupplier } from '../supplier';
 import type { IBill } from '../bill';
 

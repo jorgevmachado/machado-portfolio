@@ -3,12 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { snakeCaseToNormal } from '@repo/services/string/string';
-import { getCurrentMonth } from '@repo/services/month/month';
 
 import BillBusiness from '@repo/business/finance/bill/business';
 import { BILL_LIST_FIXTURE } from '@repo/business/finance/bill/fixtures/bill';
 
-import { Service } from '../../shared';
+import { type FilterParams, Service } from '../../shared';
 
 import type { ListParams } from '../../shared/queries';
 
@@ -28,6 +27,7 @@ import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update.bill.dto';
 import { CreateExpenseDto } from './expense/dto/create-expense.dto';
 import { UpdateExpenseDto } from './expense/dto/update-expense.dto';
+import { ExistExpenseInBill } from './bill.interface';
 
 @Injectable()
 export class BillService extends Service<Bill> {
@@ -94,9 +94,9 @@ export class BillService extends Service<Bill> {
     });
 
     if (existBill) {
-      if(withThrow) {
+      if (withThrow) {
         throw new ConflictException(
-            `Key (name)=(${bill.name}) already exists with this (year)=(${bill.year}).`,
+          `Key (name)=(${bill.name}) already exists with this (year)=(${bill.year}).`,
         );
       }
       return existBill;
@@ -233,60 +233,82 @@ export class BillService extends Service<Bill> {
     ).filter((expense): expense is Expense => !!expense);
   }
 
-  async createExpense(param: string, createExpenseDto: CreateExpenseDto) {
+  async addExpense(param: string, createExpenseDto: CreateExpenseDto) {
     const bill = await this.findOne({ value: param });
-
-    const month = !createExpenseDto.month
-      ? getCurrentMonth()
-      : createExpenseDto.month;
 
     const createdExpense = await this.expenseService.buildCreation(
       bill,
       createExpenseDto,
     );
 
-    const bills = (await this.findAll({
-      filters: [
-        {
-          value: createdExpense.name_code,
-          param: 'expenses.name_code',
-          relation: true,
-          condition: 'LIKE',
-        },
-      ],
-    })) as Array<Bill>;
+    const existExpense = await this.existExpenseInBill({
+      year: createdExpense.year,
+      nameCode: createdExpense.name_code,
+      withThrow: false,
+    });
 
-    if (bills.length) {
-      throw this.error(
-        new ConflictException(
-          'You cannot create this expense because it is already in use.',
-        ),
-      );
-    }
+    const { type, value, month, instalment_number } = createExpenseDto;
 
     const {
       nextYear,
       requiresNewBill,
+      monthsForNextYear,
       expenseForNextYear,
       expenseForCurrentYear,
-    } = this.billBusiness.initializeExpense(createdExpense, month, createExpenseDto.value);
-
-    const expense = await this.expenseService.saveExpense(
-      expenseForCurrentYear,
-    );
+    } = await this.expenseService.initialize({
+      type,
+      value,
+      month,
+      expense: !existExpense ? createdExpense : existExpense,
+      instalment_number,
+    });
 
     if (requiresNewBill) {
       const newBill = (await this.createNewBillForNextYear(
-        nextYear,
-        bill,
+          nextYear,
+          bill,
       )) as Bill;
 
-      await this.expenseService.saveExpense({
-        ...expenseForNextYear,
-        bill: newBill,
+      const existingExpense = await this.existExpenseInBill({
+        year: nextYear,
+        nameCode: expenseForNextYear.name_code,
+        withThrow: false,
+      });
+      await this.expenseService.addExpenseForNextYear(newBill, monthsForNextYear, expenseForNextYear, existingExpense);
+    }
+    return expenseForCurrentYear;
+  }
+
+  private async existExpenseInBill({
+    year,
+    nameCode,
+    withThrow = true,
+    fallBackMessage = 'You cannot add this expense because it is already in use.',
+  }: ExistExpenseInBill) {
+    const filters: Array<FilterParams> = [
+      {
+        value: nameCode,
+        param: 'expenses.name_code',
+        relation: true,
+        condition: 'LIKE',
+      },
+    ];
+    if (year) {
+      filters.push({
+        value: year,
+        param: 'expenses.year',
+        relation: true,
+        condition: '=',
       });
     }
-    return expense;
+
+    const result = (await this.findAll({ filters })) as Array<Bill>;
+
+    if (withThrow && result.length) {
+      throw this.error(new ConflictException(fallBackMessage));
+    }
+
+    return result[0]?.expenses[0];
   }
 
   private async createNewBillForNextYear(year: number, bill: Bill) {
@@ -326,24 +348,11 @@ export class BillService extends Service<Bill> {
     );
 
     if (expense.name_code !== updatedExpense.name_code) {
-      const bills = (await this.findAll({
-        filters: [
-          {
-            value: updatedExpense.name_code,
-            param: 'expenses.name_code',
-            relation: true,
-            condition: 'LIKE',
-          },
-        ],
-      })) as Array<Bill>;
-
-      if (bills.length) {
-        throw this.error(
-          new ConflictException(
-            `You cannot update this expense with this (supplier) ${updatedExpense.supplier.name} because there is already an expense linked to this supplier.`,
-          ),
-        );
-      }
+      await this.existExpenseInBill({
+        year: updatedExpense.year,
+        nameCode: updatedExpense.name_code,
+        fallBackMessage: `You cannot update this expense with this (supplier) ${updatedExpense.supplier.name} because there is already an expense linked to this supplier.`,
+      });
     }
     return await this.expenseService.saveExpense(updatedExpense);
   }

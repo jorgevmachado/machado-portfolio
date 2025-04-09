@@ -38,7 +38,7 @@ describe('BillController', () => {
             remove: jest.fn(),
             findOne: jest.fn(),
             findAllBills: jest.fn(),
-            createExpense: jest.fn(),
+            addExpense: jest.fn(),
             updateExpense: jest.fn(),
             removeExpense: jest.fn(),
             findOneExpense: jest.fn(),
@@ -138,7 +138,7 @@ describe('BillController', () => {
       };
       jest.spyOn(service, 'createExpense').mockResolvedValue(expense);
 
-      expect(await controller.createExpense(bill.id, createExpense)).toEqual(
+      expect(await controller.addExpense(bill.id, createExpense)).toEqual(
         expense,
       );
     });

@@ -8,23 +8,38 @@ import { EMonth } from '@repo/services/month/enum';
 
 import { EExpenseType } from '../enum';
 
-import type {
-  ExpenseConstructorParams,
-  InitializedExpense,
-  MergeExpenseParams,
+import {
+  ExpenseConstructorParams, HandleExpenseForNextYearParams,
+  InitializedExpense, InitializeExpenseParams,
+  MergeExpenseParams, ReinitializeExpenseParams,
 } from './interface';
 import Expense from './expense';
 
 
 export default class ExpenseBusiness {
-  initialize(params: ExpenseConstructorParams, month?: EMonth, value: number = 0): InitializedExpense {
-    const currentMonth = month ?? getCurrentMonth();
-    const builtExpense = new Expense(params);
-    validateMonth(currentMonth);
-    return this.initializeValues(builtExpense, value, currentMonth);
+  initialize({ type, value = 0, month, expense, instalment_number }: InitializeExpenseParams): InitializedExpense {
+    const builtExpense = new Expense({
+      ...expense,
+      type: type ?? expense.type,
+      instalment_number: instalment_number ?? expense.instalment_number
+    });
+    return this.initializeValues(builtExpense, value, month);
   }
 
-  private initializeValues(expense: Expense, value: number, month: EMonth): InitializedExpense {
+  reinitialize({ months, expense, existingExpense }: ReinitializeExpenseParams): Expense {
+    if(!existingExpense) {
+      return new Expense(expense);
+    }
+    months.forEach(month => {
+      existingExpense[month] += expense[month];
+      existingExpense[`${month}_paid`] = expense[`${month}_paid`];
+    });
+    existingExpense.type = expense.type;
+    existingExpense.instalment_number = expense.instalment_number;
+    return new Expense(existingExpense);
+  }
+
+  private initializeValues(expense: Expense, value: number, month?: EMonth): InitializedExpense {
     return expense.type === EExpenseType.FIXED
         ? this.handleFixedExpense(expense, value)
         : this.handleVariableExpense(expense, value, month);
@@ -40,26 +55,48 @@ export default class ExpenseBusiness {
     };
   }
 
-  private handleVariableExpense(expense: Expense, value: number, startMonth: EMonth): InitializedExpense {
+  private handleVariableExpense(expense: Expense, value: number, month: EMonth): InitializedExpense {
+    const startMonth = month ?? getCurrentMonth();
+    validateMonth(startMonth);
     const startMonthIndex = getMonthIndex(startMonth.toUpperCase() as EMonth);
     const { monthsForCurrentYear, monthsForNextYear } = this.splitMonthsByYear(expense.year, expense.instalment_number, startMonthIndex);
     const expenseForCurrentYear = this.updateMonthsOfExpense(expense, monthsForCurrentYear, value, expense.paid);
+
     const result: InitializedExpense = {
       nextYear: expense.year + 1,
       requiresNewBill: monthsForNextYear.length > 0,
+      monthsForNextYear,
+      monthsForCurrentYear,
       expenseForCurrentYear,
       expenseForNextYear: undefined,
     };
 
     if (result.requiresNewBill) {
-      result.expenseForNextYear = this.updateMonthsOfExpense(
-          {...expense, year: result.nextYear},
-          monthsForNextYear,
-          value,
-          expense.paid,
-      );
+      result.expenseForNextYear = this.handleExpenseForNextYear({
+        ...expense,
+        year: result.nextYear,
+        value,
+        months: monthsForNextYear,
+      })
     }
     return result;
+  }
+
+  private handleExpenseForNextYear({ paid, year, type, name, value, months, supplier, description }: HandleExpenseForNextYearParams) {
+    const builtExpense = new Expense({
+      paid,
+      year,
+      type,
+      name,
+      supplier,
+      description,
+      instalment_number: months.length,
+    });
+    months.forEach(month => {
+      builtExpense[month] = value;
+      builtExpense[`${month}_paid`] = paid;
+    });
+    return builtExpense;
   }
 
   private splitMonthsByYear(
@@ -90,12 +127,8 @@ export default class ExpenseBusiness {
       paid: boolean,
   ): Expense {
     const updatedExpense = { ...expense };
-    MONTHS.forEach((month) => {
-      updatedExpense[month] = 0;
-      updatedExpense[`${month}_paid`] = false;
-    });
     months.forEach((month) => {
-      updatedExpense[month] = value;
+      updatedExpense[month] += value;
       updatedExpense[`${month}_paid`] = paid;
     });
     MONTHS.forEach((month) => {
@@ -125,7 +158,6 @@ export default class ExpenseBusiness {
     expense.paid = this.hasBeenFullyPaid(expense);
     return expense;
   }
-
 
   private calculateTotalAndPaid(expense: Expense) {
     const result = {

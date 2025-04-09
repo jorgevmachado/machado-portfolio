@@ -378,7 +378,7 @@ describe('BillService', () => {
     });
   });
 
-  describe('createExpense', () => {
+  describe('addExpense', () => {
     const supplier = expense.supplier;
     const expenseParams = {
       type: EExpenseType.FIXED,
@@ -446,7 +446,7 @@ describe('BillService', () => {
         .spyOn(expenseService, 'saveExpense')
         .mockResolvedValueOnce(mockSaveExpense);
 
-      expect(await service.createExpense(bill.id, expenseParams)).toEqual(
+      expect(await service.addExpense(bill.id, expenseParams)).toEqual(
         mockSaveExpense,
       );
     });
@@ -553,7 +553,7 @@ describe('BillService', () => {
         .mockResolvedValueOnce(mockSaveExpenseForNextYear);
 
       expect(
-        await service.createExpense(bill.id, expenseVariableParams),
+        await service.addExpense(bill.id, expenseVariableParams),
       ).toEqual(mockSaveExpenseForCurrentYear);
     });
 
@@ -657,7 +657,7 @@ describe('BillService', () => {
         .mockResolvedValueOnce(mockSaveExpenseForNextYear);
 
       expect(
-        await service.createExpense(bill.id, expenseVariableParams),
+        await service.addExpense(bill.id, expenseVariableParams),
       ).toEqual(mockSaveExpenseForCurrentYear);
     });
 
@@ -712,7 +712,7 @@ describe('BillService', () => {
       } as any);
 
       await expect(
-        service.createExpense(bill.id, expenseVariableParams),
+        service.addExpense(bill.id, expenseVariableParams),
       ).rejects.toThrowError(ConflictException);
     });
   });

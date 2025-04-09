@@ -65,8 +65,8 @@ export class BillController {
   }
 
   @Post(':param/expense')
-  createExpense(@Param('param') param: string, @Body() createExpenseDto: CreateExpenseDto) {
-    return this.service.createExpense(param, createExpenseDto);
+  addExpense(@Param('param') param: string, @Body() createExpenseDto: CreateExpenseDto) {
+    return this.service.addExpense(param, createExpenseDto);
   }
 
   @Put(':param/expense/:expenseId')

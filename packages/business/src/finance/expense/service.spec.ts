@@ -18,7 +18,7 @@ describe('ExpenseService', () => {
   let mockNest: jest.Mocked<Nest>;
   let service: ExpenseService;
 
-  const mockEntity = INGRID_RESIDENTIAL_LIST_FIXTURE[0];
+  const mockEntity = { ...INGRID_RESIDENTIAL_LIST_FIXTURE[0] };
   const mockPaginateParams = { page: 1, limit: 10 };
   const mockEntityList = [mockEntity, mockEntity];
   const mockEntityPaginate = {
