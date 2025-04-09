@@ -14,6 +14,7 @@ interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen?: boolean;
   context?: TContext;
   children: React.ReactNode;
+  subtitle?: string;
   disabled?: boolean;
   iconFormat?: 'small' | 'big';
   isBorderless?: boolean;
@@ -25,6 +26,7 @@ export default function Accordion({
   isOpen,
   context = 'neutral',
   children,
+  subtitle,
   disabled,
   className,
   iconFormat = 'small',
@@ -75,9 +77,16 @@ export default function Accordion({
         {childrenTitle ? (
           <div className="accordion__button--title">{childrenTitle}</div>
         ) : (
-          <Text variant="regular" weight="bold">
-            {title}
-          </Text>
+            <div className="accordion__button--text">
+              <Text variant="regular" weight="bold">
+                {title}
+              </Text>
+              {subtitle && (
+                <Text variant="regular">
+                  {subtitle}
+                </Text>
+              )}
+            </div>
         )}
 
         <Icon

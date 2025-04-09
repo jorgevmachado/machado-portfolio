@@ -196,7 +196,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
         />
       </div>
       {isModalVisible && (
-        <CRUDModal title={`${selectedExpense ? 'Edit' : 'Create'} Expense`}>
+        <CRUDModal title={`${selectedExpense ? 'Edit' : 'Create'} Expense`} onClose={handleCloseModal} width="500px">
           {loading ? (
             <Spinner context="neutral" />
           ) : (

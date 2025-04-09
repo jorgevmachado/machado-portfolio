@@ -1,5 +1,5 @@
-import BillBusiness from '@repo/business/finance/bill/billBusiness';
-import ExpenseBusiness from '@repo/business/finance/expense/expenseBusiness';
+import BillBusiness from '@repo/business/finance/bill/business';
+import ExpenseBusiness from '@repo/business/finance/expense/business';
 
 export const billBusiness = new BillBusiness();
 

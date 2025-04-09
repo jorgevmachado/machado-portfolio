@@ -1,5 +1,7 @@
 import React from 'react';
 
+import joinClass from '@repo/ds/utils/join-class/joinClass';
+
 import Button from '@repo/ds/components/button/Button';
 
 import './CRUDModal.scss';
@@ -14,16 +16,50 @@ type CRUDModalPropsActions = {
   success: CRUDModalPropsActionsButton;
 };
 
-type CRUDModalProps = {
+type CRUDModalProps = React.HTMLAttributes<HTMLDivElement> & {
   title: string;
+  width?: string;
+  maxWidth?: string;
+  maxHeight?: string;
+  onClose?: () => void;
   actions?: CRUDModalPropsActions;
   children: React.ReactNode;
 };
 
-const CRUDModal: React.FC<CRUDModalProps> = ({ title, actions, children }) => {
+const CRUDModal: React.FC<CRUDModalProps> = ({
+  title,
+  width,
+  onClose,
+  actions,
+  children,
+  maxWidth = '400px',
+  maxHeight = '80vh',
+  className,
+  ...props
+}) => {
+  const style = {
+    width: width ?? undefined,
+    maxWidth: width ?? maxWidth,
+    maxHeight,
+  }
   return (
-    <div className="crud-modal">
-      <div className="crud-modal__content">
+    <div
+      className={joinClass(['crud-modal', className && className])}
+      {...props}
+    >
+      <div
+        className="crud-modal__content"
+        style={style}
+      >
+        {onClose && (
+          <button
+            aria-label="Close"
+            className="crud-modal__content--close"
+            onClick={onClose}
+          >
+            &times;
+          </button>
+        )}
         <h2>{title}</h2>
         {children}
         {actions && (
