@@ -8,6 +8,7 @@ import { EExpenseType } from '@repo/business/finance/enum';
 
 import Bill from '@repo/business/finance/bill';
 import Expense from '@repo/business/finance/expense/expense';
+import useModal from '@repo/ds/components/modal/useModal';
 
 import type { TColors } from '@repo/ds/utils/colors/interface';
 import { ETypeTableHeaderItem } from '@repo/ds/components/table/enum';
@@ -17,8 +18,6 @@ import Table from '@repo/ds/components/table/Table';
 import Button from '@repo/ds/components/button/Button';
 import Spinner from '@repo/ds/elements/spinner/Spinner';
 
-import CRUDModal from '../../../../layout/components/CRUDModal';
-
 import { expenseBusiness, expenseService } from '../../../../shared';
 
 import useBill from '../../useBill';
@@ -27,7 +26,6 @@ import Form from './Form';
 import { ExpenseFormFields } from './Form/inteface';
 
 import './Expenses.scss';
-
 
 type AllCalculatedExpenses = {
   total: number;
@@ -43,14 +41,11 @@ type ExpensesProps = {
 
 const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
   const { handleReload, suppliers } = useBill();
+  const { openModal, modal, closeModal } = useModal();
   const [loading, setLoading] = useState<boolean>(false);
   const [calculatedExpenses, setCalculatedExpenses] = useState<Array<Expense>>(
     [],
   );
-  const [selectedExpense, setSelectedExpense] = useState<Expense | undefined>(
-    undefined,
-  );
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [allCalculatedExpenses, setAllCalculatedExpenses] =
     useState<AllCalculatedExpenses>({
       total: 0,
@@ -84,18 +79,28 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
   };
 
   const calculateAllExpenses = (expenses: Array<Expense>) => {
-    const calculatedAllExpenses = expenseBusiness.calculateAllExpenses(expenses);
+    const calculatedAllExpenses =
+      expenseBusiness.calculateAllExpenses(expenses);
     setAllCalculatedExpenses(calculatedAllExpenses);
-  }
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-    setSelectedExpense(undefined);
   };
 
-  const handleOpenModal = (item: Expense) => {
-    setSelectedExpense(item);
-    setIsModalVisible(true);
+  const handleOpenFormModal = (expense?: Expense) => {
+    openModal({
+      title: `${expense ? 'Edit' : 'Create'} Expense`,
+      body: loading ? (
+        <Spinner context="neutral" />
+      ) : (
+        <Form
+          expense={expense}
+          suppliers={suppliers}
+          handleSaveItem={handleSaveItem}
+          handleCloseModal={closeModal}
+        />
+      ),
+      closeOnEsc: true,
+      closeOnOutsideClick: true,
+      removeBackgroundScroll: true,
+    });
     setLoading(false);
   };
 
@@ -105,9 +110,9 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
   }, [bill.expenses]);
 
   useEffect(() => {
-    if(allCalculated) {
+    if (allCalculated) {
       const { total, totalPaid, totalPending, allPaid } = allCalculated;
-      if(total === 0 && totalPaid === 0 && totalPending === 0 && !allPaid) {
+      if (total === 0 && totalPaid === 0 && totalPending === 0 && !allPaid) {
         calculateAllExpenses(calculatedExpenses);
         return;
       }
@@ -183,7 +188,7 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
           </Text>
         </div>
         <div className="expenses__summary-item">
-          <Button onClick={() => setIsModalVisible(true)} context="success">
+          <Button onClick={() => handleOpenFormModal()} context="success">
             Add Expense
           </Button>
         </div>
@@ -192,23 +197,10 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
         <Table
           headers={generateHeaders()}
           items={calculatedExpenses}
-          onRowClick={(item) => handleOpenModal(item as Expense)}
+          onRowClick={(item) => handleOpenFormModal(item as Expense)}
         />
       </div>
-      {isModalVisible && (
-        <CRUDModal title={`${selectedExpense ? 'Edit' : 'Create'} Expense`} onClose={handleCloseModal} width="500px">
-          {loading ? (
-            <Spinner context="neutral" />
-          ) : (
-            <Form
-              expense={selectedExpense}
-              suppliers={suppliers}
-              handleSaveItem={handleSaveItem}
-              handleCloseModal={handleCloseModal}
-            />
-          )}
-        </CRUDModal>
-      )}
+      {modal}
     </div>
   );
 };

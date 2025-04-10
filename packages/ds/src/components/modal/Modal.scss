@@ -12,28 +12,9 @@
 }
 
 .modal {
-  top: 50%;
-  left: 50%;
-  width: fit-content;
-  margin: 0;
-  display: flex;
-  padding: var(--size-huge) var(--size-regular);
-  z-index: 32;
-  position: fixed;
-  overflow: auto;
-  transform: translate(-50%, -50%);
-  min-width: 576px;
-  min-height: 176px;
-  border-radius: var(--border-radius-large);
-  flex-direction: column;
-  background-color: var(--color-white);
 
   &__close {
-    top: var(--size-medium);
-    right: var(--size-medium);
-    position: absolute;
     user-select: none;
-
     &:hover {
       cursor: pointer;
     }
@@ -49,8 +30,34 @@
     position: fixed;
   }
 
+  &__content {
+    top: 50%;
+    left: 50%;
+    width: fit-content;
+    margin: 0;
+    display: flex;
+    padding: var(--dimensions-relative-20);
+    z-index: 32;
+    position: fixed;
+    overflow: auto;
+    transform: translate(-50%, -50%);
+    min-width: 576px;
+    min-height: 176px;
+    border-radius: var(--border-radius-large);
+    flex-direction: column;
+    background-color: var(--color-white);
+  }
+
   &__fade-in {
     animation: fadeIn 0.3s;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--size-regular);
+    padding-bottom: var(--size-xx-small);
+    justify-content: space-between;
   }
 
   &__spacing {

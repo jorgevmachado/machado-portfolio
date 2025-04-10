@@ -5,14 +5,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { OColors, OContext } from '@repo/ds/utils/colors/options';
 
-import Modal, { ModalProps } from '@repo/ds/components/modal/Modal';
+import Modal from '@repo/ds/components/modal/Modal';
+import { ModalProps } from '@repo/ds/components/modal/types';
 import Button from '@repo/ds/components/button/Button';
 
 const meta = {
   args: {
     title: 'title modal',
     isOpen: false,
-    spacing: 'md',
     context: 'primary',
     onClose: undefined,
     children: 'body modal',
@@ -37,13 +37,12 @@ const meta = {
       },
       control: { type: 'boolean' },
     },
-    spacing: {
+    width: {
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'md' },
+        defaultValue: { summary: '500px' },
       },
-      options: ['md', 'lg'],
-      control: { type: 'select' },
+      control: { type: 'text' },
     },
     context: {
       table: {
@@ -52,6 +51,13 @@ const meta = {
       },
       options: OContext,
       control: { type: 'select' },
+    },
+    maxHeight: {
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '80vh' },
+      },
+      control: { type: 'text' },
     },
     closeOnEsc: {
       table: {
@@ -124,12 +130,26 @@ export const WithScroll: Story = {
   args: {
     children: (
       <>
-        {Array.from({ length: 32 }, (_, index) => index + 1).map((item) => (
+        {Array.from({ length: 128 }, (_, index) => index + 1).map((item) => (
           <div key={item}>CARD {item}</div>
         ))}
       </>
     ),
     removeBackgroundScroll: true,
+  },
+  render: (args) => <TemplateModal {...args} children={args.children} />,
+};
+
+export const WithCustomClose: Story = {
+  args: {
+    children: (
+      <>
+        {Array.from({ length: 128 }, (_, index) => index + 1).map((item) => (
+          <div key={item}>CARD {item}</div>
+        ))}
+      </>
+    ),
+    customCloseIcon: (<button>X</button>),
   },
   render: (args) => <TemplateModal {...args} children={args.children} />,
 };

@@ -1,34 +1,24 @@
 import React, { useEffect, useRef } from 'react';
-
-import type { TColors, TContext } from '../../utils';
 import joinClass from '../../utils/join-class';
 
 import { Icon } from '../../elements/icon';
+import { Text } from '../../elements/text';
+
+import type { ModalProps } from './types';
 
 import './Modal.scss';
 
-export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
-  title?: string;
-  isOpen: boolean;
-  spacing?: 'md' | 'lg';
-  context?: TContext;
-  onClose(): void;
-  children: React.ReactNode;
-  closeOnEsc?: boolean;
-  backDropColor?: TColors;
-  closeOnOutsideClick?: boolean;
-  removeBackgroundScroll?: boolean;
-}
-
 export default function Modal({
   title,
+  width = '500px',
   isOpen,
-  spacing = 'md',
-  context = 'primary',
+  context = 'neutral',
   onClose,
   children,
+  maxHeight = '80vh',
   closeOnEsc = false,
   backDropColor = 'neutral-100',
+  customCloseIcon,
   closeOnOutsideClick = true,
   removeBackgroundScroll = false,
   ...props
@@ -40,7 +30,9 @@ export default function Modal({
       document.body.style.overflow = 'hidden';
     }
     return () => {
-      if (removeBackgroundScroll) document.body.style.overflow = 'auto';
+      if (removeBackgroundScroll) {
+        document.body.style.overflow = 'auto';
+      }
     };
   }, [isOpen, removeBackgroundScroll]);
 
@@ -56,9 +48,8 @@ export default function Modal({
     `ds-bg-${backDropColor}`,
   ]);
   const modalClasses = joinClass([
-    'modal',
+    'modal__content',
     'modal__fade-in',
-    `modal__spacing--${spacing}`,
     `modal__context--${context}`,
   ]);
 
@@ -71,20 +62,40 @@ export default function Modal({
       />
       <div
         {...props}
+        style={{ width, maxHeight }}
         className={modalClasses}
         role="dialog"
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
         ref={modalRef}
       >
-        <Icon
-          icon="close"
-          size={35}
-          onClick={onClose}
-          aria-label="Fechar modal"
-          className="modal__close"
-        />
-        {title && <h2 id="modal-title">{title}</h2>}
+        <div className="modal__header">
+          {title && (
+            <Text
+              id="modal-title"
+              tag="h2"
+              variant="xlarge"
+              weight="bold"
+              className="modal__title"
+            >
+              {title}
+            </Text>
+          )}
+          {onClose &&
+            (customCloseIcon ? (
+              React.cloneElement(customCloseIcon, {
+                onClick: onClose,
+              } as Partial<typeof customCloseIcon.props>)
+            ) : (
+              <Icon
+                icon="close"
+                size={35}
+                onClick={onClose}
+                aria-label="Fechar modal"
+                className="modal__close"
+              />
+            ))}
+        </div>
         <div id="modal-description">{children}</div>
       </div>
     </>
