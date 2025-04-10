@@ -1,8 +1,3 @@
-export default function joinClass(
-  args: Array<string | null | undefined | boolean>,
-) {
-  return args
-    .filter((arg) => !!arg)
-    .filter(Boolean)
-    .join(' ');
+export default function joinClass(classes: (string | undefined | false)[]): string {
+  return classes.filter(Boolean).join(' ');
 }

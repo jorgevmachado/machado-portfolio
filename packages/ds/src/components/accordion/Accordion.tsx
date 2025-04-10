@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 
 import type { TContext } from '../../utils';
 
@@ -8,23 +8,26 @@ import useGenerateComponentId from '../../hooks/use-generate-component-id';
 import { Icon, Text } from '../../elements';
 
 import './Accordion.scss';
+import useAccordionState from './useAccordionState';
 
-interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
+type AccordionProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onToggle'> & {
   title: string;
   isOpen?: boolean;
   context?: TContext;
-  children: React.ReactNode;
+  onToggle?: (isOpen: boolean) => void;
   subtitle?: string;
   disabled?: boolean;
+  children: React.ReactNode;
   iconFormat?: 'small' | 'big';
   isBorderless?: boolean;
   childrenTitle?: React.ReactNode;
-}
+};
 
-export default function Accordion({
+export default function Accordion ({
   title,
   isOpen,
   context = 'neutral',
+  onToggle,
   children,
   subtitle,
   disabled,
@@ -33,10 +36,8 @@ export default function Accordion({
   isBorderless,
   childrenTitle,
   ...props
-}: AccordionProps) {
-  const [isOpenModel, setIsOpenModel] = useState(
-    isOpen !== undefined ? isOpen : false,
-  );
+}: AccordionProps)  {
+  const { isOpenModel, toggleOpen } = useAccordionState(isOpen, onToggle);
 
   const componentId = useGenerateComponentId(title);
 
@@ -49,44 +50,38 @@ export default function Accordion({
     className && className,
   ]);
 
-  const toggleOpen = React.useCallback(
-    () => setIsOpenModel((open) => !open),
-    [],
-  );
-
-  useEffect(() => {
-    if (isOpen !== undefined) {
-      setIsOpenModel(isOpen);
+  const handleToggle = useCallback(() => {
+    if (!disabled) {
+      toggleOpen();
     }
-  }, [isOpen]);
+  }, [disabled, toggleOpen]);
 
   return (
-    <div {...props} tabIndex={disabled ? -1 : 0} className={classNameList}>
+    <div
+      {...props}
+      role="presentation"
+      tabIndex={disabled ? -1 : 0}
+      className={classNameList}
+    >
       <button
         id={`${componentId}-accordion-button`}
-        role="button"
         type="button"
-        onClick={toggleOpen}
-        tabIndex={-1}
+        onClick={handleToggle}
         disabled={disabled}
         className="accordion__button"
         aria-disabled={disabled}
         aria-expanded={isOpenModel}
-        aria-controls={`${componentId}-accordion-button-content`}
+        aria-controls={`${componentId}-accordion-content`}
       >
         {childrenTitle ? (
           <div className="accordion__button--title">{childrenTitle}</div>
         ) : (
-            <div className="accordion__button--text">
-              <Text variant="regular" weight="bold">
-                {title}
-              </Text>
-              {subtitle && (
-                <Text variant="regular">
-                  {subtitle}
-                </Text>
-              )}
-            </div>
+          <div className="accordion__button--text">
+            <Text variant="regular" weight="bold">
+              {title}
+            </Text>
+            {subtitle && <Text variant="regular">{subtitle}</Text>}
+          </div>
         )}
 
         <Icon
@@ -106,4 +101,4 @@ export default function Accordion({
       </div>
     </div>
   );
-}
+};
