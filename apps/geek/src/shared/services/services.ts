@@ -2,9 +2,9 @@ import process from 'process';
 
 import { Nest } from '@repo/business/api/nest/nest';
 
-import { AuthService } from '@repo/business/auth/authService';
+import { AuthService } from '@repo/business/auth/service';
 
-import { PokemonService } from '@repo/business/pokemon/pokemonService';
+import { PokemonService } from '@repo/business/pokemon/service';
 
 import { getAccessToken } from '../cookies';
 
