@@ -1,8 +1,5 @@
 import { PaginateParameters } from './interface';
-import {
-  getSkipIntoPagination,
-  getTotalNumberOfPagesIntoPagination,
-} from './config';
+import { getTotalNumberOfPagesIntoPagination } from './config';
 
 export class Paginate<T> implements PaginateParameters<T> {
   skip: number = 0;
@@ -19,19 +16,16 @@ export class Paginate<T> implements PaginateParameters<T> {
     limit = limit > 100 ? 100 : limit;
     this.total = total;
     this.per_page = limit === 0 ? this.total : limit;
+
     this.pages = getTotalNumberOfPagesIntoPagination(
       this.total,
       limit,
       this.per_page,
     );
-    this.skip = getSkipIntoPagination(
-      this.current_page,
-      this.per_page,
-      this.pages,
-      this.total,
-    );
-    this.next = this.current_page === this.pages ? 0 : this.current_page + 1;
-    this.prev = this.current_page === 1 ? 0 : this.current_page - 1;
+
+    this.skip = (this.current_page - 1) * limit;
+    this.next = this.current_page < this.pages ? this.current_page + 1 : 0;
+    this.prev = this.current_page > 1 ? this.current_page - 1 : 0;
     this.results = results;
   }
 }

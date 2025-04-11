@@ -82,6 +82,7 @@ export class Queries<T extends BasicEntity> {
     withDeleted = false,
     withRelations = true,
   }: ListParams): Promise<Array<T> | PaginateParameters<T>> {
+    const { page, limit } = parameters;
     const query = new Query<T>({
       alias: this.alias,
       filters,
@@ -93,13 +94,16 @@ export class Queries<T extends BasicEntity> {
       withRelations,
     }).initialize();
 
-    if (!parameters?.limit || !parameters?.page) {
+    if (!limit || !page) {
       return await query.getMany();
     }
+    const currentPage = page <= 0 ? 1 : page;
+    const [results, total] = await query
+        .skip((currentPage - 1) * limit)
+        .take(limit)
+        .getManyAndCount();
 
-    const [results, total] = await query.getManyAndCount();
-
-    return new Paginate(parameters.page, parameters.limit, total, results);
+    return new Paginate(Number(page), Number(limit), Number(total), results);
   }
 
   async findOneByOrder<R>({

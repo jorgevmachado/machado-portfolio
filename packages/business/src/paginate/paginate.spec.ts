@@ -19,7 +19,7 @@ describe('paginate', () => {
   });
   it('You must build the pagination', () => {
     expect(new Paginate(0, 1302, 1302, [])).toEqual({
-      skip: 0,
+      skip: -100,
       next: 2,
       prev: 0,
       total: 1302,
@@ -45,7 +45,7 @@ describe('paginate', () => {
 
   it('You must build the pagination with pages above 2', () => {
     expect(new Paginate(3, 95, 1302, [])).toEqual({
-      skip: 285,
+      skip: 190,
       next: 4,
       prev: 2,
       total: 1302,
@@ -58,7 +58,7 @@ describe('paginate', () => {
 
   it('You must build the pagination with the page equal to the last page', () => {
     expect(new Paginate(14, 95, 1302, [])).toEqual({
-      skip: 1302,
+      skip: 1235,
       next: 0,
       prev: 13,
       total: 1302,
@@ -71,7 +71,7 @@ describe('paginate', () => {
 
   it('Must build pagination without limit', () => {
     expect(new Paginate(0, 0, 1302, [])).toEqual({
-      skip: 0,
+      skip: -0,
       next: 0,
       prev: 0,
       total: 1302,

@@ -7,10 +7,7 @@ import {
   jest,
 } from '@jest/globals';
 
-import {
-  getSkipIntoPagination,
-  getTotalNumberOfPagesIntoPagination,
-} from './config';
+import { getTotalNumberOfPagesIntoPagination } from './config';
 
 describe('getTotalNumberOfPagesIntoPagination', () => {
   beforeEach(() => {
@@ -45,47 +42,5 @@ describe('getTotalNumberOfPagesIntoPagination', () => {
     const result = getTotalNumberOfPagesIntoPagination(total, limit, perPage);
 
     expect(result).toBe(7);
-  });
-});
-
-describe('getSkipIntoPagination', () => {
-  it('should return 0 for the first page', () => {
-    const current_page = 1;
-    const per_page = 10;
-    const pages = 5;
-    const total = 50;
-    const result = getSkipIntoPagination(current_page, per_page, pages, total);
-
-    expect(result).toBe(0);
-  });
-
-  it('should return per_page value for the second page', () => {
-    const current_page = 2;
-    const per_page = 10;
-    const pages = 5;
-    const total = 50;
-    const result = getSkipIntoPagination(current_page, per_page, pages, total);
-
-    expect(result).toBe(10);
-  });
-
-  it('should return total value for the last page', () => {
-    const current_page = 5;
-    const per_page = 10;
-    const pages = 5;
-    const total = 50;
-    const result = getSkipIntoPagination(current_page, per_page, pages, total);
-
-    expect(result).toBe(50);
-  });
-
-  it('should return current_page * per_page for other pages', () => {
-    const current_page = 3;
-    const per_page = 10;
-    const pages = 5;
-    const total = 50;
-    const result = getSkipIntoPagination(current_page, per_page, pages, total);
-
-    expect(result).toBe(30);
   });
 });

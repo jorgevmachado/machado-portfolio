@@ -22,13 +22,12 @@ import { billService } from '../../../shared';
 
 import { SubTab } from '../components';
 
-import { CRUDHeader, DependencyFallback } from '../../../layout';
-
-import CRUDModal from '../../../layout/components/CRUDModal';
+import { DependencyFallback } from '../../../layout';
 
 import useBill from '../useBill';
 
 import './list.scss';
+import PageHeader from '@repo/ui/layout/page-header/PageHeader';
 
 type BillParams = {
     id?: string;
@@ -201,7 +200,7 @@ export default function BillPage() {
         <Spinner context="neutral" />
     ) : (
         <>
-            <CRUDHeader
+            <PageHeader
                 resourceName="Bill"
                 button={hasAllDependencies ? { onClick: () => openModal() } : undefined}
             />
@@ -225,84 +224,84 @@ export default function BillPage() {
                     }}
                 />
             )}
-            {isModalVisible && (
-                <CRUDModal title={fields?.id ? `Edit Bill` : `Create Bill`}>
-                    <form onSubmit={handleSubmit}>
-                        <div className="list__form--group">
-                            <Input
-                                min="1"
-                                max="9999"
-                                type="number"
-                                name="year"
-                                label="Year"
-                                value={
-                                    fields?.year?.toString() ??
-                                    new Date().getFullYear().toString()
-                                }
-                                context="primary"
-                                onChange={(e) => handleChange('year', e.target.value)}
-                                validate={(year) => yearValidator(year)}
-                                placeholder="Enter a year"
-                                reloadValidate={errors.year}
-                            />
-                        </div>
-                        <div className="list__form--group">
-                            <Select
-                                value={fields?.type ?? ''}
-                                label="Type"
-                                options={Object.values(EBillType).map((item) => ({
-                                    value: item,
-                                    label: item,
-                                }))}
-                                onChange={(value) => handleChange('type', value as string)}
-                                isInvalid={!errors.type?.valid}
-                                placeholder="Choose a type"
-                                invalidMessage={errors.type?.message}
-                            />
-                        </div>
-                        <div className="list__form--group">
-                            <Select
-                                value={fields?.bank?.id ?? ''}
-                                label="Bank"
-                                options={banks.map((item) => ({
-                                    value: item.id,
-                                    label: item.name,
-                                }))}
-                                onChange={(value) => handleChange('bank', value as string)}
-                                isInvalid={!errors.bank?.valid}
-                                placeholder="Choose a bank"
-                                invalidMessage={errors.bank?.message}
-                            />
-                        </div>
-                        <div className="list__form--group">
-                            <Select
-                                value={fields?.category?.id ?? ''}
-                                label="Category"
-                                options={categories.map((item) => ({
-                                    value: item.id,
-                                    label: item.name,
-                                }))}
-                                onChange={(value) => handleChange('category', value as string)}
-                                isInvalid={!errors.category?.valid}
-                                placeholder="Choose a category"
-                                invalidMessage={errors.category?.message}
-                            />
-                        </div>
-                        <div className="list__form--actions">
-                            <Button type="submit" context="success">
-                                Save
-                            </Button>
-                            <Button
-                                context="error"
-                                appearance="outline"
-                                onClick={() => setIsModalVisible(false)}
-                            >
-                                Cancel
-                            </Button>
-                        </div>
-                    </form>
-                </CRUDModal>
-            )}
+            {/*{isModalVisible && (*/}
+            {/*    <CRUDModal title={fields?.id ? `Edit Bill` : `Create Bill`}>*/}
+            {/*        <form onSubmit={handleSubmit}>*/}
+            {/*            <div className="list__form--group">*/}
+            {/*                <Input*/}
+            {/*                    min="1"*/}
+            {/*                    max="9999"*/}
+            {/*                    type="number"*/}
+            {/*                    name="year"*/}
+            {/*                    label="Year"*/}
+            {/*                    value={*/}
+            {/*                        fields?.year?.toString() ??*/}
+            {/*                        new Date().getFullYear().toString()*/}
+            {/*                    }*/}
+            {/*                    context="primary"*/}
+            {/*                    onChange={(e) => handleChange('year', e.target.value)}*/}
+            {/*                    validate={(year) => yearValidator(year)}*/}
+            {/*                    placeholder="Enter a year"*/}
+            {/*                    reloadValidate={errors.year}*/}
+            {/*                />*/}
+            {/*            </div>*/}
+            {/*            <div className="list__form--group">*/}
+            {/*                <Select*/}
+            {/*                    value={fields?.type ?? ''}*/}
+            {/*                    label="Type"*/}
+            {/*                    options={Object.values(EBillType).map((item) => ({*/}
+            {/*                        value: item,*/}
+            {/*                        label: item,*/}
+            {/*                    }))}*/}
+            {/*                    onChange={(value) => handleChange('type', value as string)}*/}
+            {/*                    isInvalid={!errors.type?.valid}*/}
+            {/*                    placeholder="Choose a type"*/}
+            {/*                    invalidMessage={errors.type?.message}*/}
+            {/*                />*/}
+            {/*            </div>*/}
+            {/*            <div className="list__form--group">*/}
+            {/*                <Select*/}
+            {/*                    value={fields?.bank?.id ?? ''}*/}
+            {/*                    label="Bank"*/}
+            {/*                    options={banks.map((item) => ({*/}
+            {/*                        value: item.id,*/}
+            {/*                        label: item.name,*/}
+            {/*                    }))}*/}
+            {/*                    onChange={(value) => handleChange('bank', value as string)}*/}
+            {/*                    isInvalid={!errors.bank?.valid}*/}
+            {/*                    placeholder="Choose a bank"*/}
+            {/*                    invalidMessage={errors.bank?.message}*/}
+            {/*                />*/}
+            {/*            </div>*/}
+            {/*            <div className="list__form--group">*/}
+            {/*                <Select*/}
+            {/*                    value={fields?.category?.id ?? ''}*/}
+            {/*                    label="Category"*/}
+            {/*                    options={categories.map((item) => ({*/}
+            {/*                        value: item.id,*/}
+            {/*                        label: item.name,*/}
+            {/*                    }))}*/}
+            {/*                    onChange={(value) => handleChange('category', value as string)}*/}
+            {/*                    isInvalid={!errors.category?.valid}*/}
+            {/*                    placeholder="Choose a category"*/}
+            {/*                    invalidMessage={errors.category?.message}*/}
+            {/*                />*/}
+            {/*            </div>*/}
+            {/*            <div className="list__form--actions">*/}
+            {/*                <Button type="submit" context="success">*/}
+            {/*                    Save*/}
+            {/*                </Button>*/}
+            {/*                <Button*/}
+            {/*                    context="error"*/}
+            {/*                    appearance="outline"*/}
+            {/*                    onClick={() => setIsModalVisible(false)}*/}
+            {/*                >*/}
+            {/*                    Cancel*/}
+            {/*                </Button>*/}
+            {/*            </div>*/}
+            {/*        </form>*/}
+            {/*    </CRUDModal>*/}
+            {/*)}*/}
             {billListCategory.length === 0 ? (
                 <DependencyFallback message="No bills were found." />
             ) : (
