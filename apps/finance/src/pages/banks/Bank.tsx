@@ -17,24 +17,24 @@ import Header from '../../layout/components/Header';
 import { useBank } from './useBank';
 
 type FormProps = {
-  bank?: Bank;
+  item?: Bank;
   handleSave: (bank?: Bank, close?: () => void) => Promise<Bank | undefined>;
   closeModal: () => void;
 };
 
-function Form({ bank, handleSave, closeModal }: FormProps) {
-  const [currentBank, setCurrentBank] = useState<Bank | undefined>(bank);
+function Form({ item, handleSave, closeModal }: FormProps) {
+  const [currentItem, setCurrentItem] = useState<Bank | undefined>(item);
   return (
     <div>
       <Input
         type="text"
         name="name"
         label="Name"
-        value={currentBank?.name || ''}
+        value={currentItem?.name || ''}
         context="primary"
         onChange={(e) => {
           const updatedName = e.target.value;
-          setCurrentBank(
+          setCurrentItem(
             (prev) =>
               ({
                 ...prev,
@@ -46,7 +46,7 @@ function Form({ bank, handleSave, closeModal }: FormProps) {
         placeholder="Enter a bank"
       />
       <div style={{ gap: '1rem', display: 'grid', marginTop: '2rem', gridTemplateColumns: '1fr 1fr' }}>
-        <Button context="success" onClick={() => handleSave(currentBank, closeModal)}>
+        <Button context="success" onClick={() => handleSave(currentItem, closeModal)}>
           Save
         </Button>
         <Button context="error" appearance="outline" onClick={() => closeModal}>Cancel</Button>
@@ -71,11 +71,10 @@ export default function BankPage() {
   const { openModal, modal, closeModal } = useModal();
 
   const handleOpenModal = (item?: Bank) => {
-    const bank = item ?? ({ name: '' } as Bank);
     openModal({
-      title: bank?.id ? `Edit ${resourceName}` : `Create ${resourceName}`,
+      title: item?.id ? `Edit ${resourceName}` : `Create ${resourceName}`,
       body: (
-        <Form bank={bank} closeModal={closeModal} handleSave={handleSave} />
+        <Form item={item} closeModal={closeModal} handleSave={handleSave} />
       ),
     });
   };

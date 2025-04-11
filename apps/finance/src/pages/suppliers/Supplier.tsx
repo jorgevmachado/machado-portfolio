@@ -25,30 +25,28 @@ import { useSupplier } from './useSupplier';
 import './Supplier.scss';
 
 type FormProps = {
-  supplier?: Supplier;
+  item?: Supplier;
   handleSave: (
     item?: Supplier,
     close?: () => void,
   ) => Promise<Supplier | undefined>;
   closeModal: () => void;
-  supplierTypes: Array<SupplierType>;
+  dependencies: Array<SupplierType>;
 };
 
-function Form({ supplier, handleSave, closeModal, supplierTypes }: FormProps) {
-  const [currentSupplier, setCurrentSupplier] = useState<Supplier | undefined>(
-    supplier,
-  );
+function Form({ item, handleSave, closeModal, dependencies }: FormProps) {
+  const [currentItem, setCurrentItem] = useState<Supplier | undefined>(item);
   return (
     <div>
       <Input
         type="text"
         name="name"
         label="Name"
-        value={currentSupplier?.name || ''}
+        value={currentItem?.name || ''}
         context="primary"
         onChange={(e) => {
           const updatedName = e.target.value;
-          setCurrentSupplier(
+          setCurrentItem(
             (prev) =>
               ({
                 ...prev,
@@ -61,18 +59,18 @@ function Form({ supplier, handleSave, closeModal, supplierTypes }: FormProps) {
       />
       <div className="supplier__container">
         <Select
-          value={currentSupplier?.type?.id ?? ''}
+          value={currentItem?.type?.id ?? ''}
           label="Category"
-          options={supplierTypes.map((item) => ({
+          options={dependencies.map((item) => ({
             value: item.id,
             label: item.name,
           }))}
           onChange={(value) => {
-            setCurrentSupplier(
+            setCurrentItem(
               (prev) =>
                 ({
                   ...prev,
-                  type: supplierTypes.find((item) => item.id === value),
+                  type: dependencies.find((item) => item.id === value),
                 }) as Supplier,
             );
           }}
@@ -89,7 +87,7 @@ function Form({ supplier, handleSave, closeModal, supplierTypes }: FormProps) {
       >
         <Button
           context="success"
-          onClick={() => handleSave(currentSupplier, closeModal)}
+          onClick={() => handleSave(currentItem, closeModal)}
         >
           Save
         </Button>
@@ -123,10 +121,10 @@ export default function SupplierPage() {
       title: item?.id ? `Edit ${resourceName}` : `Create ${resourceName}`,
       body: (
         <Form
-          supplier={item}
+          item={item}
           handleSave={handleSave}
           closeModal={closeModal}
-          supplierTypes={supplierTypes}
+          dependencies={supplierTypes}
         />
       ),
     });
