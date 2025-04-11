@@ -4,8 +4,8 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 
@@ -34,7 +34,7 @@ export class BillCategoryController {
     return this.billCategoryService.findOne({ value: param });
   }
 
-  @Patch(':param/category')
+  @Put(':param/category')
   update(
     @Param('param') param: string,
     @Body() updateBillCategoryDto: UpdateBillCategoryDto,
