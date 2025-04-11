@@ -12,8 +12,7 @@ import Pagination from '@repo/ds/components/pagination/Pagination';
 import Button from '@repo/ds/components/button/Button';
 
 import Input from '@repo/ui/components/input/Input';
-
-import Header from '../../../layout/components/Header';
+import PageHeader from '@repo/ui/layout/page-header/PageHeader';
 
 import { useBillCategory } from './useBillCategory';
 
@@ -99,7 +98,7 @@ export default function BillCategoryPage() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <Header
+      <PageHeader
         title={`Management of ${resourceName}`}
         button={{
           label: `Create new ${resourceName}`,

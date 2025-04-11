@@ -16,8 +16,8 @@ import Select from '@repo/ds/components/select/Select';
 import Button from '@repo/ds/components/button/Button';
 
 import Input from '@repo/ui/components/input/Input';
+import PageHeader from '@repo/ui/layout/page-header/PageHeader';
 
-import Header from '../../layout/components/Header';
 import DependencyFallback from '../../layout/components/DependencyFallback';
 
 import { useSupplier } from './useSupplier';
@@ -142,7 +142,7 @@ export default function SupplierPage() {
         />
       ) : (
         <>
-          <Header
+          <PageHeader
             title={`Management of ${resourceName}`}
             button={{
               label: `Create new ${resourceName}`,

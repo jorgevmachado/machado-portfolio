@@ -3,9 +3,9 @@ import React from 'react';
 import Text from '@repo/ds/elements/text/Text';
 import Button from '@repo/ds/components/button/Button';
 
-import { TContext } from '@repo/ds/utils/colors/interface';
+import type { TContext } from '@repo/ds/utils/colors/interface';
 
-import './Header.scss';
+import './PageHeader.scss';
 
 type CRUDHeaderPropsButton = {
   label?: string;
@@ -19,7 +19,7 @@ type CRUDHeaderProps = {
   resourceName?: string;
 };
 
-export default function Header({
+export default function PageHeader({
   title,
   button,
   context = 'success',
@@ -28,7 +28,7 @@ export default function Header({
   const resourceTitle = title ?? `Management of ${resourceName}`;
   const buttonLabel = button?.label ?? `Create new ${resourceName}`;
   return (
-    <div className="crud-header">
+    <div className="page-header">
       <Text tag="h1" variant="big" color="info-80">
         {resourceTitle}
       </Text>

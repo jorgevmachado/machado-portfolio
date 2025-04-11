@@ -12,8 +12,7 @@ import Table from '@repo/ds/components/table/Table';
 import Pagination from '@repo/ds/components/pagination/Pagination';
 
 import Input from '@repo/ui/components/input/Input';
-
-import Header from '../../../layout/components/Header';
+import PageHeader from '@repo/ui/layout/page-header/PageHeader';
 
 import { useSupplierType } from './useSupplierType';
 
@@ -98,7 +97,7 @@ export default function SupplierTypePage() {
   };
   return (
     <div style={{ padding: '20px' }}>
-      <Header
+      <PageHeader
         title={`Management of ${resourceName}`}
         button={{
           label: `Create new ${resourceName}`,
