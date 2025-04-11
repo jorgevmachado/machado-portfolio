@@ -12,7 +12,7 @@ import Pagination from '@repo/ds/components/pagination/Pagination';
 
 import Input from '@repo/ui/components/input/Input';
 
-import CRUDHeader from '../../layout/components/CRUDHeader';
+import Header from '../../layout/components/Header';
 
 import { useBank } from './useBank';
 
@@ -81,55 +81,53 @@ export default function BankPage() {
   };
 
   return (
-    <>
       <div style={{ padding: '20px' }}>
-        <CRUDHeader
-          title={`Management of ${resourceName}`}
-          button={{
-            label: `Create new ${resourceName}`,
-            onClick: () => handleOpenModal(),
-          }}
-        />
-        <Table
-          items={results}
-          headers={[
-            {
-              text: 'Name',
-              value: 'name',
-              sortable: true,
-            },
-            {
-              text: 'Created At',
-              value: 'created_at',
-              type: ETypeTableHeaderItem.DATE,
-              sortable: true,
-            },
-          ]}
-          actions={{
-            text: 'Actions',
-            align: 'center',
-            edit: { onClick: (item: Bank) => handleOpenModal(item) },
-            delete: { onClick: (item: Bank) => handleDelete(item.id) },
-          }}
-          loading={loading}
-          onRowClick={(item: Bank) => handleOpenModal(item)}
-          onSortedColumn={handleSort}
-          notFoundMessage={`No ${resourceName} found`}
-          currentSortedColumn={sortedColumn}
-        />
-        {modal}
-        {totalPages > 1 && (
-          <Pagination
-            fluid
-            currentPage={currentPage}
-            pageRange={totalPages}
-            totalPages={totalPages}
-            handleNewPage={handlePageChange}
-            isNumberedPagination
-            disableButtonsFirstAndLastPage
+          <Header
+              title={`Management of ${resourceName}`}
+              button={{
+                  label: `Create new ${resourceName}`,
+                  onClick: () => handleOpenModal(),
+              }}
           />
-        )}
+          <Table
+              items={results}
+              headers={[
+                  {
+                      text: 'Name',
+                      value: 'name',
+                      sortable: true,
+                  },
+                  {
+                      text: 'Created At',
+                      value: 'created_at',
+                      type: ETypeTableHeaderItem.DATE,
+                      sortable: true,
+                  },
+              ]}
+              actions={{
+                  text: 'Actions',
+                  align: 'center',
+                  edit: { onClick: (item: Bank) => handleOpenModal(item) },
+                  delete: { onClick: (item: Bank) => handleDelete(item.id) },
+              }}
+              loading={loading}
+              onRowClick={(item: Bank) => handleOpenModal(item)}
+              onSortedColumn={handleSort}
+              notFoundMessage={`No ${resourceName} found`}
+              currentSortedColumn={sortedColumn}
+          />
+          {modal}
+          {totalPages > 1 && (
+              <Pagination
+                  fluid
+                  currentPage={currentPage}
+                  pageRange={totalPages}
+                  totalPages={totalPages}
+                  handleNewPage={handlePageChange}
+                  isNumberedPagination
+                  disableButtonsFirstAndLastPage
+              />
+          )}
       </div>
-    </>
   );
 }

@@ -3,8 +3,9 @@ import React from 'react';
 import Text from '@repo/ds/elements/text/Text';
 import Button from '@repo/ds/components/button/Button';
 
-import './CRUDHeader.scss';
 import { TContext } from '@repo/ds/utils/colors/interface';
+
+import './Header.scss';
 
 type CRUDHeaderPropsButton = {
   label?: string;
@@ -18,12 +19,12 @@ type CRUDHeaderProps = {
   resourceName?: string;
 };
 
-const CRUDHeader: React.FC<CRUDHeaderProps> = ({
+export default function Header({
   title,
   button,
   context = 'success',
   resourceName = 'Resource',
-}) => {
+}: CRUDHeaderProps) {
   const resourceTitle = title ?? `Management of ${resourceName}`;
   const buttonLabel = button?.label ?? `Create new ${resourceName}`;
   return (
@@ -38,6 +39,4 @@ const CRUDHeader: React.FC<CRUDHeaderProps> = ({
       )}
     </div>
   );
-};
-
-export default CRUDHeader;
+}

@@ -8,7 +8,7 @@ import Pagination from '@repo/ds/components/pagination/Pagination';
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
 import DependencyFallback from '../DependencyFallback';
-import CRUDHeader from '../CRUDHeader';
+import Header from '../Header';
 
 import type { CRUDPageProps } from './interface';
 
@@ -149,7 +149,7 @@ export default function CRUDPage<T extends { id: string }>({
         />
       ) : (
         <>
-          <CRUDHeader
+          <Header
             title={`Management of ${resourceName}`}
             button={saveItem && {
               label: `Create new ${resourceName}`,
