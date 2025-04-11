@@ -64,11 +64,11 @@ export default function BankPage() {
     totalPages,
     currentPage,
     handleDelete,
+    resourceName,
     sortedColumn,
     handlePageChange,
   } = useBank();
   const { openModal, modal, closeModal } = useModal();
-  const resourceName = 'Bank';
 
   const handleOpenModal = (item?: Bank) => {
     const bank = item ?? ({ name: '' } as Bank);

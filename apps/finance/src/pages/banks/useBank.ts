@@ -21,6 +21,8 @@ export function useBank() {
     order: '',
   });
 
+  const resourceName = 'Bank';
+
   const isMounted = useRef(false);
 
   const handleSort = ({ sort, order }: SortedColumn) => {
@@ -39,7 +41,7 @@ export function useBank() {
       setTotalPages(response.pages);
       return response;
     } catch (error) {
-      addAlert({ type: 'error', message: 'Error fetching banks.' });
+      addAlert({ type: 'error', message: `Error fetching ${resourceName}s.` });
       throw error;
     } finally {
       setLoading(false);
@@ -50,13 +52,14 @@ export function useBank() {
     if(!item) {
       return;
     }
+    setLoading(true);
     try {
       const bank = item.id
           ?  await bankService.update(item.id, { name: item.name ?? '' })
           : await bankService.create({ name: item.name ?? '' });
       addAlert({
         type: 'success',
-        message: `Bank saved successfully!`,
+        message: `${resourceName} saved successfully!`,
       });
       await fetchItems({ page: currentPage });
       close && close();
@@ -64,7 +67,7 @@ export function useBank() {
     } catch (error) {
       addAlert({
         type: 'error',
-        message: (error as Error)?.message ?? `Error saving bank.`,
+        message: (error as Error)?.message ?? `Error saving ${resourceName}.`,
       });
     } finally {
       setLoading(false);
@@ -73,21 +76,21 @@ export function useBank() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!id) {
-      return;
-    }
-    setLoading(true);
+      if (!id) {
+        return;
+      }
+      setLoading(true);
     try {
       await bankService.remove(id);
       addAlert({
         type: 'success',
-        message: `Bank deleted successfully!`,
+        message: `${resourceName} deleted successfully!`,
       });
       await fetchItems({ page: currentPage });
     } catch (error) {
       addAlert({
         type: 'error',
-        message: (error as Error)?.message ?? `Error deleting bank.`,
+        message: (error as Error)?.message ?? `Error deleting ${resourceName}.`,
       });
     } finally {
       setLoading(false);
@@ -117,10 +120,10 @@ export function useBank() {
     handleSave,
     totalPages,
     handleSort,
-    fetchItems,
     currentPage,
     sortedColumn,
     handleDelete,
+    resourceName,
     handlePageChange,
   };
 }
