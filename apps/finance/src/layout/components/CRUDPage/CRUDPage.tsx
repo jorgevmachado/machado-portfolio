@@ -27,7 +27,6 @@ export default function CRUDPage<T extends { id: string }>({
   prepareItemForSave,
 }: CRUDPageProps<T>) {
   const { addAlert } = useAlert();
-
   const [items, setItems] = useState<Array<T>>([]);
 
   const [sortedColumn, setSortedColumn] = useState<SortedColumn>({
@@ -119,10 +118,23 @@ export default function CRUDPage<T extends { id: string }>({
     }
   };
 
-  const openModal = (item?: T) => {
+  const openModalVintage = (item?: T) => {
     setEditingItem(item ?? null);
     setIsModalVisible(true);
   };
+
+  const handleChange = (key: keyof T, value: unknown, item?: T) => {
+    const currentEditingItem = { ...editingItem, ...item } as T
+        ? {
+          ...editingItem,
+          [key]: value,
+        }
+        : {
+          [key]: value,
+        } as T
+    setEditingItem(currentEditingItem as T);
+  }
+
 
   useEffect(() => {
     fetchResources();
@@ -139,9 +151,9 @@ export default function CRUDPage<T extends { id: string }>({
         <>
           <CRUDHeader
             title={`Management of ${resourceName}`}
-            button={{
+            button={saveItem && {
               label: `Create new ${resourceName}`,
-              onClick: () => openModal(),
+              onClick: () => openModalVintage(),
             }}
           />
           <Table
@@ -153,7 +165,7 @@ export default function CRUDPage<T extends { id: string }>({
                     text: 'Actions',
                     align: 'center',
                     edit: saveItem
-                      ? { onClick: (item: T) => openModal(item) }
+                      ? { onClick: (item: T) => openModalVintage(item) }
                       : undefined,
                     delete: deleteItem
                       ? { onClick: (item: T) => handleDelete(String(item.id)) }
@@ -162,13 +174,13 @@ export default function CRUDPage<T extends { id: string }>({
                 : undefined
             }
             loading={loading}
-            onRowClick={saveItem ? (item: T) => openModal(item) : undefined}
+            onRowClick={saveItem ? (item: T) => openModalVintage(item) : undefined}
             onSortedColumn={handleSort}
             notFoundMessage={`No ${resourceName} found`}
             currentSortedColumn={sortedColumn}
           />
-          {isModalVisible && (
-            <CRUDModal
+          <CRUDModal
+              isOpen={isModalVisible}
               title={
                 editingItem?.id ? `Edit ${resourceName}` : `Create ${resourceName}`
               }
@@ -176,19 +188,13 @@ export default function CRUDPage<T extends { id: string }>({
                 error: { onClick: () => setIsModalVisible(false) },
                 success: { onClick: () => handleSave() },
               }}
-            >
-              {renderItemForm &&
+          >
+            {renderItemForm &&
                 renderItemForm({
                   item: editingItem || {},
-                  handleChange: (key, value) =>
-                    setEditingItem((prev) =>
-                      prev
-                        ? { ...prev, [key]: value }
-                        : ({ [key]: value } as T),
-                    ),
+                  handleChange,
                 })}
-            </CRUDModal>
-          )}
+          </CRUDModal>
           {totalPages > 1 && (
             <Pagination
               fluid

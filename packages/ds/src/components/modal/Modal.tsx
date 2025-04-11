@@ -16,11 +16,11 @@ export default function Modal({
   onClose,
   children,
   maxHeight = '80vh',
-  closeOnEsc = false,
+  closeOnEsc = true,
   backDropColor = 'neutral-100',
   customCloseIcon,
   closeOnOutsideClick = true,
-  removeBackgroundScroll = false,
+  removeBackgroundScroll = true,
   ...props
 }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);

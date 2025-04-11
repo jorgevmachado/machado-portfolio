@@ -17,6 +17,7 @@ type CRUDModalPropsActions = {
 };
 
 type CRUDModalProps = React.HTMLAttributes<HTMLDivElement> & {
+  isOpen?: boolean;
   title: string;
   width?: string;
   maxWidth?: string;
@@ -27,6 +28,7 @@ type CRUDModalProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const CRUDModal: React.FC<CRUDModalProps> = ({
+  isOpen,
   title,
   width,
   onClose,
@@ -41,16 +43,13 @@ const CRUDModal: React.FC<CRUDModalProps> = ({
     width: width ?? undefined,
     maxWidth: width ?? maxWidth,
     maxHeight,
-  }
-  return (
+  };
+  return isOpen ? (
     <div
       className={joinClass(['crud-modal', className && className])}
       {...props}
     >
-      <div
-        className="crud-modal__content"
-        style={style}
-      >
+      <div className="crud-modal__content" style={style}>
         {onClose && (
           <button
             aria-label="Close"
@@ -81,7 +80,7 @@ const CRUDModal: React.FC<CRUDModalProps> = ({
         )}
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default CRUDModal;
