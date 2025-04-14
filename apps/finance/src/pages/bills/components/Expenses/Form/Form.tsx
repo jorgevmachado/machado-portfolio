@@ -178,12 +178,12 @@ const defaultExpenseFields: ExpenseFormFields = {
   instalment_number: 1,
 };
 
-const Form: React.FC<FormProps> = ({
+export default function Form({
   expense,
   suppliers,
   handleSaveItem,
   handleCloseModal,
-}) => {
+}: FormProps) {
   const router = useRouter();
   const [formFields, setFormFields] =
     useState<ExpenseFormFields>(defaultExpenseFields);
@@ -308,7 +308,6 @@ const Form: React.FC<FormProps> = ({
     handleChange(name, newValue);
   };
 
-
   const showInstalmentNumber = expense ? true : formFields?.type == 'VARIABLE';
 
   return suppliers.length === 0 ? (
@@ -321,30 +320,27 @@ const Form: React.FC<FormProps> = ({
       }}
     />
   ) : (
-    <form
-      onSubmit={handleSubmit}
-      className="form"
-    >
+    <form onSubmit={handleSubmit} className="form">
       <div className="form__row">
         <div className="form__group">
           <Select
-              value={formFields?.type ?? ''}
-              label="Type"
-              options={Object.values(EExpenseType).map((item) => ({
-                value: item,
-                label: item,
-              }))}
-              onChange={(value) => handleChange('type', value as string)}
-              isInvalid={!errors.type?.valid}
-              placeholder="Choose a type"
-              invalidMessage={errors.type?.message}
+            value={formFields?.type ?? ''}
+            label="Type"
+            options={Object.values(EExpenseType).map((item) => ({
+              value: item,
+              label: item,
+            }))}
+            onChange={(value) => handleChange('type', value as string)}
+            isInvalid={!errors.type?.valid}
+            placeholder="Choose a type"
+            invalidMessage={errors.type?.message}
           />
         </div>
         <div className="form__group">
           <Switch
-              label="Paid"
-              checked={formFields.paid ?? false}
-              onChange={(event, value) => handleChange('paid', value)}
+            label="Paid"
+            checked={formFields.paid ?? false}
+            onChange={(event, value) => handleChange('paid', value)}
           />
         </div>
       </div>
@@ -352,104 +348,103 @@ const Form: React.FC<FormProps> = ({
       <div className="form__row">
         <div className="form__group">
           <Select
-              value={formFields?.supplier?.id ?? ''}
-              label="Supplier"
-              options={suppliers.map((item) => ({
-                value: item.id,
-                label: item.name,
-              }))}
-              onChange={(value) => handleChange('supplier', value as string)}
-              isInvalid={!errors.supplier?.valid}
-              placeholder="Choose a supplier"
-              invalidMessage={errors.supplier?.message}
+            value={formFields?.supplier?.id ?? ''}
+            label="Supplier"
+            options={suppliers.map((item) => ({
+              value: item.id,
+              label: item.name,
+            }))}
+            onChange={(value) => handleChange('supplier', value as string)}
+            isInvalid={!errors.supplier?.valid}
+            placeholder="Choose a supplier"
+            invalidMessage={errors.supplier?.message}
           />
         </div>
 
-        {!expense && formFields?.type == 'VARIABLE' &&(
-            <div className="form__group">
-              <Select
-                  value={formFields?.month ?? getCurrentMonth()}
-                  label="Month"
-                  options={MONTHS.map((item) => ({
-                    value: item.toUpperCase(),
-                    label: item,
-                  }))}
-                  onChange={(value) => handleChange('month', value as string)}
-                  isInvalid={!errors.type?.valid}
-                  placeholder="Choose a Month"
-                  invalidMessage={errors.type?.message}
-              />
-            </div>
+        {!expense && formFields?.type == 'VARIABLE' && (
+          <div className="form__group">
+            <Select
+              value={formFields?.month ?? getCurrentMonth()}
+              label="Month"
+              options={MONTHS.map((item) => ({
+                value: item.toUpperCase(),
+                label: item,
+              }))}
+              onChange={(value) => handleChange('month', value as string)}
+              isInvalid={!errors.type?.valid}
+              placeholder="Choose a Month"
+              invalidMessage={errors.type?.message}
+            />
+          </div>
         )}
       </div>
 
       <div className="form__row">
         {!expense && (
-            <div className="form__group">
-              <Input
-                  type="text"
-                  name="value"
-                  label="Value"
-                  value={formFields?.value?.toString() ?? ''}
-                  onInput={onInputHandler}
-                  onBlur={handleValidation}
-                  isInvalid={!errors.value?.valid}
-                  placeholder="Enter a Value"
-                  invalidMessage={errors.value?.message}
-              />
-            </div>
+          <div className="form__group">
+            <Input
+              type="text"
+              name="value"
+              label="Value"
+              value={formFields?.value?.toString() ?? ''}
+              onInput={onInputHandler}
+              onBlur={handleValidation}
+              isInvalid={!errors.value?.valid}
+              placeholder="Enter a Value"
+              invalidMessage={errors.value?.message}
+            />
+          </div>
         )}
-        { showInstalmentNumber && (
-            <div className="form__group">
-              <Select
-                  value={formFields?.instalment_number ?? ''}
-                  label="Instalment Number"
-                  options={MONTHS.map((item, index) => ({
-                    value: index + 1,
-                    label: (index + 1).toString(),
-                  }))}
-                  onChange={(value) => handleChange('instalment_number', value)}
-                  isInvalid={!errors.instalment_number?.valid}
-                  placeholder="Choose a Installment Number"
-                  invalidMessage={errors.instalment_number?.message}
-              />
-            </div>
+        {showInstalmentNumber && (
+          <div className="form__group">
+            <Select
+              value={formFields?.instalment_number ?? ''}
+              label="Instalment Number"
+              options={MONTHS.map((item, index) => ({
+                value: index + 1,
+                label: (index + 1).toString(),
+              }))}
+              onChange={(value) => handleChange('instalment_number', value)}
+              isInvalid={!errors.instalment_number?.valid}
+              placeholder="Choose a Installment Number"
+              invalidMessage={errors.instalment_number?.message}
+            />
+          </div>
         )}
-
       </div>
-
 
       {expense &&
         MONTHS.map((item) => (
-            <div key={item} className="form__row">
-              <div className="form__group">
-                <Input
-                    type="text"
-                    name={item}
-                    label={item}
-                    value={
-                        formFields[item as keyof ExpenseFormFields]?.toString() ?? ''
-                    }
-                    onInput={onInputHandler}
-                    onBlur={handleValidation}
-                    isInvalid={!errors[item as keyof ExpenseFormErrors]?.valid}
-                    placeholder={`Enter a ${item} Value`}
-                    invalidMessage={errors[item as keyof ExpenseFormErrors]?.message}
-                />
-              </div>
-              <div className="form__group">
-                <Switch
-                    label="Paid"
-                    checked={Boolean(
-                        formFields[`${item}_paid` as keyof ExpenseFormFields],
-                    )}
-                    onChange={(event, value) =>
-                        handleChange(`${item}_paid` as keyof ExpenseFormFields, value)
-                    }
-                />
-              </div>
+          <div key={item} className="form__row">
+            <div className="form__group">
+              <Input
+                type="text"
+                name={item}
+                label={item}
+                value={
+                  formFields[item as keyof ExpenseFormFields]?.toString() ?? ''
+                }
+                onInput={onInputHandler}
+                onBlur={handleValidation}
+                isInvalid={!errors[item as keyof ExpenseFormErrors]?.valid}
+                placeholder={`Enter a ${item} Value`}
+                invalidMessage={
+                  errors[item as keyof ExpenseFormErrors]?.message
+                }
+              />
             </div>
-
+            <div className="form__group">
+              <Switch
+                label="Paid"
+                checked={Boolean(
+                  formFields[`${item}_paid` as keyof ExpenseFormFields],
+                )}
+                onChange={(event, value) =>
+                  handleChange(`${item}_paid` as keyof ExpenseFormFields, value)
+                }
+              />
+            </div>
+          </div>
         ))}
 
       <div className="form__group">
@@ -474,6 +469,4 @@ const Form: React.FC<FormProps> = ({
       </div>
     </form>
   );
-};
-
-export default Form;
+}

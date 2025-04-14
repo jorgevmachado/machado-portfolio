@@ -20,7 +20,7 @@ type ListCardProps = {
   type: string;
 };
 
-const ListCard: React.FC<ListCardProps> = ({ list }) => {
+export default function ListCard ({ list }: ListCardProps)  {
   const { handleOpenModal } = useBill();
   const currentList = billBusiness.mapBillListByItem(list, 'bank');
   const renderChildrenTitle = (bill: Bill) => {
@@ -60,5 +60,3 @@ const ListCard: React.FC<ListCardProps> = ({ list }) => {
     </div>
   );
 };
-
-export default ListCard;

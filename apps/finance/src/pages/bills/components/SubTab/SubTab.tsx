@@ -14,7 +14,7 @@ type SubTabProps = {
   list: Array<Bill>;
 };
 
-const SubTab: React.FC<SubTabProps> = ({ list }) => {
+export default function SubTab({ list }: SubTabProps) {
   const currentList = billBusiness.mapBillListByItem(list, 'type');
 
   return (
@@ -23,11 +23,9 @@ const SubTab: React.FC<SubTabProps> = ({ list }) => {
       tabItems={currentList.map((item) => ({
         title: snakeCaseToNormal(item.title),
         children: (
-          <ListCard key={item.title} list={item.list} type={item.title}/>
+          <ListCard key={item.title} list={item.list} type={item.title} />
         ),
       }))}
     />
   );
-};
-
-export default SubTab;
+}

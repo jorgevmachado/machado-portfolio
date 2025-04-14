@@ -22,8 +22,8 @@ import { expenseBusiness, expenseService } from '../../../../shared';
 
 import useBill from '../../useBill';
 
+import type { ExpenseFormFields } from './Form/inteface';
 import Form from './Form';
-import { ExpenseFormFields } from './Form/inteface';
 
 import './Expenses.scss';
 
@@ -39,7 +39,7 @@ type ExpensesProps = {
   allCalculated?: AllCalculatedExpenses;
 };
 
-const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
+export default function Expenses({ bill, allCalculated }: ExpensesProps) {
   const { handleReload, suppliers } = useBill();
   const { openModal, modal, closeModal } = useModal();
   const [loading, setLoading] = useState<boolean>(false);
@@ -203,6 +203,4 @@ const Expenses: React.FC<ExpensesProps> = ({ bill, allCalculated }) => {
       {modal}
     </div>
   );
-};
-
-export default Expenses;
+}
