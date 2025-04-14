@@ -1,3 +1,4 @@
+import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { OColors, OContext } from '@repo/ds/utils/colors/options';
@@ -115,7 +116,7 @@ const meta = {
         defaultValue: { summary: 'standard' },
       },
       options: OAppearance,
-      control: { type: 'select' },
+      control: { type: 'radio' },
     },
     noIconBorder: {
       table: {
@@ -181,3 +182,45 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {},
 };
+
+export const Contexts: Story = {
+  args: {},
+  render: (args) => {
+    return (
+        <div style={{ gap: '1rem', display: 'flex'}}>
+          { OContext.map((item) => (
+              <Button key={item} {...args} context={item}>{item}</Button>
+          )) }
+        </div>
+    )
+  }
+};
+
+export const Sizes: Story = {
+  args: {},
+  render: (args) => {
+    return (
+        <div style={{ gap: '1rem', display: 'flex'}}>
+          { OSimplySize.map((item) => (
+              <Button key={item} {...args} size={item} context="primary" >{item}</Button>
+          )) }
+        </div>
+    )
+  }
+};
+
+export const Appearances: Story = {
+  args: {},
+  render: (args) => {
+    return (
+        <div style={{ gap: '1rem', display: 'flex'}}>
+          { OAppearance.map((item) => (
+              <Button key={item} {...args} context="primary" appearance={item}>{item}</Button>
+          )) }
+        </div>
+    )
+  }
+};
+
+
+
