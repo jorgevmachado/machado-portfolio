@@ -8,6 +8,7 @@ export type TIcon =
     | 'eye'
     | 'bed'
     | 'user'
+    | 'edit'
     | 'lamp'
     | 'star'
     | 'bolt'

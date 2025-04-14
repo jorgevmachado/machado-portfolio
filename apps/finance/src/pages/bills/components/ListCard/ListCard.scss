@@ -11,6 +11,11 @@
     gap: 16px;
     display: flex;
     flex-direction: column;
+    &--title {
+      gap: 1rem;
+      display: flex;
+      align-items: center;
+    }
   }
 
   @media (max-width: 768px) {

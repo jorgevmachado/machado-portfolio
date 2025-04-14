@@ -73,17 +73,11 @@ export default function Accordion ({
         aria-expanded={isOpenModel}
         aria-controls={`${componentId}-accordion-content`}
       >
-        {childrenTitle ? (
-          <div className="accordion__button--title">{childrenTitle}</div>
-        ) : (
-          <div className="accordion__button--text">
-            <Text variant="regular" weight="bold">
-              {title}
-            </Text>
-            {subtitle && <Text variant="regular">{subtitle}</Text>}
-          </div>
-        )}
 
+        <div className="accordion__button--title">
+          {childrenTitle ? childrenTitle : (<Text variant="regular">{title}</Text>)}
+          {subtitle && <Text variant="regular">{subtitle}</Text>}
+        </div>
         <Icon
           icon="arrow-down-outline"
           size={iconFormat === 'big' ? '2em' : '1.5em'}

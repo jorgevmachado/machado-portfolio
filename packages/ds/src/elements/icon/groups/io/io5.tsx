@@ -90,6 +90,7 @@ export const io5Group: TIconGroupIcons = {
   egg: <IoEgg />,
   eye: <IoEye />,
   bed: <IoBed />,
+  edit: undefined,
   user: <IoPerson />,
   lamp: <IoBulb />,
   star: <IoStarOutline />,

@@ -112,6 +112,7 @@ export const fa6Group: TIconGroupIcons = {
   eye: <FaEye />,
   bed: <FaBed />,
   user: <FaRegUser />,
+  edit: undefined,
   lamp: <FaRegLightbulb />,
   star: undefined,
   bolt: <FaBolt />,

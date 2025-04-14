@@ -92,6 +92,7 @@ export const ioGroup: TIconGroupIcons = {
   eye: <IoMdEye />,
   bed: <IoIosBed />,
   user: <IoIosPerson />,
+  edit: undefined,
   lamp: <IoIosBulb />,
   star: <IoIosStarOutline />,
   bolt: <IoIosFlash />,

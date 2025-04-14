@@ -7,25 +7,31 @@ import type { BillList } from '@repo/business/finance/bill/interface';
 import Supplier from "@repo/business/finance/supplier";
 
 export type BillContextProps = {
-  save: (bills: Array<Bill>) => void;
+  modal: React.ReactNode;
   bills: Array<Bill>;
   banks: Array<Bank>;
-  reload: boolean;
+  loading: boolean;
   suppliers: Array<Supplier>;
+  handleSave: (bill?: Bill, close?: () => void) => Promise<Bill | undefined>;
   categories: Array<BillCategory>;
   handleReload: (value: boolean) => void;
+  handleLoading: (value: boolean) => void;
+  handleOpenModal: (bill?: Bill) => void;
   billListCategory: Array<BillList>;
   hasAllDependencies: boolean;
 };
 
 export default React.createContext<BillContextProps>({
-  save: () => {},
+  modal: null,
   bills: [],
   banks: [],
-  reload: false,
+  loading: false,
   suppliers: [],
+  handleSave: async () => undefined,
   categories: [],
   handleReload: () => {},
+  handleLoading: () => {},
+  handleOpenModal: () => {},
   billListCategory: [],
   hasAllDependencies: false,
 });

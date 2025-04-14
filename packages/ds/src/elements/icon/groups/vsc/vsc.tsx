@@ -1,4 +1,4 @@
-import { VscError, VscTrash } from 'react-icons/vsc';
+import { VscEdit, VscError, VscTrash } from 'react-icons/vsc';
 
 import type { TIconGroupIcons } from '../interface';
 
@@ -12,6 +12,7 @@ export const vscGroup: TIconGroupIcons = {
   eye: undefined,
   bed: undefined,
   user: undefined,
+  edit: <VscEdit />,
   lamp: undefined,
   star: undefined,
   bolt: undefined,

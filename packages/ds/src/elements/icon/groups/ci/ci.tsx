@@ -2,6 +2,7 @@ import React from 'react';
 import {
   CiCalendar,
   CiCamera,
+  CiEdit,
   CiHeart,
   CiPhone,
   CiStar,
@@ -10,7 +11,6 @@ import {
 } from 'react-icons/ci';
 
 import type { TIconGroupIcons } from '../interface';
-import { GiTrashCan } from 'react-icons/gi';
 
 export const ciGroup: TIconGroupIcons = {
   tv: undefined,
@@ -22,6 +22,7 @@ export const ciGroup: TIconGroupIcons = {
   eye: undefined,
   bed: undefined,
   user: <CiUser />,
+  edit: <CiEdit />,
   lamp: undefined,
   star: <CiStar />,
   bolt: undefined,
@@ -37,7 +38,7 @@ export const ciGroup: TIconGroupIcons = {
   sort: undefined,
   stop: undefined,
   home: undefined,
-  trash: <GiTrashCan />,
+  trash: undefined,
   group: undefined,
   brush: undefined,
   chair: undefined,
