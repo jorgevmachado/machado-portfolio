@@ -219,6 +219,12 @@ npm run lint
 ###### monthValidator: Valida se o valor do mês passado é válido.
 ###### dateOfBirthValidator: Valide se é uma data válida e é-se maior de idade
 
+##### file: Responsável por todas as validações de arquivos.
+```bash
+    npm run test -- --findRelatedTests src/validator/file/file.spec.ts                 
+```
+###### imageTypeValidator: Valida se o tipo do arquivo é de uma imagem.
+
 ### window:
 #### Funções relacionadas ao objeto `window` (provavelmente para navegadores).
 ```bash

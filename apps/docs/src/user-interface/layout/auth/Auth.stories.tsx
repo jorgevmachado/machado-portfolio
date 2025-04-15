@@ -149,3 +149,12 @@ export const NoSocialAuth: Story = {
     ],
   },
 };
+
+export const Update: Story = {
+  args: {
+    type: 'update',
+    logo: undefined,
+    title: undefined,
+    description: undefined
+  }
+};

@@ -1,0 +1,127 @@
+.input {
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    color: #34495e;
+    font-size: 0.875rem;
+    font-weight: bold;
+    &--image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__required {
+    color: #e74c3c;
+    margin-left: 0.25rem;
+  }
+
+  &__picture {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 2rem;
+    justify-content: center;
+    &--image {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #e6e9ec;
+      transition: transform 0.3s, border-color 0.3s;
+      &:hover {
+        transform: scale(1.05);
+        border-color: #3498db;
+      }
+    }
+    &--label {
+      display: flex;
+      margin-top: 1rem;
+      align-items: center;
+      flex-direction: column;
+    }
+    &--input {
+      display: none;
+    }
+    &--button {
+      color: #ffffff;
+      cursor: pointer;
+      border: none;
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.2s;
+      font-weight: 600;
+      border-radius: 4px;
+      background-color: #2c3e50;
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        background-color: #34495e;
+      }
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  &__field {
+    width: 100%;
+    border: 1px solid #bdc3c7;
+    outline: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    border-radius: 0.25rem;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.2);
+      border-color: #2c3e50;
+    }
+
+    &--textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    &--file {
+      padding: 0.5rem;
+      cursor: pointer;
+      background-color: #ecf0f1;
+
+      &::-webkit-file-upload-button {
+        color: #fff;
+        cursor: pointer;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        border-radius: 0.25rem;
+        background-color: #2c3e50;
+      }
+
+      &::-webkit-file-upload-button:hover {
+        background-color: #34495e;
+      }
+    }
+  }
+
+  &__error {
+    color: #e74c3c;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  &--error .input__field {
+    border-color: #e74c3c;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.2);
+    }
+  }
+}

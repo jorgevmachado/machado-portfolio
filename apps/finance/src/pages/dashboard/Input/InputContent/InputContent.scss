@@ -1,0 +1,64 @@
+.input-content {
+  display: flex;
+  position: relative;
+  align-items: stretch;
+  &__wrapper {
+    display: flex;
+    position: relative;
+    flex-grow: 1;
+    align-items: center;
+  }
+  &__icon {
+    color: #34495e;
+    display: flex;
+    position: absolute;
+    font-size: 1.25rem;
+    margin-top: .2rem;
+    align-items: center;
+    justify-content: center;
+
+    &--right {
+      left: auto;
+      right: 0.75rem;
+    }
+    &--left {
+      left: 0.75rem;
+    }
+    &--password {
+      cursor: pointer;
+    }
+  }
+  &__field {
+    &--icon-left {
+      padding-left: 2.5rem;
+    }
+    &--prepend {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    &--append {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &--append,
+    &--prepend {
+      height: 2.5rem;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+  &__append {
+    .button {
+      height: 100%;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+  &__prepend {
+    .button {
+      height: 100%;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
