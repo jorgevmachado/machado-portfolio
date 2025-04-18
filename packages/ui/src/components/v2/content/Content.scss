@@ -1,10 +1,17 @@
 .content {
   padding: var(--dimensions-fixed-20);
+  transition: all 0.3s ease;
+  min-height: calc(100vh - 5rem);
+  box-sizing: border-box;
   margin-top: var(--dimensions-fixed-60);
   margin-left: var(--dimensions-fixed-250);
-  transition: margin-left 0.3s ease;
-}
+  &__sidebar--open {
+    width: calc(100% - var(--dimensions-fixed-250)); // O espaço com sidebar aberta
+    margin-left: var(--dimensions-fixed-250);
+  }
 
-.sidebar.closed + .content {
-  margin-left: var(--dimensions-fixed-80);
+  &__sidebar--closed {
+    width: calc(100% - var(--dimensions-fixed-80)); // O espaço com sidebar fechada
+    margin-left: var(--dimensions-fixed-80);
+  }
 }

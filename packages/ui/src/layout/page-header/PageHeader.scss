@@ -1,6 +1,31 @@
 .page-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-bottom: 20px;
   justify-content: space-between;
+
+  &__title {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: 1024px) {
+    &__title {
+      font-size: 1.6rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__title {
+      width: 100%;
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    &__button {
+      width: 100%;
+    }
+  }
+
 }

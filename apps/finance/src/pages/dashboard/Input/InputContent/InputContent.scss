@@ -8,6 +8,14 @@
     flex-grow: 1;
     align-items: center;
   }
+  &__counter {
+    left: auto;
+    right: 0.75rem;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+  }
   &__icon {
     color: #34495e;
     display: flex;
@@ -46,6 +54,19 @@
       padding-top: 0;
       padding-bottom: 0;
     }
+    &--addon {
+      border-right: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &--counter {
+      padding-right: var(--size-big);
+    }
+    &--disabled {
+      color: var(--color-neutral-70);
+      border-color: var(--color-neutral-50);
+      background-color: var(--color-neutral-50);
+    }
   }
   &__append {
     .button {
@@ -59,6 +80,37 @@
       height: 100%;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+    }
+  }
+  &__addon {
+    border: 1px solid var(--color-neutral-60);
+    display: flex;
+    padding: 0 0.75rem;
+    align-items: center;
+    background-color: var(--color-neutral-50);
+    border-top-right-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+  }
+  @media (max-width: 767px) {
+    align-items: center;
+    flex-direction: column;
+    &__wrapper {
+      width: 100%;
+      flex-wrap: wrap;
+    }
+    &__icon {
+      font-size: 1rem;
+      &--left,
+      &--right {
+        padding: 0.5rem;
+      }
+    }
+    &__field {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 0.9rem; // Reduzir o tamanho da fonte para telas pequenas
+      padding-left: 1rem; // Reduzir espaçamentos gerais
+      padding-right: 1rem;
     }
   }
 }

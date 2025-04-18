@@ -12,17 +12,24 @@ import './Sidebar.scss';
 
 export default function Sidebar({
   menu,
+  onToggle,
   onLinkClick,
+  isSidebarOpen = true,
 }: SidebarProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState<boolean>(isSidebarOpen);
 
   const handleOnClick = (path: string) => {
-      onLinkClick ? onLinkClick(path) : (window !== undefined ? window.location.href = path : null);
-  }
-
+    onLinkClick
+      ? onLinkClick(path)
+      : window !== undefined
+        ? (window.location.href = path)
+        : null;
+  };
 
   const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+    const newState = !isOpen;
+    setIsOpen(newState);
+    onToggle && onToggle(newState);
   };
 
   const classNameList = joinClass([
@@ -51,7 +58,11 @@ export default function Sidebar({
                 )}
               </div>
             ) : (
-              <Dropdown menu={item} isOpen={isOpen} onLinkClick={handleOnClick} />
+              <Dropdown
+                menu={item}
+                isOpen={isOpen}
+                onLinkClick={handleOnClick}
+              />
             )}
           </div>
         ))}

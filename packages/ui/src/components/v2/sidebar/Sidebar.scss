@@ -70,4 +70,9 @@ $transition-speed: 0.3s;
       background-color: var(--color-sidebar-button-hover-background);
     }
   }
+  @media (max-width: 768px) {
+    &__toggle-button {
+      display: none;
+    }
+  }
 }

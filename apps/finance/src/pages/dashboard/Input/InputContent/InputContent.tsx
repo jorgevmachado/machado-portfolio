@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import useChildrenElements from '@repo/ds/hooks/use-children-elements/useChildrenElements';
 import type { TIcon } from '@repo/ds/elements/icon/interface';
 import Icon from '@repo/ds/elements/icon/Icon';
+import Text from '@repo/ds/elements/text/Text';
 
 import './InputContent.scss';
 import joinClass from '@repo/ds/utils/join-class/joinClass';
@@ -19,6 +20,8 @@ type InputContentProps = React.InputHTMLAttributes<
 > & {
   icon?: React.ReactNode | TIcon;
   rows?: number;
+  addon?: string;
+  counter?: string;
   children?: React.ReactNode;
   iconPosition?: 'left' | 'right';
 };
@@ -29,7 +32,10 @@ export default function InputContent({
   rows,
   type,
   name,
+  addon,
+  counter,
   children,
+  disabled,
   className,
   iconPosition = 'left',
   ...props
@@ -88,6 +94,9 @@ export default function InputContent({
     hasIconLeft && 'input-content__field--icon-left',
     isPrepend && 'input-content__field--prepend',
     isAppend && 'input-content__field--append',
+    (addon && !isAppend) && 'input-content__field--addon',
+    (counter && !hasIconRight) && 'input-content__field--counter',
+    disabled && 'input-content__field--disabled'
   ]);
 
   useEffect(() => {
@@ -115,6 +124,7 @@ export default function InputContent({
           type={typeInput}
           rows={isTextArea ? rows : undefined}
           name={name}
+          disabled={disabled}
           className={inputFieldClassNameList}
           {...props}
         />
@@ -123,7 +133,17 @@ export default function InputContent({
             {iconRightElement}
           </div>
         )}
+        {(counter && !hasIconRight) && (
+                <div className="input-content__counter">
+                <Text color="neutral-60">{counter}</Text>
+                </div>
+        )}
       </div>
+      { (addon && !isAppend) && (
+          <div className="input-content__addon">
+            <Text color="neutral-60">{addon}</Text>
+          </div>
+      )}
       {isAppend && (
           <div className="input-content__append">
             {appendElement}

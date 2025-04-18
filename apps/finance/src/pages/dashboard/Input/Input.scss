@@ -1,6 +1,7 @@
 .input {
   gap: 0.5rem;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
 
   &__label {
@@ -26,6 +27,10 @@
     flex-direction: column;
     margin-bottom: 2rem;
     justify-content: center;
+    img {
+      max-width: 100%;
+      object-fit: cover;
+    }
     &--image {
       width: 140px;
       height: 140px;
@@ -72,22 +77,48 @@
   }
 
   &__field {
+    color: var(--color-neutral-100);
     width: 100%;
-    border: 1px solid #bdc3c7;
+    border: 1px solid var(--color-neutral-60);
     outline: none;
-    padding: 0.75rem;
+    padding: var(--size-x-small) 1rem;
     font-size: 1rem;
     transition: all 0.3s ease-in-out;
-    border-radius: 0.25rem;
+    border-radius: var(--border-radius-large);
+    background-color: transparent;
+
+    &::placeholder {
+      color: var(--color-neutral-90);
+    }
+
+    &:hover {
+      border-color: #e5cefd;
+    }
 
     &:focus {
       box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.2);
       border-color: #2c3e50;
     }
 
+    &:active {
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.16);
+    }
+
+    &#{&}-focused:focus {
+      border-color: #e5cefd;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    &[type="button"],
+    &[type="submit"] {
+      cursor: pointer;
+    }
+
     &--textarea {
+      height: auto;
       resize: vertical;
       min-height: 120px;
+      max-width: 100%;
     }
 
     &--file {
@@ -123,5 +154,31 @@
     &:focus {
       box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.2);
     }
+  }
+
+  @media (max-width: 767px) {
+    gap: 0.25rem;
+    flex-direction: column;
+    &__label {
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    &__field {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.8rem;
+    }
+    &__picture {
+      margin-bottom: 1rem;
+      &--image {
+        width: 100px;
+        height: 100px; // Ajustar tamanhos das imagens para telas menores
+      }
+    }
+
+    &__error {
+      font-size: 0.7rem; // Mensagens de erro menores
+      text-align: center;
+    }
+
   }
 }

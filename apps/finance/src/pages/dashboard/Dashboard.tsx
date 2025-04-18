@@ -8,10 +8,13 @@ export default function Dashboard() {
     name: '',
     bed: '',
     hotel: '',
+    counter: '',
     contact: '',
     password: '',
     prepend: '',
     append: '',
+    money: '',
+    single: '',
     prependAppend: '',
     description: '',
     file: undefined,
@@ -21,10 +24,13 @@ export default function Dashboard() {
     name: '',
     bed: '',
     hotel: '',
+    counter: '',
     contact: '',
     password: '',
     prepend: '',
     append: '',
+    money: '',
+    single: '',
     prependAppend: '',
     description: '',
   });
@@ -50,6 +56,8 @@ export default function Dashboard() {
     e.preventDefault();
     const newErrors: typeof errors = {
       name: form.name ? '' : 'Name is required',
+      single: form.name ? '' : 'Single is required',
+      money: form.money ? '' : 'Money is required',
       bed: form.bed ? '' : 'Bed is required',
       hotel: form.hotel ? '' : 'Hotel is required',
       contact: form.contact ? '' : 'Contact is required',
@@ -57,6 +65,7 @@ export default function Dashboard() {
       description: form.description ? '' : 'Description is required',
       prepend: form.prepend ? '' : 'Prepend is required',
       append: form.append ? '' : 'Append is required',
+      counter: form.counter ? '' : 'Counter is required',
       prependAppend: form.prependAppend ? '' : 'Prepend Append is required',
     };
     setErrors(newErrors);
@@ -67,7 +76,7 @@ export default function Dashboard() {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{ gap: '2rem', display: 'flex', flexDirection: 'column' }}
+      // style={{ gap: '2rem', display: 'flex', flexDirection: 'column' }}
     >
       <Input
         tip="(new name)"
@@ -80,6 +89,16 @@ export default function Dashboard() {
         helperText="Enter your Real Name"
         onChange={handleChange}
         invalidMessage="Name is required"
+      />
+      <Input
+          label="Single"
+          type="text"
+          name="single"
+          value={form.single}
+          placeholder="Enter your Single"
+          disabled
+          onChange={handleChange}
+          invalidMessage="Single is required"
       />
       <Input
         label="Bed"
@@ -172,6 +191,29 @@ export default function Dashboard() {
           Append
         </Button>
       </Input>
+      <Input
+          label="Money"
+          type="text"
+          name="money"
+          addon="0,00"
+          iconPosition="right"
+          value={form.money}
+          placeholder="Enter your Money"
+          required
+          onChange={handleChange}
+          invalidMessage={errors.money}
+      />
+      <Input
+          label="Counter"
+          type="text"
+          name="counter"
+          value={form.counter}
+          counter="+9"
+          placeholder="Enter your Counter"
+          required
+          onChange={handleChange}
+          invalidMessage={errors.counter}
+      />
       <Input
         label="Description"
         rows={5}
