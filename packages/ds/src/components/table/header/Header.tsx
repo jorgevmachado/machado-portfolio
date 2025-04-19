@@ -47,6 +47,7 @@ export default function Header({
               <div
                 className="header__cell--content"
                 style={{
+                  flexWrap: 'wrap',
                   justifyContent: headerItem.align ?? 'left',
                 }}
               >
