@@ -449,12 +449,11 @@ export default function Form({
 
       <div className="form__group">
         <Input
-          type="text"
+          type="textarea"
           name="description"
           label="Description"
           value={formFields?.description ?? ''}
           onInput={onInputHandler}
-          multiline
           placeholder="Enter a Description"
         />
       </div>

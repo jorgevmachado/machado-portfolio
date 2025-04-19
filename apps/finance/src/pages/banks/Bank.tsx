@@ -58,7 +58,7 @@ function Form({ item, handleSave, closeModal }: FormProps) {
         >
           Save
         </Button>
-        <Button context="error" appearance="outline" onClick={() => closeModal}>
+        <Button context="error" appearance="outline" onClick={closeModal}>
           Cancel
         </Button>
       </div>
