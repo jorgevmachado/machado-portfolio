@@ -83,6 +83,13 @@
     min-width: auto;
     border-radius: 0;
   }
+
+  @media (max-width: 480px) {
+    &__content {
+      min-width: auto;
+      max-width: 400px;
+    }
+  }
 }
 
 $contexts: (
