@@ -11,7 +11,6 @@ import PageLayout from '@repo/ui/layout/page-layout/PageLayout';
 import {
   authService,
   FinanceProvider,
-  financeService,
   getAccessToken,
   removeAccessToken,
 } from '../shared';
@@ -70,6 +69,7 @@ export default function Layout({ children }: DefaultProps) {
         <PageLayout
           user={user}
           menu={privateRoutes}
+          sidebarOpen
           navbarTitle="Finance"
           onLinkClick={handleLinkClick}
         >

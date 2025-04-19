@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Input from './Input';
+import Input from '@repo/ds/components/input/Input';
 import Icon from '@repo/ds/elements/icon/Icon';
 import Button from "@repo/ds/components/button/Button";
 

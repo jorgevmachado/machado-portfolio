@@ -8,6 +8,8 @@ import type {
 import RadioGroup, {
   OptionsProps,
 } from '@repo/ds/components/radio-group/RadioGroup';
+
+import type { TInputType } from '@repo/ds/components/input/interface';
 import InputComponent from '@repo/ds/components/input/Input';
 import type { TContext } from '@repo/ds/utils/colors/interface';
 
@@ -90,6 +92,18 @@ export default function Input({
     onInput && onInput(name ?? '', value);
   };
 
+  const currentType = (): TInputType => {
+    if (type === 'radio-group' || type === 'datepicker') {
+      return 'text';
+    }
+
+    if (multiline) {
+      return 'textarea';
+    }
+
+    return type as TInputType;
+  };
+
   return (
     <>
       {type === 'radio-group' && options?.length ? (
@@ -111,14 +125,12 @@ export default function Input({
           {...props}
           tip={tip}
           name={name}
-          type={type}
+          type={currentType()}
           label={label}
           value={formatter ? formatter(currentValue) : currentValue}
           onBlur={() => handleValidate()}
           onInput={onInputHandler}
-          multiline={multiline}
           isInvalid={inputValidator.invalid}
-          iconContext={context}
           invalidMessage={inputValidator?.message}
         />
       )}

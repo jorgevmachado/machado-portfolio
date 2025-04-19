@@ -1,6 +1,6 @@
 import React from 'react';
-
-import type { TContext } from '../../utils/colors';
+import { TIcon, TIconPosition } from '../../elements';
+import {TColors} from "../../utils";
 
 type InputPropsItem = Pick<
   React.HTMLProps<Element>,
@@ -9,21 +9,22 @@ type InputPropsItem = Pick<
 
 type HostProps = Omit<React.HTMLProps<HTMLDivElement>, keyof InputPropsItem>;
 
+export type TInputType = 'text' | 'file' | 'number' | 'email' | 'phone' | 'textarea' | 'password';
+
 export interface InputProps extends InputPropsItem, HostProps {
   tip?: string;
-  type?: string;
-  addon?: string;
-  value?: string;
+  type?: TInputType;
+  icon?: React.ReactNode | TIcon;
   label?: string;
-  variant?: 'regular' | 'large';
+  value?: string;
+  addon?: string;
+  counter?: string;
   disabled?: boolean;
-  multiline?: boolean;
+  iconColor?: TColors;
   isInvalid?: boolean;
   autoFocus?: boolean;
   dataCyName?: string;
   helperText?: React.ReactNode;
-  iconContext?: TContext;
-  floatingLabel?: boolean;
+  iconPosition?: TIconPosition;
   invalidMessage?: string;
-  hasFloatingSlots?: boolean;
 }

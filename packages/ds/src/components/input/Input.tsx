@@ -1,138 +1,141 @@
 import React, { useEffect, useState } from 'react';
 
-import type { TContext } from '../../utils';
+import { imageTypeValidator } from '@repo/services/validator/file/file';
 
 import joinClass from '../../utils/join-class';
 
 import useGenerateComponentId from '../../hooks/use-generate-component-id';
 
-import { Text } from '../../elements';
+import { Text, Image } from '../../elements';
 
 import Feedback from '../feedback';
 import Label from '../label';
 
-import { InputContent }  from './input-content';
+import { InputContent } from './input-content';
+
+import type { InputProps } from './interface';
 
 import './Input.scss';
-
-type InputPropsItem = Pick<
-  React.HTMLProps<Element>,
-  'onBlur' | 'onInput' | 'onFocus' | 'onChange' | 'onKeyDown' | 'onMouseDown'
->;
-
-type HostProps = Omit<React.HTMLProps<HTMLDivElement>, keyof InputPropsItem>;
-
-export interface InputProps extends InputPropsItem, HostProps {
-  tip?: string;
-  type?: string;
-  addon?: string;
-  value?: string;
-  label?: string;
-  disabled?: boolean;
-  multiline?: boolean;
-  isInvalid?: boolean;
-  autoFocus?: boolean;
-  dataCyName?: string;
-  helperText?: React.ReactNode;
-  iconContext?: TContext;
-  floatingLabel?: boolean;
-  invalidMessage?: string;
-  hasFloatingSlots?: boolean;
-}
 
 export default function Input({
   id,
   tip,
   rows,
-  name,
+  icon,
   type = 'text',
-  addon,
-  value,
+  name,
   label,
+  value,
+  addon,
+  accept,
   onBlur,
   onInput,
   onFocus,
-  onChange,
-  children,
+  counter,
   disabled = false,
+  children,
+  onChange,
+  required = false,
+  iconColor,
   onKeyDown,
-  multiline,
-  isInvalid,
+  isInvalid = false,
   autoFocus = false,
   maxLength,
-  className,
+  minLength,
+  className = '',
   dataCyName,
   helperText,
   onMouseDown,
+  iconPosition,
   placeholder = '',
-  iconContext = 'primary',
   autoComplete,
-  floatingLabel,
   invalidMessage,
-  hasFloatingSlots,
   ...props
 }: InputProps) {
   const [currentInputValue, setCurrentInputValue] = useState<string>(
     value || '',
   );
+  const [currentIsInvalid, setCurrentIsInvalid] = useState<boolean>(isInvalid);
+
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const [isInputMouseFocused, setIsInputMouseFocused] =
     useState<boolean>(false);
 
   const componentId = id ?? useGenerateComponentId('input-');
-  const labelId = `${componentId}-label`;
-
-  const hasValue = Boolean(value || currentInputValue);
-  const currentPlaceholder =
-    floatingLabel && (hasValue || isInputFocused) ? '' : placeholder;
-  const isShrink = floatingLabel && (hasValue || isInputFocused);
+  const labelId = componentId ? `${componentId}-label` : undefined;
+  const helperId = componentId ? `${componentId}-helper` : undefined;
 
   const ariaAttributes = {
-    'aria-invalid': isInvalid || undefined,
+    'aria-invalid': currentIsInvalid || undefined,
     'aria-disabled': disabled,
     'aria-labelledby': label ? labelId : undefined,
-    'aria-describedby': helperText ? `${componentId}-helper` : undefined,
+    'aria-describedby': helperText ? helperId : undefined,
     'aria-placeholder': placeholder,
   };
 
-  const createEventHandler =
-    (
-      updater?: React.Dispatch<React.SetStateAction<boolean>>,
-      callback?: (e: any) => void,
-    ) =>
-    (e: any) => {
-      if (updater) updater(true);
-      if (callback) callback(e);
+  const isFile = type === 'file';
+  const isImage = isFile ? imageTypeValidator({ accept }).valid : false;
+  const isTextArea = type === 'textarea';
+  const isText = type === 'text';
+
+  const createEventHandler = <E extends React.SyntheticEvent>(updater?: React.Dispatch<React.SetStateAction<boolean>>, callback?: (e: E) => void) => (e: E) => {
+      updater && updater(true);
+      callback && callback(e);
     };
 
-  const handleBlur = (e: React.FocusEvent) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setIsInputMouseFocused(false);
     setIsInputFocused(false);
-    onBlur?.(e);
+    if (required && !e.target.value.trim()) {
+      setCurrentIsInvalid(true);
+    }
+    onBlur && onBlur(e);
   };
 
   const handleInput = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { value: inputValue } = e.target as HTMLInputElement;
-    setCurrentInputValue(String(inputValue));
-    onInput?.(e);
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+    setCurrentInputValue(target.value);
+    onInput && onInput(e);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+          const newValue = reader.result as string;
+          setCurrentInputValue(newValue);
+        }
+      };
+      reader.readAsDataURL(file);
+      onChange && onChange(e);
+    }
   };
 
   useEffect(() => {
     setCurrentInputValue(value || '');
   }, [value]);
 
+
+  const classNameInputList = joinClass([
+    'input__field',
+    isTextArea && 'input__field--textarea',
+    isFile && !isImage && 'input__field--file',
+    isText && 'input__field--text',
+    disabled && 'input__field--disabled',
+    isInputFocused && 'input__field--focused',
+    isInputMouseFocused && 'input__field--mouse-focused',
+  ]);
+
   return (
     <div
       {...props}
       role="group"
-      tabIndex={disabled ? -1 : 0}
-      className={joinClass([
-        'input',
-        iconContext && `input__icon--context-${iconContext}`,
-        className,
-      ])}
+      tabIndex={-1}
+      className={`input ${className} ${currentIsInvalid ? 'input--error' : ''}`}
     >
       {label && (
         <Label
@@ -140,52 +143,73 @@ export default function Input({
           tip={tip}
           color={isInvalid ? 'error-80' : 'neutral-90'}
           label={label}
-          className={joinClass([
-            'input__label',
-            floatingLabel && 'input__label--floating',
-            isShrink && 'input__label--shrink',
-          ])}
+          className={`input__label ${isImage ? 'input__label--image' : ''}`}
           componentId={componentId}
         />
       )}
 
-      <div className="input__wrapper">
-        <InputContent
-          id={componentId}
-          type={type}
-          rows={rows}
-          name={name}
-          value={currentInputValue}
-          addon={addon}
-          onBlur={handleBlur}
-          onInput={handleInput}
-          onFocus={createEventHandler(setIsInputFocused, onFocus)}
-          onChange={createEventHandler(setIsInputMouseFocused, onChange)}
-          disabled={disabled}
-          onKeyDown={createEventHandler(setIsInputMouseFocused, onKeyDown)}
-          multiline={multiline}
-          isInvalid={isInvalid}
-          maxLength={maxLength}
-          autoFocus={autoFocus}
-          dataCyName={dataCyName}
-          placeholder={currentPlaceholder}
-          onMouseDown={createEventHandler(setIsInputMouseFocused, onMouseDown)}
-          autoComplete={autoComplete}
-          isInputMouseFocused={isInputMouseFocused}
-          hasFloatingSlots={hasFloatingSlots}
-          {...ariaAttributes}
-        >
-          {children}
-        </InputContent>
-      </div>
-      {isInvalid && invalidMessage && (
+      {isImage ? (
+          <div className="input__picture">
+            <Image
+                src={currentInputValue === '' ? undefined : currentInputValue}
+                alt="picture"
+                className="input__picture--image"
+            />
+            <label htmlFor={`${name}-picture`} className="input__picture--label">
+              <span className="input__picture--button">Choose Photo</span>
+              <input
+                  id={`${name}-picture`}
+                  type="file"
+                  name={name}
+                  onBlur={handleBlur}
+                  accept={accept}
+                  className="input__picture--input"
+                  onChange={createEventHandler(
+                      setIsInputMouseFocused,
+                      handleFileChange,
+                  )}
+              />
+            </label>
+          </div>
+      ) : (
+          <InputContent
+              id={componentId}
+              icon={icon}
+              type={type}
+              rows={rows}
+              name={name}
+              value={currentInputValue}
+              addon={addon}
+              onBlur={handleBlur}
+              counter={counter}
+              onInput={handleInput}
+              onFocus={createEventHandler(setIsInputFocused, onFocus)}
+              onChange={createEventHandler(setIsInputMouseFocused, onChange)}
+              disabled={disabled}
+              iconColor={iconColor}
+              onKeyDown={createEventHandler(setIsInputMouseFocused, onKeyDown)}
+              className={classNameInputList}
+              maxLength={maxLength}
+              minLength={minLength}
+              autoFocus={autoFocus}
+              dataCyName={dataCyName}
+              placeholder={placeholder}
+              onMouseDown={createEventHandler(setIsInputMouseFocused, onMouseDown)}
+              autoComplete={autoComplete}
+              iconPosition={iconPosition}
+              {...ariaAttributes}
+          >
+            {children}
+          </InputContent>
+      )}
+      {currentIsInvalid && (
         <Feedback id={`${componentId}-feedback`} context="error">
-          {invalidMessage}
+          {invalidMessage ?? ''}
         </Feedback>
       )}
-      {helperText && (
+      {helperText && currentIsInvalid &&  (
         <Text
-          id={`${componentId}-helper`}
+          id={helperId}
           tag="p"
           color="error-80"
           variant="small"

@@ -1,162 +1,160 @@
 @use "../../../styles/main" as *;
 .input-content {
-  &__container {
+  display: flex;
+  position: relative;
+  align-items: stretch;
+  &__wrapper {
     display: flex;
     position: relative;
     flex-grow: 1;
-    .icon, div, span {
-      position: absolute;
-      transform: translate(0, -50%);
-    }
-    .icon {
-      top: 55%;
-      left: 1rem;
-      max-width: 1rem;
-    }
-    div, span {
-      top: 50%;
-      left: unset;
-      right: 1rem;
-    }
-
-    &--wrapper + .icon {
-      left: unset;
-      right: 1rem;
-    }
-
-    &--wrapper {
-      color: var(--color-neutral-100);
-      width: 100%;
-      padding: var(--size-x-small) 1rem;
-      border: 1px solid var(--color-neutral-60);
-      text-align: left;
-      border-radius: var(--border-radius-large);
-      background-color: transparent;
-
-      &::placeholder {
-        color: var(--color-neutral-90);
-      }
-
-      &:hover {
-        border-color: #e5cefd;
-      }
-
-      @include focus(
-              $default-transition: (
-                      border 0.2s ease-in-out,
-                      box-shadow 0.2s ease-in-out,
-              ),
-              $overflow-border: true
-      );
-
-      &:active {
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.16);
-      }
-
-      &#{&}-focused:focus {
-        border-color: #e5cefd;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      }
-
-      &[type="button"],
-      &[type="submit"] {
-        cursor: pointer;
-      }
-
-      &-multiline {
-        height: auto;
-      }
-
-      &-invalid {
-        color: var(--color-error-80);
-        border-color: var(--colors-error-80);
-
-        &:focus {
-          box-shadow: inset 0 0 0 1px var(--color-error-80);
-        }
-        &::placeholder {
-          color: var(--color-error-80);
-        }
-      }
-
-      &-icon {
-        &-left {
-          padding-left: var(--size-xx-large);
-        }
-        &-right {
-          padding-right: var(--size-big);
-        }
-      }
-
-      &-addon {
-        border-right: none;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-
-      &-counter {
-        padding-right: var(--size-big);
-      }
-
-      &-prepend {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-
-      &-append {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-
-      &-append,
-      &-prepend {
-        height: auto;
-        padding-top: 0;
-        padding-bottom: 0;
-        &__floating {
-          height: auto;
-        }
-      }
-
-      &-disabled {
-        color: var(--color-neutral-70);
-        border-color: var(--color-neutral-50);
-        background-color: var(--color-neutral-50);
-      }
-    }
-  }
-  &__password {
-    cursor: pointer;
-  }
-  &__addon {
-    display: flex;
     align-items: center;
-    padding: 0 0.75rem;
-    border: 1px solid var(--color-neutral-60);
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    background-color: var(--color-neutral-50);
   }
+  &__counter {
+    left: auto;
+    right: 0.75rem;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+  }
+  &__icon {
+    //color: #34495e;
+    display: flex;
+    position: absolute;
+    font-size: 1.25rem;
+    margin-top: .2rem;
+    align-items: center;
+    justify-content: center;
 
-  &__append {
-    .button {
+    &--right {
+      left: auto;
+      right: 0.75rem;
+    }
+    &--left {
+      left: 0.75rem;
+    }
+    &--password {
+      cursor: pointer;
+    }
+  }
+  &__field {
+    color: var(--color-neutral-100);
+    width: 100%;
+    border: 1px solid var(--color-neutral-60);
+    outline: none;
+    padding: var(--size-x-small) 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    border-radius: var(--border-radius-large);
+    background-color: transparent;
+    &::placeholder {
+      color: var(--color-neutral-90);
+    }
+
+    &:hover {
+      border-color: #e5cefd;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.2);
+      border-color: #2c3e50;
+    }
+
+    &:active {
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.16);
+    }
+
+    &#{&}-focused:focus {
+      border-color: #e5cefd;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    &[type="button"],
+    &[type="submit"] {
+      cursor: pointer;
+    }
+
+    @include focus(
+            $default-transition: (
+                    border 0.2s ease-in-out,
+                    box-shadow 0.2s ease-in-out,
+            ),
+            $overflow-border: true
+    );
+    &--icon-left {
+      padding-left: 2.5rem;
+    }
+    &--prepend {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
-    &-floating {
-      .button {
-        top: 50%;
-        right: 4px;
-        height: var(--size-large);
-        position: absolute;
-        transform: translateY(-50%);
-      }
+    &--append {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &--append,
+    &--prepend {
+      height: 2.5rem;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    &--addon {
+      border-right: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &--counter {
+      padding-right: var(--size-big);
+    }
+  }
+  &__append {
+    .button {
+      height: 100%;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
   &__prepend {
     .button {
+      height: 100%;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+    }
+  }
+  &__addon {
+    border: 1px solid var(--color-neutral-60);
+    display: flex;
+    padding: 0 0.75rem;
+    align-items: center;
+    background-color: var(--color-neutral-50);
+    border-top-right-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+  }
+  @media (max-width: 767px) {
+    align-items: center;
+    flex-direction: row;
+    &__wrapper {
+      width: 100%;
+      flex-wrap: wrap;
+      align-items: stretch; /* Ajusta os elementos preenchendo o espaço */
+    }
+    &__icon {
+      font-size: 1rem;
+      &--left,
+      &--right {
+        padding: 0.5rem;
+      }
+    }
+    &__field {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 0.9rem;
+    }
+    &__append,
+    &__prepend, {
+      .button {
+        height: var(--size-xxx-large);
+      }
     }
   }
 }

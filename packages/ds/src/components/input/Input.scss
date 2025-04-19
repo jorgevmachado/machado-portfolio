@@ -1,74 +1,158 @@
 @use "../../styles/main" as *;
 
 .input {
-  &__icon {
-    &--context {
-      &-info {
-        .icon {
-          color: var(--color-info-80);
-        }
-      }
-      &-error {
-        .icon {
-          color: var(--color-error-80);
-        }
-      }
-      &-neutral {
-        .icon {
-          color: var(--color-neutral-110);
-        }
-      }
-      &-success {
-        .icon {
-          color: var(--color-success-80);
-        }
-      }
-      &-primary {
-        .icon {
-          color: var(--color-primary-100);
-        }
-      }
-      &-secondary {
-        .icon {
-          color: var(--color-secondary-100);
-        }
-      }
-      &-attention {
-        .icon {
-          color: var(--color-attention-80);
-        }
-      }
-    }
-  }
+  gap: var(--dimensions-relative-8);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 
   &__label {
-    background: var(--color-white);
-    transition: transform 0.2s ease, margin 0.2s ease, color 0.2s ease;
+    color: #34495e;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+    &--image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
-    &--floating {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      transform-origin: left center;
-      pointer-events: none;
+  &__required {
+    color: var(--color-error-80);
+    margin-left: var(--dimensions-relative-4);
+  }
 
-      &--shrink {
-        transform: translateY(-1.5rem) scale(0.75);
-        color: var(--color-neutral-80);
+  &__picture {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--dimensions-relative-32);
+    flex-direction: column;
+    justify-content: center;
+    img {
+      max-width: 100%;
+      object-fit: cover;
+    }
+    &--image {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #e6e9ec;
+      transition: transform 0.3s, border-color 0.3s;
+      &:hover {
+        transform: scale(1.05);
+        border-color: #3498db;
+      }
+    }
+    &--label {
+      display: flex;
+      margin-top: 1rem;
+      align-items: center;
+      flex-direction: column;
+    }
+    &--input {
+      display: none;
+    }
+    &--button {
+      color: #ffffff;
+      cursor: pointer;
+      border: none;
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.2s;
+      font-weight: 600;
+      border-radius: 4px;
+      background-color: #2c3e50;
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        background-color: #34495e;
+      }
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
     }
   }
 
-  &__wrapper {
-    display: flex;
-    position: relative;
-    align-items: stretch;
-  }
+  &__field {
+    &--textarea {
+      height: auto;
+      resize: vertical;
+      min-height: 120px;
+      max-width: 100%;
+    }
 
-  &--floating-label {
-    .input__wrapper > input {
-      padding-top: 1.5rem;
+    &--file {
+      padding: 0.5rem;
+      cursor: pointer;
+      background-color: #ecf0f1;
+
+      &::-webkit-file-upload-button {
+        color: #fff;
+        cursor: pointer;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        border-radius: 0.25rem;
+        background-color: #2c3e50;
+      }
+
+      &::-webkit-file-upload-button:hover {
+        background-color: #34495e;
+      }
+    }
+
+    &--disabled {
+      color: var(--color-neutral-70);
+      border-color: var(--color-neutral-50);
+      background-color: var(--color-neutral-50);
     }
   }
 
+  &__error {
+    color: var(--color-error-80);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    border-color: var(--colors-error-80);
+  }
+
+  &--error .input__field {
+    border-color: #e74c3c;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.2);
+    }
+    &::placeholder {
+      color: var(--color-error-80);
+    }
+  }
+
+  @media (max-width: 767px) {
+    gap: 0.25rem;
+    flex-direction: column;
+    &__label {
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    &__field {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.8rem;
+    }
+    &__picture {
+      margin-bottom: 1rem;
+      &--image {
+        width: 100px;
+        height: 100px; // Ajustar tamanhos das imagens para telas menores
+      }
+    }
+    &__error {
+      font-size: 0.7rem; // Mensagens de erro menores
+      text-align: center;
+    }
+
+  }
 }

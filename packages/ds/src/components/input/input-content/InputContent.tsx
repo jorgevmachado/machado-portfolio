@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 
 import { joinClass } from '../../../utils';
 
@@ -6,156 +6,154 @@ import { useChildrenElements } from '../../../hooks';
 
 import { Icon, Text } from '../../../elements';
 
+import type { InputProps } from '../interface';
+
 import './InputContent.scss';
 
-export enum EDataChildren {
-  ICON = 'icon',
+enum EInputContentChildren {
   APPEND = 'append',
-  COUNTER = 'counter',
   PREPEND = 'prepend',
   ICON_LEFT = 'icon-left',
   ICON_RIGHT = 'icon-right',
 }
 
-interface InputItemProps
+interface InputContentProps
   extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-  id: string;
+  icon?: InputProps['icon'];
   rows?: number;
-  type?: string;
-  addon?: string;
+  addon?: InputProps['addon'];
+  counter?: InputProps['counter'];
   children?: React.ReactNode;
-  autoFocus?: boolean;
-  multiline?: boolean;
-  isInvalid?: boolean;
-  dataCyName?: string;
-  hasFloatingSlots?: boolean;
-  inputClassNameList?: string;
-  isInputMouseFocused?: boolean;
+  iconColor?: InputProps['iconColor'];
+  autoFocus?: InputProps['autoFocus'];
+  dataCyName?: InputProps['dataCyName'];
+  iconPosition?: InputProps['iconPosition'];
 }
-export const InputContent = forwardRef<any, InputItemProps>(
+export const InputContent = forwardRef<any, InputContentProps>(
   (
     {
       id,
+      icon,
       rows,
       type,
       addon,
+      counter,
       children,
-      disabled,
-      multiline,
-      isInvalid,
+      iconColor = 'neutral-90',
+      className,
       dataCyName,
-      placeholder,
-      hasFloatingSlots,
-      isInputMouseFocused,
+      iconPosition = 'left',
       ...props
     },
     ref,
   ) => {
     const [typeInput, setTypeInput] = useState<string | undefined>(type);
-    const [passwordIcon, setPasswordIcon] = useState<'eye' | 'eye-close'>(
-      'eye-close',
-    );
+    const [currentIcon, setCurrentIcon] =
+      useState<InputContentProps['icon']>(icon);
+    const [currentIconPosition, setCurrentIconPosition] =
+      useState<InputContentProps['iconPosition']>(iconPosition);
 
+    const isPassword = type === 'password';
+    const isTextArea = typeInput === 'textarea';
     const toggleShowPassword = (e: React.MouseEvent<HTMLSpanElement>) => {
       e.preventDefault();
+      e.stopPropagation();
       setTypeInput((prev) => (prev === 'password' ? 'text' : 'password'));
-      setPasswordIcon((prev) => (prev === 'eye' ? 'eye-close' : 'eye'));
+      setCurrentIcon((prev) => (prev === 'eye' ? 'eye-close' : 'eye'));
     };
 
     const { getChildrenElement, childrenElements } =
       useChildrenElements(children);
-    const prependElement = getChildrenElement(EDataChildren.PREPEND);
-    const appendElement = getChildrenElement(EDataChildren.APPEND);
-    const iconLeftElement = getChildrenElement(EDataChildren.ICON_LEFT);
-    const iconRightElement =
-      type === 'password' ? (
+    const renderIcon = () => {
+      const classNameList = isPassword ? 'input-content__icon--password' : '';
+      return (
         <Icon
-          icon={passwordIcon}
-          onClick={toggleShowPassword}
-          className="input-content__password"
-          data-children="icon-right"
+          icon={currentIcon}
+          color={iconColor}
+          onClick={isPassword ? toggleShowPassword : undefined}
+          className={classNameList}
         />
-      ) : (
-        getChildrenElement(EDataChildren.ICON_RIGHT)
       );
-    const counterElement = getChildrenElement(EDataChildren.COUNTER);
+    };
 
-    const isPrepend = Boolean(childrenElements[EDataChildren.PREPEND]);
-    const isAppend = Boolean(childrenElements[EDataChildren.APPEND]);
+    const iconLeftElement =
+      currentIcon && currentIconPosition === 'left'
+        ? renderIcon()
+        : getChildrenElement(EInputContentChildren.ICON_LEFT);
 
-    const InputElement = multiline ? 'textarea' : 'input';
+    const iconRightElement =
+      currentIcon && currentIconPosition === 'right'
+        ? renderIcon()
+        : getChildrenElement(EInputContentChildren.ICON_RIGHT);
+    const hasIconLeft = Boolean(iconLeftElement);
+    const hasIconRight = Boolean(iconRightElement);
 
-    const classNameList = joinClass([
-      'input-content__container--wrapper',
-      multiline && 'input-content__container--wrapper-multiline',
-      isInvalid && 'input-content__container--wrapper-invalid',
-      (childrenElements[EDataChildren.ICON] ||
-        childrenElements[EDataChildren.ICON_RIGHT]) &&
-        'input-content__container--wrapper-icon-right',
-      childrenElements[EDataChildren.ICON_LEFT] &&
-        'input-content__container--wrapper-icon-left',
-      addon && 'input-content__container--wrapper-addon',
-      childrenElements[EDataChildren.COUNTER] &&
-        'input-content__container--wrapper-counter',
-      isPrepend && 'input-content__container--wrapper-prepend',
-      isAppend &&
-        !hasFloatingSlots &&
-        'input-content__container--wrapper-append',
-      isAppend &&
-        hasFloatingSlots &&
-        'input-content__container--wrapper-append__floating',
-      isInputMouseFocused && 'input-content__container--wrapper-focused',
-      disabled && 'input-content__container--wrapper-disabled',
+    const prependElement = getChildrenElement(EInputContentChildren.PREPEND);
+    const appendElement = getChildrenElement(EInputContentChildren.APPEND);
+
+    const isPrepend = Boolean(childrenElements[EInputContentChildren.PREPEND]);
+    const isAppend = Boolean(childrenElements[EInputContentChildren.APPEND]);
+
+    const InputElement = isTextArea ? 'textarea' : 'input';
+
+    const inputFieldClassNameList = joinClass([
+      className,
+      'input-content__field',
+      hasIconLeft && 'input-content__field--icon-left',
+      isPrepend && 'input-content__field--prepend',
+      isAppend && 'input-content__field--append',
+      addon && !isAppend && 'input-content__field--addon',
+      counter && !hasIconRight && 'input-content__field--counter',
     ]);
 
+    useEffect(() => {
+      if (!currentIcon && typeInput === 'password') {
+        setCurrentIcon('eye-close');
+        setCurrentIconPosition('right');
+      }
+    }, [icon]);
+
     return (
-      <>
-        {prependElement && (
-          <div className={joinClass(['input-content__prepend'])}>
-            {prependElement}
-          </div>
+      <div className="input-content">
+        {isPrepend && (
+          <div className="input-content__prepend">{prependElement}</div>
         )}
 
-        <div
-          className={joinClass([
-            'input-content__container',
-            childrenElements[EDataChildren.ICON_LEFT] &&
-              'input-content__container--icon__left',
-          ])}
-        >
-          {iconLeftElement}
+        <div className="input-content__wrapper">
+          {hasIconLeft && (
+            <div className="input-content__icon input-content__icon--left">
+              {iconLeftElement}
+            </div>
+          )}
           <InputElement
             id={id}
             ref={ref}
             type={typeInput}
-            rows={rows}
-            tabIndex={0}
+            rows={isTextArea ? rows : undefined}
             data-cy={dataCyName}
-            disabled={disabled}
-            className={classNameList}
-            placeholder={placeholder}
+            className={inputFieldClassNameList}
             {...props}
           />
-          {iconRightElement}
-          {counterElement}
+          {hasIconRight && (
+            <div className="input-content__icon input-content__icon--right">
+              {iconRightElement}
+            </div>
+          )}
+          {counter && !hasIconRight && (
+            <div className="input-content__counter">
+              <Text color="neutral-60">{counter}</Text>
+            </div>
+          )}
         </div>
-        {addon && (
+        {addon && !isAppend && (
           <div className="input-content__addon">
             <Text color="neutral-60">{addon}</Text>
           </div>
         )}
-        {appendElement && (
-          <div
-            className={joinClass([
-              !hasFloatingSlots
-                ? 'input-content__append'
-                : 'input-content__append-floating',
-            ])}
-          >
-            {appendElement}
-          </div>
+        {isAppend && (
+          <div className="input-content__append">{appendElement}</div>
         )}
-      </>
+      </div>
     );
   },
 );
