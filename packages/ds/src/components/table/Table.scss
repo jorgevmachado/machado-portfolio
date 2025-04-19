@@ -1,22 +1,22 @@
 .table {
   padding: var(--size-regular);
+  overflow-x: auto;
   border-radius: var(--borders-regular);
-  overflow-x: auto; /* Permite o scroll horizontal */
-  -webkit-overflow-scrolling: touch; /* Melhor experiência em dispositivos móveis */
+  -webkit-overflow-scrolling: touch;
 
 
   table {
     width: 100%;
-    border-spacing: 0; /* Remove os espaços entre as células */
-    border-collapse: collapse; /* Faz com que bordas da tabela não fiquem separadas */
+    border-spacing: 0;
+    border-collapse: collapse;
 
     th {
       padding: var(--size-tiny);
       border-bottom: 1px solid var(--color-neutral-60);
       user-select: none;
-      white-space: nowrap; /* Garante que as células não quebrem por padrão */
-      overflow: hidden; /* Evita overflow em colunas muito estreitas */
-      text-overflow: ellipsis; /* Adiciona reticências (...) em dados muito longos */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       span {
         color: var(--color-neutral-90);
@@ -68,37 +68,20 @@
   @media (max-width: 768px) {
     th,
     td {
-      /* Aumenta espaço para visualização no mobile */
       padding: var(--size-small);
       font-size: var(--font-size-1-5);
-      white-space: normal; /* Permite textos mais longos quebrarem */
+      white-space: normal;
     }
 
     tr {
-      /* Fica em modo card-style para telas menores */
       display: flex;
-      flex-direction: column;
       margin-bottom: var(--size-small);
+      flex-direction: column;
+
     }
 
     th {
-      text-align: left; /* Alinha cabeçalhos no topo do card */
-    }
-
-    td {
-      //display: block; /* Cada célula vira um bloco independente */
-      //text-align: left; /* Alinha texto do conteúdo da célula */
+      text-align: left;
     }
   }
 }
-//@media (max-width: 768px) {
-//  .table table td {
-//    max-width: 150px;
-//  }
-//}
-
-//@media (max-width: 480px) {
-//  .table table td {
-//    max-width: 100px;
-//  }
-//}
