@@ -148,4 +148,28 @@ describe('AuthBusiness', () => {
       }
     });
   });
+
+  describe('getCurrentId', () => {
+    it('should return the auth user ID if no ID is provided', () => {
+      expect(authBusiness.getCurrentId(mockAuthUser)).toBe(mockAuthUser.id);
+    });
+
+    it('should return the provided ID if it matches the auth user ID', () => {
+      expect(authBusiness.getCurrentId(mockAuthUser, mockAuthUser.id)).toBe(mockAuthUser.id);
+    });
+
+    it('should validate the current user if the provided ID does not match the auth user ID', () => {
+      const currentMockUser = {
+        ...mockAuthUser,
+        role: ERole.ADMIN,
+      }
+      expect(authBusiness.getCurrentId(currentMockUser, mockUser.id)).toBe(mockUser.id);
+    });
+
+    it('should throw an error if the provided ID does not match the auth user ID and the auth user is not an ADMIN', () => {
+        expect(() =>
+            authBusiness.getCurrentId(mockAuthUser, mockUser.id),
+        ).toThrowError('You are not authorized to access this feature');
+    });
+  });
 });
