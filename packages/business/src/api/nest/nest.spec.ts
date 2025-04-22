@@ -21,7 +21,6 @@ describe('Nest', () => {
   const mockToken = 'test-token';
   const mockHeaders = {
     Authorization: `Bearer ${mockToken}`,
-    'content-type': 'application/json; charset=UTF-8',
   };
 
   beforeEach(() => {

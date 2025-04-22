@@ -79,9 +79,14 @@ export abstract class Http {
     url: string,
     { body, method, headers }: RequestInit,
   ): Promise<T> {
+    const isFormData = body instanceof FormData;
+    const configHeaders = isFormData
+        ? { ...this.config.headers, ...headers }
+        : { ...this.config.headers, ...headers, 'content-type': 'application/json; charset=UTF-8'};
+
     const config = {
       ...this.config,
-      ...(headers ? { headers } : this.config.headers),
+      headers: configHeaders,
       method,
       body,
     };

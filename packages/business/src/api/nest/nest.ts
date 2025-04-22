@@ -11,7 +11,6 @@ export class Nest {
   constructor({ baseUrl = 'http://localhost:3000', token = '' }: INestConfig) {
     const headers = {
       Authorization: `Bearer ${token}`,
-      'content-type': 'application/json; charset=UTF-8',
     };
     this.authModule = new Auth({ baseUrl, headers });
     this.pokemonModule = new Pokemon({ baseUrl, headers });
