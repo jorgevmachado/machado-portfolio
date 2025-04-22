@@ -5,6 +5,10 @@ import { Transform } from 'class-transformer';
 import { EGender, ERole, EStatus } from '@repo/business/shared/enum';
 
 export class UpdateAuthDto {
+
+  @IsEmpty()
+  id?: string;
+
   @IsEmpty()
   @IsEnum(ERole)
   role?: ERole;
