@@ -38,13 +38,12 @@ export interface ISignInParams extends Pick<IUser, 'email'> {
   password: string;
 }
 
-export type IUpdateUserParams = Pick<
+export type IUpdateUserParams = Partial<Pick<
   IUser,
-  | 'name'
+  | 'id'
   | 'role'
+  | 'name'
   | 'gender'
   | 'status'
   | 'date_of_birth'
-  | 'password'
-  | 'picture'
->;
+>>;

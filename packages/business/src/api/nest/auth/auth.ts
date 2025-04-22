@@ -1,7 +1,7 @@
 import type { INestModuleConfig } from '../interface';
 import { NestModuleAbstract } from '../nestModuleAbstract';
 
-import type { ISignInParams, ISignUpParams, IUser } from './interface';
+import {ISignInParams, ISignUpParams, IUpdateUserParams, IUser} from './interface';
 
 export class Auth extends NestModuleAbstract<IUser, unknown, unknown> {
   constructor(nestModuleConfig: INestModuleConfig) {
@@ -21,5 +21,15 @@ export class Auth extends NestModuleAbstract<IUser, unknown, unknown> {
 
   public async me(): Promise<IUser> {
     return this.get(`${this.pathUrl}/me`);
+  }
+
+  public async updateAuth(params: IUpdateUserParams): Promise<{ message: string }> {
+    return this.path(`${this.pathUrl}/update`, { body: params })
+  }
+
+  public async uploadPicture(file: File): Promise<{ message: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.path(`${this.pathUrl}/upload`, { body: formData });
   }
 }

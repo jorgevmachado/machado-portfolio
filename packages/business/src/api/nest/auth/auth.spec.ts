@@ -10,7 +10,7 @@ import {
 import { Auth } from './auth';
 import { NestModuleAbstract } from '../nestModuleAbstract';
 import { ISignInParams, ISignUpParams } from './interface';
-import { EGender } from '../../../shared';
+import { EGender, ERole, EStatus } from '../../../shared';
 
 jest.mock('../nestModuleAbstract'); // Mock da classe base
 
@@ -101,5 +101,39 @@ describe('Auth', () => {
       username: 'testUser',
       email: 'testUser@example.com',
     });
+  });
+
+  it('should call path with correct URL and body for updateAuth', async () => {
+    const mockPath = jest
+      .spyOn(NestModuleAbstract.prototype, 'path')
+      .mockResolvedValue({ message: 'Update Successfully!' });
+
+    const pathParams = {
+      id: '1',
+      role: ERole.USER,
+      name: 'James Bond',
+      gender: EGender.MALE,
+      status: EStatus.COMPLETE,
+      date_of_birth: new Date('2000-01-01'),
+    }
+
+    const result = await auth.updateAuth(pathParams);
+
+    expect(mockPath).toHaveBeenCalledTimes(1);
+    expect(mockPath).toHaveBeenCalledWith('auth/update', { body: pathParams });
+    expect(result).toEqual({ message: 'Update Successfully!' });
+  });
+
+  it('should call path with correct URL and body for uploadPicture', async () => {
+    const mockFile = new File(['test'], 'test.png', { type: 'image/png' });
+    const mockPath = jest
+        .spyOn(NestModuleAbstract.prototype, 'path')
+        .mockResolvedValue({message: 'File uploaded successfully!'});
+    const result = await auth.uploadPicture(mockFile);
+    const formData = new FormData();
+    formData.append('file', mockFile);
+    expect(mockPath).toHaveBeenCalledTimes(1);
+    expect(mockPath).toHaveBeenCalledWith('auth/upload', { body: formData });
+    expect(result).toEqual({ message: 'File uploaded successfully!' });
   });
 });
