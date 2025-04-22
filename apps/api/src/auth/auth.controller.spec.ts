@@ -234,7 +234,6 @@ describe('AuthController', () => {
 
       expect(
         await controller.update(
-          USER_ENTITY_FIXTURE.id,
           {
             name: 'Demi Moore',
             date_of_birth: new Date('2000-01-01'),

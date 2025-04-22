@@ -52,10 +52,11 @@ export class AuthService extends Base {
     return this.authBusiness.currentUser(currentUser, user);
   }
 
-  async update(id: string, updateAuthDto: UpdateAuthDto, authUser: User) {
-    const { role, status } = updateAuthDto;
+  async update(updateAuthDto: UpdateAuthDto, authUser: User) {
+    const { id, role, status } = updateAuthDto;
     this.authBusiness.validateCurrentUser({ role, status, authUser });
-    await this.userService.update(id, updateAuthDto);
+    const currentId = this.authBusiness.getCurrentId(authUser, id);
+    await this.userService.update(currentId, updateAuthDto);
     return { message: 'Update Successfully!' };
   }
 

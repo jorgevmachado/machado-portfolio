@@ -55,14 +55,13 @@ export class AuthController {
     return this.authService.findOne(id, user);
   }
 
-  @Put(':id')
+  @Put('update')
   @UseGuards(AuthGuard(), AuthRoleGuards)
   update(
-    @Param('id') id: string,
     @Body() updateAuthDto: UpdateAuthDto,
     @GetUserAuth() user: User,
   ) {
-    return this.authService.update(id, updateAuthDto, user);
+    return this.authService.update(updateAuthDto, user);
   }
 
   @Put(':id/promote')

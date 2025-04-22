@@ -205,7 +205,7 @@ describe('AuthService', () => {
       });
 
       expect(
-        await service.update(USER_ENTITY_FIXTURE.id, updateAuthDto, USER_ENTITY_FIXTURE),
+        await service.update(updateAuthDto, USER_ENTITY_FIXTURE),
       ).toEqual({ message: 'Update Successfully!' });
     });
   });
