@@ -234,7 +234,7 @@ describe('AuthService', () => {
       });
 
       expect(
-        await service.upload(USER_ENTITY_FIXTURE.id, mockFile, USER_ENTITY_FIXTURE),
+        await service.upload(mockFile, USER_ENTITY_FIXTURE),
       ).toEqual({ message: 'File uploaded successfully!' });
     });
   });

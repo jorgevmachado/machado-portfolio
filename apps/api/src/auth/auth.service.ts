@@ -82,7 +82,8 @@ export class AuthService extends Base {
     return this.userService.promoteUser(currentUser);
   }
 
-  async upload(id: string, file: Express.Multer.File, authUser: User) {
+  async upload(file: Express.Multer.File, authUser: User) {
+    const id = authUser.id;
     this.authBusiness.validateCurrentUser({ id, authUser });
     await this.userService.upload(id, file);
     return {

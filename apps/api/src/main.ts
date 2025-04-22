@@ -8,7 +8,12 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    origin: 'http://finance.com.br:3000',
+    origin: [
+      'http://finance.com.br:3003',
+      'http://geek.com.br:3002',
+      'http://finance.com.br:4003',
+      'http://geek.com.br:4003',
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });

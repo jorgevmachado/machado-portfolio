@@ -55,6 +55,12 @@ export class AuthController {
     return this.authService.findOne(id, user);
   }
 
+  @Put(':id/promote')
+  @UseGuards(AuthGuard(), AuthRoleGuards)
+  promoteUser(@Param('id') id: string, @GetUserAuth() user: User) {
+    return this.authService.promoteUser(id, user);
+  }
+
   @Put('update')
   @UseGuards(AuthGuard(), AuthRoleGuards)
   update(
@@ -64,20 +70,13 @@ export class AuthController {
     return this.authService.update(updateAuthDto, user);
   }
 
-  @Put(':id/promote')
-  @UseGuards(AuthGuard(), AuthRoleGuards)
-  promoteUser(@Param('id') id: string, @GetUserAuth() user: User) {
-    return this.authService.promoteUser(id, user);
-  }
-
-  @Put(':id/upload')
+  @Put('upload')
   @UseGuards(AuthGuard(), AuthRoleGuards)
   @UseFileUpload(['image/jpeg', 'image/png', 'image/jpg'])
   async upload(
-    @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File,
     @GetUserAuth() user: User,
   ) {
-    return await this.authService.upload(id, file, user);
+    return await this.authService.upload(file, user);
   }
 }

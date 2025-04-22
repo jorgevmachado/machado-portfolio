@@ -263,7 +263,6 @@ describe('AuthController', () => {
       });
       expect(
           await controller.upload(
-              USER_ENTITY_FIXTURE.id,
               mockFile,
               USER_ENTITY_FIXTURE,
           ),
