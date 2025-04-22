@@ -11,7 +11,12 @@ import { Nest } from '../api';
 
 import { AuthService } from './service';
 
-import { SignInParams, SignUpParams, UserEntity } from './interface';
+import type {
+  SignInParams,
+  SignUpParams,
+  UpdateParams,
+  UserEntity,
+} from './interface';
 import { USER_ENTITY_FIXTURE } from './fixtures';
 
 describe('AuthService', () => {
@@ -29,30 +34,19 @@ describe('AuthService', () => {
 
   const mockUser: UserEntity = USER_ENTITY_FIXTURE;
   const mockPassword: string = 'testPassword';
-  const mockSignUpParams: SignUpParams = {
-    cpf: mockUser.cpf,
-    name: mockUser.name,
-    email: mockUser.email,
-    gender: mockUser.gender,
-    password: mockPassword,
-    whatsapp: mockUser.whatsapp,
-    date_of_birth: mockUser.date_of_birth,
-    password_confirmation: mockPassword,
-  };
-  const mockSignInParams: SignInParams = {
-    email: mockUser.email,
-    password: mockPassword,
-  };
   const mockResponseError = { message: 'Internal Server Error' };
   const mockResponseNotFound = { message: 'Not Found' };
 
   beforeEach(() => {
     mockNest = {
       auth: {
+        me: jest.fn(),
         signUp: jest.fn(),
         signIn: jest.fn(),
         getOne: jest.fn(),
-        me: jest.fn(),
+        updateAuth: jest.fn(),
+        uploadPicture: jest.fn(),
+
       },
     } as unknown as jest.Mocked<Nest>;
 
@@ -60,6 +54,16 @@ describe('AuthService', () => {
   });
 
   describe('signUp', () => {
+    const mockSignUpParams: SignUpParams = {
+      cpf: mockUser.cpf,
+      name: mockUser.name,
+      email: mockUser.email,
+      gender: mockUser.gender,
+      password: mockPassword,
+      whatsapp: mockUser.whatsapp,
+      date_of_birth: mockUser.date_of_birth,
+      password_confirmation: mockPassword,
+    };
     it('should return success message when registering', async () => {
       const mockResponse = { message: 'Registration Completed Successfully!' };
 
@@ -85,6 +89,10 @@ describe('AuthService', () => {
   });
 
   describe('signIn', () => {
+    const mockSignInParams: SignInParams = {
+      email: mockUser.email,
+      password: mockPassword,
+    };
     it('should return token when logging in', async () => {
       const mockResponse = { token: 'abc123' };
 
@@ -146,6 +154,37 @@ describe('AuthService', () => {
 
       await expect(authService.me()).rejects.toThrow(mockResponseError.message);
       expect(mockNest.auth.me).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('update', () => {
+    const mockUpdateParams: UpdateParams = {
+      id: mockUser.id,
+      role: mockUser.role,
+      name: mockUser.name,
+      gender: mockUser.gender,
+      status: mockUser.status,
+      date_of_birth: mockUser.date_of_birth,
+    };
+    it('should return success message when updating user', async () => {
+      const mockResponse = { message: 'Update Successfully!' };
+      mockNest.auth.updateAuth.mockResolvedValue(mockResponse);
+      const result = await authService.update(mockUpdateParams);
+      expect(mockNest.auth.updateAuth).toHaveBeenCalledTimes(1);
+      expect(mockNest.auth.updateAuth).toHaveBeenCalledWith(mockUpdateParams);
+      expect(result).toBe(mockResponse.message);
+    });
+  });
+
+  describe('upload', () => {
+    const mockFile = new File(['test'], 'test.png', { type: 'image/png' });
+    it('should return success message when upload picture', async () => {
+      const mockResponse = { message: 'File uploaded successfully!' };
+      mockNest.auth.uploadPicture.mockResolvedValue(mockResponse);
+      const result = await authService.upload(mockFile);
+      expect(mockNest.auth.uploadPicture).toHaveBeenCalledTimes(1);
+      expect(mockNest.auth.uploadPicture).toHaveBeenCalledWith(mockFile);
+      expect(result).toBe(mockResponse.message);
     });
   });
 });

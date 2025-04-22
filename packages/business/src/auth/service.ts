@@ -1,6 +1,6 @@
 import { Nest } from '../api';
 
-import { SignInParams, SignUpParams, UserEntity } from './interface';
+import {SignInParams, SignUpParams, UpdateParams, UserEntity} from './interface';
 
 export class AuthService {
     constructor(private nest: Nest) {}
@@ -19,5 +19,13 @@ export class AuthService {
 
     public async me(): Promise<UserEntity> {
         return this.nest.auth.me();
+    }
+
+    public async update(params: UpdateParams): Promise<string> {
+        return this.nest.auth.updateAuth(params).then((res) => res.message);
+    }
+
+    public async upload(file: File): Promise<string> {
+        return this.nest.auth.uploadPicture(file).then((res) => res.message);
     }
 }
