@@ -21,6 +21,13 @@ const acceptRoutes: Array<string> = [
   '/dashboard',
 ];
 
+const favIconsRoutes: Array<string> = [
+    '/favicon.ico',
+    '/law/favicon/favicon.ico',
+    '/geek/favicon/favicon.ico',
+    '/finance/favicon/favicon.ico',
+];
+
 const getCurrentAccessToken = async (source?: string) => {
   const cookieStore = await cookies();
   if (!source) {
@@ -63,6 +70,9 @@ export default async function middleware(request: NextRequest) {
   const redirectUrl = generateUrl({ url, env, source, redirectTo });
 
   if (!acceptRoutes.includes(path)) {
+    if(favIconsRoutes.includes(path)) {
+      return NextResponse.next();
+    }
     const notFoundUrl = redirectUrl;
     notFoundUrl.searchParams.set('error', 'notfound');
     return NextResponse.redirect(notFoundUrl);

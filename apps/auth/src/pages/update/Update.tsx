@@ -378,7 +378,7 @@ export default function Update() {
           isInvalid={!updateFormData.errors.date_of_birth.valid}
           invalidMessage={updateFormData.errors.date_of_birth.message}
         />
-        <Button type="submit" context="primary" loading={loading} fluid>
+        <Button type="submit" context="neutral" loading={loading} fluid>
           Save
         </Button>
       </form>

@@ -24,6 +24,7 @@ import {
   authService,
   generateUrl,
   getAccessTokenName,
+  getLogoUrl,
   setAccessToken,
 } from '../../shared';
 
@@ -80,8 +81,6 @@ export default function SignIn() {
   const redirectTo = searchParams.get('redirectTo') ?? undefined;
 
   const title = 'Sign in';
-  const logoSrc =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHN5dygQnJFirBww40JLAsLuZHF0kOdBrzLw&s';
   const description =
     'By continuing, you affirm that you are over 18 years old and allow the sharing of your data in interactions with the platform.';
   const socialText = 'Or enter your email';
@@ -104,14 +103,14 @@ export default function SignIn() {
     {
       order: 3,
       label: 'I forgot my password',
-      context: 'primary',
+      context: 'neutral',
       onClick: () => redirectToPage('/forgot-password'),
     },
     {
       order: 1,
       title: 'Dont have an account ?',
       label: 'Register here',
-      context: 'primary',
+      context: 'neutral',
       onClick: () => redirectToPage('/sign-up'),
     },
   ];
@@ -237,7 +236,7 @@ export default function SignIn() {
 
   return (
     <div className="sign-in">
-      <Logo src={logoSrc} />
+      <Logo src={getLogoUrl(source)} />
 
       <InfoText title={title} description={description} />
 
@@ -268,7 +267,7 @@ export default function SignIn() {
           isInvalid={!signInFormData.errors.password.valid}
           invalidMessage={signInFormData.errors.password.message}
         />
-        <Button type="submit" context="primary" loading={loading} fluid>
+        <Button type="submit" context="neutral" loading={loading} fluid>
           Sign-in
         </Button>
       </form>

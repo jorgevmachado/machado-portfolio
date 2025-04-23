@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 export default function Home() {
-  return (
+    return (
     <>
       <Head>
         <title>Create Next App</title>

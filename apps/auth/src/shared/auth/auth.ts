@@ -23,3 +23,7 @@ export function getOriginalUrl(
       return referer || request.url;
   }
 }
+
+export function acceptedSources() {
+    return ['geek', 'finance', 'law'];
+}

@@ -33,7 +33,7 @@ import RadioGroup from '@repo/ds/components/radio-group/RadioGroup';
 
 import useAlert from '@repo/ui/hooks/alert/useAlert';
 
-import { authService, generateUrl } from '../../shared';
+import {authService, generateUrl, getLogoUrl} from '../../shared';
 
 import type { TLink } from '../../components/links/Links';
 import type { TSocial } from '../../components/socials/Socials';
@@ -141,8 +141,6 @@ export default function SignUp() {
   const redirectTo = searchParams.get('redirectTo') ?? undefined;
 
   const title = 'Create an Account';
-  const logoSrc =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHN5dygQnJFirBww40JLAsLuZHF0kOdBrzLw&s';
   const description =
     'By creating an account, you agree to our Terms of Service and Privacy Policy.';
   const socialText = 'Or register with your email';
@@ -166,7 +164,7 @@ export default function SignUp() {
       order: 1,
       title: 'Already have an account ?',
       label: 'Sign in here',
-      context: 'primary',
+      context: 'neutral',
       onClick: () => redirectToPage('/sign-in'),
     },
   ];
@@ -361,7 +359,7 @@ export default function SignUp() {
 
   return (
     <div className="sign-up">
-      <Logo src={logoSrc} />
+      <Logo src={getLogoUrl(source)} />
 
       <InfoText title={title} description={description} />
 
@@ -469,7 +467,7 @@ export default function SignUp() {
           isInvalid={!signUpFormData.errors.password_confirmation.valid}
           invalidMessage={signUpFormData.errors.password_confirmation.message}
         />
-        <Button type="submit" context="primary" loading={loading} fluid>
+        <Button type="submit" context="neutral" loading={loading} fluid>
           Sign-up
         </Button>
       </form>

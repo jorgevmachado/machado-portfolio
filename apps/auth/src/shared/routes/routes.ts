@@ -63,3 +63,16 @@ function getValidError(hasRequiredParameters: boolean, error?: string) {
 
     return error;
 }
+
+export function getLogoUrl(source?: string) {
+    switch (source) {
+        case 'law':
+            return '/law/law.png';
+        case 'geek':
+            return '/geek/geek.png';
+        case 'finance':
+            return '/finance/finance.png';
+        default:
+            return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHN5dygQnJFirBww40JLAsLuZHF0kOdBrzLw&s';
+    }
+}
