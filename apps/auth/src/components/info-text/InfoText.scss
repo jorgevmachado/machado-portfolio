@@ -1,0 +1,10 @@
+.info-text {
+  &__description {
+    display: flex;
+    text-align: center;
+    line-height: var(--font-line-height-small, 1.5);
+    &--large {
+      width: clamp(15rem, 50%, 20rem);
+    }
+  }
+}

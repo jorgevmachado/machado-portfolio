@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev:mock": "env-cmd -f .env.mock next dev --turbopack",
-    "dev:local": "env-cmd -f .env.local next dev --turbopack",
+    "dev:mock": "env-cmd -f .env.mock next dev --port 3003 --turbopack",
+    "dev:local": "env-cmd -f .env.local next dev --port 3003 --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0 --fix"

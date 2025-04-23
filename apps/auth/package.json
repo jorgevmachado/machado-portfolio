@@ -1,10 +1,10 @@
 {
-  "name": "geek",
+  "name": "auth",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev:mock": "env-cmd -f .env.mock next dev --port 3002 --turbopack",
-    "dev:local": "env-cmd -f .env.local next dev --port 3002 --turbopack",
+    "dev:mock": "env-cmd -f .env.mock next dev --port 4003 --turbopack",
+    "dev:local": "env-cmd -f .env.local next dev --port 4003 --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0 --fix"
@@ -16,9 +16,11 @@
     "@repo/tokens": "*",
     "@repo/ui": "*",
     "env-cmd": "^10.1.0",
+    "jwt-decode": "^4.0.0",
     "next": "^15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router-dom": "^7.2.0",
     "sass": "^1.83.1",
     "sass-loader": "^16.0.4"
   },
@@ -30,6 +32,7 @@
     "@repo/typescript": "*",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
+    "@types/jwt-decode": "^2.2.1",
     "@types/node": "^22.10.6",
     "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.3",
