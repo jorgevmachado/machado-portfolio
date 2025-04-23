@@ -3,36 +3,39 @@ import { cookies } from 'next/headers';
 
 import { allRoutes, publicRoutes } from './routes';
 
-function RedirectToSignIn(request: NextRequest, redirectTo?: string) {
-  const host = request.headers.get('host');
-  const url = request.nextUrl;
-  const currentRedirectTo = !redirectTo ? '/dashboard' : redirectTo;
+type TAccount = 'sign-in' | 'sign-up' | 'update';
+
+function accountRedirect(
+  url: NextRequest['nextUrl'],
+  host?: string,
+  redirectTo?: string,
+) {
+  const currentPath = !redirectTo ? '/dashboard' : redirectTo;
+  const currentRedirectTo =
+    currentPath === '/sign-in' ||
+    currentPath === '/sign-up' ||
+    currentPath === '/update'
+      ? '/dashboard'
+      : currentPath;
   const redirectToUrl = new URL(currentRedirectTo, url);
   redirectToUrl.host = !host ? redirectToUrl.host : host;
   return redirectToUrl;
 }
 
-function SignInRoute(request: NextRequest, redirectTo?: string) {
-  const host = request.headers.get('host');
+function accountRoute(
+  type: TAccount,
+  request: NextRequest,
+  redirectTo?: string,
+) {
+  const host = request.headers.get('host') ?? undefined;
   const url = request.nextUrl;
-  const accountUrl = new URL('/sign-in', url);
-  accountUrl.searchParams.append('source', 'finance');
-  accountUrl.searchParams.append('env', 'dev');
-  const redirectToUrl = RedirectToSignIn(request, redirectTo)
-  accountUrl.searchParams.append('redirectTo', redirectToUrl.href);
-  accountUrl.host = !host ? accountUrl.host : host;
-  accountUrl.port = '4003';
-  return accountUrl;
-}
+  const accountUrl = new URL(`/${type}`, url);
 
-function UpdateRoute(request: NextRequest, redirectTo?: string) {
-  const host = request.headers.get('host');
-  const url = request.nextUrl;
-  const accountUrl = new URL('/update', url);
+  const redirectToUrl = accountRedirect(url, host, redirectTo);
+  accountUrl.searchParams.append('redirectTo', redirectToUrl.href);
+
   accountUrl.searchParams.append('source', 'finance');
   accountUrl.searchParams.append('env', 'dev');
-  const redirectToUrl = RedirectToSignIn(request, redirectTo)
-  accountUrl.searchParams.append('redirectTo', redirectToUrl.href);
   accountUrl.host = !host ? accountUrl.host : host;
   accountUrl.port = '4003';
   return accountUrl;
@@ -47,7 +50,7 @@ export default async function middleware(request: NextRequest) {
   const isLogout = path === '/logout';
 
   if (isLogout) {
-    return NextResponse.redirect(SignInRoute(request));
+    return NextResponse.redirect(accountRoute('sign-in', request));
   }
 
   const isEmptyPath = path === '/';
@@ -60,7 +63,6 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-
   const isAuthRoute = publicRoutes.some((route) => route.path === path);
   const accessToken = cookieStore.get('financeAccessToken');
   const isAuthenticated = Boolean(accessToken);
@@ -70,15 +72,15 @@ export default async function middleware(request: NextRequest) {
   }
 
   if (!isAuthRoute && !isAuthenticated) {
-    return NextResponse.redirect(SignInRoute(request, path));
+    return NextResponse.redirect(accountRoute('sign-in', request, path));
   }
 
-  if(isAuthRoute && !isAuthenticated) {
-    return NextResponse.redirect(SignInRoute(request, path));
+  if (isAuthRoute && !isAuthenticated) {
+    return NextResponse.redirect(accountRoute('sign-in', request, path));
   }
 
-  if(path === '/profile') {
-    return NextResponse.redirect(UpdateRoute(request, '/'));
+  if (path === '/profile') {
+    return NextResponse.redirect(accountRoute('update', request, '/'));
   }
 
   return NextResponse.next();
