@@ -7,7 +7,7 @@ import { Text } from '../../elements';
 import './Feedback.scss';
 
 interface FeedbackProps {
-  id: string;
+  id?: string;
   context: 'error' | 'success' | 'attention';
   children?: React.ReactNode;
   className?: string;

@@ -1,13 +1,9 @@
-import {
-  afterEach,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  jest,
-} from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 
-import { findEntityBy, transformObjectDateAndNulls } from './entities';
+import { parseDateFromString } from '../date';
+
+import { findEntityBy, transformDateStringInDate, transformObjectDateAndNulls } from './entities';
+
 
 describe('findEntityBy', () => {
   const mockList = [
@@ -137,5 +133,53 @@ describe('transformObjectDateAndNulls', () => {
   };
   it('Should transform the object dates and nulls.', () => {
     expect(transformObjectDateAndNulls(receivedData)).toEqual(expectedData);
+  });
+});
+
+describe('transformDateStringInDate', () => {
+  const receivedData = {
+    id: 1,
+    name: 'Example',
+    created_at: '2000-01-01T00:00:00.000Z',
+    updated_at: '2000-01-01T00:00:00.000Z',
+    deleted_at: undefined,
+    date_of_birth: '2000-01-01T00:00:00.000Z',
+    nested: {
+      created_at: '2000-01-01T00:00:00.000Z',
+      deleted_at: undefined,
+      date_of_birth: '2000-01-01T00:00:00.000Z',
+      items: [
+        {
+          id: 1,
+          created_at: '2023-10-24T12:00:00Z',
+          deleted_at: undefined,
+          date_of_birth: '2000-01-01T00:00:00.000Z',
+        },
+      ],
+    },
+  };
+  const expectedData = {
+    id: 1,
+    name: 'Example',
+    created_at: parseDateFromString('2000-01-01T00:00:00.000Z'),
+    updated_at: parseDateFromString('2000-01-01T00:00:00.000Z'),
+    deleted_at: undefined,
+    date_of_birth: parseDateFromString('2000-01-01T00:00:00.000Z'),
+    nested: {
+      created_at: parseDateFromString('2000-01-01T00:00:00.000Z'),
+      deleted_at: undefined,
+      date_of_birth: parseDateFromString('2000-01-01T00:00:00.000Z'),
+      items: [
+        {
+          id: 1,
+          created_at: parseDateFromString('2023-10-24T12:00:00Z'),
+          deleted_at: undefined,
+          date_of_birth: parseDateFromString('2000-01-01T00:00:00.000Z'),
+        },
+      ],
+    },
+  };
+  it('Should transform the object dates and nulls.', () => {
+    expect(transformDateStringInDate(receivedData)).toEqual(expectedData);
   });
 });

@@ -64,6 +64,7 @@ export default function Input({
   const componentId = id ?? useGenerateComponentId('input-');
   const labelId = componentId ? `${componentId}-label` : undefined;
   const helperId = componentId ? `${componentId}-helper` : undefined;
+  const feedbackId = componentId ? `${componentId}-feedback` : undefined;
 
   const ariaAttributes = {
     'aria-invalid': currentIsInvalid || undefined,
@@ -203,7 +204,7 @@ export default function Input({
           </InputContent>
       )}
       {currentIsInvalid && (
-        <Feedback id={`${componentId}-feedback`} context="error">
+        <Feedback id={feedbackId} context="error">
           {invalidMessage ?? ''}
         </Feedback>
       )}

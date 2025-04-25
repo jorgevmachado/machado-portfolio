@@ -1,23 +1,14 @@
-import {
-  afterEach,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  jest,
-} from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+
+import { transformDateStringInDate } from '@repo/services/entities/entities';
 
 import { Nest } from '../api';
 
 import { AuthService } from './service';
 
-import type {
-  SignInParams,
-  SignUpParams,
-  UpdateParams,
-  UserEntity,
-} from './interface';
+import type { SignInParams, SignUpParams, UpdateParams, UserEntity } from './interface';
 import { USER_ENTITY_FIXTURE } from './fixtures';
+
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -122,7 +113,7 @@ describe('AuthService', () => {
       mockNest.auth.getOne.mockResolvedValue(mockUser);
 
       const result = await authService.get(mockUser.id);
-      expect(result).toEqual(mockUser);
+      expect(result).toEqual(transformDateStringInDate(mockUser));
       expect(mockNest.auth.getOne).toHaveBeenCalledTimes(1);
       expect(mockNest.auth.getOne).toHaveBeenCalledWith(mockUser.id);
     });
@@ -145,7 +136,7 @@ describe('AuthService', () => {
       mockNest.auth.me.mockResolvedValue(mockUser);
 
       const result = await authService.me();
-      expect(result).toEqual(mockUser);
+      expect(result).toEqual(transformDateStringInDate(mockUser));
       expect(mockNest.auth.me).toHaveBeenCalledTimes(1);
     });
 

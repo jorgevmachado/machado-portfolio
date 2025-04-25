@@ -151,7 +151,7 @@ export default function SignIn() {
         setAccessToken(response, key);
         addAlert({ type: 'success', message: 'Authenticated successfully!' });
         isBrowser()
-          ? window.open(redirectTo, '_self')
+          ? window.open(redirectTo ?? '/', '_self')
           : router.push(redirectTo ?? '/');
       })
       .catch((error) => {

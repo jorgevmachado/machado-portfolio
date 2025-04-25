@@ -103,3 +103,28 @@ export function dateOfBirthValidator({ value }: ValidatorParams): ValidatorMessa
         message: 'valid date.',
       };
 }
+
+/**
+ * Check if a string has date format (ISO, Brazilian or ISO with Zulu/UTC).
+ * @param value String a ser validada.
+ */
+export function isDateString({ value }: ValidatorParams): ValidatorMessage {
+  if (!value) {
+    return REQUIRED_FIELD;
+  }
+
+  if (typeof value !== 'string') {
+    return INVALID_TYPE;
+  }
+
+  const dateRegex =
+    /^(\d{4}-\d{2}-\d{2}([Tt]\d{2}:\d{2}(:\d{2}(\.\d+)?)?([Zz]|[+-]\d{2}:\d{2})?)?)|(\d{2}\/\d{2}\/\d{4})$/;
+  const valid = dateRegex.test(value);
+  return {
+    valid,
+    value: valid ? value : undefined,
+    message: valid ? 'Valid date string.' : 'Please enter a valid date string.',
+  }
+
+
+}

@@ -9,7 +9,13 @@ import {
 
 import { INVALID_TYPE, REQUIRED_FIELD } from '../utils';
 
-import { dateOfBirthValidator, yearValidator, dayValidator, monthValidator } from './date';
+import {
+  dateOfBirthValidator,
+  dayValidator,
+  isDateString,
+  monthValidator,
+  yearValidator,
+} from './date';
 
 describe('date validator methods', () => {
   beforeEach(() => {
@@ -51,17 +57,17 @@ describe('date validator methods', () => {
       expect(monthValidator({ value: 0 })).toEqual({
         valid: true,
         value: 0,
-        message: 'Valid month.'
+        message: 'Valid month.',
       });
       expect(monthValidator({ value: 12 })).toEqual({
         valid: true,
         value: 12,
-        message: 'Valid month.'
+        message: 'Valid month.',
       });
       expect(monthValidator({ value: 6 })).toEqual({
         valid: true,
         value: 6,
-        message: 'Valid month.'
+        message: 'Valid month.',
       });
     });
 
@@ -69,12 +75,12 @@ describe('date validator methods', () => {
       expect(monthValidator({ value: -1 })).toEqual({
         valid: false,
         value: undefined,
-        message: 'Please enter a valid month.'
+        message: 'Please enter a valid month.',
       });
       expect(monthValidator({ value: 13 })).toEqual({
         valid: false,
         value: undefined,
-        message: 'Please enter a valid month.'
+        message: 'Please enter a valid month.',
       });
     });
 
@@ -93,17 +99,17 @@ describe('date validator methods', () => {
       expect(dayValidator({ value: 1 })).toEqual({
         valid: true,
         value: 1,
-        message: 'Valid day.'
+        message: 'Valid day.',
       });
       expect(dayValidator({ value: 31 })).toEqual({
         valid: true,
         value: 31,
-        message: 'Valid day.'
+        message: 'Valid day.',
       });
       expect(dayValidator({ value: 15 })).toEqual({
         valid: true,
         value: 15,
-        message: 'Valid day.'
+        message: 'Valid day.',
       });
     });
 
@@ -111,17 +117,17 @@ describe('date validator methods', () => {
       expect(dayValidator({ value: 0 })).toEqual({
         valid: false,
         value: undefined,
-        message: 'Please enter a valid day.'
+        message: 'Please enter a valid day.',
       });
       expect(dayValidator({ value: 32 })).toEqual({
         valid: false,
         value: undefined,
-        message: 'Please enter a valid day.'
+        message: 'Please enter a valid day.',
       });
       expect(dayValidator({ value: -5 })).toEqual({
         valid: false,
         value: undefined,
-        message: 'Please enter a valid day.'
+        message: 'Please enter a valid day.',
       });
     });
 
@@ -162,12 +168,58 @@ describe('date validator methods', () => {
     it('should return valid when received date string over 18 year old.', () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 20);
-      const value =  date.toISOString();
+      const value = date.toISOString();
       expect(dateOfBirthValidator({ value })).toEqual({
         valid: true,
         value,
         message: 'valid date.',
       });
+    });
+  });
+
+  describe('isDateString', () => {
+    it('Must return valid for string with international standard date.', () => {
+      const value = '2000-01-01';
+      expect(isDateString({ value })).toEqual({
+        valid: true,
+        value,
+        message: 'Valid date string.',
+      });
+    });
+
+    it('Must return valid for string iso with international standard date.', () => {
+      const value = '2000-01-01T00:00:00Z';
+      expect(isDateString({ value })).toEqual({
+        valid: true,
+        value,
+        message: 'Valid date string.',
+      });
+    });
+
+    it('Must return valid for string iso with timezone and international standard date.', () => {
+      const value = '2000-01-01T00:00:00.000Z';
+      expect(isDateString({ value })).toEqual({
+        valid: true,
+        value,
+        message: 'Valid date string.',
+      });
+    });
+
+    it('Must return valid for string with Brazilian standard date.', () => {
+      const value = '01/01/2000';
+      expect(isDateString({ value })).toEqual({
+        valid: true,
+        value,
+        message: 'Valid date string.',
+      });
+    });
+
+    it('should return a required field error for missing date string.', () => {
+      expect(isDateString({ value: undefined })).toEqual(REQUIRED_FIELD);
+    });
+
+    it('should return a type error for non string date.', () => {
+      expect(isDateString({ value: 1 })).toEqual(INVALID_TYPE);
     });
   });
 });

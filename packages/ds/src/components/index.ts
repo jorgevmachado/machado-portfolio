@@ -20,3 +20,4 @@ export { default as Table, type TableProps } from './table';
 export { default as Pagination } from './pagination';
 export { default as Select } from './select'
 export { default as Tabs } from './tabs'
+export { default as DatePicker } from './date-picker'

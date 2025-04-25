@@ -1,42 +1,41 @@
+'use client';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { isBrowser } from '@repo/services/window/window';
 
+import { calculateMaxDate } from '@repo/services/date/dateUtils';
+
 import { cpfFormatter } from '@repo/services/formatter/document/document';
 import { mobileFormatter } from '@repo/services/formatter/contact/contact';
 
-import type {
-  ValidatorMessage,
-  ValidatorParams,
-} from '@repo/services/validator/interface';
-import {
-  genderValidator,
-  nameValidator,
-} from '@repo/services/validator/personal/personal';
+import type { ValidatorMessage, ValidatorParams } from '@repo/services/validator/interface';
+import { genderValidator, nameValidator } from '@repo/services/validator/personal/personal';
 import { dateOfBirthValidator } from '@repo/services/validator/date/date';
 
 import { EGender } from '@repo/business/shared/enum';
 import type { User } from '@repo/business/auth/interface';
 
-import useAlert from '@repo/ui/hooks/alert/useAlert';
-
 import Input from '@repo/ds/components/input/Input';
 import Button from '@repo/ds/components/button/Button';
-
 import RadioGroup from '@repo/ds/components/radio-group/RadioGroup';
+import DatePicker from '@repo/ds/components/date-picker/DatePicker';
+
+import useAlert from '@repo/ui/hooks/alert/useAlert';
 
 import {
   authService,
   generateUrl,
   getAccessTokenName,
   getCurrenAccessToken,
-  removeAccessToken,
+  getLogoUrl,
+  removeAccessToken
 } from '../../shared';
 
 import { InfoText, Logo } from '../../components';
 
 import './Update.scss';
+
 
 type FormDataError = ValidatorMessage & {
   validator: (validatorParams: ValidatorParams) => ValidatorMessage;
@@ -53,7 +52,7 @@ type UpdateFormDataFields = {
   name: string;
   gender: string;
   picture: string;
-  date_of_birth: string;
+  date_of_birth?: Date;
 };
 
 type UpdateFormData = {
@@ -70,7 +69,7 @@ const DefaultFormUpdateFormData: UpdateFormData = {
     name: '',
     gender: '',
     picture: '',
-    date_of_birth: '',
+    date_of_birth: new Date()
   },
   errors: {
     name: {
@@ -119,7 +118,17 @@ export default function Update() {
       addAlert({ type: 'error', message: 'Your token has expired!' });
       const key = getAccessTokenName(source ?? '');
       removeAccessToken(key);
-      // router.push('/');
+      const currentUrl = generateUrl({
+        env,
+        source,
+        redirectTo,
+        destination: 'sign-in',
+      }).toString();
+      if (isBrowser()) {
+        router.push(currentUrl);
+        return;
+      }
+      window.open(currentUrl, '_self');
     }
   }, [addAlert, router]);
 
@@ -138,15 +147,13 @@ export default function Update() {
           name: user.name ?? '',
           gender: user.gender ?? '',
           picture: user.picture ?? '',
-          date_of_birth: user.date_of_birth?.toString() ?? '',
+          date_of_birth: user?.date_of_birth,
         },
       }));
     }
   }, [user]);
 
   const title = 'Update an Account';
-  const logoSrc =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHN5dygQnJFirBww40JLAsLuZHF0kOdBrzLw&s';
   const description =
     'By upgrading an account, you agree to our Terms of Service and Privacy Policy.';
 
@@ -181,20 +188,23 @@ export default function Update() {
 
     const { name, gender, date_of_birth } = updateFormData.fields;
     await handleUpload();
+
     setLoading(true);
     try {
       await authService.update({
         name,
         gender: gender as EGender,
-        date_of_birth: new Date(date_of_birth),
+        date_of_birth: date_of_birth,
       });
       addAlert({ type: 'success', message: 'User updated successfully!' });
-      const redirectToUrl =
-        redirectTo ??
-        generateUrl({ env, source, redirectTo, error: 'authenticated' });
-      isBrowser()
-        ? window.open(redirectToUrl, '_self')
-        : router.push(redirectToUrl.toString());
+      if(redirectTo) {
+        const redirectToUrl =
+          redirectTo ??
+          generateUrl({ env, source, redirectTo, error: 'authenticated' });
+        isBrowser()
+          ? window.open(redirectToUrl, '_self')
+          : router.push(redirectToUrl.toString());
+      }
     } catch (error) {
       addAlert({
         type: 'error',
@@ -226,7 +236,7 @@ export default function Update() {
     }));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
     if (files && files[0]) {
       setCurrentPicture(files[0]);
@@ -238,10 +248,17 @@ export default function Update() {
     }));
   };
 
-  const handleChangeRadio = (name: string, value: string) => {
+  const handleChangeGender = (value: string) => {
     setUpdateFormData((prev) => ({
       ...prev,
-      fields: { ...prev.fields, [name]: value },
+      fields: { ...prev.fields, gender: value },
+    }));
+  };
+
+  const handleOnChangeDateOfBirth = (date?: Date) => {
+    setUpdateFormData((prev) => ({
+      ...prev,
+      fields: { ...prev.fields, date_of_birth: date },
     }));
   };
 
@@ -294,7 +311,7 @@ export default function Update() {
 
   return (
     <div className="update">
-      <Logo src={logoSrc} />
+      <Logo src={getLogoUrl(source)} />
 
       <InfoText title={title} description={description} />
 
@@ -306,7 +323,7 @@ export default function Update() {
           label="Picture"
           value={updateFormData.fields.picture}
           accept="image/*"
-          onChange={handleChange}
+          onChange={handleOnChange}
           isInvalid={!updateFormData.errors.picture.valid}
           invalidMessage={updateFormData.errors.picture.message}
         />
@@ -326,7 +343,7 @@ export default function Update() {
           label="Name"
           value={updateFormData.fields.name}
           onBlur={() => handleInputValidate('name')}
-          onChange={handleChange}
+          onChange={handleOnChange}
           placeholder="Enter your FullName"
           isInvalid={!updateFormData.errors.name.valid}
           invalidMessage={updateFormData.errors.name.message}
@@ -343,9 +360,7 @@ export default function Update() {
             appearance="standard"
             modelValue={updateFormData.fields.gender}
             onClick={(event) => event.preventDefault()}
-            onActionClick={(value) =>
-              handleChangeRadio('gender', value as string)
-            }
+            onActionClick={(value) => handleChangeGender(value as string)}
           />
         </div>
         <Input
@@ -366,17 +381,20 @@ export default function Update() {
           disabled
           placeholder="Enter your Whatsapp"
         />
-        <Input
+        <DatePicker
           id="date_of_birth"
-          type="text"
-          name="date_of_birth"
           label="Date of birth"
-          value={updateFormData.fields.date_of_birth}
-          onBlur={() => handleInputValidate('date_of_birth')}
-          onChange={handleChange}
-          placeholder="Enter your Date of birth"
+          selected={updateFormData.fields.date_of_birth}
+          onChange={({ date }) => handleOnChangeDateOfBirth(date)}
+          placeholder="Select your Date of birth"
           isInvalid={!updateFormData.errors.date_of_birth.valid}
+          maxDate={calculateMaxDate(new Date(), 18)}
+          dropdownMode="select"
           invalidMessage={updateFormData.errors.date_of_birth.message}
+          showYearDropdown
+          showMonthDropdown
+          scrollableYearDropdown
+          useShortMonthInDropdown
         />
         <Button type="submit" context="neutral" loading={loading} fluid>
           Save

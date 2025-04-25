@@ -13,8 +13,10 @@ export function parseDateFromString(
   value: string,
   dateSeparators: Array<TDateSeparator> = ['-', '/'],
 ): Date | undefined {
+  const isoRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/
+  const currentValue = isoRegex.test(value) ? value.split('T')[0] : value;
   return dateSeparators
-    .map((separator) => parseDateFromStringWithSeparator(value, separator))
+    .map((separator) => parseDateFromStringWithSeparator(currentValue, separator))
     .filter((date) => date !== undefined)
     .shift();
 }

@@ -48,6 +48,14 @@ describe('Date functions', () => {
       expect(parseDateFromString('2000-01-01')).toEqual(new Date(2000, 0, 1));
     });
 
+    it('Must convert date string iso with international standard to date.', () => {
+      expect(parseDateFromString('2000-01-01T00:00:00Z')).toEqual(new Date(2000, 0, 1));
+    });
+
+    it('Must convert date string iso with timezone and international standard to date.', () => {
+      expect(parseDateFromString('2000-01-01T00:00:00.000Z')).toEqual(new Date(2000, 0, 1));
+    });
+
     it('Must convert the date string with Brazilian standard to date.', () => {
       expect(parseDateFromString('01/01/2000')).toEqual(new Date(2000, 0, 1));
     });
