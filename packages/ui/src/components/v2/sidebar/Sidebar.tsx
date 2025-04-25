@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import joinClass from '@repo/ds/utils/join-class/joinClass';
 
@@ -16,7 +16,11 @@ export default function Sidebar({
   onLinkClick,
   isSidebarOpen = true,
 }: SidebarProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(isSidebarOpen);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+
+  useEffect(() => {
+    setIsOpen(isSidebarOpen);
+  }, [isSidebarOpen]);
 
   const handleOnClick = (path: string) => {
     onLinkClick

@@ -69,7 +69,7 @@ export default function Layout({ children }: DefaultProps) {
         <PageLayout
           user={user}
           menu={privateRoutes}
-          sidebarOpen
+          sidebarOpen={true}
           navbarTitle="Finance"
           onLinkClick={handleLinkClick}
         >
