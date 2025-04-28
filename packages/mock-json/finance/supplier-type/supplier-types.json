@@ -1,0 +1,58 @@
+[
+  {
+    "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+    "name": "Housing",
+    "name_code": "housing",
+    "created_at": "2025-02-01T19:00:18.670Z",
+    "updated_at": "2025-02-01T19:00:18.670Z"
+  },
+  {
+    "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+    "name": "Food",
+    "name_code": "food",
+    "created_at": "2025-02-02T19:00:18.686Z",
+    "updated_at": "2025-02-02T19:00:18.686Z"
+  },
+  {
+    "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+    "name": "Transport",
+    "name_code": "transport",
+    "created_at": "2025-02-03T19:00:18.686Z",
+    "updated_at": "2025-02-03T19:00:18.686Z"
+  },
+  {
+    "id": "1f886516-c5fa-4ca5-8e16-e395a65598cd",
+    "name": "Health",
+    "name_code": "health",
+    "created_at": "2025-02-04T19:00:18.687Z",
+    "updated_at": "2025-02-04T19:00:18.687Z"
+  },
+  {
+    "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+    "name": "Leisure",
+    "name_code": "leisure",
+    "created_at": "2025-02-05T19:00:18.686Z",
+    "updated_at": "2025-02-05T19:00:18.686Z"
+  },
+  {
+    "id": "693a8c6a-0832-4acc-9a00-2f38ac2cab7b",
+    "name": "Education",
+    "name_code": "education",
+    "created_at": "2025-02-06T19:00:18.688Z",
+    "updated_at": "2025-02-06T19:00:18.688Z"
+  },
+  {
+    "id": "10f85833-96e5-44c6-a73a-9f4960ba9279",
+    "name": "Unknown",
+    "name_code": "unknown",
+    "created_at": "2025-02-08T19:00:18.687Z",
+    "updated_at": "2025-02-08T19:00:18.687Z"
+  },
+  {
+    "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+    "name": "Bills",
+    "name_code": "bills",
+    "created_at": "2025-02-07T19:00:18.688Z",
+    "updated_at": "2025-02-07T19:00:18.688Z"
+  }
+]

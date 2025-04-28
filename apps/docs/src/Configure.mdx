@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Documentation" />
+
+# Documentação de Componentes com Storybook
+
+Este projeto utiliza o **Storybook** como ferramenta para documentar e testar os componentes do nosso sistema. Aqui, os componentes são divididos em duas principais categorias:
+
+## 1. **Design System (DS)**:
+O **Design System** é uma coleção de componentes reutilizáveis, como botões, inputs, modais e estilos tipográficos, que seguem uma identidade visual consistente. Ele serve como base para construção de interfaces em qualquer projeto que siga as diretrizes de design estabelecidas. Esses componentes são simples, genéricos e desacoplados de lógicas específicas de negócios, podendo ser utilizados em diversos contextos.
+
+## 2. **User-Interface (UI)**:
+A camada de **User-Interface** é composta por hooks e abstrações construídas sobre o Design System e outras dependências do projeto. Esta camada oferece componentes mais especializados e preparados para lidar com funcionalidades e interações específicas de projetos reais.
+
+## Como Utilizar
+ - Você pode instalar o Design System em outros projetos como uma dependência de base. Garanta que os estilos globais e configurações (como temas) sejam importados apropriadamente para harmonizar com o restante do projeto.
+ - Para componentes específicos da **User-Interface**, verifique as dependências do projeto atual e integre as que forem necessárias para permitir a reutilização desses componentes.
+
+
+## **Execução do Storybook**
+ - Execute o Storybook para visualizar e testar individualmente os componentes disponíveis. Os componentes documentados são exibidos como histórias interativas, permitindo que você explore suas características e personalizá-los de acordo com as necessidades do seu projeto.
+ - Exemplos: Como um botão pode ser estilizado, como modais podem ser configurados (como no exemplo `Modal`) e como hooks, como o `useModal`, podem ser utilizados para estender comportamentos.
+
+## **Integração com Outros Projetos**:
+ - Reutilize os componentes do Design System copiando-os diretamente para outro projeto ou publicando-os em um repositório compartilhado como um pacote NPM.
+ - Para funcionalidades específicas (presentes na camada de **User-Interface**) que não pertencem ao Design System—como hooks (`useModal`) e provedores (`ModalProvider`)—avalie suas dependências e certifique-se de que toda a base necessária está configurada no novo projeto antes de utilizá-las.
+
+### Benefícios do Storybook:
+- **Pode ser utilizado como guia visual para desenvolvedores e designers**, ajudando a alinhar ideias enquanto desenvolvem componentes reutilizáveis.
+- Facilita a **documentação interativa**, mostrando não apenas a aparência dos componentes, mas também como utilizá-los com exemplos práticos.
+- Torna os componentes reutilizáveis **portáveis e escaláveis**, promovendo consistência entre equipes e projetos diferentes.
+
+O Storybook é uma poderosa ferramenta para garantir que os componentes e hooks construídos neste projeto sejam acessíveis e fáceis de utilizar em qualquer novo projeto, incentivando o reuso e reduzindo o retrabalho.

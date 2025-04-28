@@ -1,0 +1,127 @@
+import {IconGallery, IconItem, Meta} from '@storybook/blocks';
+
+import IconExample from '@repo/ds/elements/icon/Icon';
+import { OIcon } from '@repo/ds/elements/icon/options';
+import { getIcon, ICON_GROUPS } from '@repo/ds/elements/icon/service';
+
+
+
+<Meta title="Iconography" />
+
+# **Guia de Uso de Icones**
+
+O projeto possui um conjunto abrangente de ícones disponíveis para uso em diferentes contextos, seguindo as diretrizes visuais do nosso sistema. Esses ícones do **Design System** garantem consistência visual e funcionalidade nas interfaces.
+
+## O que são os ícones?
+Ícones são elementos visuais utilizados para comunicar mensagens de forma rápida e intuitiva, ajudando a guiar os usuários em diferentes contextos. Nesta documentação, você encontrará tudo que precisa para utilizá-los de forma eficiente, com total integração ao Design System.
+
+## Como Utilizar os Ícones no Projeto:
+### 1. **Seleção do Ícone**:
+ - Todos os ícones disponíveis no projeto podem ser visualizados e testados através da documentação interativa no Storybook, por meio da sessão **Iconography**.
+ - A galeria exibe todos os ícones disponíveis (`OIcon`), com seus respectivos `names`, facilitando a seleção do ícone desejado.
+
+### 2. **Implementação**:
+ - Para utilizar um ícone, importe o componente de ícones do Design System e adicione o ícone escolhido utilizando o `name` correspondente.
+ - Opções como **tamanho** e **cor** podem ser ajustadas facilmente para atender aos requisitos do design de cada parte da interface.
+
+### 3. **Personalização**:
+ - **Tamanho**: Configure utilizando o parâmetro `size` (ex.: `2rem`, `24px`, etc.).
+ - **Cor**: Use as configurações de cores do Design System, como `primary-80` ou `secondary-100`.
+#### Exemplos:
+- Ícone pequeno (`size: 1rem`) com cor primária:
+```tsx
+    import Icon from '@repo/ds/elements/icon/Icon';
+
+    <Icon icon="check" size="1rem" group="fa" color="primary-80" aria-label="Mais informações" />
+```
+- Ícone Dinâmico:
+Você também pode utilizar ícones dinamicamente baseados em estados ou valores do seu código:
+```tsx
+    import Icon from '@repo/ds/elements/icon/Icon';
+    const statusIcon = status === 'success' ? 'check' : 'error';
+
+    <Icon icon={statusIcon} size="1rem" group="fa" color="primary-80" aria-label="Successo" />
+```
+### 4. **Personalização**
+Os ícones podem ser customizados de acordo com diferentes necessidades do projeto:
+
+- **Tamanho** (`size`): Especifique valores como `16px`, `2rem`, etc.
+- **Cor** (`color`): Utilize as cores do **Design System**, como `primary-80` ou `secondary-100`.
+- **Acessibilidade**: Adicione o atributo `aria-label` para descrever o significado do ícone.
+
+#### Exemplos Práticos:
+**Ícone Pequeno com Cor Primária:**
+```tsx
+import Icon from '@repo/ds/elements/icon/Icon';
+<Icon icon="check" size="1rem" group="fa" color="primary-80" aria-label="Confirmar" />
+```
+
+**Ícone Dinâmico Baseado em Estados:**
+```tsx
+import Icon from '@repo/ds/elements/icon/Icon';
+const statusIcon = status === 'success' ? 'check' : 'error';
+
+<Icon icon={statusIcon} size="1rem"  group="fa" color="primary-80" aria-label={status === 'success' ? "Sucesso" : "Erro"} />
+```
+
+### 5. **Reutilização**:
+Os ícones foram projetados para serem **reutilizáveis**. Você pode usá-los em qualquer parte do projeto, garantindo consistência visual.
+
+#### **Galeria de Ícones Disponíveis**
+
+##### **Lista Geral de Ícones**
+A galeria abaixo apresenta todos os ícones disponíveis (`OIcon`) no sistema, com seus respectivos nomes, tamanhos e cores padrão.
+
+<br/>
+<br/>
+<IconGallery>
+    {OIcon.map((iconName, index) => {
+        const size = '2rem';
+        const color = 'primary-100';
+        const withDefault = false;
+
+        const iconData = getIcon({ name: iconName, size, color, withDefault })
+        return (
+            <IconItem key={`${iconName}-${index}`} name={`${iconData.group} > ${iconName}`}>
+                <div aria-label={`Este é o ícone ${iconName}`}>
+                    <IconExample icon={iconName} size={size} color={color} withDefault={withDefault} />
+                </div>
+            </IconItem>
+        );
+    })}
+</IconGallery>
+
+### **Ícones por Grupo**
+Listagem de ícones organizados por seus respectivos grupos para facilitar a consulta.
+
+<div>
+    <br/>
+    <br/>
+    {Object.keys(ICON_GROUPS).map((group) => {
+        const size = '2rem';
+        const color = 'primary-100';
+        const withDefault = false;
+        const groupName = group.toUpperCase();
+
+        const iconsByGroup = OIcon.map((iconName) => ({
+            ...getIcon({ name: iconName, size, group, color, withDefault }),
+            name: iconName,
+        })).filter((item) => item.icon);
+        return iconsByGroup.length > 0 && (
+            <>
+                <h5 style={{ marginBottom: '2rem'}}>Lista de Todos os Ícones disponíveis no sistema do grupo: `{groupName}`</h5>
+                <IconGallery>
+                    {iconsByGroup.map((icon) => {
+                        return (
+                            <IconItem name={icon.name}>
+                                <div aria-label={`Este é o ícone ${icon.name}`}>
+                                    <IconExample icon={icon.name} size={size} color={color} withDefault={withDefault} />
+                                </div>
+                            </IconItem>
+                        );
+                    })}
+                </IconGallery>
+            </>
+        )
+    })}
+</div>

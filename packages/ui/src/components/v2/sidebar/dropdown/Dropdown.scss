@@ -1,0 +1,27 @@
+.dropdown {
+  cursor: pointer;
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  &__submenu {
+    gap: var(--dimensions-fixed-10);
+    display: flex;
+    background: var(--color-sidebar-background);
+    padding-top: var(--dimensions-fixed-10);
+    padding-left: var(--dimensions-fixed-40);
+    flex-direction: column;
+    padding-bottom: var(--dimensions-fixed-10);
+  }
+  .dropdown {
+    margin-left: -20px;
+    .dropdown {
+      &__submenu {
+        padding-left: var(--dimensions-fixed-50);
+        background: none;
+      }
+    }
+  }
+}

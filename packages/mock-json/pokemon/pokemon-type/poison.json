@@ -1,0 +1,11 @@
+{
+  "id": "eeb060e0-8e36-4bd4-951b-5172534c45e3",
+  "url": "https://pokeapi.co/api/v2/type/4/",
+  "name": "poison",
+  "order": 4,
+  "created_at": "2025-02-07T19:00:23.487Z",
+  "updated_at": "2025-02-07T19:00:23.487Z",
+  "deleted_at": null,
+  "text_color": "#f5f5f5",
+  "background_color": "#8b008b"
+}

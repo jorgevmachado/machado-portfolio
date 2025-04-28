@@ -1,0 +1,76 @@
+@use "../../styles/main" as *;
+.date-picker {
+  &__container {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    &--inline  {
+      display: block;
+    }
+  }
+  &__label {
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  &__input {
+    color: var(--color-neutral-100);
+    width: 100%;
+    border: 1px solid var(--color-neutral-60);
+    outline: none;
+    padding: var(--size-x-small) 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    border-radius: var(--border-radius-large);
+    background-color: transparent;
+    &::placeholder {
+      color: var(--color-neutral-90);
+    }
+    &:hover {
+      border-color: #e5cefd;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.2);
+      border-color: #2c3e50;
+    }
+
+    &:active {
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.16);
+    }
+
+    &#{&}-focused:focus {
+      border-color: #e5cefd;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    &[type="button"],
+    &[type="submit"] {
+      cursor: pointer;
+    }
+
+    @include focus(
+            $default-transition: (
+                    border 0.2s ease-in-out,
+                    box-shadow 0.2s ease-in-out,
+            ),
+            $overflow-border: true
+    );
+    &--error {
+      border-color: var(--color-error-80);
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.2);
+      }
+      &::placeholder {
+        color: var(--color-error-80);
+      }
+    }
+  }
+  &__error {
+    color: var(--color-error-80);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    border-color: var(--colors-error-80);
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "58ff5efb-f261-4631-9658-3a69ee7df3fc",
+    "name": "Caixa",
+    "name_code": "caixa",
+    "created_at": "2025-02-01T19:46:54.072Z",
+    "updated_at": "2025-02-01T19:46:54.072Z"
+  },
+  {
+    "id": "70b9ecf7-bd98-4601-b25a-fae5163017a5",
+    "name": "Itaú",
+    "name_code": "itau",
+    "created_at": "2025-02-01T19:46:54.072Z",
+    "updated_at": "2025-02-01T19:46:54.072Z"
+  },
+  {
+    "id": "dfea3644-1e51-4c59-9456-64ced7d13873",
+    "name": "Nubank",
+    "name_code": "nubank",
+    "created_at": "2025-02-01T19:46:54.072Z",
+    "updated_at": "2025-02-01T19:46:54.072Z"
+  },
+  {
+    "id": "6d958829-590b-4340-9e7a-be99b4185f25",
+    "name": "Porto",
+    "name_code": "porto",
+    "created_at": "2025-02-01T19:46:54.072Z",
+    "updated_at": "2025-02-01T19:46:54.072Z"
+  }
+]

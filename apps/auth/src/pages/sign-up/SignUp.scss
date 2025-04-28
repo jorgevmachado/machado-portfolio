@@ -1,0 +1,26 @@
+.sign-up {
+  display: flex;
+  padding: 5rem;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  &__form {
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    &--gender {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    fieldset {
+      .label, .radio-group P {
+          margin-left: var(--dimensions-relative-16);
+      }
+     }
+    }
+    @media screen and (min-width: 720px) {
+      width: Calc(25vw - 10px);
+    }
+  }
+}

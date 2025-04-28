@@ -1,0 +1,11 @@
+{
+  "id": "01ade48b-573f-41fe-9d33-34a3cb4c0b9c",
+  "url": "https://pokeapi.co/api/v2/ability/34/",
+  "name": "chlorophyll",
+  "slot": 3,
+  "order": 34,
+  "is_hidden": true,
+  "created_at": "2025-02-07T19:00:23.496Z",
+  "updated_at": "2025-02-07T19:00:23.496Z",
+  "deleted_at": null
+}

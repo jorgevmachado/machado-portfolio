@@ -1,0 +1,15 @@
+.links {
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  &__link {
+    gap: var(--dimensions-relative-8);
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+  }
+}

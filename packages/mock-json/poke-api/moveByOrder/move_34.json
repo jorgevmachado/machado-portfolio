@@ -1,0 +1,3604 @@
+{
+  "accuracy": 100,
+  "contest_combos": null,
+  "contest_effect": {
+    "url": "http://localhost:9000/external/api/v2/contest-effect/4/"
+  },
+  "contest_type": {
+    "name": "tough",
+    "url": "http://localhost:9000/external/api/v2/contest-type/5/"
+  },
+  "damage_class": {
+    "name": "physical",
+    "url": "http://localhost:9000/external/api/v2/move-damage-class/2/"
+  },
+  "effect_chance": 30,
+  "effect_changes": [],
+  "effect_entries": [
+    {
+      "effect": "Inflicts regular damage.  Has a 30% chance to paralyze the target.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "short_effect": "Has a 30% chance to paralyze the target."
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "An attack that may\ncause paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "gold-silver",
+        "url": "http://localhost:9000/external/api/v2/version-group/3/"
+      }
+    },
+    {
+      "flavor_text": "An attack that may\ncause paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "crystal",
+        "url": "http://localhost:9000/external/api/v2/version-group/4/"
+      }
+    },
+    {
+      "flavor_text": "A full-body slam that may\ncause paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ruby-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/5/"
+      }
+    },
+    {
+      "flavor_text": "A full-body slam that may\ncause paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "emerald",
+        "url": "http://localhost:9000/external/api/v2/version-group/6/"
+      }
+    },
+    {
+      "flavor_text": "The user drops its\nfull body on the\nfoe. It may leave\nthe foe paralyzed.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "firered-leafgreen",
+        "url": "http://localhost:9000/external/api/v2/version-group/7/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto\nthe foe with its full\nbody weight.\nIt may leave the foe\nparalyzed.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "diamond-pearl",
+        "url": "http://localhost:9000/external/api/v2/version-group/8/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto\nthe foe with its full\nbody weight.\nIt may leave the foe\nparalyzed.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "platinum",
+        "url": "http://localhost:9000/external/api/v2/version-group/9/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto\nthe foe with its full\nbody weight.\nIt may leave the foe\nparalyzed.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "heartgold-soulsilver",
+        "url": "http://localhost:9000/external/api/v2/version-group/10/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur se laisse tomber sur l’ennemi\nde tout son poids. Peut le paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "http://localhost:9000/external/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "black-white",
+        "url": "http://localhost:9000/external/api/v2/version-group/11/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto the target\nwith its full body weight. It may also\nleave the target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "black-white",
+        "url": "http://localhost:9000/external/api/v2/version-group/11/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto the target\nwith its full body weight. It may also\nleave the target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "black-2-white-2",
+        "url": "http://localhost:9000/external/api/v2/version-group/14/"
+      }
+    },
+    {
+      "flavor_text": "からだ　ぜんたいで\nあいてに　のしかかり　こうげきする。\nまひ　じょうたいに　することが　ある。",
+      "language": {
+        "name": "ja-Hrkt",
+        "url": "http://localhost:9000/external/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "http://localhost:9000/external/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "몸 전체로\n상대를 덮쳐 눌러 공격한다.\n마비 상태로 만들 때가 있다.",
+      "language": {
+        "name": "ko",
+        "url": "http://localhost:9000/external/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "http://localhost:9000/external/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur se laisse tomber sur l’ennemi de tout\nson poids. Peut aussi le paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "http://localhost:9000/external/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "http://localhost:9000/external/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Trifft das Ziel mit vollem Körpereinsatz.\nBewirkt eventuell Paralyse.",
+      "language": {
+        "name": "de",
+        "url": "http://localhost:9000/external/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "http://localhost:9000/external/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Salta sobre el objetivo con todo su peso. Puede\nparalizar.",
+      "language": {
+        "name": "es",
+        "url": "http://localhost:9000/external/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "http://localhost:9000/external/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa carica il bersaglio con tutto il corpo.\nPuò causarne anche la paralisi.",
+      "language": {
+        "name": "it",
+        "url": "http://localhost:9000/external/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "http://localhost:9000/external/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto the target\nwith its full body weight. This may also\nleave the target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "http://localhost:9000/external/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "全身で\n相手に　のしかかり　攻撃する。\nまひ状態に　することが　ある。",
+      "language": {
+        "name": "ja",
+        "url": "http://localhost:9000/external/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "http://localhost:9000/external/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "からだ　ぜんたいで\nあいてに　のしかかり　こうげきする。\nまひ　じょうたいに　することが　ある。",
+      "language": {
+        "name": "ja-Hrkt",
+        "url": "http://localhost:9000/external/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "몸 전체로\n상대를 덮쳐눌러 공격한다.\n마비 상태로 만들 때가 있다.",
+      "language": {
+        "name": "ko",
+        "url": "http://localhost:9000/external/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur se laisse tomber sur l’ennemi de tout\nson poids. Peut aussi le paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "http://localhost:9000/external/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Trifft das Ziel mit vollem Körpereinsatz.\nBewirkt eventuell Paralyse.",
+      "language": {
+        "name": "de",
+        "url": "http://localhost:9000/external/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Salta sobre el objetivo con todo su peso.\nPuede paralizar.",
+      "language": {
+        "name": "es",
+        "url": "http://localhost:9000/external/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa carica il bersaglio con tutto il corpo.\nPuò causarne anche la paralisi.",
+      "language": {
+        "name": "it",
+        "url": "http://localhost:9000/external/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto the target\nwith its full body weight. This may also\nleave the target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "全身で\n相手に　のしかかり　攻撃する。\nまひ状態に　することが　ある。",
+      "language": {
+        "name": "ja",
+        "url": "http://localhost:9000/external/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "http://localhost:9000/external/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "からだ　ぜんたいで\nあいてに　のしかかり　こうげきする。\nまひ　じょうたいに　することが　ある。",
+      "language": {
+        "name": "ja-Hrkt",
+        "url": "http://localhost:9000/external/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "몸 전체로\n상대를 덮쳐눌러 공격한다.\n마비 상태로 만들 때가 있다.",
+      "language": {
+        "name": "ko",
+        "url": "http://localhost:9000/external/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "用整個身體\n壓住對手進行攻擊。\n有時會讓對手陷入麻痺狀態。",
+      "language": {
+        "name": "zh-Hant",
+        "url": "http://localhost:9000/external/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur se laisse tomber sur l’ennemi de tout\nson poids. Peut aussi le paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "http://localhost:9000/external/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Trifft das Ziel mit vollem Körpereinsatz.\nBewirkt eventuell Paralyse.",
+      "language": {
+        "name": "de",
+        "url": "http://localhost:9000/external/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Salta sobre el objetivo con todo su peso.\nPuede paralizar.",
+      "language": {
+        "name": "es",
+        "url": "http://localhost:9000/external/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa carica il bersaglio con tutto il corpo.\nPuò causarne anche la paralisi.",
+      "language": {
+        "name": "it",
+        "url": "http://localhost:9000/external/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto the target with its full body\nweight. This may also leave the target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "全身で\n相手に　のしかかり　攻撃する。\nまひ状態に　することが　ある。",
+      "language": {
+        "name": "ja",
+        "url": "http://localhost:9000/external/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "用整个身体\n压住对手进行攻击。\n有时会让对手陷入麻痹状态。",
+      "language": {
+        "name": "zh-Hans",
+        "url": "http://localhost:9000/external/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "からだ　ぜんたいで\nあいてに　のしかかり　こうげきする。\nまひ　じょうたいに　することが　ある。",
+      "language": {
+        "name": "ja-Hrkt",
+        "url": "http://localhost:9000/external/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "몸 전체로\n상대를 덮쳐눌러 공격한다.\n마비 상태로 만들 때가 있다.",
+      "language": {
+        "name": "ko",
+        "url": "http://localhost:9000/external/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "用整個身體\n壓住對手進行攻擊。\n有時會讓對手陷入麻痺狀態。",
+      "language": {
+        "name": "zh-Hant",
+        "url": "http://localhost:9000/external/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur se laisse tomber sur l’ennemi de tout\nson poids. Peut aussi le paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "http://localhost:9000/external/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Trifft das Ziel mit vollem Körpereinsatz.\nBewirkt eventuell Paralyse.",
+      "language": {
+        "name": "de",
+        "url": "http://localhost:9000/external/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Salta sobre el objetivo con todo su peso.\nPuede paralizar.",
+      "language": {
+        "name": "es",
+        "url": "http://localhost:9000/external/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa carica il bersaglio con tutto il corpo.\nPuò causarne anche la paralisi.",
+      "language": {
+        "name": "it",
+        "url": "http://localhost:9000/external/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto the target with its full body\nweight. This may also leave the target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "全身で\n相手に　のしかかり　攻撃する。\nまひ状態に　することが　ある。",
+      "language": {
+        "name": "ja",
+        "url": "http://localhost:9000/external/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "用整个身体\n压住对手进行攻击。\n有时会让对手陷入麻痹状态。",
+      "language": {
+        "name": "zh-Hans",
+        "url": "http://localhost:9000/external/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "http://localhost:9000/external/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "からだ　ぜんたいで\nあいてに　のしかかり　こうげきする。\nまひ　じょうたいに　することが　ある。",
+      "language": {
+        "name": "ja-Hrkt",
+        "url": "http://localhost:9000/external/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "몸 전체로\n상대를 덮쳐눌러 공격한다.\n마비 상태로 만들 때가 있다.",
+      "language": {
+        "name": "ko",
+        "url": "http://localhost:9000/external/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "用整個身體\n壓住對手進行攻擊。\n有時會讓對手陷入麻痺狀態。",
+      "language": {
+        "name": "zh-Hant",
+        "url": "http://localhost:9000/external/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur se laisse tomber sur l’ennemi de tout\nson poids. Peut aussi le paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "http://localhost:9000/external/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Trifft das Ziel mit vollem Körpereinsatz.\nBewirkt eventuell Paralyse.",
+      "language": {
+        "name": "de",
+        "url": "http://localhost:9000/external/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Salta sobre el objetivo con todo su peso.\nPuede paralizar.",
+      "language": {
+        "name": "es",
+        "url": "http://localhost:9000/external/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa carica il bersaglio con tutto il corpo.\nPuò causarne anche la paralisi.",
+      "language": {
+        "name": "it",
+        "url": "http://localhost:9000/external/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto the target with its full body\nweight. This may also leave the target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "全身で\n相手に　のしかかり　攻撃する。\nまひ状態に　することが　ある。",
+      "language": {
+        "name": "ja",
+        "url": "http://localhost:9000/external/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "用整个身体\n压住对手进行攻击。\n有时会让对手陷入麻痹状态。",
+      "language": {
+        "name": "zh-Hans",
+        "url": "http://localhost:9000/external/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "http://localhost:9000/external/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "からだ　ぜんたいで\nあいてに　のしかかり　こうげきする。\nまひ　じょうたいに　することが　ある。",
+      "language": {
+        "name": "ja-Hrkt",
+        "url": "http://localhost:9000/external/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "몸 전체로\n상대를 덮쳐눌러 공격한다.\n마비 상태로 만들 때가 있다.",
+      "language": {
+        "name": "ko",
+        "url": "http://localhost:9000/external/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "用整個身體\n壓住對手進行攻擊。\n有時會讓對手陷入麻痺狀態。",
+      "language": {
+        "name": "zh-Hant",
+        "url": "http://localhost:9000/external/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur se laisse tomber sur l’ennemi\nde tout son poids. Peut aussi le paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "http://localhost:9000/external/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Trifft das Ziel mit vollem Körpereinsatz.\nBewirkt eventuell Paralyse.",
+      "language": {
+        "name": "de",
+        "url": "http://localhost:9000/external/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Salta sobre el objetivo con todo su peso y puede llegar\na paralizarlo.",
+      "language": {
+        "name": "es",
+        "url": "http://localhost:9000/external/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa carica il bersaglio con tutto il corpo.\nPuò causarne anche la paralisi.",
+      "language": {
+        "name": "it",
+        "url": "http://localhost:9000/external/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "The user drops onto the target with its full body\nweight. This may also leave the target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "全身で\n相手に　のしかかり　攻撃する。\nまひ状態に　することが　ある。",
+      "language": {
+        "name": "ja",
+        "url": "http://localhost:9000/external/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "用整个身体\n压住对手进行攻击。\n有时会让对手陷入麻痹状态。",
+      "language": {
+        "name": "zh-Hans",
+        "url": "http://localhost:9000/external/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    }
+  ],
+  "generation": {
+    "name": "generation-i",
+    "url": "http://localhost:9000/external/api/v2/generation/1/"
+  },
+  "id": 34,
+  "learned_by_pokemon": [
+    {
+      "name": "bulbasaur",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1/"
+    },
+    {
+      "name": "ivysaur",
+      "url": "http://localhost:9000/external/api/v2/pokemon/2/"
+    },
+    {
+      "name": "venusaur",
+      "url": "http://localhost:9000/external/api/v2/pokemon/3/"
+    },
+    {
+      "name": "charmander",
+      "url": "http://localhost:9000/external/api/v2/pokemon/4/"
+    },
+    {
+      "name": "charmeleon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/5/"
+    },
+    {
+      "name": "charizard",
+      "url": "http://localhost:9000/external/api/v2/pokemon/6/"
+    },
+    {
+      "name": "squirtle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/7/"
+    },
+    {
+      "name": "wartortle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/8/"
+    },
+    {
+      "name": "blastoise",
+      "url": "http://localhost:9000/external/api/v2/pokemon/9/"
+    },
+    {
+      "name": "rattata",
+      "url": "http://localhost:9000/external/api/v2/pokemon/19/"
+    },
+    {
+      "name": "raticate",
+      "url": "http://localhost:9000/external/api/v2/pokemon/20/"
+    },
+    {
+      "name": "ekans",
+      "url": "http://localhost:9000/external/api/v2/pokemon/23/"
+    },
+    {
+      "name": "arbok",
+      "url": "http://localhost:9000/external/api/v2/pokemon/24/"
+    },
+    {
+      "name": "pikachu",
+      "url": "http://localhost:9000/external/api/v2/pokemon/25/"
+    },
+    {
+      "name": "raichu",
+      "url": "http://localhost:9000/external/api/v2/pokemon/26/"
+    },
+    {
+      "name": "sandshrew",
+      "url": "http://localhost:9000/external/api/v2/pokemon/27/"
+    },
+    {
+      "name": "sandslash",
+      "url": "http://localhost:9000/external/api/v2/pokemon/28/"
+    },
+    {
+      "name": "nidoran-f",
+      "url": "http://localhost:9000/external/api/v2/pokemon/29/"
+    },
+    {
+      "name": "nidorina",
+      "url": "http://localhost:9000/external/api/v2/pokemon/30/"
+    },
+    {
+      "name": "nidoqueen",
+      "url": "http://localhost:9000/external/api/v2/pokemon/31/"
+    },
+    {
+      "name": "nidoran-m",
+      "url": "http://localhost:9000/external/api/v2/pokemon/32/"
+    },
+    {
+      "name": "nidorino",
+      "url": "http://localhost:9000/external/api/v2/pokemon/33/"
+    },
+    {
+      "name": "nidoking",
+      "url": "http://localhost:9000/external/api/v2/pokemon/34/"
+    },
+    {
+      "name": "clefairy",
+      "url": "http://localhost:9000/external/api/v2/pokemon/35/"
+    },
+    {
+      "name": "clefable",
+      "url": "http://localhost:9000/external/api/v2/pokemon/36/"
+    },
+    {
+      "name": "vulpix",
+      "url": "http://localhost:9000/external/api/v2/pokemon/37/"
+    },
+    {
+      "name": "ninetales",
+      "url": "http://localhost:9000/external/api/v2/pokemon/38/"
+    },
+    {
+      "name": "jigglypuff",
+      "url": "http://localhost:9000/external/api/v2/pokemon/39/"
+    },
+    {
+      "name": "wigglytuff",
+      "url": "http://localhost:9000/external/api/v2/pokemon/40/"
+    },
+    {
+      "name": "vileplume",
+      "url": "http://localhost:9000/external/api/v2/pokemon/45/"
+    },
+    {
+      "name": "paras",
+      "url": "http://localhost:9000/external/api/v2/pokemon/46/"
+    },
+    {
+      "name": "parasect",
+      "url": "http://localhost:9000/external/api/v2/pokemon/47/"
+    },
+    {
+      "name": "diglett",
+      "url": "http://localhost:9000/external/api/v2/pokemon/50/"
+    },
+    {
+      "name": "dugtrio",
+      "url": "http://localhost:9000/external/api/v2/pokemon/51/"
+    },
+    {
+      "name": "meowth",
+      "url": "http://localhost:9000/external/api/v2/pokemon/52/"
+    },
+    {
+      "name": "persian",
+      "url": "http://localhost:9000/external/api/v2/pokemon/53/"
+    },
+    {
+      "name": "psyduck",
+      "url": "http://localhost:9000/external/api/v2/pokemon/54/"
+    },
+    {
+      "name": "golduck",
+      "url": "http://localhost:9000/external/api/v2/pokemon/55/"
+    },
+    {
+      "name": "mankey",
+      "url": "http://localhost:9000/external/api/v2/pokemon/56/"
+    },
+    {
+      "name": "primeape",
+      "url": "http://localhost:9000/external/api/v2/pokemon/57/"
+    },
+    {
+      "name": "growlithe",
+      "url": "http://localhost:9000/external/api/v2/pokemon/58/"
+    },
+    {
+      "name": "arcanine",
+      "url": "http://localhost:9000/external/api/v2/pokemon/59/"
+    },
+    {
+      "name": "poliwag",
+      "url": "http://localhost:9000/external/api/v2/pokemon/60/"
+    },
+    {
+      "name": "poliwhirl",
+      "url": "http://localhost:9000/external/api/v2/pokemon/61/"
+    },
+    {
+      "name": "poliwrath",
+      "url": "http://localhost:9000/external/api/v2/pokemon/62/"
+    },
+    {
+      "name": "abra",
+      "url": "http://localhost:9000/external/api/v2/pokemon/63/"
+    },
+    {
+      "name": "kadabra",
+      "url": "http://localhost:9000/external/api/v2/pokemon/64/"
+    },
+    {
+      "name": "alakazam",
+      "url": "http://localhost:9000/external/api/v2/pokemon/65/"
+    },
+    {
+      "name": "machop",
+      "url": "http://localhost:9000/external/api/v2/pokemon/66/"
+    },
+    {
+      "name": "machoke",
+      "url": "http://localhost:9000/external/api/v2/pokemon/67/"
+    },
+    {
+      "name": "machamp",
+      "url": "http://localhost:9000/external/api/v2/pokemon/68/"
+    },
+    {
+      "name": "weepinbell",
+      "url": "http://localhost:9000/external/api/v2/pokemon/70/"
+    },
+    {
+      "name": "victreebel",
+      "url": "http://localhost:9000/external/api/v2/pokemon/71/"
+    },
+    {
+      "name": "geodude",
+      "url": "http://localhost:9000/external/api/v2/pokemon/74/"
+    },
+    {
+      "name": "graveler",
+      "url": "http://localhost:9000/external/api/v2/pokemon/75/"
+    },
+    {
+      "name": "golem",
+      "url": "http://localhost:9000/external/api/v2/pokemon/76/"
+    },
+    {
+      "name": "ponyta",
+      "url": "http://localhost:9000/external/api/v2/pokemon/77/"
+    },
+    {
+      "name": "rapidash",
+      "url": "http://localhost:9000/external/api/v2/pokemon/78/"
+    },
+    {
+      "name": "slowpoke",
+      "url": "http://localhost:9000/external/api/v2/pokemon/79/"
+    },
+    {
+      "name": "slowbro",
+      "url": "http://localhost:9000/external/api/v2/pokemon/80/"
+    },
+    {
+      "name": "farfetchd",
+      "url": "http://localhost:9000/external/api/v2/pokemon/83/"
+    },
+    {
+      "name": "doduo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/84/"
+    },
+    {
+      "name": "dodrio",
+      "url": "http://localhost:9000/external/api/v2/pokemon/85/"
+    },
+    {
+      "name": "seel",
+      "url": "http://localhost:9000/external/api/v2/pokemon/86/"
+    },
+    {
+      "name": "dewgong",
+      "url": "http://localhost:9000/external/api/v2/pokemon/87/"
+    },
+    {
+      "name": "grimer",
+      "url": "http://localhost:9000/external/api/v2/pokemon/88/"
+    },
+    {
+      "name": "muk",
+      "url": "http://localhost:9000/external/api/v2/pokemon/89/"
+    },
+    {
+      "name": "cloyster",
+      "url": "http://localhost:9000/external/api/v2/pokemon/91/"
+    },
+    {
+      "name": "gengar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/94/"
+    },
+    {
+      "name": "onix",
+      "url": "http://localhost:9000/external/api/v2/pokemon/95/"
+    },
+    {
+      "name": "drowzee",
+      "url": "http://localhost:9000/external/api/v2/pokemon/96/"
+    },
+    {
+      "name": "hypno",
+      "url": "http://localhost:9000/external/api/v2/pokemon/97/"
+    },
+    {
+      "name": "krabby",
+      "url": "http://localhost:9000/external/api/v2/pokemon/98/"
+    },
+    {
+      "name": "kingler",
+      "url": "http://localhost:9000/external/api/v2/pokemon/99/"
+    },
+    {
+      "name": "exeggutor",
+      "url": "http://localhost:9000/external/api/v2/pokemon/103/"
+    },
+    {
+      "name": "cubone",
+      "url": "http://localhost:9000/external/api/v2/pokemon/104/"
+    },
+    {
+      "name": "marowak",
+      "url": "http://localhost:9000/external/api/v2/pokemon/105/"
+    },
+    {
+      "name": "hitmonlee",
+      "url": "http://localhost:9000/external/api/v2/pokemon/106/"
+    },
+    {
+      "name": "hitmonchan",
+      "url": "http://localhost:9000/external/api/v2/pokemon/107/"
+    },
+    {
+      "name": "lickitung",
+      "url": "http://localhost:9000/external/api/v2/pokemon/108/"
+    },
+    {
+      "name": "koffing",
+      "url": "http://localhost:9000/external/api/v2/pokemon/109/"
+    },
+    {
+      "name": "weezing",
+      "url": "http://localhost:9000/external/api/v2/pokemon/110/"
+    },
+    {
+      "name": "rhyhorn",
+      "url": "http://localhost:9000/external/api/v2/pokemon/111/"
+    },
+    {
+      "name": "rhydon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/112/"
+    },
+    {
+      "name": "chansey",
+      "url": "http://localhost:9000/external/api/v2/pokemon/113/"
+    },
+    {
+      "name": "tangela",
+      "url": "http://localhost:9000/external/api/v2/pokemon/114/"
+    },
+    {
+      "name": "kangaskhan",
+      "url": "http://localhost:9000/external/api/v2/pokemon/115/"
+    },
+    {
+      "name": "goldeen",
+      "url": "http://localhost:9000/external/api/v2/pokemon/118/"
+    },
+    {
+      "name": "seaking",
+      "url": "http://localhost:9000/external/api/v2/pokemon/119/"
+    },
+    {
+      "name": "mr-mime",
+      "url": "http://localhost:9000/external/api/v2/pokemon/122/"
+    },
+    {
+      "name": "jynx",
+      "url": "http://localhost:9000/external/api/v2/pokemon/124/"
+    },
+    {
+      "name": "electabuzz",
+      "url": "http://localhost:9000/external/api/v2/pokemon/125/"
+    },
+    {
+      "name": "magmar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/126/"
+    },
+    {
+      "name": "pinsir",
+      "url": "http://localhost:9000/external/api/v2/pokemon/127/"
+    },
+    {
+      "name": "tauros",
+      "url": "http://localhost:9000/external/api/v2/pokemon/128/"
+    },
+    {
+      "name": "gyarados",
+      "url": "http://localhost:9000/external/api/v2/pokemon/130/"
+    },
+    {
+      "name": "lapras",
+      "url": "http://localhost:9000/external/api/v2/pokemon/131/"
+    },
+    {
+      "name": "eevee",
+      "url": "http://localhost:9000/external/api/v2/pokemon/133/"
+    },
+    {
+      "name": "vaporeon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/134/"
+    },
+    {
+      "name": "jolteon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/135/"
+    },
+    {
+      "name": "flareon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/136/"
+    },
+    {
+      "name": "omanyte",
+      "url": "http://localhost:9000/external/api/v2/pokemon/138/"
+    },
+    {
+      "name": "omastar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/139/"
+    },
+    {
+      "name": "kabuto",
+      "url": "http://localhost:9000/external/api/v2/pokemon/140/"
+    },
+    {
+      "name": "kabutops",
+      "url": "http://localhost:9000/external/api/v2/pokemon/141/"
+    },
+    {
+      "name": "snorlax",
+      "url": "http://localhost:9000/external/api/v2/pokemon/143/"
+    },
+    {
+      "name": "dratini",
+      "url": "http://localhost:9000/external/api/v2/pokemon/147/"
+    },
+    {
+      "name": "dragonair",
+      "url": "http://localhost:9000/external/api/v2/pokemon/148/"
+    },
+    {
+      "name": "dragonite",
+      "url": "http://localhost:9000/external/api/v2/pokemon/149/"
+    },
+    {
+      "name": "mewtwo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/150/"
+    },
+    {
+      "name": "mew",
+      "url": "http://localhost:9000/external/api/v2/pokemon/151/"
+    },
+    {
+      "name": "chikorita",
+      "url": "http://localhost:9000/external/api/v2/pokemon/152/"
+    },
+    {
+      "name": "bayleef",
+      "url": "http://localhost:9000/external/api/v2/pokemon/153/"
+    },
+    {
+      "name": "meganium",
+      "url": "http://localhost:9000/external/api/v2/pokemon/154/"
+    },
+    {
+      "name": "cyndaquil",
+      "url": "http://localhost:9000/external/api/v2/pokemon/155/"
+    },
+    {
+      "name": "quilava",
+      "url": "http://localhost:9000/external/api/v2/pokemon/156/"
+    },
+    {
+      "name": "typhlosion",
+      "url": "http://localhost:9000/external/api/v2/pokemon/157/"
+    },
+    {
+      "name": "totodile",
+      "url": "http://localhost:9000/external/api/v2/pokemon/158/"
+    },
+    {
+      "name": "croconaw",
+      "url": "http://localhost:9000/external/api/v2/pokemon/159/"
+    },
+    {
+      "name": "feraligatr",
+      "url": "http://localhost:9000/external/api/v2/pokemon/160/"
+    },
+    {
+      "name": "sentret",
+      "url": "http://localhost:9000/external/api/v2/pokemon/161/"
+    },
+    {
+      "name": "furret",
+      "url": "http://localhost:9000/external/api/v2/pokemon/162/"
+    },
+    {
+      "name": "noctowl",
+      "url": "http://localhost:9000/external/api/v2/pokemon/164/"
+    },
+    {
+      "name": "spinarak",
+      "url": "http://localhost:9000/external/api/v2/pokemon/167/"
+    },
+    {
+      "name": "ariados",
+      "url": "http://localhost:9000/external/api/v2/pokemon/168/"
+    },
+    {
+      "name": "pichu",
+      "url": "http://localhost:9000/external/api/v2/pokemon/172/"
+    },
+    {
+      "name": "cleffa",
+      "url": "http://localhost:9000/external/api/v2/pokemon/173/"
+    },
+    {
+      "name": "igglybuff",
+      "url": "http://localhost:9000/external/api/v2/pokemon/174/"
+    },
+    {
+      "name": "togepi",
+      "url": "http://localhost:9000/external/api/v2/pokemon/175/"
+    },
+    {
+      "name": "togetic",
+      "url": "http://localhost:9000/external/api/v2/pokemon/176/"
+    },
+    {
+      "name": "mareep",
+      "url": "http://localhost:9000/external/api/v2/pokemon/179/"
+    },
+    {
+      "name": "flaaffy",
+      "url": "http://localhost:9000/external/api/v2/pokemon/180/"
+    },
+    {
+      "name": "ampharos",
+      "url": "http://localhost:9000/external/api/v2/pokemon/181/"
+    },
+    {
+      "name": "marill",
+      "url": "http://localhost:9000/external/api/v2/pokemon/183/"
+    },
+    {
+      "name": "azumarill",
+      "url": "http://localhost:9000/external/api/v2/pokemon/184/"
+    },
+    {
+      "name": "sudowoodo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/185/"
+    },
+    {
+      "name": "politoed",
+      "url": "http://localhost:9000/external/api/v2/pokemon/186/"
+    },
+    {
+      "name": "aipom",
+      "url": "http://localhost:9000/external/api/v2/pokemon/190/"
+    },
+    {
+      "name": "wooper",
+      "url": "http://localhost:9000/external/api/v2/pokemon/194/"
+    },
+    {
+      "name": "quagsire",
+      "url": "http://localhost:9000/external/api/v2/pokemon/195/"
+    },
+    {
+      "name": "espeon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/196/"
+    },
+    {
+      "name": "umbreon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/197/"
+    },
+    {
+      "name": "slowking",
+      "url": "http://localhost:9000/external/api/v2/pokemon/199/"
+    },
+    {
+      "name": "girafarig",
+      "url": "http://localhost:9000/external/api/v2/pokemon/203/"
+    },
+    {
+      "name": "pineco",
+      "url": "http://localhost:9000/external/api/v2/pokemon/204/"
+    },
+    {
+      "name": "forretress",
+      "url": "http://localhost:9000/external/api/v2/pokemon/205/"
+    },
+    {
+      "name": "dunsparce",
+      "url": "http://localhost:9000/external/api/v2/pokemon/206/"
+    },
+    {
+      "name": "steelix",
+      "url": "http://localhost:9000/external/api/v2/pokemon/208/"
+    },
+    {
+      "name": "snubbull",
+      "url": "http://localhost:9000/external/api/v2/pokemon/209/"
+    },
+    {
+      "name": "granbull",
+      "url": "http://localhost:9000/external/api/v2/pokemon/210/"
+    },
+    {
+      "name": "shuckle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/213/"
+    },
+    {
+      "name": "heracross",
+      "url": "http://localhost:9000/external/api/v2/pokemon/214/"
+    },
+    {
+      "name": "teddiursa",
+      "url": "http://localhost:9000/external/api/v2/pokemon/216/"
+    },
+    {
+      "name": "ursaring",
+      "url": "http://localhost:9000/external/api/v2/pokemon/217/"
+    },
+    {
+      "name": "slugma",
+      "url": "http://localhost:9000/external/api/v2/pokemon/218/"
+    },
+    {
+      "name": "magcargo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/219/"
+    },
+    {
+      "name": "swinub",
+      "url": "http://localhost:9000/external/api/v2/pokemon/220/"
+    },
+    {
+      "name": "piloswine",
+      "url": "http://localhost:9000/external/api/v2/pokemon/221/"
+    },
+    {
+      "name": "corsola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/222/"
+    },
+    {
+      "name": "delibird",
+      "url": "http://localhost:9000/external/api/v2/pokemon/225/"
+    },
+    {
+      "name": "mantine",
+      "url": "http://localhost:9000/external/api/v2/pokemon/226/"
+    },
+    {
+      "name": "houndour",
+      "url": "http://localhost:9000/external/api/v2/pokemon/228/"
+    },
+    {
+      "name": "houndoom",
+      "url": "http://localhost:9000/external/api/v2/pokemon/229/"
+    },
+    {
+      "name": "kingdra",
+      "url": "http://localhost:9000/external/api/v2/pokemon/230/"
+    },
+    {
+      "name": "phanpy",
+      "url": "http://localhost:9000/external/api/v2/pokemon/231/"
+    },
+    {
+      "name": "donphan",
+      "url": "http://localhost:9000/external/api/v2/pokemon/232/"
+    },
+    {
+      "name": "stantler",
+      "url": "http://localhost:9000/external/api/v2/pokemon/234/"
+    },
+    {
+      "name": "tyrogue",
+      "url": "http://localhost:9000/external/api/v2/pokemon/236/"
+    },
+    {
+      "name": "hitmontop",
+      "url": "http://localhost:9000/external/api/v2/pokemon/237/"
+    },
+    {
+      "name": "smoochum",
+      "url": "http://localhost:9000/external/api/v2/pokemon/238/"
+    },
+    {
+      "name": "elekid",
+      "url": "http://localhost:9000/external/api/v2/pokemon/239/"
+    },
+    {
+      "name": "magby",
+      "url": "http://localhost:9000/external/api/v2/pokemon/240/"
+    },
+    {
+      "name": "miltank",
+      "url": "http://localhost:9000/external/api/v2/pokemon/241/"
+    },
+    {
+      "name": "blissey",
+      "url": "http://localhost:9000/external/api/v2/pokemon/242/"
+    },
+    {
+      "name": "raikou",
+      "url": "http://localhost:9000/external/api/v2/pokemon/243/"
+    },
+    {
+      "name": "entei",
+      "url": "http://localhost:9000/external/api/v2/pokemon/244/"
+    },
+    {
+      "name": "suicune",
+      "url": "http://localhost:9000/external/api/v2/pokemon/245/"
+    },
+    {
+      "name": "larvitar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/246/"
+    },
+    {
+      "name": "pupitar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/247/"
+    },
+    {
+      "name": "tyranitar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/248/"
+    },
+    {
+      "name": "lugia",
+      "url": "http://localhost:9000/external/api/v2/pokemon/249/"
+    },
+    {
+      "name": "ho-oh",
+      "url": "http://localhost:9000/external/api/v2/pokemon/250/"
+    },
+    {
+      "name": "treecko",
+      "url": "http://localhost:9000/external/api/v2/pokemon/252/"
+    },
+    {
+      "name": "grovyle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/253/"
+    },
+    {
+      "name": "sceptile",
+      "url": "http://localhost:9000/external/api/v2/pokemon/254/"
+    },
+    {
+      "name": "torchic",
+      "url": "http://localhost:9000/external/api/v2/pokemon/255/"
+    },
+    {
+      "name": "combusken",
+      "url": "http://localhost:9000/external/api/v2/pokemon/256/"
+    },
+    {
+      "name": "blaziken",
+      "url": "http://localhost:9000/external/api/v2/pokemon/257/"
+    },
+    {
+      "name": "mudkip",
+      "url": "http://localhost:9000/external/api/v2/pokemon/258/"
+    },
+    {
+      "name": "marshtomp",
+      "url": "http://localhost:9000/external/api/v2/pokemon/259/"
+    },
+    {
+      "name": "swampert",
+      "url": "http://localhost:9000/external/api/v2/pokemon/260/"
+    },
+    {
+      "name": "poochyena",
+      "url": "http://localhost:9000/external/api/v2/pokemon/261/"
+    },
+    {
+      "name": "mightyena",
+      "url": "http://localhost:9000/external/api/v2/pokemon/262/"
+    },
+    {
+      "name": "zigzagoon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/263/"
+    },
+    {
+      "name": "linoone",
+      "url": "http://localhost:9000/external/api/v2/pokemon/264/"
+    },
+    {
+      "name": "lotad",
+      "url": "http://localhost:9000/external/api/v2/pokemon/270/"
+    },
+    {
+      "name": "lombre",
+      "url": "http://localhost:9000/external/api/v2/pokemon/271/"
+    },
+    {
+      "name": "ludicolo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/272/"
+    },
+    {
+      "name": "seedot",
+      "url": "http://localhost:9000/external/api/v2/pokemon/273/"
+    },
+    {
+      "name": "nuzleaf",
+      "url": "http://localhost:9000/external/api/v2/pokemon/274/"
+    },
+    {
+      "name": "shiftry",
+      "url": "http://localhost:9000/external/api/v2/pokemon/275/"
+    },
+    {
+      "name": "pelipper",
+      "url": "http://localhost:9000/external/api/v2/pokemon/279/"
+    },
+    {
+      "name": "ralts",
+      "url": "http://localhost:9000/external/api/v2/pokemon/280/"
+    },
+    {
+      "name": "kirlia",
+      "url": "http://localhost:9000/external/api/v2/pokemon/281/"
+    },
+    {
+      "name": "gardevoir",
+      "url": "http://localhost:9000/external/api/v2/pokemon/282/"
+    },
+    {
+      "name": "shroomish",
+      "url": "http://localhost:9000/external/api/v2/pokemon/285/"
+    },
+    {
+      "name": "breloom",
+      "url": "http://localhost:9000/external/api/v2/pokemon/286/"
+    },
+    {
+      "name": "slakoth",
+      "url": "http://localhost:9000/external/api/v2/pokemon/287/"
+    },
+    {
+      "name": "vigoroth",
+      "url": "http://localhost:9000/external/api/v2/pokemon/288/"
+    },
+    {
+      "name": "slaking",
+      "url": "http://localhost:9000/external/api/v2/pokemon/289/"
+    },
+    {
+      "name": "whismur",
+      "url": "http://localhost:9000/external/api/v2/pokemon/293/"
+    },
+    {
+      "name": "loudred",
+      "url": "http://localhost:9000/external/api/v2/pokemon/294/"
+    },
+    {
+      "name": "exploud",
+      "url": "http://localhost:9000/external/api/v2/pokemon/295/"
+    },
+    {
+      "name": "makuhita",
+      "url": "http://localhost:9000/external/api/v2/pokemon/296/"
+    },
+    {
+      "name": "hariyama",
+      "url": "http://localhost:9000/external/api/v2/pokemon/297/"
+    },
+    {
+      "name": "azurill",
+      "url": "http://localhost:9000/external/api/v2/pokemon/298/"
+    },
+    {
+      "name": "nosepass",
+      "url": "http://localhost:9000/external/api/v2/pokemon/299/"
+    },
+    {
+      "name": "skitty",
+      "url": "http://localhost:9000/external/api/v2/pokemon/300/"
+    },
+    {
+      "name": "delcatty",
+      "url": "http://localhost:9000/external/api/v2/pokemon/301/"
+    },
+    {
+      "name": "sableye",
+      "url": "http://localhost:9000/external/api/v2/pokemon/302/"
+    },
+    {
+      "name": "mawile",
+      "url": "http://localhost:9000/external/api/v2/pokemon/303/"
+    },
+    {
+      "name": "aron",
+      "url": "http://localhost:9000/external/api/v2/pokemon/304/"
+    },
+    {
+      "name": "lairon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/305/"
+    },
+    {
+      "name": "aggron",
+      "url": "http://localhost:9000/external/api/v2/pokemon/306/"
+    },
+    {
+      "name": "meditite",
+      "url": "http://localhost:9000/external/api/v2/pokemon/307/"
+    },
+    {
+      "name": "medicham",
+      "url": "http://localhost:9000/external/api/v2/pokemon/308/"
+    },
+    {
+      "name": "electrike",
+      "url": "http://localhost:9000/external/api/v2/pokemon/309/"
+    },
+    {
+      "name": "manectric",
+      "url": "http://localhost:9000/external/api/v2/pokemon/310/"
+    },
+    {
+      "name": "plusle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/311/"
+    },
+    {
+      "name": "minun",
+      "url": "http://localhost:9000/external/api/v2/pokemon/312/"
+    },
+    {
+      "name": "volbeat",
+      "url": "http://localhost:9000/external/api/v2/pokemon/313/"
+    },
+    {
+      "name": "illumise",
+      "url": "http://localhost:9000/external/api/v2/pokemon/314/"
+    },
+    {
+      "name": "roselia",
+      "url": "http://localhost:9000/external/api/v2/pokemon/315/"
+    },
+    {
+      "name": "gulpin",
+      "url": "http://localhost:9000/external/api/v2/pokemon/316/"
+    },
+    {
+      "name": "swalot",
+      "url": "http://localhost:9000/external/api/v2/pokemon/317/"
+    },
+    {
+      "name": "wailmer",
+      "url": "http://localhost:9000/external/api/v2/pokemon/320/"
+    },
+    {
+      "name": "wailord",
+      "url": "http://localhost:9000/external/api/v2/pokemon/321/"
+    },
+    {
+      "name": "numel",
+      "url": "http://localhost:9000/external/api/v2/pokemon/322/"
+    },
+    {
+      "name": "camerupt",
+      "url": "http://localhost:9000/external/api/v2/pokemon/323/"
+    },
+    {
+      "name": "torkoal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/324/"
+    },
+    {
+      "name": "spoink",
+      "url": "http://localhost:9000/external/api/v2/pokemon/325/"
+    },
+    {
+      "name": "grumpig",
+      "url": "http://localhost:9000/external/api/v2/pokemon/326/"
+    },
+    {
+      "name": "spinda",
+      "url": "http://localhost:9000/external/api/v2/pokemon/327/"
+    },
+    {
+      "name": "trapinch",
+      "url": "http://localhost:9000/external/api/v2/pokemon/328/"
+    },
+    {
+      "name": "vibrava",
+      "url": "http://localhost:9000/external/api/v2/pokemon/329/"
+    },
+    {
+      "name": "flygon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/330/"
+    },
+    {
+      "name": "cacnea",
+      "url": "http://localhost:9000/external/api/v2/pokemon/331/"
+    },
+    {
+      "name": "cacturne",
+      "url": "http://localhost:9000/external/api/v2/pokemon/332/"
+    },
+    {
+      "name": "swablu",
+      "url": "http://localhost:9000/external/api/v2/pokemon/333/"
+    },
+    {
+      "name": "altaria",
+      "url": "http://localhost:9000/external/api/v2/pokemon/334/"
+    },
+    {
+      "name": "zangoose",
+      "url": "http://localhost:9000/external/api/v2/pokemon/335/"
+    },
+    {
+      "name": "seviper",
+      "url": "http://localhost:9000/external/api/v2/pokemon/336/"
+    },
+    {
+      "name": "lunatone",
+      "url": "http://localhost:9000/external/api/v2/pokemon/337/"
+    },
+    {
+      "name": "solrock",
+      "url": "http://localhost:9000/external/api/v2/pokemon/338/"
+    },
+    {
+      "name": "whiscash",
+      "url": "http://localhost:9000/external/api/v2/pokemon/340/"
+    },
+    {
+      "name": "corphish",
+      "url": "http://localhost:9000/external/api/v2/pokemon/341/"
+    },
+    {
+      "name": "crawdaunt",
+      "url": "http://localhost:9000/external/api/v2/pokemon/342/"
+    },
+    {
+      "name": "lileep",
+      "url": "http://localhost:9000/external/api/v2/pokemon/345/"
+    },
+    {
+      "name": "cradily",
+      "url": "http://localhost:9000/external/api/v2/pokemon/346/"
+    },
+    {
+      "name": "anorith",
+      "url": "http://localhost:9000/external/api/v2/pokemon/347/"
+    },
+    {
+      "name": "armaldo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/348/"
+    },
+    {
+      "name": "milotic",
+      "url": "http://localhost:9000/external/api/v2/pokemon/350/"
+    },
+    {
+      "name": "castform",
+      "url": "http://localhost:9000/external/api/v2/pokemon/351/"
+    },
+    {
+      "name": "kecleon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/352/"
+    },
+    {
+      "name": "shuppet",
+      "url": "http://localhost:9000/external/api/v2/pokemon/353/"
+    },
+    {
+      "name": "banette",
+      "url": "http://localhost:9000/external/api/v2/pokemon/354/"
+    },
+    {
+      "name": "duskull",
+      "url": "http://localhost:9000/external/api/v2/pokemon/355/"
+    },
+    {
+      "name": "dusclops",
+      "url": "http://localhost:9000/external/api/v2/pokemon/356/"
+    },
+    {
+      "name": "tropius",
+      "url": "http://localhost:9000/external/api/v2/pokemon/357/"
+    },
+    {
+      "name": "absol",
+      "url": "http://localhost:9000/external/api/v2/pokemon/359/"
+    },
+    {
+      "name": "snorunt",
+      "url": "http://localhost:9000/external/api/v2/pokemon/361/"
+    },
+    {
+      "name": "glalie",
+      "url": "http://localhost:9000/external/api/v2/pokemon/362/"
+    },
+    {
+      "name": "spheal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/363/"
+    },
+    {
+      "name": "sealeo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/364/"
+    },
+    {
+      "name": "walrein",
+      "url": "http://localhost:9000/external/api/v2/pokemon/365/"
+    },
+    {
+      "name": "clamperl",
+      "url": "http://localhost:9000/external/api/v2/pokemon/366/"
+    },
+    {
+      "name": "huntail",
+      "url": "http://localhost:9000/external/api/v2/pokemon/367/"
+    },
+    {
+      "name": "gorebyss",
+      "url": "http://localhost:9000/external/api/v2/pokemon/368/"
+    },
+    {
+      "name": "relicanth",
+      "url": "http://localhost:9000/external/api/v2/pokemon/369/"
+    },
+    {
+      "name": "bagon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/371/"
+    },
+    {
+      "name": "shelgon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/372/"
+    },
+    {
+      "name": "salamence",
+      "url": "http://localhost:9000/external/api/v2/pokemon/373/"
+    },
+    {
+      "name": "metang",
+      "url": "http://localhost:9000/external/api/v2/pokemon/375/"
+    },
+    {
+      "name": "metagross",
+      "url": "http://localhost:9000/external/api/v2/pokemon/376/"
+    },
+    {
+      "name": "regirock",
+      "url": "http://localhost:9000/external/api/v2/pokemon/377/"
+    },
+    {
+      "name": "regice",
+      "url": "http://localhost:9000/external/api/v2/pokemon/378/"
+    },
+    {
+      "name": "registeel",
+      "url": "http://localhost:9000/external/api/v2/pokemon/379/"
+    },
+    {
+      "name": "latias",
+      "url": "http://localhost:9000/external/api/v2/pokemon/380/"
+    },
+    {
+      "name": "latios",
+      "url": "http://localhost:9000/external/api/v2/pokemon/381/"
+    },
+    {
+      "name": "kyogre",
+      "url": "http://localhost:9000/external/api/v2/pokemon/382/"
+    },
+    {
+      "name": "groudon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/383/"
+    },
+    {
+      "name": "rayquaza",
+      "url": "http://localhost:9000/external/api/v2/pokemon/384/"
+    },
+    {
+      "name": "jirachi",
+      "url": "http://localhost:9000/external/api/v2/pokemon/385/"
+    },
+    {
+      "name": "deoxys-normal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/386/"
+    },
+    {
+      "name": "turtwig",
+      "url": "http://localhost:9000/external/api/v2/pokemon/387/"
+    },
+    {
+      "name": "grotle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/388/"
+    },
+    {
+      "name": "torterra",
+      "url": "http://localhost:9000/external/api/v2/pokemon/389/"
+    },
+    {
+      "name": "infernape",
+      "url": "http://localhost:9000/external/api/v2/pokemon/392/"
+    },
+    {
+      "name": "empoleon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/395/"
+    },
+    {
+      "name": "luxray",
+      "url": "http://localhost:9000/external/api/v2/pokemon/405/"
+    },
+    {
+      "name": "roserade",
+      "url": "http://localhost:9000/external/api/v2/pokemon/407/"
+    },
+    {
+      "name": "cranidos",
+      "url": "http://localhost:9000/external/api/v2/pokemon/408/"
+    },
+    {
+      "name": "rampardos",
+      "url": "http://localhost:9000/external/api/v2/pokemon/409/"
+    },
+    {
+      "name": "shieldon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/410/"
+    },
+    {
+      "name": "bastiodon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/411/"
+    },
+    {
+      "name": "floatzel",
+      "url": "http://localhost:9000/external/api/v2/pokemon/419/"
+    },
+    {
+      "name": "shellos",
+      "url": "http://localhost:9000/external/api/v2/pokemon/422/"
+    },
+    {
+      "name": "gastrodon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/423/"
+    },
+    {
+      "name": "drifloon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/425/"
+    },
+    {
+      "name": "drifblim",
+      "url": "http://localhost:9000/external/api/v2/pokemon/426/"
+    },
+    {
+      "name": "purugly",
+      "url": "http://localhost:9000/external/api/v2/pokemon/432/"
+    },
+    {
+      "name": "stunky",
+      "url": "http://localhost:9000/external/api/v2/pokemon/434/"
+    },
+    {
+      "name": "skuntank",
+      "url": "http://localhost:9000/external/api/v2/pokemon/435/"
+    },
+    {
+      "name": "bronzor",
+      "url": "http://localhost:9000/external/api/v2/pokemon/436/"
+    },
+    {
+      "name": "bronzong",
+      "url": "http://localhost:9000/external/api/v2/pokemon/437/"
+    },
+    {
+      "name": "bonsly",
+      "url": "http://localhost:9000/external/api/v2/pokemon/438/"
+    },
+    {
+      "name": "spiritomb",
+      "url": "http://localhost:9000/external/api/v2/pokemon/442/"
+    },
+    {
+      "name": "gible",
+      "url": "http://localhost:9000/external/api/v2/pokemon/443/"
+    },
+    {
+      "name": "gabite",
+      "url": "http://localhost:9000/external/api/v2/pokemon/444/"
+    },
+    {
+      "name": "garchomp",
+      "url": "http://localhost:9000/external/api/v2/pokemon/445/"
+    },
+    {
+      "name": "munchlax",
+      "url": "http://localhost:9000/external/api/v2/pokemon/446/"
+    },
+    {
+      "name": "lucario",
+      "url": "http://localhost:9000/external/api/v2/pokemon/448/"
+    },
+    {
+      "name": "hippopotas",
+      "url": "http://localhost:9000/external/api/v2/pokemon/449/"
+    },
+    {
+      "name": "hippowdon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/450/"
+    },
+    {
+      "name": "snover",
+      "url": "http://localhost:9000/external/api/v2/pokemon/459/"
+    },
+    {
+      "name": "abomasnow",
+      "url": "http://localhost:9000/external/api/v2/pokemon/460/"
+    },
+    {
+      "name": "magnezone",
+      "url": "http://localhost:9000/external/api/v2/pokemon/462/"
+    },
+    {
+      "name": "lickilicky",
+      "url": "http://localhost:9000/external/api/v2/pokemon/463/"
+    },
+    {
+      "name": "rhyperior",
+      "url": "http://localhost:9000/external/api/v2/pokemon/464/"
+    },
+    {
+      "name": "tangrowth",
+      "url": "http://localhost:9000/external/api/v2/pokemon/465/"
+    },
+    {
+      "name": "electivire",
+      "url": "http://localhost:9000/external/api/v2/pokemon/466/"
+    },
+    {
+      "name": "magmortar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/467/"
+    },
+    {
+      "name": "togekiss",
+      "url": "http://localhost:9000/external/api/v2/pokemon/468/"
+    },
+    {
+      "name": "leafeon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/470/"
+    },
+    {
+      "name": "glaceon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/471/"
+    },
+    {
+      "name": "mamoswine",
+      "url": "http://localhost:9000/external/api/v2/pokemon/473/"
+    },
+    {
+      "name": "gallade",
+      "url": "http://localhost:9000/external/api/v2/pokemon/475/"
+    },
+    {
+      "name": "probopass",
+      "url": "http://localhost:9000/external/api/v2/pokemon/476/"
+    },
+    {
+      "name": "dusknoir",
+      "url": "http://localhost:9000/external/api/v2/pokemon/477/"
+    },
+    {
+      "name": "froslass",
+      "url": "http://localhost:9000/external/api/v2/pokemon/478/"
+    },
+    {
+      "name": "dialga",
+      "url": "http://localhost:9000/external/api/v2/pokemon/483/"
+    },
+    {
+      "name": "palkia",
+      "url": "http://localhost:9000/external/api/v2/pokemon/484/"
+    },
+    {
+      "name": "heatran",
+      "url": "http://localhost:9000/external/api/v2/pokemon/485/"
+    },
+    {
+      "name": "regigigas",
+      "url": "http://localhost:9000/external/api/v2/pokemon/486/"
+    },
+    {
+      "name": "giratina-altered",
+      "url": "http://localhost:9000/external/api/v2/pokemon/487/"
+    },
+    {
+      "name": "cresselia",
+      "url": "http://localhost:9000/external/api/v2/pokemon/488/"
+    },
+    {
+      "name": "arceus",
+      "url": "http://localhost:9000/external/api/v2/pokemon/493/"
+    },
+    {
+      "name": "serperior",
+      "url": "http://localhost:9000/external/api/v2/pokemon/497/"
+    },
+    {
+      "name": "tepig",
+      "url": "http://localhost:9000/external/api/v2/pokemon/498/"
+    },
+    {
+      "name": "pignite",
+      "url": "http://localhost:9000/external/api/v2/pokemon/499/"
+    },
+    {
+      "name": "emboar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/500/"
+    },
+    {
+      "name": "samurott",
+      "url": "http://localhost:9000/external/api/v2/pokemon/503/"
+    },
+    {
+      "name": "blitzle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/522/"
+    },
+    {
+      "name": "zebstrika",
+      "url": "http://localhost:9000/external/api/v2/pokemon/523/"
+    },
+    {
+      "name": "excadrill",
+      "url": "http://localhost:9000/external/api/v2/pokemon/530/"
+    },
+    {
+      "name": "audino",
+      "url": "http://localhost:9000/external/api/v2/pokemon/531/"
+    },
+    {
+      "name": "conkeldurr",
+      "url": "http://localhost:9000/external/api/v2/pokemon/534/"
+    },
+    {
+      "name": "throh",
+      "url": "http://localhost:9000/external/api/v2/pokemon/538/"
+    },
+    {
+      "name": "sandile",
+      "url": "http://localhost:9000/external/api/v2/pokemon/551/"
+    },
+    {
+      "name": "krokorok",
+      "url": "http://localhost:9000/external/api/v2/pokemon/552/"
+    },
+    {
+      "name": "krookodile",
+      "url": "http://localhost:9000/external/api/v2/pokemon/553/"
+    },
+    {
+      "name": "darmanitan-standard",
+      "url": "http://localhost:9000/external/api/v2/pokemon/555/"
+    },
+    {
+      "name": "scrafty",
+      "url": "http://localhost:9000/external/api/v2/pokemon/560/"
+    },
+    {
+      "name": "tirtouga",
+      "url": "http://localhost:9000/external/api/v2/pokemon/564/"
+    },
+    {
+      "name": "carracosta",
+      "url": "http://localhost:9000/external/api/v2/pokemon/565/"
+    },
+    {
+      "name": "garbodor",
+      "url": "http://localhost:9000/external/api/v2/pokemon/569/"
+    },
+    {
+      "name": "zoroark",
+      "url": "http://localhost:9000/external/api/v2/pokemon/571/"
+    },
+    {
+      "name": "gothitelle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/576/"
+    },
+    {
+      "name": "reuniclus",
+      "url": "http://localhost:9000/external/api/v2/pokemon/579/"
+    },
+    {
+      "name": "deerling",
+      "url": "http://localhost:9000/external/api/v2/pokemon/585/"
+    },
+    {
+      "name": "sawsbuck",
+      "url": "http://localhost:9000/external/api/v2/pokemon/586/"
+    },
+    {
+      "name": "foongus",
+      "url": "http://localhost:9000/external/api/v2/pokemon/590/"
+    },
+    {
+      "name": "amoonguss",
+      "url": "http://localhost:9000/external/api/v2/pokemon/591/"
+    },
+    {
+      "name": "alomomola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/594/"
+    },
+    {
+      "name": "eelektrik",
+      "url": "http://localhost:9000/external/api/v2/pokemon/603/"
+    },
+    {
+      "name": "eelektross",
+      "url": "http://localhost:9000/external/api/v2/pokemon/604/"
+    },
+    {
+      "name": "haxorus",
+      "url": "http://localhost:9000/external/api/v2/pokemon/612/"
+    },
+    {
+      "name": "cubchoo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/613/"
+    },
+    {
+      "name": "beartic",
+      "url": "http://localhost:9000/external/api/v2/pokemon/614/"
+    },
+    {
+      "name": "cryogonal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/615/"
+    },
+    {
+      "name": "shelmet",
+      "url": "http://localhost:9000/external/api/v2/pokemon/616/"
+    },
+    {
+      "name": "accelgor",
+      "url": "http://localhost:9000/external/api/v2/pokemon/617/"
+    },
+    {
+      "name": "druddigon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/621/"
+    },
+    {
+      "name": "golett",
+      "url": "http://localhost:9000/external/api/v2/pokemon/622/"
+    },
+    {
+      "name": "golurk",
+      "url": "http://localhost:9000/external/api/v2/pokemon/623/"
+    },
+    {
+      "name": "bouffalant",
+      "url": "http://localhost:9000/external/api/v2/pokemon/626/"
+    },
+    {
+      "name": "rufflet",
+      "url": "http://localhost:9000/external/api/v2/pokemon/627/"
+    },
+    {
+      "name": "braviary",
+      "url": "http://localhost:9000/external/api/v2/pokemon/628/"
+    },
+    {
+      "name": "heatmor",
+      "url": "http://localhost:9000/external/api/v2/pokemon/631/"
+    },
+    {
+      "name": "deino",
+      "url": "http://localhost:9000/external/api/v2/pokemon/633/"
+    },
+    {
+      "name": "zweilous",
+      "url": "http://localhost:9000/external/api/v2/pokemon/634/"
+    },
+    {
+      "name": "hydreigon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/635/"
+    },
+    {
+      "name": "larvesta",
+      "url": "http://localhost:9000/external/api/v2/pokemon/636/"
+    },
+    {
+      "name": "volcarona",
+      "url": "http://localhost:9000/external/api/v2/pokemon/637/"
+    },
+    {
+      "name": "cobalion",
+      "url": "http://localhost:9000/external/api/v2/pokemon/638/"
+    },
+    {
+      "name": "terrakion",
+      "url": "http://localhost:9000/external/api/v2/pokemon/639/"
+    },
+    {
+      "name": "virizion",
+      "url": "http://localhost:9000/external/api/v2/pokemon/640/"
+    },
+    {
+      "name": "tornadus-incarnate",
+      "url": "http://localhost:9000/external/api/v2/pokemon/641/"
+    },
+    {
+      "name": "thundurus-incarnate",
+      "url": "http://localhost:9000/external/api/v2/pokemon/642/"
+    },
+    {
+      "name": "reshiram",
+      "url": "http://localhost:9000/external/api/v2/pokemon/643/"
+    },
+    {
+      "name": "zekrom",
+      "url": "http://localhost:9000/external/api/v2/pokemon/644/"
+    },
+    {
+      "name": "landorus-incarnate",
+      "url": "http://localhost:9000/external/api/v2/pokemon/645/"
+    },
+    {
+      "name": "kyurem",
+      "url": "http://localhost:9000/external/api/v2/pokemon/646/"
+    },
+    {
+      "name": "chespin",
+      "url": "http://localhost:9000/external/api/v2/pokemon/650/"
+    },
+    {
+      "name": "quilladin",
+      "url": "http://localhost:9000/external/api/v2/pokemon/651/"
+    },
+    {
+      "name": "chesnaught",
+      "url": "http://localhost:9000/external/api/v2/pokemon/652/"
+    },
+    {
+      "name": "diggersby",
+      "url": "http://localhost:9000/external/api/v2/pokemon/660/"
+    },
+    {
+      "name": "litleo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/667/"
+    },
+    {
+      "name": "pyroar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/668/"
+    },
+    {
+      "name": "skiddo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/672/"
+    },
+    {
+      "name": "gogoat",
+      "url": "http://localhost:9000/external/api/v2/pokemon/673/"
+    },
+    {
+      "name": "pancham",
+      "url": "http://localhost:9000/external/api/v2/pokemon/674/"
+    },
+    {
+      "name": "pangoro",
+      "url": "http://localhost:9000/external/api/v2/pokemon/675/"
+    },
+    {
+      "name": "clawitzer",
+      "url": "http://localhost:9000/external/api/v2/pokemon/693/"
+    },
+    {
+      "name": "tyrunt",
+      "url": "http://localhost:9000/external/api/v2/pokemon/696/"
+    },
+    {
+      "name": "tyrantrum",
+      "url": "http://localhost:9000/external/api/v2/pokemon/697/"
+    },
+    {
+      "name": "amaura",
+      "url": "http://localhost:9000/external/api/v2/pokemon/698/"
+    },
+    {
+      "name": "aurorus",
+      "url": "http://localhost:9000/external/api/v2/pokemon/699/"
+    },
+    {
+      "name": "sylveon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/700/"
+    },
+    {
+      "name": "hawlucha",
+      "url": "http://localhost:9000/external/api/v2/pokemon/701/"
+    },
+    {
+      "name": "carbink",
+      "url": "http://localhost:9000/external/api/v2/pokemon/703/"
+    },
+    {
+      "name": "goomy",
+      "url": "http://localhost:9000/external/api/v2/pokemon/704/"
+    },
+    {
+      "name": "sliggoo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/705/"
+    },
+    {
+      "name": "goodra",
+      "url": "http://localhost:9000/external/api/v2/pokemon/706/"
+    },
+    {
+      "name": "bergmite",
+      "url": "http://localhost:9000/external/api/v2/pokemon/712/"
+    },
+    {
+      "name": "avalugg",
+      "url": "http://localhost:9000/external/api/v2/pokemon/713/"
+    },
+    {
+      "name": "noivern",
+      "url": "http://localhost:9000/external/api/v2/pokemon/715/"
+    },
+    {
+      "name": "xerneas",
+      "url": "http://localhost:9000/external/api/v2/pokemon/716/"
+    },
+    {
+      "name": "yveltal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/717/"
+    },
+    {
+      "name": "zygarde-50",
+      "url": "http://localhost:9000/external/api/v2/pokemon/718/"
+    },
+    {
+      "name": "diancie",
+      "url": "http://localhost:9000/external/api/v2/pokemon/719/"
+    },
+    {
+      "name": "volcanion",
+      "url": "http://localhost:9000/external/api/v2/pokemon/721/"
+    },
+    {
+      "name": "litten",
+      "url": "http://localhost:9000/external/api/v2/pokemon/725/"
+    },
+    {
+      "name": "torracat",
+      "url": "http://localhost:9000/external/api/v2/pokemon/726/"
+    },
+    {
+      "name": "incineroar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/727/"
+    },
+    {
+      "name": "brionne",
+      "url": "http://localhost:9000/external/api/v2/pokemon/729/"
+    },
+    {
+      "name": "primarina",
+      "url": "http://localhost:9000/external/api/v2/pokemon/730/"
+    },
+    {
+      "name": "gumshoos",
+      "url": "http://localhost:9000/external/api/v2/pokemon/735/"
+    },
+    {
+      "name": "crabrawler",
+      "url": "http://localhost:9000/external/api/v2/pokemon/739/"
+    },
+    {
+      "name": "crabominable",
+      "url": "http://localhost:9000/external/api/v2/pokemon/740/"
+    },
+    {
+      "name": "rockruff",
+      "url": "http://localhost:9000/external/api/v2/pokemon/744/"
+    },
+    {
+      "name": "lycanroc-midday",
+      "url": "http://localhost:9000/external/api/v2/pokemon/745/"
+    },
+    {
+      "name": "toxapex",
+      "url": "http://localhost:9000/external/api/v2/pokemon/748/"
+    },
+    {
+      "name": "mudbray",
+      "url": "http://localhost:9000/external/api/v2/pokemon/749/"
+    },
+    {
+      "name": "mudsdale",
+      "url": "http://localhost:9000/external/api/v2/pokemon/750/"
+    },
+    {
+      "name": "araquanid",
+      "url": "http://localhost:9000/external/api/v2/pokemon/752/"
+    },
+    {
+      "name": "salazzle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/758/"
+    },
+    {
+      "name": "bewear",
+      "url": "http://localhost:9000/external/api/v2/pokemon/760/"
+    },
+    {
+      "name": "oranguru",
+      "url": "http://localhost:9000/external/api/v2/pokemon/765/"
+    },
+    {
+      "name": "passimian",
+      "url": "http://localhost:9000/external/api/v2/pokemon/766/"
+    },
+    {
+      "name": "palossand",
+      "url": "http://localhost:9000/external/api/v2/pokemon/770/"
+    },
+    {
+      "name": "komala",
+      "url": "http://localhost:9000/external/api/v2/pokemon/775/"
+    },
+    {
+      "name": "turtonator",
+      "url": "http://localhost:9000/external/api/v2/pokemon/776/"
+    },
+    {
+      "name": "jangmo-o",
+      "url": "http://localhost:9000/external/api/v2/pokemon/782/"
+    },
+    {
+      "name": "hakamo-o",
+      "url": "http://localhost:9000/external/api/v2/pokemon/783/"
+    },
+    {
+      "name": "kommo-o",
+      "url": "http://localhost:9000/external/api/v2/pokemon/784/"
+    },
+    {
+      "name": "solgaleo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/791/"
+    },
+    {
+      "name": "nihilego",
+      "url": "http://localhost:9000/external/api/v2/pokemon/793/"
+    },
+    {
+      "name": "buzzwole",
+      "url": "http://localhost:9000/external/api/v2/pokemon/794/"
+    },
+    {
+      "name": "celesteela",
+      "url": "http://localhost:9000/external/api/v2/pokemon/797/"
+    },
+    {
+      "name": "guzzlord",
+      "url": "http://localhost:9000/external/api/v2/pokemon/799/"
+    },
+    {
+      "name": "necrozma",
+      "url": "http://localhost:9000/external/api/v2/pokemon/800/"
+    },
+    {
+      "name": "magearna",
+      "url": "http://localhost:9000/external/api/v2/pokemon/801/"
+    },
+    {
+      "name": "stakataka",
+      "url": "http://localhost:9000/external/api/v2/pokemon/805/"
+    },
+    {
+      "name": "melmetal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/809/"
+    },
+    {
+      "name": "grookey",
+      "url": "http://localhost:9000/external/api/v2/pokemon/810/"
+    },
+    {
+      "name": "thwackey",
+      "url": "http://localhost:9000/external/api/v2/pokemon/811/"
+    },
+    {
+      "name": "rillaboom",
+      "url": "http://localhost:9000/external/api/v2/pokemon/812/"
+    },
+    {
+      "name": "skwovet",
+      "url": "http://localhost:9000/external/api/v2/pokemon/819/"
+    },
+    {
+      "name": "greedent",
+      "url": "http://localhost:9000/external/api/v2/pokemon/820/"
+    },
+    {
+      "name": "corviknight",
+      "url": "http://localhost:9000/external/api/v2/pokemon/823/"
+    },
+    {
+      "name": "dubwool",
+      "url": "http://localhost:9000/external/api/v2/pokemon/832/"
+    },
+    {
+      "name": "chewtle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/833/"
+    },
+    {
+      "name": "drednaw",
+      "url": "http://localhost:9000/external/api/v2/pokemon/834/"
+    },
+    {
+      "name": "rolycoly",
+      "url": "http://localhost:9000/external/api/v2/pokemon/837/"
+    },
+    {
+      "name": "carkol",
+      "url": "http://localhost:9000/external/api/v2/pokemon/838/"
+    },
+    {
+      "name": "coalossal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/839/"
+    },
+    {
+      "name": "appletun",
+      "url": "http://localhost:9000/external/api/v2/pokemon/842/"
+    },
+    {
+      "name": "silicobra",
+      "url": "http://localhost:9000/external/api/v2/pokemon/843/"
+    },
+    {
+      "name": "sandaconda",
+      "url": "http://localhost:9000/external/api/v2/pokemon/844/"
+    },
+    {
+      "name": "clobbopus",
+      "url": "http://localhost:9000/external/api/v2/pokemon/852/"
+    },
+    {
+      "name": "grapploct",
+      "url": "http://localhost:9000/external/api/v2/pokemon/853/"
+    },
+    {
+      "name": "grimmsnarl",
+      "url": "http://localhost:9000/external/api/v2/pokemon/861/"
+    },
+    {
+      "name": "obstagoon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/862/"
+    },
+    {
+      "name": "perrserker",
+      "url": "http://localhost:9000/external/api/v2/pokemon/863/"
+    },
+    {
+      "name": "cursola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/864/"
+    },
+    {
+      "name": "sirfetchd",
+      "url": "http://localhost:9000/external/api/v2/pokemon/865/"
+    },
+    {
+      "name": "mr-rime",
+      "url": "http://localhost:9000/external/api/v2/pokemon/866/"
+    },
+    {
+      "name": "falinks",
+      "url": "http://localhost:9000/external/api/v2/pokemon/870/"
+    },
+    {
+      "name": "pincurchin",
+      "url": "http://localhost:9000/external/api/v2/pokemon/871/"
+    },
+    {
+      "name": "stonjourner",
+      "url": "http://localhost:9000/external/api/v2/pokemon/874/"
+    },
+    {
+      "name": "eiscue-ice",
+      "url": "http://localhost:9000/external/api/v2/pokemon/875/"
+    },
+    {
+      "name": "indeedee-male",
+      "url": "http://localhost:9000/external/api/v2/pokemon/876/"
+    },
+    {
+      "name": "cufant",
+      "url": "http://localhost:9000/external/api/v2/pokemon/878/"
+    },
+    {
+      "name": "copperajah",
+      "url": "http://localhost:9000/external/api/v2/pokemon/879/"
+    },
+    {
+      "name": "dracozolt",
+      "url": "http://localhost:9000/external/api/v2/pokemon/880/"
+    },
+    {
+      "name": "arctozolt",
+      "url": "http://localhost:9000/external/api/v2/pokemon/881/"
+    },
+    {
+      "name": "dracovish",
+      "url": "http://localhost:9000/external/api/v2/pokemon/882/"
+    },
+    {
+      "name": "arctovish",
+      "url": "http://localhost:9000/external/api/v2/pokemon/883/"
+    },
+    {
+      "name": "duraludon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/884/"
+    },
+    {
+      "name": "dragapult",
+      "url": "http://localhost:9000/external/api/v2/pokemon/887/"
+    },
+    {
+      "name": "zacian",
+      "url": "http://localhost:9000/external/api/v2/pokemon/888/"
+    },
+    {
+      "name": "zamazenta",
+      "url": "http://localhost:9000/external/api/v2/pokemon/889/"
+    },
+    {
+      "name": "eternatus",
+      "url": "http://localhost:9000/external/api/v2/pokemon/890/"
+    },
+    {
+      "name": "kubfu",
+      "url": "http://localhost:9000/external/api/v2/pokemon/891/"
+    },
+    {
+      "name": "urshifu-single-strike",
+      "url": "http://localhost:9000/external/api/v2/pokemon/892/"
+    },
+    {
+      "name": "zarude",
+      "url": "http://localhost:9000/external/api/v2/pokemon/893/"
+    },
+    {
+      "name": "regieleki",
+      "url": "http://localhost:9000/external/api/v2/pokemon/894/"
+    },
+    {
+      "name": "regidrago",
+      "url": "http://localhost:9000/external/api/v2/pokemon/895/"
+    },
+    {
+      "name": "glastrier",
+      "url": "http://localhost:9000/external/api/v2/pokemon/896/"
+    },
+    {
+      "name": "spectrier",
+      "url": "http://localhost:9000/external/api/v2/pokemon/897/"
+    },
+    {
+      "name": "wyrdeer",
+      "url": "http://localhost:9000/external/api/v2/pokemon/899/"
+    },
+    {
+      "name": "ursaluna",
+      "url": "http://localhost:9000/external/api/v2/pokemon/901/"
+    },
+    {
+      "name": "enamorus-incarnate",
+      "url": "http://localhost:9000/external/api/v2/pokemon/905/"
+    },
+    {
+      "name": "fuecoco",
+      "url": "http://localhost:9000/external/api/v2/pokemon/909/"
+    },
+    {
+      "name": "crocalor",
+      "url": "http://localhost:9000/external/api/v2/pokemon/910/"
+    },
+    {
+      "name": "skeledirge",
+      "url": "http://localhost:9000/external/api/v2/pokemon/911/"
+    },
+    {
+      "name": "lechonk",
+      "url": "http://localhost:9000/external/api/v2/pokemon/915/"
+    },
+    {
+      "name": "oinkologne-male",
+      "url": "http://localhost:9000/external/api/v2/pokemon/916/"
+    },
+    {
+      "name": "tarountula",
+      "url": "http://localhost:9000/external/api/v2/pokemon/917/"
+    },
+    {
+      "name": "spidops",
+      "url": "http://localhost:9000/external/api/v2/pokemon/918/"
+    },
+    {
+      "name": "fidough",
+      "url": "http://localhost:9000/external/api/v2/pokemon/926/"
+    },
+    {
+      "name": "dachsbun",
+      "url": "http://localhost:9000/external/api/v2/pokemon/927/"
+    },
+    {
+      "name": "nacli",
+      "url": "http://localhost:9000/external/api/v2/pokemon/932/"
+    },
+    {
+      "name": "naclstack",
+      "url": "http://localhost:9000/external/api/v2/pokemon/933/"
+    },
+    {
+      "name": "garganacl",
+      "url": "http://localhost:9000/external/api/v2/pokemon/934/"
+    },
+    {
+      "name": "maschiff",
+      "url": "http://localhost:9000/external/api/v2/pokemon/942/"
+    },
+    {
+      "name": "mabosstiff",
+      "url": "http://localhost:9000/external/api/v2/pokemon/943/"
+    },
+    {
+      "name": "klawf",
+      "url": "http://localhost:9000/external/api/v2/pokemon/950/"
+    },
+    {
+      "name": "espathra",
+      "url": "http://localhost:9000/external/api/v2/pokemon/956/"
+    },
+    {
+      "name": "finizen",
+      "url": "http://localhost:9000/external/api/v2/pokemon/963/"
+    },
+    {
+      "name": "palafin-zero",
+      "url": "http://localhost:9000/external/api/v2/pokemon/964/"
+    },
+    {
+      "name": "varoom",
+      "url": "http://localhost:9000/external/api/v2/pokemon/965/"
+    },
+    {
+      "name": "revavroom",
+      "url": "http://localhost:9000/external/api/v2/pokemon/966/"
+    },
+    {
+      "name": "cyclizar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/967/"
+    },
+    {
+      "name": "orthworm",
+      "url": "http://localhost:9000/external/api/v2/pokemon/968/"
+    },
+    {
+      "name": "cetoddle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/974/"
+    },
+    {
+      "name": "cetitan",
+      "url": "http://localhost:9000/external/api/v2/pokemon/975/"
+    },
+    {
+      "name": "veluza",
+      "url": "http://localhost:9000/external/api/v2/pokemon/976/"
+    },
+    {
+      "name": "dondozo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/977/"
+    },
+    {
+      "name": "annihilape",
+      "url": "http://localhost:9000/external/api/v2/pokemon/979/"
+    },
+    {
+      "name": "clodsire",
+      "url": "http://localhost:9000/external/api/v2/pokemon/980/"
+    },
+    {
+      "name": "farigiraf",
+      "url": "http://localhost:9000/external/api/v2/pokemon/981/"
+    },
+    {
+      "name": "dudunsparce-two-segment",
+      "url": "http://localhost:9000/external/api/v2/pokemon/982/"
+    },
+    {
+      "name": "great-tusk",
+      "url": "http://localhost:9000/external/api/v2/pokemon/984/"
+    },
+    {
+      "name": "scream-tail",
+      "url": "http://localhost:9000/external/api/v2/pokemon/985/"
+    },
+    {
+      "name": "brute-bonnet",
+      "url": "http://localhost:9000/external/api/v2/pokemon/986/"
+    },
+    {
+      "name": "slither-wing",
+      "url": "http://localhost:9000/external/api/v2/pokemon/988/"
+    },
+    {
+      "name": "sandy-shocks",
+      "url": "http://localhost:9000/external/api/v2/pokemon/989/"
+    },
+    {
+      "name": "iron-treads",
+      "url": "http://localhost:9000/external/api/v2/pokemon/990/"
+    },
+    {
+      "name": "iron-bundle",
+      "url": "http://localhost:9000/external/api/v2/pokemon/991/"
+    },
+    {
+      "name": "iron-hands",
+      "url": "http://localhost:9000/external/api/v2/pokemon/992/"
+    },
+    {
+      "name": "iron-jugulis",
+      "url": "http://localhost:9000/external/api/v2/pokemon/993/"
+    },
+    {
+      "name": "iron-thorns",
+      "url": "http://localhost:9000/external/api/v2/pokemon/995/"
+    },
+    {
+      "name": "frigibax",
+      "url": "http://localhost:9000/external/api/v2/pokemon/996/"
+    },
+    {
+      "name": "arctibax",
+      "url": "http://localhost:9000/external/api/v2/pokemon/997/"
+    },
+    {
+      "name": "baxcalibur",
+      "url": "http://localhost:9000/external/api/v2/pokemon/998/"
+    },
+    {
+      "name": "wo-chien",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1001/"
+    },
+    {
+      "name": "ting-lu",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1003/"
+    },
+    {
+      "name": "roaring-moon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1005/"
+    },
+    {
+      "name": "koraidon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1007/"
+    },
+    {
+      "name": "miraidon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1008/"
+    },
+    {
+      "name": "walking-wake",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1009/"
+    },
+    {
+      "name": "dipplin",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1011/"
+    },
+    {
+      "name": "okidogi",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1014/"
+    },
+    {
+      "name": "archaludon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1018/"
+    },
+    {
+      "name": "hydrapple",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1019/"
+    },
+    {
+      "name": "gouging-fire",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1020/"
+    },
+    {
+      "name": "raging-bolt",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1021/"
+    },
+    {
+      "name": "iron-boulder",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1022/"
+    },
+    {
+      "name": "iron-crown",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1023/"
+    },
+    {
+      "name": "terapagos",
+      "url": "http://localhost:9000/external/api/v2/pokemon/1024/"
+    },
+    {
+      "name": "deoxys-attack",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10001/"
+    },
+    {
+      "name": "deoxys-defense",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10002/"
+    },
+    {
+      "name": "deoxys-speed",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10003/"
+    },
+    {
+      "name": "giratina-origin",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10007/"
+    },
+    {
+      "name": "castform-sunny",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10013/"
+    },
+    {
+      "name": "castform-rainy",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10014/"
+    },
+    {
+      "name": "castform-snowy",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10015/"
+    },
+    {
+      "name": "darmanitan-zen",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10017/"
+    },
+    {
+      "name": "tornadus-therian",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10019/"
+    },
+    {
+      "name": "thundurus-therian",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10020/"
+    },
+    {
+      "name": "landorus-therian",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10021/"
+    },
+    {
+      "name": "kyurem-black",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10022/"
+    },
+    {
+      "name": "kyurem-white",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10023/"
+    },
+    {
+      "name": "kyogre-primal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10077/"
+    },
+    {
+      "name": "pikachu-original-cap",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10094/"
+    },
+    {
+      "name": "pikachu-hoenn-cap",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10095/"
+    },
+    {
+      "name": "pikachu-sinnoh-cap",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10096/"
+    },
+    {
+      "name": "pikachu-unova-cap",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10097/"
+    },
+    {
+      "name": "pikachu-kalos-cap",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10098/"
+    },
+    {
+      "name": "pikachu-alola-cap",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10099/"
+    },
+    {
+      "name": "raichu-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10100/"
+    },
+    {
+      "name": "sandshrew-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10101/"
+    },
+    {
+      "name": "sandslash-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10102/"
+    },
+    {
+      "name": "vulpix-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10103/"
+    },
+    {
+      "name": "ninetales-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10104/"
+    },
+    {
+      "name": "diglett-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10105/"
+    },
+    {
+      "name": "dugtrio-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10106/"
+    },
+    {
+      "name": "meowth-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10107/"
+    },
+    {
+      "name": "persian-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10108/"
+    },
+    {
+      "name": "geodude-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10109/"
+    },
+    {
+      "name": "graveler-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10110/"
+    },
+    {
+      "name": "golem-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10111/"
+    },
+    {
+      "name": "grimer-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10112/"
+    },
+    {
+      "name": "muk-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10113/"
+    },
+    {
+      "name": "exeggutor-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10114/"
+    },
+    {
+      "name": "marowak-alola",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10115/"
+    },
+    {
+      "name": "zygarde-10-power-construct",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10118/"
+    },
+    {
+      "name": "zygarde-50-power-construct",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10119/"
+    },
+    {
+      "name": "zygarde-complete",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10120/"
+    },
+    {
+      "name": "lycanroc-midnight",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10126/"
+    },
+    {
+      "name": "magearna-original",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10147/"
+    },
+    {
+      "name": "pikachu-partner-cap",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10148/"
+    },
+    {
+      "name": "rockruff-own-tempo",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10151/"
+    },
+    {
+      "name": "necrozma-dusk",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10155/"
+    },
+    {
+      "name": "necrozma-dawn",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10156/"
+    },
+    {
+      "name": "pikachu-world-cap",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10160/"
+    },
+    {
+      "name": "meowth-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10161/"
+    },
+    {
+      "name": "ponyta-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10162/"
+    },
+    {
+      "name": "rapidash-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10163/"
+    },
+    {
+      "name": "slowpoke-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10164/"
+    },
+    {
+      "name": "slowbro-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10165/"
+    },
+    {
+      "name": "farfetchd-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10166/"
+    },
+    {
+      "name": "weezing-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10167/"
+    },
+    {
+      "name": "mr-mime-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10168/"
+    },
+    {
+      "name": "slowking-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10172/"
+    },
+    {
+      "name": "corsola-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10173/"
+    },
+    {
+      "name": "zigzagoon-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10174/"
+    },
+    {
+      "name": "linoone-galar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10175/"
+    },
+    {
+      "name": "darmanitan-galar-standard",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10177/"
+    },
+    {
+      "name": "darmanitan-galar-zen",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10178/"
+    },
+    {
+      "name": "zygarde-10",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10181/"
+    },
+    {
+      "name": "eiscue-noice",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10185/"
+    },
+    {
+      "name": "indeedee-female",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10186/"
+    },
+    {
+      "name": "zacian-crowned",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10188/"
+    },
+    {
+      "name": "zamazenta-crowned",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10189/"
+    },
+    {
+      "name": "urshifu-rapid-strike",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10191/"
+    },
+    {
+      "name": "zarude-dada",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10192/"
+    },
+    {
+      "name": "calyrex-ice",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10193/"
+    },
+    {
+      "name": "calyrex-shadow",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10194/"
+    },
+    {
+      "name": "growlithe-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10229/"
+    },
+    {
+      "name": "arcanine-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10230/"
+    },
+    {
+      "name": "typhlosion-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10233/"
+    },
+    {
+      "name": "samurott-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10236/"
+    },
+    {
+      "name": "zoroark-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10239/"
+    },
+    {
+      "name": "braviary-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10240/"
+    },
+    {
+      "name": "sliggoo-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10241/"
+    },
+    {
+      "name": "goodra-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10242/"
+    },
+    {
+      "name": "avalugg-hisui",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10243/"
+    },
+    {
+      "name": "dialga-origin",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10245/"
+    },
+    {
+      "name": "palkia-origin",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10246/"
+    },
+    {
+      "name": "enamorus-therian",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10249/"
+    },
+    {
+      "name": "tauros-paldea-combat-breed",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10250/"
+    },
+    {
+      "name": "tauros-paldea-blaze-breed",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10251/"
+    },
+    {
+      "name": "tauros-paldea-aqua-breed",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10252/"
+    },
+    {
+      "name": "wooper-paldea",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10253/"
+    },
+    {
+      "name": "oinkologne-female",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10254/"
+    },
+    {
+      "name": "dudunsparce-three-segment",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10255/"
+    },
+    {
+      "name": "palafin-hero",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10256/"
+    },
+    {
+      "name": "koraidon-limited-build",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10264/"
+    },
+    {
+      "name": "koraidon-sprinting-build",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10265/"
+    },
+    {
+      "name": "koraidon-swimming-build",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10266/"
+    },
+    {
+      "name": "koraidon-gliding-build",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10267/"
+    },
+    {
+      "name": "miraidon-low-power-mode",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10268/"
+    },
+    {
+      "name": "miraidon-drive-mode",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10269/"
+    },
+    {
+      "name": "miraidon-aquatic-mode",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10270/"
+    },
+    {
+      "name": "miraidon-glide-mode",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10271/"
+    },
+    {
+      "name": "ursaluna-bloodmoon",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10272/"
+    },
+    {
+      "name": "terapagos-terastal",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10276/"
+    },
+    {
+      "name": "terapagos-stellar",
+      "url": "http://localhost:9000/external/api/v2/pokemon/10277/"
+    }
+  ],
+  "machines": [
+    {
+      "machine": {
+        "url": "http://localhost:9000/external/api/v2/machine/142/"
+      },
+      "version_group": {
+        "name": "red-blue",
+        "url": "http://localhost:9000/external/api/v2/version-group/1/"
+      }
+    },
+    {
+      "machine": {
+        "url": "http://localhost:9000/external/api/v2/machine/143/"
+      },
+      "version_group": {
+        "name": "yellow",
+        "url": "http://localhost:9000/external/api/v2/version-group/2/"
+      }
+    },
+    {
+      "machine": {
+        "url": "http://localhost:9000/external/api/v2/machine/1494/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "http://localhost:9000/external/api/v2/version-group/20/"
+      }
+    },
+    {
+      "machine": {
+        "url": "http://localhost:9000/external/api/v2/machine/1771/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "http://localhost:9000/external/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "meta": {
+    "ailment": {
+      "name": "paralysis",
+      "url": "http://localhost:9000/external/api/v2/move-ailment/1/"
+    },
+    "ailment_chance": 30,
+    "category": {
+      "name": "damage+ailment",
+      "url": "http://localhost:9000/external/api/v2/move-category/4/"
+    },
+    "crit_rate": 0,
+    "drain": 0,
+    "flinch_chance": 0,
+    "healing": 0,
+    "max_hits": null,
+    "max_turns": null,
+    "min_hits": null,
+    "min_turns": null,
+    "stat_chance": 0
+  },
+  "name": "body-slam",
+  "names": [
+    {
+      "language": {
+        "name": "ja-Hrkt",
+        "url": "http://localhost:9000/external/api/v2/language/1/"
+      },
+      "name": "のしかかり"
+    },
+    {
+      "language": {
+        "name": "ko",
+        "url": "http://localhost:9000/external/api/v2/language/3/"
+      },
+      "name": "누르기"
+    },
+    {
+      "language": {
+        "name": "zh-Hant",
+        "url": "http://localhost:9000/external/api/v2/language/4/"
+      },
+      "name": "泰山壓頂"
+    },
+    {
+      "language": {
+        "name": "fr",
+        "url": "http://localhost:9000/external/api/v2/language/5/"
+      },
+      "name": "Plaquage"
+    },
+    {
+      "language": {
+        "name": "de",
+        "url": "http://localhost:9000/external/api/v2/language/6/"
+      },
+      "name": "Bodyslam"
+    },
+    {
+      "language": {
+        "name": "es",
+        "url": "http://localhost:9000/external/api/v2/language/7/"
+      },
+      "name": "Golpe Cuerpo"
+    },
+    {
+      "language": {
+        "name": "it",
+        "url": "http://localhost:9000/external/api/v2/language/8/"
+      },
+      "name": "Corposcontro"
+    },
+    {
+      "language": {
+        "name": "en",
+        "url": "http://localhost:9000/external/api/v2/language/9/"
+      },
+      "name": "Body Slam"
+    },
+    {
+      "language": {
+        "name": "ja",
+        "url": "http://localhost:9000/external/api/v2/language/11/"
+      },
+      "name": "のしかかり"
+    },
+    {
+      "language": {
+        "name": "zh-Hans",
+        "url": "http://localhost:9000/external/api/v2/language/12/"
+      },
+      "name": "泰山压顶"
+    }
+  ],
+  "past_values": [],
+  "power": 85,
+  "pp": 15,
+  "priority": 0,
+  "stat_changes": [],
+  "super_contest_effect": {
+    "url": "http://localhost:9000/external/api/v2/super-contest-effect/5/"
+  },
+  "target": {
+    "name": "selected-pokemon",
+    "url": "http://localhost:9000/external/api/v2/move-target/10/"
+  },
+  "type": {
+    "name": "normal",
+    "url": "http://localhost:9000/external/api/v2/type/1/"
+  }
+}

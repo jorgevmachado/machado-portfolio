@@ -1,0 +1,19 @@
+{
+  "id": "ec32e54a-da48-47af-8dd6-4855d0409192",
+  "pp": 10,
+  "url": "https://pokeapi.co/api/v2/move/13/",
+  "type": "normal",
+  "name": "razor-wind",
+  "order": 13,
+  "power": 80,
+  "target": "all-opponents",
+  "effect": "Inflicts regular damage.  User's critical hit rate is one level higher when using this move.  User charges for one turn before attacking.\n\nThis move cannot be selected by sleep talk.",
+  "priority": 0,
+  "accuracy": 100,
+  "created_at": "2025-02-07T19:00:21.927Z",
+  "updated_at": "2025-02-07T19:00:21.927Z",
+  "deleted_at": null,
+  "short_effect": "Requires a turn to charge before attacking.",
+  "damage_class": "special",
+  "effect_chance": null
+}

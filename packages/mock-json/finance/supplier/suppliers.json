@@ -1,0 +1,1458 @@
+[
+  {
+    "id": "20b2d8d3-4484-4a24-88a5-dc41e05088cb",
+    "name": "Vivo",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "vivo",
+    "created_at": "2025-04-02T19:11:59.333Z",
+    "updated_at": "2025-04-02T19:11:59.333Z",
+    "deleted_at": null
+  },
+  {
+    "id": "1aa45eb4-36bc-4310-baab-974d77b62819",
+    "name": "IPTU",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "iptu",
+    "created_at": "2025-04-02T19:11:59.334Z",
+    "updated_at": "2025-04-02T19:11:59.334Z",
+    "deleted_at": null
+  },
+  {
+    "id": "603c4ad5-435e-4909-9c4c-04ed696bee27",
+    "name": "Claro",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "claro",
+    "created_at": "2025-04-02T19:11:59.334Z",
+    "updated_at": "2025-04-02T19:11:59.334Z",
+    "deleted_at": null
+  },
+  {
+    "id": "41d0576b-65da-455a-8b7d-2ede9bf21398",
+    "name": "Day Laborer Luana",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "day_laborer_luana",
+    "created_at": "2025-04-02T19:11:59.334Z",
+    "updated_at": "2025-04-02T19:11:59.334Z",
+    "deleted_at": null
+  },
+  {
+    "id": "3855dada-7262-4c68-9d9c-d2350b789871",
+    "name": "Condominium",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "condominium",
+    "created_at": "2025-04-02T19:11:59.334Z",
+    "updated_at": "2025-04-02T19:11:59.334Z",
+    "deleted_at": null
+  },
+  {
+    "id": "bb27bc14-fac5-435f-b8ac-d3f9ef8e2781",
+    "name": "Day Laborer Didi",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "day_laborer_didi",
+    "created_at": "2025-04-02T19:11:59.334Z",
+    "updated_at": "2025-04-02T19:11:59.334Z",
+    "deleted_at": null
+  },
+  {
+    "id": "5a724db5-532f-4622-97b0-5b7ddf5631dc",
+    "name": "Neoenergia",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "neoenergia",
+    "created_at": "2025-04-02T19:11:59.334Z",
+    "updated_at": "2025-04-02T19:11:59.334Z",
+    "deleted_at": null
+  },
+  {
+    "id": "8f6b5144-5917-4947-987e-c768d45c9a7e",
+    "name": "Rent",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "rent",
+    "created_at": "2025-04-02T19:11:59.334Z",
+    "updated_at": "2025-04-02T19:11:59.334Z",
+    "deleted_at": null
+  },
+  {
+    "id": "7cd34f59-2e0a-4cdf-ae71-b29e4b0065f7",
+    "name": "Licensing",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "licensing",
+    "created_at": "2025-04-02T19:11:59.339Z",
+    "updated_at": "2025-04-02T19:11:59.339Z",
+    "deleted_at": null
+  },
+  {
+    "id": "80e04b94-0037-4f4b-97da-254e6592f233",
+    "name": "IPVA",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "ipva",
+    "created_at": "2025-04-02T19:11:59.338Z",
+    "updated_at": "2025-04-02T19:11:59.338Z",
+    "deleted_at": null
+  },
+  {
+    "id": "d4278a93-d199-48ac-b23f-8796c045bc1c",
+    "name": "Car Insurance",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "car_insurance",
+    "created_at": "2025-04-02T19:11:59.339Z",
+    "updated_at": "2025-04-02T19:11:59.339Z",
+    "deleted_at": null
+  },
+  {
+    "id": "e01fadee-bc15-48dd-ae16-15ed936720eb",
+    "name": "Nubank",
+    "type": {
+      "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+      "name": "Bills",
+      "name_code": "bills",
+      "created_at": "2025-02-07T19:00:18.688Z",
+      "updated_at": "2025-02-07T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "nubank",
+    "created_at": "2025-04-02T19:11:59.339Z",
+    "updated_at": "2025-04-02T19:11:59.339Z",
+    "deleted_at": null
+  },
+  {
+    "id": "708a654a-2db0-4153-8318-7a080e31eb1a",
+    "name": "Porto",
+    "type": {
+      "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+      "name": "Bills",
+      "name_code": "bills",
+      "created_at": "2025-02-07T19:00:18.688Z",
+      "updated_at": "2025-02-07T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "porto",
+    "created_at": "2025-04-02T19:11:59.340Z",
+    "updated_at": "2025-04-02T19:11:59.340Z",
+    "deleted_at": null
+  },
+  {
+    "id": "10ba32e7-054b-4d44-8724-3f411ecf8b43",
+    "name": "Caixa",
+    "type": {
+      "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+      "name": "Bills",
+      "name_code": "bills",
+      "created_at": "2025-02-07T19:00:18.688Z",
+      "updated_at": "2025-02-07T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "caixa",
+    "created_at": "2025-04-02T19:11:59.340Z",
+    "updated_at": "2025-04-02T19:11:59.340Z",
+    "deleted_at": null
+  },
+  {
+    "id": "ddee42b6-2031-463f-b1f4-a9468543bf15",
+    "name": "Apache",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "apache",
+    "created_at": "2025-04-02T19:11:59.341Z",
+    "updated_at": "2025-04-02T19:11:59.341Z",
+    "deleted_at": null
+  },
+  {
+    "id": "f52d0c46-a3c0-4ac1-8640-e144a1fbc32b",
+    "name": "Old Bikers",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "old_bikers",
+    "created_at": "2025-04-02T19:11:59.341Z",
+    "updated_at": "2025-04-02T19:11:59.341Z",
+    "deleted_at": null
+  },
+  {
+    "id": "b2fdd82f-4b55-4a05-ba60-26dcfcdbc3ad",
+    "name": "Ancar Gestao de emp",
+    "type": {
+      "id": "10f85833-96e5-44c6-a73a-9f4960ba9279",
+      "name": "Unknown",
+      "name_code": "unknown",
+      "created_at": "2025-02-08T19:00:18.687Z",
+      "updated_at": "2025-02-08T19:00:18.687Z",
+      "deleted_at": null
+    },
+    "name_code": "ancar_gestao_de_emp",
+    "created_at": "2025-04-02T19:11:59.341Z",
+    "updated_at": "2025-04-02T19:11:59.341Z",
+    "deleted_at": null
+  },
+  {
+    "id": "8076b18b-a556-4afe-822a-87dec914f01d",
+    "name": "Bar do Japa",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "bar_do_japa",
+    "created_at": "2025-04-02T19:11:59.344Z",
+    "updated_at": "2025-04-02T19:11:59.344Z",
+    "deleted_at": null
+  },
+  {
+    "id": "54a780fd-b5d7-4a65-a232-85ffc17c9488",
+    "name": "Baruc Restaurante",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "baruc_restaurante",
+    "created_at": "2025-04-02T19:11:59.344Z",
+    "updated_at": "2025-04-02T19:11:59.344Z",
+    "deleted_at": null
+  },
+  {
+    "id": "54623ac0-eef1-40ba-abed-a1a0f2fae9b1",
+    "name": "Atacadão Dia a Dia",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "atacadao_dia_a_dia",
+    "created_at": "2025-04-02T19:11:59.343Z",
+    "updated_at": "2025-04-02T19:11:59.343Z",
+    "deleted_at": null
+  },
+  {
+    "id": "006d5051-6507-410e-bc0a-1a7730b30d47",
+    "name": "Bg Norte Petroleo",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "bg_norte_petroleo",
+    "created_at": "2025-04-02T19:11:59.344Z",
+    "updated_at": "2025-04-02T19:11:59.344Z",
+    "deleted_at": null
+  },
+  {
+    "id": "f04305e7-ea34-4449-8e7d-9b0b8af4a59b",
+    "name": "Brascansthrp",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "brascansthrp",
+    "created_at": "2025-04-02T19:11:59.344Z",
+    "updated_at": "2025-04-02T19:11:59.344Z",
+    "deleted_at": null
+  },
+  {
+    "id": "954d61d8-fbef-4afb-bb43-633b3fb3ce8c",
+    "name": "Brossman",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "brossman",
+    "created_at": "2025-04-02T19:11:59.345Z",
+    "updated_at": "2025-04-02T19:11:59.345Z",
+    "deleted_at": null
+  },
+  {
+    "id": "7c926ec5-e79d-4149-9c0f-5feb1021635f",
+    "name": "Cadeira Design Studio",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "cadeira_design_studio",
+    "created_at": "2025-04-02T19:11:59.346Z",
+    "updated_at": "2025-04-02T19:11:59.346Z",
+    "deleted_at": null
+  },
+  {
+    "id": "0be13efb-2d04-4918-ae5a-67a8ed866d8b",
+    "name": "Garage",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "garage",
+    "created_at": "2025-04-02T19:11:59.345Z",
+    "updated_at": "2025-04-02T19:11:59.345Z",
+    "deleted_at": null
+  },
+  {
+    "id": "076c57d0-5d59-47a4-a6b5-4d01bf49f3b9",
+    "name": "Caiocesarrochamen",
+    "type": {
+      "id": "10f85833-96e5-44c6-a73a-9f4960ba9279",
+      "name": "Unknown",
+      "name_code": "unknown",
+      "created_at": "2025-02-08T19:00:18.687Z",
+      "updated_at": "2025-02-08T19:00:18.687Z",
+      "deleted_at": null
+    },
+    "name_code": "caiocesarrochamen",
+    "created_at": "2025-04-02T19:11:59.347Z",
+    "updated_at": "2025-04-02T19:11:59.347Z",
+    "deleted_at": null
+  },
+  {
+    "id": "3cc11716-1975-4470-921d-87d8abc001fa",
+    "name": "Cascol Combustiveis",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "cascol_combustiveis",
+    "created_at": "2025-04-02T19:11:59.347Z",
+    "updated_at": "2025-04-02T19:11:59.347Z",
+    "deleted_at": null
+  },
+  {
+    "id": "6234f187-0e70-423b-9c06-3d601a109058",
+    "name": "Castelo Campos do jordão",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "castelo_campos_do_jordao",
+    "created_at": "2025-04-02T19:11:59.347Z",
+    "updated_at": "2025-04-02T19:11:59.347Z",
+    "deleted_at": null
+  },
+  {
+    "id": "25da5daa-f380-44c5-8b39-e399582bcc76",
+    "name": "Unimed",
+    "type": {
+      "id": "1f886516-c5fa-4ca5-8e16-e395a65598cd",
+      "name": "Health",
+      "name_code": "health",
+      "created_at": "2025-02-04T19:00:18.687Z",
+      "updated_at": "2025-02-04T19:00:18.687Z",
+      "deleted_at": null
+    },
+    "name_code": "unimed",
+    "created_at": "2025-04-02T19:11:59.346Z",
+    "updated_at": "2025-04-02T19:11:59.346Z",
+    "deleted_at": null
+  },
+  {
+    "id": "1ca110bc-8832-4524-9219-2dbd40eb4279",
+    "name": "Condominio Civil Brasil",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "condominio_civil_brasil",
+    "created_at": "2025-04-02T19:11:59.347Z",
+    "updated_at": "2025-04-02T19:11:59.347Z",
+    "deleted_at": null
+  },
+  {
+    "id": "ef77521c-670c-4622-8ba1-eaa4a1e13e1d",
+    "name": "Confiance Gestao Condo",
+    "type": {
+      "id": "10f85833-96e5-44c6-a73a-9f4960ba9279",
+      "name": "Unknown",
+      "name_code": "unknown",
+      "created_at": "2025-02-08T19:00:18.687Z",
+      "updated_at": "2025-02-08T19:00:18.687Z",
+      "deleted_at": null
+    },
+    "name_code": "confiance_gestao_condo",
+    "created_at": "2025-04-02T19:11:59.347Z",
+    "updated_at": "2025-04-02T19:11:59.347Z",
+    "deleted_at": null
+  },
+  {
+    "id": "0ee38602-8a4e-4a4e-9400-a4493964234d",
+    "name": "Confraria da Barba",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "confraria_da_barba",
+    "created_at": "2025-04-02T19:11:59.348Z",
+    "updated_at": "2025-04-02T19:11:59.348Z",
+    "deleted_at": null
+  },
+  {
+    "id": "317d6b5b-8e85-4a3e-8d34-bc0c004edcb0",
+    "name": "Daiso",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "daiso",
+    "created_at": "2025-04-02T19:11:59.349Z",
+    "updated_at": "2025-04-02T19:11:59.349Z",
+    "deleted_at": null
+  },
+  {
+    "id": "a4fd8d5f-68ad-49be-838a-d57598d76b76",
+    "name": "Djaci Martins Bezerra",
+    "type": {
+      "id": "10f85833-96e5-44c6-a73a-9f4960ba9279",
+      "name": "Unknown",
+      "name_code": "unknown",
+      "created_at": "2025-02-08T19:00:18.687Z",
+      "updated_at": "2025-02-08T19:00:18.687Z",
+      "deleted_at": null
+    },
+    "name_code": "djaci_martins_bezerra",
+    "created_at": "2025-04-02T19:11:59.349Z",
+    "updated_at": "2025-04-02T19:11:59.349Z",
+    "deleted_at": null
+  },
+  {
+    "id": "dd47cde8-0a51-4188-ad93-e7d828d720cb",
+    "name": "Drogaria Brasil",
+    "type": {
+      "id": "1f886516-c5fa-4ca5-8e16-e395a65598cd",
+      "name": "Health",
+      "name_code": "health",
+      "created_at": "2025-02-04T19:00:18.687Z",
+      "updated_at": "2025-02-04T19:00:18.687Z",
+      "deleted_at": null
+    },
+    "name_code": "drogaria_brasil",
+    "created_at": "2025-04-02T19:11:59.351Z",
+    "updated_at": "2025-04-02T19:11:59.351Z",
+    "deleted_at": null
+  },
+  {
+    "id": "290b861f-dc80-4598-a791-17fdc0e30538",
+    "name": "Drogaria Pacheco",
+    "type": {
+      "id": "1f886516-c5fa-4ca5-8e16-e395a65598cd",
+      "name": "Health",
+      "name_code": "health",
+      "created_at": "2025-02-04T19:00:18.687Z",
+      "updated_at": "2025-02-04T19:00:18.687Z",
+      "deleted_at": null
+    },
+    "name_code": "drogaria_pacheco",
+    "created_at": "2025-04-02T19:11:59.351Z",
+    "updated_at": "2025-04-02T19:11:59.351Z",
+    "deleted_at": null
+  },
+  {
+    "id": "0814637a-e903-4922-8583-5412047f9927",
+    "name": "Dona de Casa",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "dona_de_casa",
+    "created_at": "2025-04-02T19:11:59.350Z",
+    "updated_at": "2025-04-02T19:11:59.350Z",
+    "deleted_at": null
+  },
+  {
+    "id": "69983cbf-cb94-47bc-a45e-ee0998c6302b",
+    "name": "Espetinho Elena",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "espetinho_elena",
+    "created_at": "2025-04-02T19:11:59.351Z",
+    "updated_at": "2025-04-02T19:11:59.351Z",
+    "deleted_at": null
+  },
+  {
+    "id": "eb8d5f18-fc1f-4b8d-aec2-756008c245e8",
+    "name": "Estacionamento Brasilia",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "estacionamento_brasilia",
+    "created_at": "2025-04-02T19:11:59.351Z",
+    "updated_at": "2025-04-02T19:11:59.351Z",
+    "deleted_at": null
+  },
+  {
+    "id": "4b57df3d-202f-4ab2-8108-09048c28a6b3",
+    "name": "Dunkin Donuts",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "dunkin_donuts",
+    "created_at": "2025-04-02T19:11:59.351Z",
+    "updated_at": "2025-04-02T19:11:59.351Z",
+    "deleted_at": null
+  },
+  {
+    "id": "0ae91684-3a2d-42cc-835d-04e156f62e8d",
+    "name": "Ecopista FPay",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "ecopista_f_pay",
+    "created_at": "2025-04-02T19:11:59.351Z",
+    "updated_at": "2025-04-02T19:11:59.351Z",
+    "deleted_at": null
+  },
+  {
+    "id": "dbfd3e88-6e78-4376-a0c8-52bae2e94988",
+    "name": "ets pizzaria express",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "ets_pizzaria_express",
+    "created_at": "2025-04-02T19:11:59.352Z",
+    "updated_at": "2025-04-02T19:11:59.352Z",
+    "deleted_at": null
+  },
+  {
+    "id": "da066c1e-60cd-4897-b9b1-d0807917f882",
+    "name": "Gambar",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "gambar",
+    "created_at": "2025-04-02T19:11:59.353Z",
+    "updated_at": "2025-04-02T19:11:59.353Z",
+    "deleted_at": null
+  },
+  {
+    "id": "ebe36102-4256-4791-955b-3c30e5e6b672",
+    "name": "Guararema",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "guararema",
+    "created_at": "2025-04-02T19:11:59.353Z",
+    "updated_at": "2025-04-02T19:11:59.353Z",
+    "deleted_at": null
+  },
+  {
+    "id": "74dacb81-2cd3-4c92-b38c-9455f21dd4e1",
+    "name": "Itaquacetuba",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "itaquacetuba",
+    "created_at": "2025-04-02T19:11:59.353Z",
+    "updated_at": "2025-04-02T19:11:59.353Z",
+    "deleted_at": null
+  },
+  {
+    "id": "a06b63bb-ffc0-4365-85eb-52dfc5bc50ec",
+    "name": "kinoplex",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "kinoplex",
+    "created_at": "2025-04-02T19:11:59.353Z",
+    "updated_at": "2025-04-02T19:11:59.353Z",
+    "deleted_at": null
+  },
+  {
+    "id": "5c95be17-787b-4a27-bc4b-14608a13aa9f",
+    "name": "levvo DF",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "levvo_df",
+    "created_at": "2025-04-02T19:11:59.354Z",
+    "updated_at": "2025-04-02T19:11:59.354Z",
+    "deleted_at": null
+  },
+  {
+    "id": "c1419100-2bda-4201-9f1a-a7ae95f822aa",
+    "name": "Lojas Milano",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "lojas_milano",
+    "created_at": "2025-04-02T19:11:59.354Z",
+    "updated_at": "2025-04-02T19:11:59.354Z",
+    "deleted_at": null
+  },
+  {
+    "id": "a9a2d5dd-65b9-4398-af5e-abbcd7f1de30",
+    "name": "Madero",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "madero",
+    "created_at": "2025-04-02T19:11:59.354Z",
+    "updated_at": "2025-04-02T19:11:59.354Z",
+    "deleted_at": null
+  },
+  {
+    "id": "adb05203-282c-4171-aff6-38748ef5cf20",
+    "name": "Mb Parking",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "mb_parking",
+    "created_at": "2025-04-02T19:11:59.355Z",
+    "updated_at": "2025-04-02T19:11:59.355Z",
+    "deleted_at": null
+  },
+  {
+    "id": "40b5b28e-9bf5-4f81-adb3-d1f7bec1d6a0",
+    "name": "Motiva Imóveis",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "motiva_imoveis",
+    "created_at": "2025-04-02T19:11:59.355Z",
+    "updated_at": "2025-04-02T19:11:59.355Z",
+    "deleted_at": null
+  },
+  {
+    "id": "a9b54d57-fc8e-4911-8589-68c6b53e9133",
+    "name": "NetShop Informatica",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "net_shop_informatica",
+    "created_at": "2025-04-02T19:11:59.355Z",
+    "updated_at": "2025-04-02T19:11:59.355Z",
+    "deleted_at": null
+  },
+  {
+    "id": "177ba68c-956e-4ecc-8bea-be3e58c82901",
+    "name": "Nova Rde Express",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "nova_rde_express",
+    "created_at": "2025-04-02T19:11:59.355Z",
+    "updated_at": "2025-04-02T19:11:59.355Z",
+    "deleted_at": null
+  },
+  {
+    "id": "67d9a4a0-fb30-4cc3-b068-ed443d469732",
+    "name": "O baden Baden",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "o_baden_baden",
+    "created_at": "2025-04-02T19:11:59.355Z",
+    "updated_at": "2025-04-02T19:11:59.355Z",
+    "deleted_at": null
+  },
+  {
+    "id": "9c8a8264-a5e0-4e36-94c3-cf5f8df66a8d",
+    "name": "Pão de Açucar",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "pao_de_acucar",
+    "created_at": "2025-04-02T19:11:59.357Z",
+    "updated_at": "2025-04-02T19:11:59.357Z",
+    "deleted_at": null
+  },
+  {
+    "id": "00ee1f61-f7ff-460f-b626-94c22928304b",
+    "name": "paygo Divino Lanche",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "paygo_divino_lanche",
+    "created_at": "2025-04-02T19:11:59.357Z",
+    "updated_at": "2025-04-02T19:11:59.357Z",
+    "deleted_at": null
+  },
+  {
+    "id": "537d25be-599c-40de-8cbd-6bbc24df3f36",
+    "name": "Petz",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "petz",
+    "created_at": "2025-04-02T19:11:59.358Z",
+    "updated_at": "2025-04-02T19:11:59.358Z",
+    "deleted_at": null
+  },
+  {
+    "id": "7ce00cb0-22d5-43a4-abdd-c8c69e32531b",
+    "name": "PG TON ANESIA MARTINS",
+    "type": {
+      "id": "10f85833-96e5-44c6-a73a-9f4960ba9279",
+      "name": "Unknown",
+      "name_code": "unknown",
+      "created_at": "2025-02-08T19:00:18.687Z",
+      "updated_at": "2025-02-08T19:00:18.687Z",
+      "deleted_at": null
+    },
+    "name_code": "pg_ton_anesia_martins",
+    "created_at": "2025-04-02T19:11:59.358Z",
+    "updated_at": "2025-04-02T19:11:59.358Z",
+    "deleted_at": null
+  },
+  {
+    "id": "7217d045-7f9e-4f09-8924-3e7eb1d5b813",
+    "name": "Playtime Combustivel",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "playtime_combustivel",
+    "created_at": "2025-04-02T19:11:59.358Z",
+    "updated_at": "2025-04-02T19:11:59.358Z",
+    "deleted_at": null
+  },
+  {
+    "id": "81ab44f8-469c-45c3-8329-ea8db7356362",
+    "name": "Posto San Remo",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "posto_san_remo",
+    "created_at": "2025-04-02T19:11:59.358Z",
+    "updated_at": "2025-04-02T19:11:59.358Z",
+    "deleted_at": null
+  },
+  {
+    "id": "4201cd1c-31e5-49e1-add9-6ee16100a1b6",
+    "name": "Prime Global",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "prime_global",
+    "created_at": "2025-04-02T19:11:59.359Z",
+    "updated_at": "2025-04-02T19:11:59.359Z",
+    "deleted_at": null
+  },
+  {
+    "id": "51d28269-b58e-4c1d-9edd-d3be1632ba06",
+    "name": "Rota de Casa",
+    "type": {
+      "id": "8df2ee99-cfce-435a-9df0-efd533d825b7",
+      "name": "Housing",
+      "name_code": "housing",
+      "created_at": "2025-02-01T19:00:18.670Z",
+      "updated_at": "2025-02-01T19:00:18.670Z",
+      "deleted_at": null
+    },
+    "name_code": "rota_de_casa",
+    "created_at": "2025-04-02T19:11:59.359Z",
+    "updated_at": "2025-04-02T19:11:59.359Z",
+    "deleted_at": null
+  },
+  {
+    "id": "e8a3fd05-e946-48bd-bca5-5323b745d54b",
+    "name": "Sans Souci",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "sans_souci",
+    "created_at": "2025-04-02T19:11:59.359Z",
+    "updated_at": "2025-04-02T19:11:59.359Z",
+    "deleted_at": null
+  },
+  {
+    "id": "e4010434-a784-4d71-af56-c8499d0b94ee",
+    "name": "São Jose",
+    "type": {
+      "id": "5e9f3895-4b9f-473b-b100-43a51d25d4cc",
+      "name": "Transport",
+      "name_code": "transport",
+      "created_at": "2025-02-03T19:00:18.686Z",
+      "updated_at": "2025-02-03T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "sao_jose",
+    "created_at": "2025-04-02T19:11:59.359Z",
+    "updated_at": "2025-04-02T19:11:59.359Z",
+    "deleted_at": null
+  },
+  {
+    "id": "8c8d924e-ab53-478f-9f38-0ed8909b05bf",
+    "name": "Senhora Baforada",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "senhora_baforada",
+    "created_at": "2025-04-02T19:11:59.360Z",
+    "updated_at": "2025-04-02T19:11:59.360Z",
+    "deleted_at": null
+  },
+  {
+    "id": "78284c6a-c580-40d5-9ee1-241274cf9ec2",
+    "name": "Spoleto",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "spoleto",
+    "created_at": "2025-04-02T19:11:59.361Z",
+    "updated_at": "2025-04-02T19:11:59.361Z",
+    "deleted_at": null
+  },
+  {
+    "id": "dfd50894-21b9-4a29-8780-adebda15b9da",
+    "name": "Starbucks",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "starbucks",
+    "created_at": "2025-04-02T19:11:59.361Z",
+    "updated_at": "2025-04-02T19:11:59.361Z",
+    "deleted_at": null
+  },
+  {
+    "id": "72091bfd-03b4-452c-a788-636a05e6215e",
+    "name": "Sushiloko",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "sushiloko",
+    "created_at": "2025-04-02T19:11:59.361Z",
+    "updated_at": "2025-04-02T19:11:59.361Z",
+    "deleted_at": null
+  },
+  {
+    "id": "561ba95a-b5bf-4c8d-83ba-b31215f91832",
+    "name": "Vero Tratoria",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "vero_tratoria",
+    "created_at": "2025-04-02T19:11:59.361Z",
+    "updated_at": "2025-04-02T19:11:59.361Z",
+    "deleted_at": null
+  },
+  {
+    "id": "8294efdb-3017-49be-88e2-2afb61f1d455",
+    "name": "China in Box",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "china_in_box",
+    "created_at": "2025-04-02T19:11:59.361Z",
+    "updated_at": "2025-04-02T19:11:59.361Z",
+    "deleted_at": null
+  },
+  {
+    "id": "85828955-bcfe-4e93-b6dd-29812eb0ac75",
+    "name": "Urban Capacete",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "urban_capacete",
+    "created_at": "2025-04-02T19:11:59.362Z",
+    "updated_at": "2025-04-02T19:11:59.362Z",
+    "deleted_at": null
+  },
+  {
+    "id": "0e941c85-3c97-4a24-9086-70de4a8113b2",
+    "name": "IFood Clube",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "i_food_clube",
+    "created_at": "2025-04-02T19:11:59.362Z",
+    "updated_at": "2025-04-02T19:11:59.362Z",
+    "deleted_at": null
+  },
+  {
+    "id": "2fc62939-3bf5-4242-9b18-828418138357",
+    "name": "Anjos Restaurante",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "anjos_restaurante",
+    "created_at": "2025-04-02T19:11:59.362Z",
+    "updated_at": "2025-04-02T19:11:59.362Z",
+    "deleted_at": null
+  },
+  {
+    "id": "89c60a31-ba04-4ca4-951b-34413b9ef7cb",
+    "name": "Andre Vinicios Pereira",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "andre_vinicios_pereira",
+    "created_at": "2025-04-02T19:11:59.362Z",
+    "updated_at": "2025-04-02T19:11:59.362Z",
+    "deleted_at": null
+  },
+  {
+    "id": "c6df05cf-e986-49e7-867c-a2728e317a14",
+    "name": "Ifood",
+    "type": {
+      "id": "66efe38d-6878-4a55-8898-5feadce8f6ca",
+      "name": "Food",
+      "name_code": "food",
+      "created_at": "2025-02-02T19:00:18.686Z",
+      "updated_at": "2025-02-02T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "ifood",
+    "created_at": "2025-04-02T19:11:59.362Z",
+    "updated_at": "2025-04-02T19:11:59.362Z",
+    "deleted_at": null
+  },
+  {
+    "id": "62e965ad-e84c-4c83-83b4-2e7254a2050f",
+    "name": "Pizzaria dois irmãos",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "pizzaria_dois_irmaos",
+    "created_at": "2025-04-02T19:11:59.364Z",
+    "updated_at": "2025-04-02T19:11:59.364Z",
+    "deleted_at": null
+  },
+  {
+    "id": "d6be8782-20e9-4af0-9a54-2cf10e038973",
+    "name": "Google One",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "google_one",
+    "created_at": "2025-04-02T19:11:59.364Z",
+    "updated_at": "2025-04-02T19:11:59.364Z",
+    "deleted_at": null
+  },
+  {
+    "id": "0a840bac-f752-42cb-8279-9a5bcdbe76aa",
+    "name": "Credit Card Previous Invoice Balance",
+    "type": {
+      "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+      "name": "Bills",
+      "name_code": "bills",
+      "created_at": "2025-02-07T19:00:18.688Z",
+      "updated_at": "2025-02-07T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "credit_card_previous_invoice_balance",
+    "created_at": "2025-04-02T19:11:59.367Z",
+    "updated_at": "2025-04-02T19:11:59.367Z",
+    "deleted_at": null
+  },
+  {
+    "id": "873c8e0b-1911-4105-aac2-f9a6f01e2864",
+    "name": "Xique Xique",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "xique_xique",
+    "created_at": "2025-04-02T19:11:59.364Z",
+    "updated_at": "2025-04-02T19:11:59.364Z",
+    "deleted_at": null
+  },
+  {
+    "id": "5c11e66e-f7af-4af8-bb1b-56b85ed71236",
+    "name": "Motorcycle Club",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "motorcycle_club",
+    "created_at": "2025-04-02T19:11:59.368Z",
+    "updated_at": "2025-04-02T19:11:59.368Z",
+    "deleted_at": null
+  },
+  {
+    "id": "6faef581-fe94-4654-9679-f48780d8fcec",
+    "name": "Mercado Livre",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "mercado_livre",
+    "created_at": "2025-04-02T19:11:59.365Z",
+    "updated_at": "2025-04-02T19:11:59.365Z",
+    "deleted_at": null
+  },
+  {
+    "id": "3dcb0787-1771-45c7-99f2-659e92c86c84",
+    "name": "Philosophical Masonic Lodge",
+    "type": {
+      "id": "693a8c6a-0832-4acc-9a00-2f38ac2cab7b",
+      "name": "Education",
+      "name_code": "education",
+      "created_at": "2025-02-06T19:00:18.688Z",
+      "updated_at": "2025-02-06T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "philosophical_masonic_lodge",
+    "created_at": "2025-04-02T19:11:59.368Z",
+    "updated_at": "2025-04-02T19:11:59.368Z",
+    "deleted_at": null
+  },
+  {
+    "id": "46785207-d597-4759-bb67-e905fca418d4",
+    "name": "MeliMais Mercado Livre",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "meli_mais_mercado_livre",
+    "created_at": "2025-04-02T19:11:59.364Z",
+    "updated_at": "2025-04-02T19:11:59.364Z",
+    "deleted_at": null
+  },
+  {
+    "id": "367497f7-e037-43d4-9840-9d707c8104fe",
+    "name": "Netflix",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "netflix",
+    "created_at": "2025-04-02T19:11:59.365Z",
+    "updated_at": "2025-04-02T19:11:59.365Z",
+    "deleted_at": null
+  },
+  {
+    "id": "9348c467-7359-48c9-9bf4-727d5da261da",
+    "name": "Credit Card Charges",
+    "type": {
+      "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+      "name": "Bills",
+      "name_code": "bills",
+      "created_at": "2025-02-07T19:00:18.688Z",
+      "updated_at": "2025-02-07T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "credit_card_charges",
+    "created_at": "2025-04-02T19:11:59.367Z",
+    "updated_at": "2025-04-02T19:11:59.367Z",
+    "deleted_at": null
+  },
+  {
+    "id": "700195f2-d8c3-4e4d-83e6-fe1ced18e29b",
+    "name": "HBO Max",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "hbo_max",
+    "created_at": "2025-04-02T19:11:59.365Z",
+    "updated_at": "2025-04-02T19:11:59.365Z",
+    "deleted_at": null
+  },
+  {
+    "id": "c816a0b1-3abf-4d65-9d9a-09977d944926",
+    "name": "Masonic Lodge",
+    "type": {
+      "id": "693a8c6a-0832-4acc-9a00-2f38ac2cab7b",
+      "name": "Education",
+      "name_code": "education",
+      "created_at": "2025-02-06T19:00:18.688Z",
+      "updated_at": "2025-02-06T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "masonic_lodge",
+    "created_at": "2025-04-02T19:11:59.368Z",
+    "updated_at": "2025-04-02T19:11:59.368Z",
+    "deleted_at": null
+  },
+  {
+    "id": "483b82d0-ddb0-49d9-a5ae-19169500f6c9",
+    "name": "Amazon",
+    "type": {
+      "id": "9a8e83c3-8fc0-498d-bb1e-39f7c6d57fd9",
+      "name": "Leisure",
+      "name_code": "leisure",
+      "created_at": "2025-02-05T19:00:18.686Z",
+      "updated_at": "2025-02-05T19:00:18.686Z",
+      "deleted_at": null
+    },
+    "name_code": "amazon",
+    "created_at": "2025-04-02T19:11:59.365Z",
+    "updated_at": "2025-04-02T19:11:59.365Z",
+    "deleted_at": null
+  },
+  {
+    "id": "cb2ecae0-baee-4e0e-9914-f29c3138ff6d",
+    "name": "Credit Card Annual Fee",
+    "type": {
+      "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+      "name": "Bills",
+      "name_code": "bills",
+      "created_at": "2025-02-07T19:00:18.688Z",
+      "updated_at": "2025-02-07T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "credit_card_annual_fee",
+    "created_at": "2025-04-02T19:11:59.366Z",
+    "updated_at": "2025-04-02T19:11:59.366Z",
+    "deleted_at": null
+  },
+  {
+    "id": "1be4359a-b4e1-410b-8899-0c70d3286c32",
+    "name": "Credit Card Loss And Theft Protection Service",
+    "type": {
+      "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+      "name": "Bills",
+      "name_code": "bills",
+      "created_at": "2025-02-07T19:00:18.688Z",
+      "updated_at": "2025-02-07T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "credit_card_loss_and_theft_protection_service",
+    "created_at": "2025-04-02T19:11:59.367Z",
+    "updated_at": "2025-04-02T19:11:59.367Z",
+    "deleted_at": null
+  },
+  {
+    "id": "90f06a73-259d-4db6-b653-6a28647ff2bb",
+    "name": "Credit Card IOF On Financed Balance",
+    "type": {
+      "id": "afdb7bc2-78ad-459c-9d1f-27b99e38f954",
+      "name": "Bills",
+      "name_code": "bills",
+      "created_at": "2025-02-07T19:00:18.688Z",
+      "updated_at": "2025-02-07T19:00:18.688Z",
+      "deleted_at": null
+    },
+    "name_code": "credit_card_iof_on_financed_balance",
+    "created_at": "2025-04-02T19:11:59.367Z",
+    "updated_at": "2025-04-02T19:11:59.367Z",
+    "deleted_at": null
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "id": "f73f900d-1e0e-4a39-be7a-509746164ae9",
+  "url": "https://pokeapi.co/api/v2/type/12/",
+  "name": "grass",
+  "order": 12,
+  "created_at": "2025-02-07T19:00:23.486Z",
+  "updated_at": "2025-02-07T19:00:23.486Z",
+  "deleted_at": null,
+  "text_color": "#8b4513",
+  "background_color": "#b9cc50"
+}

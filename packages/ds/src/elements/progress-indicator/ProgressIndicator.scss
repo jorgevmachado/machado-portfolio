@@ -1,0 +1,37 @@
+@mixin context($color) {
+  background-color: $color;
+}
+
+.progress-indicator {
+  gap: var(--dimensions-fixed-4);
+  display: flex;
+
+  &__item {
+    width: var(--dimensions-fixed-8);
+    height: var(--dimensions-fixed-8);
+    align-self: center;
+    border-radius: var(--size-large);
+    background-color: var(--color-neutral-60);
+
+    &--context {
+      &-info {
+        @include context(var(--color-info-100));
+      }
+      &-error {
+        @include context(var(--color-error-100));
+      }
+      &-success {
+        @include context(var(--color-success-100));
+      }
+      &-primary {
+        @include context(var(--color-primary-100));
+      }
+      &-secondary {
+        @include context(var(--color-secondary-100));
+      }
+      &-attention {
+        @include context(var(--color-attention-100));
+      }
+    }
+  }
+}

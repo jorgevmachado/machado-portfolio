@@ -1,0 +1,87 @@
+.table {
+  padding: var(--size-regular);
+  overflow-x: auto;
+  border-radius: var(--borders-regular);
+  -webkit-overflow-scrolling: touch;
+
+
+  table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    th {
+      padding: var(--size-tiny);
+      border-bottom: 1px solid var(--color-neutral-60);
+      user-select: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      span {
+        color: var(--color-neutral-90);
+      }
+    }
+    tr {
+      &:hover {
+        td {
+          background-color: var(--color-neutral-50);
+        }
+      }
+      &:last-child {
+        td {
+          border-bottom: none;
+        }
+      }
+    }
+    td {
+      padding: var(--size-regular) var(--size-tiny);
+      font-size: var(--font-size-1-75);
+      word-wrap: break-word;
+      //white-space: normal;
+      border-bottom: 1px solid var(--color-neutral-60);
+      white-space: nowrap; /* Garante que as células não quebrem por padrão */
+      overflow: hidden; /* Evita overflow em colunas muito estreitas */
+      text-overflow: ellipsis; /* Adiciona reticências (...) em dados muito longos */
+
+
+    }
+  }
+
+  &__no-data-container {
+    height: 200px;
+    margin: 16px 0;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__action-row {
+    tbody {
+      tr {
+        cursor: pointer;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    th,
+    td {
+      padding: var(--size-small);
+      font-size: var(--font-size-1-5);
+      white-space: normal;
+    }
+
+    tr {
+      display: flex;
+      margin-bottom: var(--size-small);
+      flex-direction: column;
+
+    }
+
+    th {
+      text-align: left;
+    }
+  }
+}

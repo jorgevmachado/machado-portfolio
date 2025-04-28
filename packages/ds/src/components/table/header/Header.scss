@@ -1,0 +1,21 @@
+.header {
+  &__cell {
+    &--content {
+      display: flex;
+      &-icon {
+        opacity: 0;
+        &__active {
+          opacity: 1;
+        }
+      }
+    }
+    &--sortable {
+      &:hover {
+        cursor: pointer;
+        .header__cell--content-icon {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

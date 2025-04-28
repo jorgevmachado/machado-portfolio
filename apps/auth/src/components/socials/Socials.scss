@@ -1,0 +1,20 @@
+.socials {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  &__button {
+    &--google {
+      &.button {
+        border-color: var(--color-social-google-90);
+        background-color: var(--color-social-google-90);
+      }
+    }
+    &--facebook {
+      &.button {
+        border-color: var(--color-social-facebook-90);
+        background-color: var(--color-social-facebook-90);
+      }
+    }
+    &--github {}
+  }
+}

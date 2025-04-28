@@ -1,0 +1,1 @@
+export { default, SUPPLIER_TYPE_FINANCE_ENTITY } from './supplierType';
