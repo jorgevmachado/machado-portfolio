@@ -1,1 +1,0 @@
-export { PokemonExternalApi } from './PokemonExternalApi';

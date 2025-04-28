@@ -1,8 +1,0 @@
-.form {
-  gap: 1rem;
-  display: flex;
-  flex-direction: column;
-  @media screen and (min-width: 720px) {
-    width: Calc(25vw - 10px);
-  }
-}

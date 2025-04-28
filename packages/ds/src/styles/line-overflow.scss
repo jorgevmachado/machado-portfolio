@@ -1,9 +1,0 @@
-@mixin line-overflow($lines: 1) {
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: $lines;
-
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
